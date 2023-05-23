@@ -1,4 +1,4 @@
-const style = {
+const Style = {
    font: {
       $Primary: "Segoe UI",
       $Secondary: "SeoulHangang",
@@ -30,4 +30,4 @@ const style = {
    },
 };
 
-export default style;
+export default Style;

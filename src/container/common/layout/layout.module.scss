@@ -1,0 +1,9 @@
+@use '../../style/' as c;
+
+
+.content {
+   min-height: 100vh;
+   .extraSpace {
+      height: c.$h-header;
+   }
+}
