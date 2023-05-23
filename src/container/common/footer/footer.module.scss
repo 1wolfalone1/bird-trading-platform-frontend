@@ -1,0 +1,73 @@
+@use "../../style/" as c;
+
+.container {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: flex-start;
+   padding: 3rem 9rem;
+   gap: 55px;
+   position: relative;
+   height: 317px;
+   box-sizing: border-box;
+   background-color: c.$Complementary4;
+
+   .infoText {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0px;
+      gap: 10px;
+      flex-wrap: nowrap;
+      span {
+         display: inline-block;
+         word-wrap: normal;
+         word-break: normal;
+      }
+      .title {
+         font-family: "SeoulHangang";
+         font-style: normal;
+         font-weight: 400;
+         font-size: 48px;
+         line-height: 48px;
+         /* Dominant/1 */
+         color: #cdffa6;
+      }
+      .info {
+         line-height: 32px;
+         font-family: "SeoulHangang";
+         font-style: normal;
+         font-weight: 400;
+         font-size: 32px;
+         line-height: 32px;
+
+         color: #ffffff;
+      }
+   }
+   .contactUs {
+      font-family: "SeoulHangang";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 48px;
+      /* Dominant/1 */
+      color: #cdffa6;
+
+      .logoContainer {
+         display: flex;
+         flex-direction: row;
+         justify-content: center;
+         align-items: center;
+         padding: 46px 0;
+         gap: 10px;
+      }
+   }
+
+   .logo {
+      width: 23.8rem;
+      width: 23.8rem;
+      img {
+         width: 100%;
+      }
+   }
+}
