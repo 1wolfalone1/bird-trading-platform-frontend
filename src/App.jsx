@@ -4,12 +4,14 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './container/common/layout/Layout'
 import Home from './container/home/Home';
 import './style/fontLoader.scss'
+import Login from './container/login/Login';
 
 function App() {
   return (
     <Routes>
       <Route element={<Layout/>}>
         <Route index element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
       </Route>
     </Routes>
   );
