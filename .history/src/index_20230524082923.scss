@@ -1,7 +1,7 @@
 @use "./style/common" as c;
 
 html {
-  font-size: 8px;
+  font-size: 10px;
 }
 body {
   margin: 0;
@@ -16,8 +16,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 // button {
@@ -56,8 +55,7 @@ code {
   transition: background 0.8s;
 }
 .ripple:hover {
-  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%)
-    center/15000%;
+  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%) center/15000%;
   cursor: pointer;
 }
 .ripple:active:hover {
@@ -82,12 +80,13 @@ input {
 }
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s !important;
+    transition: background-color 600000s 0s, color 600000s 0s !important;
 }
 
 input[data-autocompleted] {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
+
 
 input {
   border-style: none;

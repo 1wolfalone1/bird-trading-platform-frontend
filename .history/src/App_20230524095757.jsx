@@ -3,7 +3,7 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./container/common/layout/Layout";
 import Home from "./container/home/Home";
-import SignUp from "./container/signup/SignUp";
+import SignUp from "./container/signUp/SignUp";
 import "./style/fontLoader.scss";
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route element={<SignUp />} />
       </Route>
     </Routes>
   );
