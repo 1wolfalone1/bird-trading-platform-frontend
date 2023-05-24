@@ -28,7 +28,7 @@ const buttonStyle = {
    color: Style.color.$Dominant1,
    fontFamily: Style.font.$Secondary,
    fontWeight: 400,
-   padding: "2.1rem 1rem",
+   padding: "1.5rem 1rem",
    lineHeight: "100%",
    textTransform: "none",
 };
@@ -82,6 +82,12 @@ export default function Header() {
                   value={age}
                   onChange={handleChange}
                   sx={{ fontSize: "2.4rem" }}
+                  MenuProps={{
+                     disableScrollLock: true,
+                     style: {
+                        color: "white",
+                     }
+                   }}
                >
                   <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
                      Ten
