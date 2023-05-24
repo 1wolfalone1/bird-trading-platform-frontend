@@ -1,0 +1,17 @@
+@use "../style/" as c;
+
+.container {
+   display: flex;
+   flex-direction: row;
+   align-items: flex-start;
+   padding: 0px;
+   min-height: calc(100vh - c.$h-header);
+
+   .imgLeft {
+      max-height: calc(100vh - c.$h-header);
+
+      img {
+         max-height:  calc(100vh - c.$h-header);
+      }
+   }
+}

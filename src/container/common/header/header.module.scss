@@ -37,20 +37,20 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
-      gap: 5px;
+      gap: 0.5rem;
 
       width: 40%;
-      height: 84px;
+      height: 6rem;
       &>input {
          width: 100%;
          background-color: c.$Dominant2;
          border: 0;
          border-radius: 118px;
-         padding: 2.6rem;
+         padding: 2.4rem;
          font-family: c.$Secondary;
          font-style: normal;
          font-weight: 400;
-         font-size: 32px;
+         font-size: 2.4rem;
          transition: 0.1s ease-in;
          &:focus {
             box-shadow: 0 5px 20px rgba(21, 21, 21, 0.712);            
@@ -68,7 +68,7 @@
          right: 1rem;
          .icon {
             font-size: 3.5rem;
-            margin: 0 10px;
+            margin: 0 0.1rem;
             &:hover {
                scale: 1.1;
                cursor: pointer;

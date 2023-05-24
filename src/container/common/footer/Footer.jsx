@@ -7,7 +7,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 
 const iconStyle = {
-  fontSize: '7.4rem'
+  fontSize: '5.4rem'
 }
 export default function Footer() {
    return (
