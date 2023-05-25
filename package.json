@@ -25,6 +25,7 @@
     "reactjs-popup": "^2.0.5",
     "redux-toolkit": "^1.1.2",
     "sass": "^1.62.1",
+    "swiper": "^9.3.2",
     "uuid": "^9.0.0",
     "yup": "^1.1.1"
   },
