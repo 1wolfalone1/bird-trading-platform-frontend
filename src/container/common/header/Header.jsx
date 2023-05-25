@@ -22,6 +22,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import LoginIcon from "../../../asset/icons/Login";
+import SignupIcon from "../../../asset/icons/Signup";
+import CartIcon from './../../../asset/icons/Cart';
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "4rem",
@@ -124,15 +127,13 @@ export default function Header() {
          </div>
          <div className={s.navRight}>
             <Button variant="outlined" sx={buttonLogin}>
-               Sign in <FontAwesomeIcon icon={faRightToBracket} />
+               Sign in <LoginIcon className={s.icon}/>
             </Button>
             <Button variant="outlined" sx={buttonLogin}>
-               Sign up <FontAwesomeIcon icon={faUserPlus} />
+               Sign up <SignupIcon className={s.icon}/>
             </Button>
             <IconButton color="Dominant1">
-               <ShoppingCartOutlinedIcon
-                  sx={{ fontSize: "5.5rem", color: Style.color.$Dominant1 }}
-               />
+               <CartIcon className={s.cartIcon}/>
             </IconButton>
          </div>
       </div>

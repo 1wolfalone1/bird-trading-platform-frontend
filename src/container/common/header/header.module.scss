@@ -40,9 +40,9 @@
       align-items: center;
       gap: 0.5rem;
 
-      width: 40%;
+      width: 35%;
       height: 4rem;
-      &>input {
+      & > input {
          width: 100%;
          background-color: c.$Dominant2;
          border: 0;
@@ -54,9 +54,8 @@
          font-size: 2.4rem;
          transition: 0.1s ease-in;
          &:focus {
-            box-shadow: 0 5px 20px rgba(21, 21, 21, 0.712);            
+            box-shadow: 0 5px 20px rgba(21, 21, 21, 0.712);
          }
-         
       }
       position: relative;
 
@@ -88,9 +87,20 @@
       gap: 1rem;
       align-items: center;
       .icon {
+         margin-left: 0.2rem;
+         width: 4rem;
+         path {
+            fill: c.$Accent2;
+         }
+      }
+      .cartIcon {
+         width: 5.6rem;
+         height: 5.6rem;
          
-         font-size: 4rem;
-         color: c.$Dominant1;
+         circle,
+         path{
+            stroke: c.$Dominant5;
+         }
       }
    }
 }
