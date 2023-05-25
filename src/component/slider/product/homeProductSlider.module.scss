@@ -4,8 +4,9 @@
    /* Auto layout */
 
    padding: 1.6rem;
-   padding-right: 2rem;
-   width: 80%;
+   padding-right: 4rem;
+   padding-bottom: 0;
+   width: 78%;
    /* Dominant/3 */
    background: c.$Dominant3;
    box-shadow: 7px 9px 20px rgba(21, 21, 21, 0.47);
@@ -23,7 +24,12 @@
       }
    }
    :global(.swiper-wrapper) {
-      padding: 1.6rem 4rem;
-   }
+      padding: 1.6rem 3.2rem;
+      height: auto !important;
 
+   }
+   :global(.swiper-slide) {
+      height: auto !important;
+      display: flex !important;
+   }
 }

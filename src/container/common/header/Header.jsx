@@ -81,7 +81,7 @@ export default function Header() {
                   id="demo-simple-select"
                   value={age}
                   onChange={handleChange}
-                  sx={{ fontSize: "2.4rem",height: "5rem"  }}
+                  sx={{ fontSize: "2.4rem",height: "4rem" }}
                   MenuProps={{
                      disableScrollLock: true,
                      style: {
@@ -104,7 +104,7 @@ export default function Header() {
                   id="demo-simple-select"
                   value={age}
                   onChange={handleChange}
-                  sx={{ fontSize: "2.4rem", height: "5rem" }}
+                  sx={{ fontSize: "2.4rem", height: "4rem" }}
                >
                   <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
                      Ten
