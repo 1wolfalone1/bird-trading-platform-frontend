@@ -27,7 +27,7 @@ import SignupIcon from "../../../asset/icons/Signup";
 import CartIcon from './../../../asset/icons/Cart';
 library.add(faCartShopping);
 const buttonStyle = {
-   fontSize: "4rem",
+   fontSize: "3.8rem",
    color: Style.color.$Dominant1,
    fontFamily: Style.font.$Secondary,
    fontWeight: 100,
@@ -40,10 +40,10 @@ const buttonLogin = {
    textTransform: "none",
    fontFamily: Style.font.$Secondary,
    color: Style.color.$Dominant1,
-   fontSize: "3.2rem",
+   fontSize: "2.4rem",
    fontWeight: 100,
    lineHeight: "100%",
-   padding: "1.55rem 3.3rem",
+   padding: "1rem 2.4rem",
    "&.MuiButton-outlined": {
       border: "1px solid " + Style.color.$Dominant1,
    },

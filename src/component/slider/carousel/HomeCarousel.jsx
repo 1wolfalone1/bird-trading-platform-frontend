@@ -6,25 +6,36 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import "swiper/css/effect-fade";
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade } from "swiper";
+import {
+   Navigation,
+   Pagination,
+   Scrollbar,
+   A11y,
+   Autoplay,
+   EffectFade,
+} from "swiper";
 import clsx from "clsx";
 import "./custom.scss";
 const carouselImags = [
    {
-      img: "1.png",
+      img: "1.jpg",
       id: 1,
    },
    {
-      img: "2.png",
+      img: "2.jpg",
       id: 2,
    },
    {
-      img: "3.png",
+      img: "3.jpg",
       id: 3,
    },
    {
-      img: "4.png",
+      img: "4.jpg",
       id: 4,
+   },
+   {
+      img: "5.jpg",
+      id: 5,
    },
 ];
 export default function HomeCarousel() {
