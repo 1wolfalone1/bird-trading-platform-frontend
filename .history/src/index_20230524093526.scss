@@ -1,10 +1,7 @@
 @use "./style/common" as c;
 
 html {
-  font-size: 10px;
-  @include c.m-Responsive(XXL) {
-    font-size: 8px;
-  }
+  font-size: 0.5rem;
 }
 body {
   margin: 0;
@@ -59,7 +56,8 @@ code {
   transition: background 0.8s;
 }
 .ripple:hover {
-  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%) center/15000%;
+  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%)
+    center/15000%;
   cursor: pointer;
 }
 .ripple:active:hover {

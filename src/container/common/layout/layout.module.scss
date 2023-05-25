@@ -1,11 +1,9 @@
-@use '../../style/' as c;
-
+@use "../../style/" as c;
 
 .content {
-   min-height: 100vh;
-   overflow: hidden;
-   .extraSpace {
-      height: c.$h-header;
-
-   }
+  overflow: hidden;
+  min-height: 100vh;
+  .extraSpace {
+    height: c.$h-header;
+  }
 }

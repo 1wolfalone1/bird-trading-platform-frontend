@@ -2,9 +2,6 @@
 
 html {
   font-size: 10px;
-  @include c.m-Responsive(XXL) {
-    font-size: 8px;
-  }
 }
 body {
   margin: 0;
@@ -19,8 +16,7 @@ body {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 // button {
@@ -84,12 +80,13 @@ input {
 }
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
-  transition: background-color 600000s 0s, color 600000s 0s !important;
+    transition: background-color 600000s 0s, color 600000s 0s !important;
 }
 
 input[data-autocompleted] {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
+
 
 input {
   border-style: none;

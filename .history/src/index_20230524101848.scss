@@ -59,7 +59,8 @@ code {
   transition: background 0.8s;
 }
 .ripple:hover {
-  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%) center/15000%;
+  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%)
+    center/15000%;
   cursor: pointer;
 }
 .ripple:active:hover {
