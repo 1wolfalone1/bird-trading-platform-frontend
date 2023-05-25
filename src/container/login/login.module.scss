@@ -5,10 +5,14 @@
    flex-direction: row;
    align-items: flex-start;
    padding: 0px;
-   min-height: calc(100vh - c.$h-header);
-
+   max-height: calc(100vh - c.$h-header);
+   
    .imgLeft {
       max-height: calc(100vh - c.$h-header);
+      max-width: 40vw;
+      img  {
+         width: 100%;
+      }
    }
    .contentRight {
       display: flex;

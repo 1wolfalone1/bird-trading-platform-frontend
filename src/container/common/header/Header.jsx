@@ -27,7 +27,7 @@ const buttonStyle = {
    fontSize: "4rem",
    color: Style.color.$Dominant1,
    fontFamily: Style.font.$Secondary,
-   fontWeight: 400,
+   fontWeight: 100,
    padding: "1.5rem 1rem",
    lineHeight: "100%",
    textTransform: "none",
@@ -81,7 +81,7 @@ export default function Header() {
                   id="demo-simple-select"
                   value={age}
                   onChange={handleChange}
-                  sx={{ fontSize: "2.4rem" }}
+                  sx={{ fontSize: "2.4rem",height: "5rem"  }}
                   MenuProps={{
                      disableScrollLock: true,
                      style: {
@@ -95,7 +95,7 @@ export default function Header() {
                   <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
                      Twenty
                   </MenuItem>
-                  <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
+                  <MenuItem value={30} sx={{ fontSize: "2.4rem",  }}>
                      Thirty
                   </MenuItem>
                </Select>
@@ -104,7 +104,7 @@ export default function Header() {
                   id="demo-simple-select"
                   value={age}
                   onChange={handleChange}
-                  sx={{ fontSize: "2.4rem" }}
+                  sx={{ fontSize: "2.4rem", height: "5rem" }}
                >
                   <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
                      Ten
@@ -129,7 +129,7 @@ export default function Header() {
             <Button variant="outlined" sx={buttonLogin}>
                Sign up <FontAwesomeIcon icon={faUserPlus} />
             </Button>
-            <IconButton>
+            <IconButton color="Dominant1">
                <ShoppingCartOutlinedIcon
                   sx={{ fontSize: "5.5rem", color: Style.color.$Dominant1 }}
                />

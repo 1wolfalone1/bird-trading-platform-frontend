@@ -24,7 +24,7 @@ const theme = createTheme({
          main:  "rgb(205, 255, 166)",
 
       },
-      Dominant2: {
+      Dominant2q: {
          main: "rgb(228, 223, 209)",
 
       },

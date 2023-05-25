@@ -1,0 +1,29 @@
+@use "../../style/" as c;
+
+.container {
+   /* Auto layout */
+
+   padding: 1.6rem;
+   padding-right: 2rem;
+   width: 80%;
+   /* Dominant/3 */
+   background: c.$Dominant3;
+   box-shadow: 7px 9px 20px rgba(21, 21, 21, 0.47);
+   .title {
+      text-align: center;
+      span {
+         font-family: "SeoulHangang";
+         font-style: normal;
+         font-weight: 400;
+         font-size: 7.2rem;
+
+         /* Dominant/7 */
+
+         color: #04001e;
+      }
+   }
+   :global(.swiper-wrapper) {
+      padding: 1.6rem 4rem;
+   }
+
+}
