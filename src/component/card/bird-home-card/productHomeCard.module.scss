@@ -91,14 +91,13 @@ $card-width: 28rem;
          span {
             font-family: c.$Primary;
             font-style: normal;
-            font-weight: 350;
-            font-size: 1.6rem;
+            font-weight: 500;
+            font-size: 1.9rem;
 
-            color: #1c2100;
+            color: c.$Accent7;
          }
       }
-      .star {
-      }
+
       .shop {
          margin-top: auto;
          margin-bottom: 0.4rem;
@@ -133,7 +132,14 @@ $card-width: 28rem;
          }
       }
    }
-
+   .star {
+      :global(.MuiRating-root) {
+         color: c.$Accent7;
+      }
+      :global(.MuiRating-decimal) {
+         color: c.$Accent7;
+      }
+   }
    &:hover {
       transform: scale(1.05);
       box-shadow: 6px 8px 20px rgba(0, 0, 0, 0.25);
