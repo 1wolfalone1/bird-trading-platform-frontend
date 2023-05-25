@@ -15,20 +15,18 @@ export default function HomeProductSlider({ products, title }) {
             <span>{title}</span>
          </div>
          <Swiper
-            spaceBetween={"1"}
+            spaceBetween={"0rem"}
             slidesPerView={4.5}
             modules={[Thumbs]}
             watchSlidesProgress
             onSlideChange={() => console.log("slide change")}
             onSwiper={(swiper) => console.log(swiper)}
          >
-            <div style={{padding: '10rem'}}>
                {products.map((product) => (
                   <SwiperSlide key={product.id}>
                      <ProductHomeCard product={product} />
                   </SwiperSlide>
                ))}
-            </div>
          </Swiper>
       </div>
    );
