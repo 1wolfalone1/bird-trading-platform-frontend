@@ -5,6 +5,7 @@ import Home from "./container/home/Home";
 import SignUp from "./container/signup/SignUp";
 import "./style/fontLoader.scss";
 import Login from "./container/login/Login";
+import Profile from "./container/profile/Profile";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   );
