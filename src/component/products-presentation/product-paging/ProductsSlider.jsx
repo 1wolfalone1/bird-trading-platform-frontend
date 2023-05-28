@@ -9,7 +9,7 @@ export default function ProductsSlider({ pageNumber = 10 }) {
    };
    console.log(page);
    return (
-      <div className={s.container}>
+      <div className={s.containerSlider}>
          <Pagination
             count={pageNumber}
             showFirstButton
