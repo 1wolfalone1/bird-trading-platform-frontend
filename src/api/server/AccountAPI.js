@@ -1,8 +1,9 @@
-import { BASE_URL } from "./ServerConfig";
+import axios from "axios";
+import { MOCK_URL } from "./ServerConfig";
 
 
 const api = axios.create({
-   baseURL: BASE_URL,
+   baseURL: MOCK_URL,
    headers: {
       "Access-Control-Allow-Origin": "http://localhost:3000",
    },

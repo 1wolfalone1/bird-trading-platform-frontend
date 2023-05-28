@@ -1,0 +1,56 @@
+@use "../style/" as c;
+
+$widthContainer: 24rem;
+.container {
+   padding: 1rem;
+   max-width: 24rem;
+   flex-shrink: 0;
+   border-left: 1px solid c.$Accent6;
+   border-right: 1px solid c.$Accent6;
+   .title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: c.$Accent7;
+      font-weight: 500;
+      span {
+         font-size: 3.6rem;
+      }
+      .iconFilter {
+         $size: 3.2rem;
+         width: $size;
+         height: $size;
+      }
+   }
+   .filterControl {
+      .filterComponent {
+         border-bottom: 2px solid c.$Complementary0;
+         margin-top: 1rem;
+         .title {
+            font-size: 3.2rem;
+            font-family: c.$Secondary;
+            display: block;
+            border-bottom: 1px solid c.$Accent5;
+            width: fit-content;
+         }
+         .filter {
+            padding: 1rem 0;
+            .filterRating {
+               font-size: 3rem;
+               transition: 0.5s linear;
+               border-radius: 1rem;
+               &:hover {
+                  background-color: rgba(60, 60, 60, 0.198);
+                  cursor: pointer;
+               }
+            }
+         }
+
+         .controlButton {
+            display: flex;
+            justify-content: end;
+            margin-top: 1rem;
+         }
+      }
+   }
+}

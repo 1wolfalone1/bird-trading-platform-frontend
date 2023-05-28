@@ -7,17 +7,21 @@ import "./style/fontLoader.scss";
 import Login from "./container/login/Login";
 import Profile from "./container/profile/Profile";
 
+import ProductPageRoute from "./routes/ProductPageRoute";
+
 function App() {
-  return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
-      </Route>
-    </Routes>
-  );
+   return (
+      <Routes>
+         <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="products/*" element={<ProductPageRoute />}/>
+              <Route path="/profile" element={<Profile />} />
+         </Route>
+      </Routes>
+   );
+
 }
 
 export default App;

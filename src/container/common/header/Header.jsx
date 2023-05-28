@@ -24,7 +24,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LoginIcon from "../../../asset/icons/Login";
 import SignupIcon from "../../../asset/icons/Signup";
-import CartIcon from './../../../asset/icons/Cart';
+import CartIcon from "./../../../asset/icons/Cart";
+import { useNavigate } from "react-router-dom";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -50,6 +51,7 @@ const buttonLogin = {
    borderRadius: 35,
 };
 export default function Header() {
+   const navigate = useNavigate();
    const [age, setAge] = React.useState("10");
 
    const handleChange = (e) => {
@@ -62,12 +64,25 @@ export default function Header() {
          </div>
          <div className={s.navLeft}>
             <div className={clsx(s.navCover, s.active)}>
-               <Button variant="text" sx={buttonStyle} size="small">
+               <Button
+                  variant="text"
+                  sx={buttonStyle}
+                  size="small"
+                  onClick={() => {
+                     navigate("/");
+                  }}
+               >
                   Home
                </Button>
             </div>
             <div className={s.navCover}>
-               <Button variant="text" sx={buttonStyle}>
+               <Button
+                  variant="text"
+                  sx={buttonStyle}
+                  onClick={() => {
+                     navigate("/products");
+                  }}
+               >
                   Products
                </Button>
             </div>
@@ -84,13 +99,13 @@ export default function Header() {
                   id="demo-simple-select"
                   value={age}
                   onChange={handleChange}
-                  sx={{ fontSize: "2.4rem",height: "4rem" }}
+                  sx={{ fontSize: "2.4rem", height: "4rem" }}
                   MenuProps={{
                      disableScrollLock: true,
                      style: {
                         color: "white",
-                     }
-                   }}
+                     },
+                  }}
                >
                   <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
                      Ten
@@ -98,7 +113,7 @@ export default function Header() {
                   <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
                      Twenty
                   </MenuItem>
-                  <MenuItem value={30} sx={{ fontSize: "2.4rem",  }}>
+                  <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
                      Thirty
                   </MenuItem>
                </Select>
@@ -108,8 +123,15 @@ export default function Header() {
                   value={age}
                   onChange={handleChange}
                   sx={{ fontSize: "2.4rem", height: "4rem" }}
+                  MenuProps={{
+                     disableScrollLock: true,
+                     style: {
+                        color: Style.color.$Dominant1,
+                     },
+                  }}
+                  
                >
-                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
+                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }} >
                      Ten
                   </MenuItem>
                   <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
@@ -126,14 +148,26 @@ export default function Header() {
             </div>
          </div>
          <div className={s.navRight}>
-            <Button variant="outlined" sx={buttonLogin}>
-               Sign in <LoginIcon className={s.icon}/>
+            <Button
+               variant="outlined"
+               sx={buttonLogin}
+               onClick={() => {
+                  navigate("/login");
+               }}
+            >
+               Sign in <LoginIcon className={s.icon} />
             </Button>
-            <Button variant="outlined" sx={buttonLogin}>
-               Sign up <SignupIcon className={s.icon}/>
+            <Button
+               variant="outlined"
+               sx={buttonLogin}
+               onClick={() => {
+                  navigate("/signup");
+               }}
+            >
+               Sign up <SignupIcon className={s.icon} />
             </Button>
             <IconButton color="Dominant1">
-               <CartIcon className={s.cartIcon}/>
+               <CartIcon className={s.cartIcon} />
             </IconButton>
          </div>
       </div>
