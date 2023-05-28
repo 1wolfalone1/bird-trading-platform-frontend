@@ -1,0 +1,94 @@
+@use "../style/" as c;
+
+@mixin text($fw: 600, $fz: 3rem, $color: c.$Complementary0) {
+  font-weight: $fw;
+  font-size: $fz;
+  color: $color;
+}
+
+@mixin inputField {
+  .title {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    padding-bottom: 5rem;
+    @include text(600, 2.5rem);
+    .inputText {
+      margin-left: 3rem;
+      width: 40rem;
+    }
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+$Dominant0: rgb(200 211 218);
+$heightAvatar: 30rem;
+
+h1 {
+  font-family: c.$Secondary;
+  @include text(900, 4rem);
+  text-align: center;
+}
+
+.profile {
+  display: flex;
+  align-items: start;
+  width: 70%;
+  height: 40rem;
+  margin-left: 5rem;
+  margin-top: 10rem;
+  font-family: c.$Secondary;
+  border: 0 solid black;
+
+  .uploadImg {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20rem;
+
+    .imgProfile {
+      img {
+        height: $heightAvatar;
+        width: $heightAvatar;
+        border-radius: 100%;
+      }
+    }
+
+    .edit_profile {
+      @include text(400, 2rem);
+      text-decoration: none;
+      border: 1px solid c.$Complementary0;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+  .showInfo {
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    padding: 0 10rem;
+    .left {
+      @include inputField();
+    }
+
+    .right {
+      margin-left: 10rem;
+      @include inputField();
+    }
+  }
+}
+
+.saveChange {
+  @include text(100, 2.4rem);
+  font-family: c.$Secondary;
+  margin-right: 12rem;
+  margin-bottom: 2rem;
+  border: 1px solid c.$Complementary0;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  display: flex;
+  float: right;
+}

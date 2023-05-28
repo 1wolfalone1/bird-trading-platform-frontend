@@ -5,6 +5,8 @@ import Home from "./container/home/Home";
 import SignUp from "./container/signup/SignUp";
 import "./style/fontLoader.scss";
 import Login from "./container/login/Login";
+import Profile from "./container/profile/Profile";
+
 import ProductPageRoute from "./routes/ProductPageRoute";
 
 function App() {
@@ -15,9 +17,11 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<SignUp />} />
             <Route path="products/*" element={<ProductPageRoute />}/>
+              <Route path="/profile" element={<Profile />} />
          </Route>
       </Routes>
    );
+
 }
 
 export default App;
