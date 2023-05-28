@@ -1,7 +1,8 @@
+
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export default createSlice({
-   name: "userInfo",
+   name: "productState",
    initialState: {
       status: "guest",
       info: {

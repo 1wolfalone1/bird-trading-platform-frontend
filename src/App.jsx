@@ -5,17 +5,19 @@ import Home from "./container/home/Home";
 import SignUp from "./container/signup/SignUp";
 import "./style/fontLoader.scss";
 import Login from "./container/login/Login";
+import ProductPageRoute from "./routes/ProductPageRoute";
 
 function App() {
-  return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-      </Route>
-    </Routes>
-  );
+   return (
+      <Routes>
+         <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="products/*" element={<ProductPageRoute />}/>
+         </Route>
+      </Routes>
+   );
 }
 
 export default App;
