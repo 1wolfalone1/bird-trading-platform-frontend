@@ -3,16 +3,31 @@ import s from "./home.module.scss";
 
 import React, { useEffect } from "react";
 import HomeCarousel from "./../../component/slider/carousel/HomeCarousel";
-import { getBirds, getBirdsSelector } from "./HomeSlice";
+import {
+   getAccessories,
+   getAccessoriesSelector,
+   getBirds,
+   getBirdsSelector,
+   getFood,
+   getFoodSelector,
+   getTopProducts,
+   getTopProductsSelector,
+   homeDataStatus,
+} from "./HomeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import HomeProductSlider from "../../component/slider/product/HomeProductSlider";
+import Accessories from "./../../asset/icons/Accessories";
 export default function Home() {
    const dispatch = useDispatch();
    const birds = useSelector(getBirdsSelector);
-
+   const food = useSelector(getFoodSelector);
+   const topProduct = useSelector(getTopProductsSelector);
+   const accessories = useSelector(getAccessoriesSelector);
    useEffect(() => {
-      const birds = dispatch(getBirds());
-      console.log(birds, "asdfasdfadsfasdfasdasdfsdf");
+      dispatch(getBirds());
+      dispatch(getFood());
+      dispatch(getAccessories());
+      dispatch(getTopProducts());
    }, []);
 
    return (
@@ -21,10 +36,10 @@ export default function Home() {
             <HomeCarousel />
          </div>
          <div className={clsx(s.content)}>
-            {birds? <HomeProductSlider products={birds} title={'Top product'}/>: 'loading...'}
-            {birds? <HomeProductSlider products={birds} title={'Top product'}/>: 'loading...'}
-            {birds? <HomeProductSlider products={birds} title={'Top product'}/>: 'loading...'}
-            {birds? <HomeProductSlider products={birds} title={'Top product'}/>: 'loading...'}
+            <HomeProductSlider products={topProduct} title={"Top product"} />
+            <HomeProductSlider products={birds} title={"Birds"} />
+            <HomeProductSlider products={food} title={"Food"} />
+            <HomeProductSlider products={accessories} title={"Accessories"} />
          </div>
       </div>
    );

@@ -8,7 +8,7 @@ export default function Products({ products }) {
    console.log(products);
    return (
       <>
-         <Grid container spacing={5} margin={4} marginTop={1} marginBottom={1}>
+         <Grid container spacing={5} marginRight={4}  marginLeft={4} marginTop={1} marginBottom={1}>
             {products
                ? products.map((product) => (
                     <Grid xs={3} key={product.id}>
