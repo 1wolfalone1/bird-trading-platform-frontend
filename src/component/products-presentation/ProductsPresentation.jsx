@@ -14,14 +14,14 @@ export default function ProductsPresentation() {
    const { data, page } = products;
    useEffect(() => {
       const k = async () => {
-         const a = await dispatch(callFirstPage());
+         await dispatch(callFirstPage());
       };
       k();
    }, []);
    return (
       <div className={s.container}>
          <Products products={data} />
-         <ProductsSlider page={page} />
+         <ProductsSlider pageNumber={page} />
       </div>
    );
 }

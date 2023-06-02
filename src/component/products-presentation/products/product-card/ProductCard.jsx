@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
                <div className={s.type}>
                   <span>
                      <span style={{ color: "#005250" }}>Type:</span>{" "}
-                     {product.typeBird.name}
+                     {product.type.name}
                   </span>
                </div>
                <Tooltip title={<>{product.tags
