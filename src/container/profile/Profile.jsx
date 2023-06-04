@@ -21,7 +21,7 @@ const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || img);
   const [fullName, setFullName] = useState("Huynh Van Phuot");
   const [email, setEmail] = useState("phuothvse160205@fpt.edu.vn");
-  const [address, setAddress] = useState("Tp HCM");
+  const [joinedOn, setJoinedOn] = useState("11/11/1111");
   const [phoneNumber, setPhoneNumber] = useState("0123456789");
   const [isEditable, setIsEditable] = useState(false); // Editable state for the fields
   const [city, setCity] = useState("HCM");
@@ -48,11 +48,9 @@ const Profile = () => {
   const handleChangeFullName = (e) => {
     setFullName(e.target.value);
   };
-
   const handleChangePhoneNumber = (e) => {
     setPhoneNumber(e.target.value);
   };
-
   const handleChangeCity = (e) => {
     setCity(e.target.value);
   };
@@ -137,7 +135,7 @@ const Profile = () => {
               <div className={clsx(s.inputText)}>
                 <TextField
                   id="filled-basic"
-                  value="11/11/1111"
+                  value={joinedOn}
                   variant="filled"
                   color="Dominant0"
                   sx={textFieldStyle}
@@ -211,13 +209,15 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <button
-        type="button"
-        className={clsx(s.saveChange)}
-        onClick={handleSaveChange}
-      >
-        {isEditable ? "Save Change" : "Edit"}
-      </button>
+      <div className={clsx(s.containerButton)}>
+        <button
+          type="button"
+          className={clsx(s.saveChange)}
+          onClick={handleSaveChange}
+        >
+          {isEditable ? "Save Change" : "Edit"}
+        </button>
+      </div>
     </Fragment>
   );
 };

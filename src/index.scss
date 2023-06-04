@@ -6,6 +6,7 @@ html {
     font-size: 8px;
   }
 }
+
 body {
   margin: 0;
   font-family: c.$Primary;
@@ -33,7 +34,8 @@ body {
   color: c.$Dominant1 !important;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 // button {
@@ -72,7 +74,8 @@ code {
   transition: background 0.8s;
 }
 .ripple:hover {
-  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%) center/15000%;
+  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%)
+    center/15000%;
   cursor: pointer;
 }
 .ripple:active:hover {
@@ -116,12 +119,14 @@ input {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: c.$Dominant2;
+  background: c.$Complementary6;
+  border-radius: 1rem;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: c.$Complementary1-header;
+  background: c.$Accent7;
+  border-radius: 1rem;
 }
 
 /* Handle on hover */
