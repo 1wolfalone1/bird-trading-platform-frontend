@@ -8,6 +8,7 @@ export const INCREASE = 2;
 export const STATUS_FULLFILLED = 1;
 export const STATUS_PENDING = 0;
 export const STATUS_ERROR = -1;
+
 export const typeProduct = {
    PRODUCTS: "products",
    BIRDS: "birds",
