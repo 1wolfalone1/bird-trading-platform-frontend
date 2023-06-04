@@ -71,7 +71,6 @@ export default function SideBarFilter() {
    const ref = useRef();
    const [personName, setPersonName] = React.useState([]);
    const [openPopup, setOpenPopup] = useState(false);
-   const closeModal = () => setOpenPopup(false);
    const [typeTextValue, setTypeTextValue] = useState("...");
 
    useEffect(() => {
@@ -91,7 +90,6 @@ export default function SideBarFilter() {
       );
    };
 
-   console.log(openPopup);
    return (
       <div className={clsx(s.container)}>
          <div
@@ -184,7 +182,7 @@ export default function SideBarFilter() {
                         Sort price
                      </InputLabel>
                      <Select
-                        value={personName}
+                        value={''}
                         onChange={handleChange}
                         input={<OutlinedInput label="Categories" />}
                         renderValue={(selected) => {

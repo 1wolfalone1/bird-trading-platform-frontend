@@ -87,28 +87,5 @@
          }
       }
    }
-   .navRight {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      :global(.MuiBadge-badge ){
-         font-size: 1.1rem !important;
-      }
-      .icon {
-         margin-left: 0.4rem;
-         width: 3.2rem;
-         path {
-            fill: c.$Accent2;
-         }
-      }
-      .cartIcon {
-         width: 4.8rem;
-         height: 4.8rem;
-
-         circle,
-         path {
-            stroke: c.$Dominant5;
-         }
-      }
-   }
+  
 }

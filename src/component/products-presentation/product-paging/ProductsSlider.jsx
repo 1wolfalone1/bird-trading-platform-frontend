@@ -15,7 +15,6 @@ export default function ProductsSlider({ pageNumber = 10 }) {
    useEffect(() => {
       dispatch(slidePage(page));
    }, [page]);
-   console.log(page);
    return (
       <div className={s.containerSlider}>
          <Pagination

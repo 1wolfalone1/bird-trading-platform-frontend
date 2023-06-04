@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
 import {
@@ -30,6 +30,13 @@ import LoginIcon from "../../../asset/icons/Login";
 import SignupIcon from "../../../asset/icons/Signup";
 import CartIcon from "./../../../asset/icons/Cart";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { totalItemsSelector } from "../../order/cartSlice";
+import { ToastContainer, toast } from "react-toastify";
+import { useRef } from "react";
+import { useState } from "react";
+import CartItemsPopper from "./../../../component/popper/cart-popper/CartItemsPopper";
+import GuestRightHeader from "./guestRightHeader/GuestRightHeader";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -41,30 +48,27 @@ const buttonStyle = {
    textTransform: "none",
 };
 
-const buttonLogin = {
-   textTransform: "none",
-   fontFamily: Style.font.$Secondary,
-   color: Style.color.$Dominant1,
-   fontSize: "2.4rem",
-   fontWeight: 100,
-   lineHeight: "100%",
-   padding: "1rem 2.4rem",
-   "&.MuiButton-outlined": {
-      border: "1px solid " + Style.color.$Dominant1,
-   },
-   borderRadius: 35,
-};
+
 
 export default function Header() {
    const navigate = useNavigate();
    const [age, setAge] = React.useState("10");
    const [value, setValue] = React.useState("1");
+   const totalCartItems = useSelector(totalItemsSelector);
+   const [iconCartClick, setIconCartClick] = useState(false);
+   const [isCartClick, setIsCartClick] = useState(false);
    const handleNavChange = (event, newValue) => {
       setValue(newValue);
+      notifyAddtoCart();
    };
+   const notifyAddtoCart = () =>
+      toast("Add to cart successfully!", {
+         position: toast.POSITION.BOTTOM_LEFT,
+      });
    const handleChange = (e) => {
       setAge(e.target.value);
    };
+
    return (
       <div className={s.container}>
          <div className={s.logo}>
@@ -152,31 +156,7 @@ export default function Header() {
                />
             </div>
          </div>
-         <div className={s.navRight}>
-            <Button
-               variant="outlined"
-               sx={buttonLogin}
-               onClick={() => {
-                  navigate("/login");
-               }}
-            >
-               Sign in <LoginIcon className={s.icon} />
-            </Button>
-            <Button
-               variant="outlined"
-               sx={buttonLogin}
-               onClick={() => {
-                  navigate("/signup");
-               }}
-            >
-               Sign up <SignupIcon className={s.icon} />
-            </Button>
-            <IconButton color="Dominant1">
-               <Badge badgeContent={20} color="Accent1" sx={{}} max={10} overlap="circular">
-                  <CartIcon className={s.cartIcon}/>
-               </Badge>
-            </IconButton>
-         </div>
+         <GuestRightHeader totalCartItems={totalCartItems}/>
       </div>
    );
 }
