@@ -40,6 +40,7 @@ const theme = createTheme({
     },
     Accent1: {
       main: "rgb(178, 223, 255)",
+      contrastText: "rgb(4, 0, 30)",
     },
   },
   overrides: {
