@@ -99,7 +99,7 @@ const theme = createTheme({
          },
       },
    },
-
+  }
 });
 export default function Layout() {
   return (
