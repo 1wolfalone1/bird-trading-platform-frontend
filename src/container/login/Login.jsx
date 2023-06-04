@@ -80,6 +80,7 @@ export default function Login() {
             });
             const data = await reposne.data;
             handleLoginResponseData(data);
+            console.log(data);
          } else {
             console.log(form.values);
          }
@@ -89,10 +90,9 @@ export default function Login() {
    };
 
    const handleLoginResponseData = (data) => {
-      if(data.status === 200) {
-         
+      if (data.status === 200) {
       }
-   }
+   };
 
    return (
       <div className={clsx(s.container)}>
@@ -156,13 +156,15 @@ export default function Login() {
                   content={"Sign in with Google"}
                   onClick={() => {}}
                />
-               <div className={clsx(s.helpGooleText)}>
-                  {loginGoogleStatus ? (
-                     ""
-                  ) : (
-                     <span>Sign in by Google failed! Try again</span>
-                  )}
-               </div>
+              
+                  <div className={clsx(s.helpGooleText)}>
+                     {loginGoogleStatus ? (
+                        ""
+                     ) : (
+                        <span>Sign in by Google failed! Try again</span>
+                     )}
+                  </div>
+             
             </div>
             <div className={clsx(s.linkBottom)}>
                Don't have an account yet?{" "}
