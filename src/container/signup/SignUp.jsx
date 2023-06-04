@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import s from "./signUp.module.scss";
-import React from "react";
+import React, { useState } from "react";
 import img from "../../asset/leftImgRegistration.jpg";
 import { Button, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
+import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
 
 const textFieldStyle = {
   input: {
@@ -19,13 +20,15 @@ const textFieldStyle = {
 
 const buttonRegisterStyle = {
   textTransform: "none",
-  fontSize: "2.4rem",
-  width: "80%",
-  borderRadius: "36px",
+  fontSize: "3rem",
+  width: "100%",
   padding: "1rem",
 };
 
 export default function SignUp() {
+  const [signUpWithGoogle, setSignUpWithGoogle] = useState();
+
+
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.imgLeft)}>
@@ -86,6 +89,16 @@ export default function SignUp() {
         <div className={clsx(s.separate)}>
           <span>Or</span>
         </div>
+        <div>
+               <ButtonGoogle content={"Sign up with Google"} />
+               <div className={clsx(s.helpGooleText)}>
+                  {signUpWithGoogle ? (
+                     ""
+                  ) : (
+                     <span>Sign in by Google failed! Try again</span>
+                  )}
+               </div>
+            </div>
         <div className={clsx(s.linkBottom)}>
           Already have an account?{" "}
           <Link to="/login" className={clsx(s.link)}>

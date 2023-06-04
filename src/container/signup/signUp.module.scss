@@ -28,7 +28,7 @@
     .title {
       font-family: c.$Secondary;
       font-weight: 400;
-      font-size: 8rem;
+      font-size: 7.2rem;
       padding: 3.3rem 0;
       color: #000000;
     }
@@ -39,15 +39,15 @@
       align-items: center;
       width: 100%;
       .inputText {
-        padding: 5.6rem 0 4rem 0;
+        padding: 1.6rem 0 4rem 0;
         display: flex;
         flex-direction: column;
-        width: 80%;
+        width: 70%;
         gap: 1.6rem;
       }
       .button {
         text-align: center;
-        width: 50%;
+        width: 70%;
       }
     }
   }
@@ -64,4 +64,12 @@
       text-decoration: none;
     }
   }
+  .helpGooleText {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: red;
+    font-size: 2rem;
+    padding: 10px;
+ } 
 }

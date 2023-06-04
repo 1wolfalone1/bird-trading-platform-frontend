@@ -18,7 +18,7 @@ const textFieldStyle = {
 };
 const buttonLoginStyle = {
    textTransform: "none",
-   fontSize: "2.4rem",
+   fontSize: "3.2rem",
    width: "80%",
 };
 export default function Login() {
