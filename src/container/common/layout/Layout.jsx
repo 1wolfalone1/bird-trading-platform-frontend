@@ -22,6 +22,7 @@ const theme = createTheme({
       },
       Dominant1: {
          main: "rgb(205, 255, 166)",
+         contrastText: '#1a1a1a'
       },
       Dominant2: {
          main: "rgb(228, 223, 209)",
@@ -40,6 +41,8 @@ const theme = createTheme({
       },
       Accent1: {
          main: "rgb(178, 223, 255)",
+         contrastText: "rgb(4, 0, 30)"
+
       },
    },
    overrides: {

@@ -2,12 +2,16 @@ import React from "react";
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
 import {
+   Badge,
+   Box,
    Button,
    FormControl,
    IconButton,
    InputBase,
    MenuItem,
    Select,
+   Tab,
+   Tabs,
    alpha,
 } from "@mui/material";
 import Style from "./../../../style/inline-style/style";
@@ -50,10 +54,14 @@ const buttonLogin = {
    },
    borderRadius: 35,
 };
+
 export default function Header() {
    const navigate = useNavigate();
    const [age, setAge] = React.useState("10");
-
+   const [value, setValue] = React.useState("1");
+   const handleNavChange = (event, newValue) => {
+      setValue(newValue);
+   };
    const handleChange = (e) => {
       setAge(e.target.value);
    };
@@ -63,29 +71,27 @@ export default function Header() {
             <img src={logo} alt="logo" />
          </div>
          <div className={s.navLeft}>
-            <div className={clsx(s.navCover, s.active)}>
-               <Button
-                  variant="text"
-                  sx={buttonStyle}
-                  size="small"
-                  onClick={() => {
-                     navigate("/");
+            <Box sx={{ width: "100%" }}>
+               <Tabs
+                  value={value}
+                  onChange={handleNavChange}
+                  aria-label="wrapped label tabs example"
+                  color="Dominant1"
+                  className={clsx(s.tabs)}
+                  TabIndicatorProps={{
+                     sx: {
+                        backgroundColor: Style.color.$Accent1,
+                     },
                   }}
                >
-                  Home
-               </Button>
-            </div>
-            <div className={s.navCover}>
-               <Button
-                  variant="text"
-                  sx={buttonStyle}
-                  onClick={() => {
-                     navigate("/products");
-                  }}
-               >
-                  Products
-               </Button>
-            </div>
+                  <Tab value="1" label="Home" onClick={() => navigate("/")} />
+                  <Tab
+                     value="2"
+                     label="Products"
+                     onClick={() => navigate("/products")}
+                  />
+               </Tabs>
+            </Box>
          </div>
          <div className={s.searchBar}>
             <input
@@ -129,9 +135,8 @@ export default function Header() {
                         color: Style.color.$Dominant1,
                      },
                   }}
-                  
                >
-                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }} >
+                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
                      Ten
                   </MenuItem>
                   <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
@@ -167,7 +172,9 @@ export default function Header() {
                Sign up <SignupIcon className={s.icon} />
             </Button>
             <IconButton color="Dominant1">
-               <CartIcon className={s.cartIcon} />
+               <Badge badgeContent={20} color="Accent1" sx={{}} max={10} overlap="circular">
+                  <CartIcon className={s.cartIcon}/>
+               </Badge>
             </IconButton>
          </div>
       </div>
