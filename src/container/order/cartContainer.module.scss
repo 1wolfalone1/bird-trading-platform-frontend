@@ -1,0 +1,210 @@
+@use "../style/" as c;
+$Dominant0: rgb(249 213 82);
+$overlay: rgba(0, 0, 0, 0.7);
+
+p {
+  font-family: c.$Secondary;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.birdList {
+  margin: 0 10rem;
+  .header {
+    font-family: c.$Secondary;
+    text-align: center;
+    font-size: 3rem;
+    margin: 2rem 0;
+    border-top: 3px solid c.$Complementary0;
+    border-bottom: 3px solid c.$Complementary0;
+    padding: 2rem 0;
+  }
+
+  .bird {
+    font-family: c.$Secondary;
+    text-align: center;
+    font-size: 2.5rem;
+    margin: 2rem 0;
+    .container {
+      background-color: c.$Complementary5;
+      color: $Dominant0;
+      margin: 3rem 0;
+      .item {
+        .productContainer {
+          display: flex;
+          align-items: flex-start;
+
+          img {
+            width: 16rem;
+            height: 16rem;
+            margin-right: 10rem;
+          }
+          .productInfo {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            .productShop {
+              margin-top: -4rem;
+            }
+            .productName {
+              margin-top: 1rem;
+            }
+          }
+        }
+      }
+
+      .stockItem {
+        padding: 6rem 0;
+      }
+
+      .priceItem {
+        padding: 6rem 0;
+      }
+
+      .quantityItem {
+        margin-top: 2.5rem;
+        button {
+          font-size: 5rem;
+        }
+      }
+
+      .totalPrice {
+        padding: 6rem 0;
+      }
+
+      .remove {
+        color: $Dominant0;
+        .removeButton:hover {
+          cursor: pointer;
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+.voucherContainer {
+  margin: 0 10rem;
+  Button {
+    border: 1px solid c.$Complementary0;
+    font-size: 2rem;
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+.totalOrders {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10rem;
+  .bill {
+    font-size: 3rem;
+  }
+  Button {
+    font-size: 2rem;
+    width: 16rem;
+    border: 2px solid c.$Complementary0;
+    margin-bottom: 5rem;
+    color: c.$Dominant4;
+    background-color: c.$Complementary0;
+  }
+
+  Button:hover {
+    color: c.$Accent7;
+    background-color: c.$Dominant5;
+  }
+}
+
+.modal {
+  background: c.$Dominant2;
+  border-radius: 0.1rem;
+  padding: 2rem 5rem;
+  position: relative;
+
+  .headerVoucher {
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+    .close {
+      color: c.$Complementary5;
+      cursor: pointer;
+      font-size: 7rem;
+      line-height: 0.5;
+      position: absolute;
+      right: 2.5rem;
+      top: 2.5rem;
+      margin-bottom: 3rem;
+      margin-top: 1rem;
+    }
+
+    .close:hover {
+      color: red;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 3rem;
+      font-weight: bold;
+    }
+  }
+
+  .voucherListContainer {
+    height: 60rem;
+    overflow-y: scroll;
+    .voucherList {
+      width: 60rem;
+      .containerItem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        box-sizing: border-box;
+        margin-left: 5%;
+        color: c.$Dominant5;
+        background-color: c.$Complementary4;
+        margin-bottom: 2.4rem;
+        .voucher {
+          padding: 1rem;
+          .voucherItem {
+            padding: 1rem;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            .voucherCode {
+              font-size: 2.4rem;
+              font-weight: 700;
+              color: c.$Dominant5;
+            }
+          }
+        }
+        .checkboxButton {
+          margin-right: 3rem;
+          color: c.$Dominant5;
+          svg {
+            font-size: 4rem;
+          }
+        }
+      }
+    }
+  }
+  .submitBtn {
+    padding: 1rem 3.6rem;
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-left: 45rem;
+    background-color: c.$Complementary4;
+    color: c.$Dominant5;
+    border: 1px solid c.$Complementary0;
+  }
+
+  .submitBtn:hover {
+    border: 1px solid c.$Complementary0;
+    background-color: c.$Dominant5;
+    color: c.$Complementary0;
+  }
+}
+
+:global(.addButton-overlay) {
+  background: $overlay;
+}
