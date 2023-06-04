@@ -25,11 +25,16 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      .navCover {
-         text-align: center;
-      }
-      .active {
-         border-bottom: 1px solid c.$Dominant1;
+      .tabs {
+         button {
+            color: c.$Dominant2;
+            font-size: 2rem;
+            padding: 2rem;
+            font-family: c.$Secondary;
+         }
+         :global(.Mui-selected) {
+            color: c.$Dominant1;
+         }
       }
    }
 
@@ -86,6 +91,9 @@
       display: flex;
       gap: 1rem;
       align-items: center;
+      :global(.MuiBadge-badge ){
+         font-size: 1.1rem !important;
+      }
       .icon {
          margin-left: 0.4rem;
          width: 3.2rem;
@@ -96,9 +104,9 @@
       .cartIcon {
          width: 4.8rem;
          height: 4.8rem;
-         
+
          circle,
-         path{
+         path {
             stroke: c.$Dominant5;
          }
       }

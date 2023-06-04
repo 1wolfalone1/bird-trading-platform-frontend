@@ -4,16 +4,17 @@ import React, { useId } from "react";
 import { Grid } from "swiper";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IconButton, Rating, Tooltip } from "@mui/material";
-import CartDown from "../../../../asset/icons/CartDown";
-import Details from "../../../../asset/icons/Details";
-import Style from "../../../../style/inline-style/style";
+import CartDown from "../../../asset/icons/CartDown";
+import Details from "../../../asset/icons/Details";
+import Style from "../../../style/inline-style/style";
+import { useDispatch } from "react-redux";
 const ratingCustomizer = {
    fontSize: "3.2rem",
    color: Style.color.$Dominant7,
 };
 export default function ProductCard({ product }) {
    const uuid = useId();
-
+   const dispatch = useDispatch();
    return (
       <div className={s.container}>
          <div className={s.image}>
