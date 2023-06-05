@@ -63,7 +63,7 @@ export default createSlice({
          });
    },
 });
-const suffixTopProduct = '/topproduct';
+const suffixTopProduct = '/top-product';
 export const getBirds = createAsyncThunk("home/getBirds", async () => {
    const response = await birdApi.get(suffixTopProduct);
    console.log(response.data, "data nee");
@@ -77,7 +77,7 @@ export const getFood = createAsyncThunk("home/getFood", async () => {
 export const getTopProducts = createAsyncThunk(
    "home/getTopProducts",
    async () => {
-      const response = await productAPI.get("/topproduct");
+      const response = await productAPI.get("/top-product");
       console.log(response.data, "data nee");
       return response.data;
    }
