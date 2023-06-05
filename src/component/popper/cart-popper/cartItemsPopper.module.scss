@@ -35,5 +35,20 @@
       backdrop-filter: blur(20.4px);
       -webkit-backdrop-filter: blur(20.4px);
       border: 1px solid rgba(22, 25, 36, 0.6);
+      overflow: hidden;
    }
+}
+.container {
+   max-height: 54rem;
+   position: relative;
+   overflow-y: scroll;
+}
+.button {
+   border-top: 1px solid c.$Accent1;
+   display: flex;
+   flex: 1;
+   width: 100%;
+   justify-content: center;
+   bottom: 0;
+  
 }

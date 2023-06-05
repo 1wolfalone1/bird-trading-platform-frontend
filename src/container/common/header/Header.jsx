@@ -1,18 +1,12 @@
-import React, { useEffect } from "react";
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
 import {
    Badge,
    Box,
-   Button,
-   FormControl,
-   IconButton,
-   InputBase,
    MenuItem,
    Select,
    Tab,
    Tabs,
-   alpha,
 } from "@mui/material";
 import Style from "./../../../style/inline-style/style";
 import clsx from "clsx";
@@ -21,22 +15,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
    faCartShopping,
    faMagnifyingGlass,
-   faRightToBracket,
-   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import LoginIcon from "../../../asset/icons/Login";
-import SignupIcon from "../../../asset/icons/Signup";
-import CartIcon from "./../../../asset/icons/Cart";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { totalItemsSelector } from "../../order/cartSlice";
-import { ToastContainer, toast } from "react-toastify";
-import { useRef } from "react";
+import { totalItemsSelector, userStatus } from "../../order/cartSlice";
+import GuestRightHeader from "./guest-right-header/GuestRightHeader";
+import { userInfoSelector } from "./../../../redux/global/userInfoSlice";
+import UserRightHeader from "./user-right-header/UserRightHeader";
+import { toast } from "react-toastify";
 import { useState } from "react";
-import CartItemsPopper from "./../../../component/popper/cart-popper/CartItemsPopper";
-import GuestRightHeader from "./guestRightHeader/GuestRightHeader";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -48,15 +36,14 @@ const buttonStyle = {
    textTransform: "none",
 };
 
-
-
 export default function Header() {
    const navigate = useNavigate();
-   const [age, setAge] = React.useState("10");
-   const [value, setValue] = React.useState("1");
+   const [age, setAge] = useState("10");
+   const [value, setValue] = useState("1");
    const totalCartItems = useSelector(totalItemsSelector);
-   const [iconCartClick, setIconCartClick] = useState(false);
-   const [isCartClick, setIsCartClick] = useState(false);
+
+   const user = useSelector(userInfoSelector);
+   console.log(user, "0ssssssssssssssssssssssssssssssss");
    const handleNavChange = (event, newValue) => {
       setValue(newValue);
       notifyAddtoCart();
@@ -68,7 +55,6 @@ export default function Header() {
    const handleChange = (e) => {
       setAge(e.target.value);
    };
-
    return (
       <div className={s.container}>
          <div className={s.logo}>
@@ -156,7 +142,11 @@ export default function Header() {
                />
             </div>
          </div>
-         <GuestRightHeader totalCartItems={totalCartItems}/>
+         {user.status === userStatus.USER ? (
+            <UserRightHeader user={user}  totalCartItems={totalCartItems} />
+         ) : (
+            <GuestRightHeader totalCartItems={totalCartItems} />
+         )}
       </div>
    );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import s from "./cartContainer.module.scss";
 import { Button } from "@mui/material";
@@ -6,7 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "reactjs-popup";
 import Voucher from "../../component/order/Voucher";
-import Style from '../../style/inline-style/style';
+import Style from "../../style/inline-style/style";
 const birdProducts = [
    {
       id: 1,
@@ -64,11 +64,13 @@ export default function Cart() {
          });
       });
    };
-
    let total = 0;
-   cart.map((item) => {
-      total += item.price * item.quantity;
-   });
+
+   useEffect(() => {
+      cart.map((item) => {
+         total += item.price * item.quantity;
+      });
+   }, []);
 
    return (
       <div>
@@ -165,9 +167,15 @@ export default function Cart() {
                         <input
                            value={item.quantity}
                            onChange={(e) => {
-                              return () =>{item.quantity = e.target.value}
+                              return () => {
+                                 item.quantity = e.target.value;
+                              };
                            }}
-                           style={{width: '2rem', fontSize: '2rem', color: 'white'}}
+                           style={{
+                              width: "2rem",
+                              fontSize: "2rem",
+                              color: "white",
+                           }}
                         />
                         <Button
                            onClick={() => handleIncrement(item.id)}

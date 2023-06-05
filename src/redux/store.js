@@ -7,7 +7,7 @@ import globalConfigSlice from "./global/globalConfigSlice";
 
 const store = configureStore({
    reducer: {
-      userInfo: userInfoSlice.reducer,
+      userInfoSlice: userInfoSlice.reducer,
       homeData: HomeSlice.reducer,
       productsPresentationData: productsPresentationSlice.reducer,
       cartSlice: cartSlice.reducer,
