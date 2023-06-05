@@ -17,13 +17,14 @@ import CartIcon from "../../../asset/icons/Cart";
 import { getListItemSelector } from "../../../container/order/cartSlice";
 import { useSelector } from "react-redux";
 import CartItemInPopper from "./cartItemInPopper/CartItemInPopper";
+import { useNavigate } from "react-router-dom";
 export default function CartItemsPopper({ totalCartItems }) {
    const [anchorEl, setAnchorEl] = useState();
    const cartItems = useSelector(getListItemSelector);
    const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
    };
-
+   const navigate = useNavigate();
    const handleClose = () => {
       setAnchorEl(null);
    };
@@ -55,7 +56,6 @@ export default function CartItemsPopper({ totalCartItems }) {
             onClose={handleClose}
             disableScrollLock={true}
             placement="bottom"
-            margintopThreshold={10}
             className={clsx(s.popover)}
          >
             {cartItems.length !== 0 ? (
@@ -73,7 +73,15 @@ export default function CartItemsPopper({ totalCartItems }) {
                         </div>
                      </div>
                      <div className={s.button}>
-                        <Button sx={{ fontSize: "3rem" }} color="Accent1" fullWidth>
+                        <Button
+                           sx={{ fontSize: "3rem" }}
+                           color="Accent1"
+                           fullWidth
+                           onClick={() => {
+                              navigate("/cart");
+                              handleClose();
+                           }}
+                        >
                            Order now
                         </Button>
                      </div>

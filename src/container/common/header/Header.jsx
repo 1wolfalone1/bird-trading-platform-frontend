@@ -43,7 +43,6 @@ export default function Header() {
    const totalCartItems = useSelector(totalItemsSelector);
 
    const user = useSelector(userInfoSelector);
-   console.log(user, "0ssssssssssssssssssssssssssssssss");
    const handleNavChange = (event, newValue) => {
       setValue(newValue);
       notifyAddtoCart();
