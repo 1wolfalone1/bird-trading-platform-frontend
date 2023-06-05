@@ -5,10 +5,15 @@ import img from "../../asset/leftImagLogin.jpg";
 import { Button, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import ButtonGoogle from "./../../component/buttonGoogle/ButtonGoogle";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { authenticateAPI } from "../../api/server/AuthenticatonAPI";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import userInfoSlice from "../../redux/global/userInfoSlice";
+import { userStatus } from "../order/cartSlice";
+import { api } from './../../api/server/API';
 
 const textFieldStyle = {
    input: {
@@ -46,7 +51,9 @@ export default function Login() {
    const [loginGoogleStatus, setLoginGoogleStatus] = useState();
    const [userName, setUserName] = useState("");
    const [password, setPassword] = useState("");
-
+   const params = new URLSearchParams(window.location.search); // id=123
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
    const form = useFormik({
       initialValues: {
          email: "",
@@ -60,7 +67,20 @@ export default function Login() {
       validateOnChange: true,
       validateOnBlur: true,
    });
-
+   useEffect(() => {
+      let token = params.get("token");
+      let error = params.get("error");
+      if (token) {
+         console.log(token);
+         dispatch(userInfoSlice.actions.changeAuthentication({
+            status: userStatus.USER,
+         }))
+         navigate("/");
+      } else if (error) {
+         navigate("/login");
+         setLoginGoogleStatus("You already have local account!!!");
+      }
+   }, []);
    const handleLogin = async () => {
       try {
          console.log(userName, password);
@@ -73,27 +93,43 @@ export default function Login() {
             true
          );
          if (form.isValid) {
-            console.log(form.values);
-            const reposne = await authenticateAPI.post("", {
+
+            const resposne = await authenticateAPI.post("", {
                email: form.values.email,
                password: form.values.password,
             });
-            const data = await reposne.data;
-            handleLoginResponseData(data);
-            console.log(data);
+            console.log(resposne)
+            const data = await resposne.data;
+            console.log(data, '2')
+
+            handleLoginResponseData(data, resposne.status);
          } else {
-            console.log(form.values);
          }
       } catch (err) {
          console.log(err);
       }
    };
 
-   const handleLoginResponseData = (data) => {
-      if (data.status === 200) {
+   const handleLoginResponseData = (data, status) => {
+      console.log(data, '111');
+      if (status === 200) {
+         localStorage.setItem("token", JSON.stringify(data.token));
+         dispatch(userInfoSlice.actions.changeAuthentication({
+            status: userStatus.USER,
+            info: data.userInfo
+         }))
+         callCookies();
       }
    };
-
+   const callCookies = async() => {
+      try {
+         const response = await api.get('/users/get-cookie')
+         const data = await response.data;
+         console.log(data);
+      } catch (e) {
+         console.error(e);
+      }
+   }
    return (
       <div className={clsx(s.container)}>
          <div className={clsx(s.imgLeft)}>
@@ -156,15 +192,10 @@ export default function Login() {
                   content={"Sign in with Google"}
                   onClick={() => {}}
                />
-              
-                  <div className={clsx(s.helpGooleText)}>
-                     {loginGoogleStatus ? (
-                        ""
-                     ) : (
-                        <span>Sign in by Google failed! Try again</span>
-                     )}
-                  </div>
-             
+
+               <div className={clsx(s.helpGooleText)}>
+                  {loginGoogleStatus ? <span>{loginGoogleStatus}</span> : ""}
+               </div>
             </div>
             <div className={clsx(s.linkBottom)}>
                Don't have an account yet?{" "}

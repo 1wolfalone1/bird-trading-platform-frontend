@@ -1,13 +1,18 @@
 @use "../../../style/" as c;
 
 .container {
-   padding: 1rem;
+   transition: 0.3s linear;
    display: flex;
-   align-items: center;
+   margin: 1rem 0;
+   align-items: stretch;
    justify-content: space-between;
    position: relative;
    gap: 1rem;
    max-width: 70rem;
+   &:hover {
+      background-color: rgba(49, 49, 49, 0.331);
+      cursor: pointer;
+   }
    .image {
       width: 10rem;
       img {
@@ -17,7 +22,11 @@
    .content {
       display: flex;
       flex: 1;
+      padding: 1rem;
       .left {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
          font-size: 2rem;
          color: rgb(190, 190, 190);
          .productName {

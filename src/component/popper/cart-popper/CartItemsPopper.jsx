@@ -1,6 +1,7 @@
 import {
    Badge,
    Box,
+   Button,
    Fade,
    IconButton,
    Popover,
@@ -29,7 +30,6 @@ export default function CartItemsPopper({ totalCartItems }) {
 
    const open = Boolean(anchorEl);
    const id = open ? "simple-popover" : undefined;
-   console.log(cartItems);
    return (
       <>
          <IconButton
@@ -55,22 +55,30 @@ export default function CartItemsPopper({ totalCartItems }) {
             onClose={handleClose}
             disableScrollLock={true}
             placement="bottom"
-            marginTopThreshold={10}
+            margintopThreshold={10}
             className={clsx(s.popover)}
-            
          >
             {cartItems.length !== 0 ? (
                <>
-               <div className={s.titleCartItem}>
-                  <span>Your cart</span>
-                  <div></div>
-               </div>
-               <div className={s.itemContainer}>
-                  {cartItems.map((item) => (
-                     <CartItemInPopper item={item} key={item.id} />
-                     ))}
-               </div>
-                     </>
+                  <div>
+                     <div className={s.container}>
+                        <div className={s.titleCartItem}>
+                           <span>Your cart</span>
+                           <div></div>
+                        </div>
+                        <div className={s.itemContainer}>
+                           {cartItems.map((item) => (
+                              <CartItemInPopper item={item} key={item.id} />
+                           ))}
+                        </div>
+                     </div>
+                     <div className={s.button}>
+                        <Button sx={{ fontSize: "3rem" }} color="Accent1" fullWidth>
+                           Order now
+                        </Button>
+                     </div>
+                  </div>
+               </>
             ) : (
                ""
             )}

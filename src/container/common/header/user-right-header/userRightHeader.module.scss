@@ -1,0 +1,59 @@
+@use "../../../style/" as c;
+
+$container-height: calc(c.$h-header - 3rem);
+.container {
+   display: flex;
+   .userControl {
+      padding: 0;
+      display: flex;
+      box-sizing: border-box;
+      align-items: center;
+      border: 1px solid #c5ff49;
+      border-top-left-radius: $container-height;
+      border-top-right-radius: $container-height;
+      border-bottom-right-radius: $container-height;
+      border-bottom-left-radius: $container-height;
+      height: $container-height;
+      max-width: 40rem;
+      &:hover {
+         cursor: pointer;
+      }
+      .avatar {
+         width: $container-height;
+         img {
+            border-radius: 100%;
+            width: $container-height;
+            height: $container-height;
+         }
+      }
+      .userName {
+         display: flex;
+         align-items: center;
+         span {
+            margin: 0 1rem;
+            color: c.$Dominant1;
+            font-family: c.$Primary;
+            font-weight: 400;
+            font-size: 2.4rem;
+            line-height: 2.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         }
+      }
+   }
+  
+}
+.iconMenu{
+   width: 3rem;
+   height: 3rem;
+}

@@ -10,7 +10,6 @@ import BirdHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import { homeDataStatus } from "../../../container/home/HomeSlice";
 export default function HomeProductSlider({ products, title }) {
-   console.log(products, '1----------------------')
    return (
       <>
          {products.status === homeDataStatus.FULFILLED ? (

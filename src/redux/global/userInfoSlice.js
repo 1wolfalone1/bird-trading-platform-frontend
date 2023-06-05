@@ -8,8 +8,7 @@ export const userStatus = {
    SHOP_STAFF: 3,
    ADMIN: 4,
 }
-
-export default createSlice({
+const userInfoSlice = createSlice({
    name: "productState",
    initialState: {
       status: userStatus.GUEST,
@@ -24,3 +23,6 @@ export default createSlice({
       },
    },
 });
+export default userInfoSlice;
+
+export const userInfoSelector = state => state.userInfoSlice;
