@@ -5,7 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Style from "../../../../style/inline-style/style";
 import CartItemsPopper from "../../../../component/popper/cart-popper/CartItemsPopper";
 import { motion } from "framer-motion";
-import { Box, Menu, MenuItem, Typography } from "@mui/material";
+import { Box, Divider, Menu, MenuItem, Typography } from "@mui/material";
 import { useState } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ const menuItemStyle = {
 const typoItemMenu = {
    fontSize: "2.4rem",
    fontWeight: "1",
+   color: Style.color.$Accent1,
 };
 export default function UserRightHeader({ user, totalCartItems }) {
    const [isActive, setIsActive] = React.useState(false);
@@ -117,12 +118,14 @@ export default function UserRightHeader({ user, totalCartItems }) {
                      />
                   </Box>
                </MenuItem>
+               <Divider className={clsx(s.divider)} />
                <MenuItem onClick={handleClose("/shop")}>
                   <Box sx={menuItemStyle}>
                      <Typography sx={typoItemMenu}>Your shop</Typography>
                      <FontAwesomeIcon icon={faShop} className={s.iconMenu} />
                   </Box>
                </MenuItem>
+               <Divider className={clsx(s.divider)} />
                <MenuItem onClick={handleClose("/logout")}>
                   <Box sx={menuItemStyle}>
                      <Typography sx={typoItemMenu}>Logout</Typography>

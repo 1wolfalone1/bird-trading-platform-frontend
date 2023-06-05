@@ -5,11 +5,11 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import cartSlice from "../../../../container/order/cartSlice";
-export default function CartItemInPopper({ item }) {
+export default function CartItemInPopper({ item, className }) {
    console.log(item);
    const dispatch = useDispatch();
    return (
-      <div className={clsx(s.container)}>
+      <div className={clsx(s.container, className)}>
          <div className={s.image}>
             <img src={item.imgUrl} alt="" />
          </div>

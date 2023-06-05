@@ -67,9 +67,24 @@ export default function CartItemsPopper({ totalCartItems }) {
                            <div></div>
                         </div>
                         <div className={s.itemContainer}>
-                           {cartItems.map((item) => (
-                              <CartItemInPopper item={item} key={item.id} />
-                           ))}
+                           {cartItems.map((item, i) => {
+                              return (
+                                 <>
+                                    {i === 0 ? (
+                                       <CartItemInPopper
+                                          item={item}
+                                          key={item.id}
+                                       />
+                                    ) : (
+                                       <CartItemInPopper
+                                          item={item}
+                                          key={item.id}
+                                          className={s.divider}
+                                       />
+                                    )}
+                                 </>
+                              );
+                           })}
                         </div>
                      </div>
                      <div className={s.button}>
