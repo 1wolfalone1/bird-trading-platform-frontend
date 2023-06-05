@@ -2,8 +2,8 @@
 
 .container {
    transition: 0.3s linear;
+   box-sizing: border-box;
    display: flex;
-   margin: 1rem 0;
    align-items: stretch;
    justify-content: space-between;
    position: relative;

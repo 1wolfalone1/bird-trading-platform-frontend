@@ -20,18 +20,17 @@ body {
   min-height: 100vh;
 }
 // -------------------------------------------------
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+.MuiList-root.MuiList-padding.MuiMenu-list {
   /* From https://css.glass */
   background: rgba(36, 36, 36, 0.65) !important;
   /* From https://css.glass */
   background: rgba(0, 83, 70, 0.47);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(6.7px);
   -webkit-backdrop-filter: blur(6.7px);
   border: 1px solid rgba(0, 83, 70, 0.49);
 }
-.css-1ka5eyc-MuiPaper-root-MuiMenu-paper-MuiPopover-paper {
+.MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
   color: c.$Dominant1 !important;
 }
 .MuiButtonBase-root.MuiMenuItem-root:hover {
@@ -40,6 +39,9 @@ body {
 .MuiMenuItem-root.Mui-selected {
   background-color: rgba(42, 69, 58, 0.542) !important;
 
+}
+.MuiPaper-root.MuiMenu-paper.MuiPopover-paper{ 
+  background-color: #55555500 !important;
 }
 // -----------------------------------
 code {
