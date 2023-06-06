@@ -7,6 +7,7 @@ import "./style/fontLoader.scss";
 import Login from "./container/login/Login";
 import Profile from "./container/profile/Profile";
 import CartContainer from "./container/order/CartContainer";
+import Checkout from "./container/checkout/Checkout";
 import ProductPageRoute from "./routes/ProductPageRoute";
 import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
@@ -51,6 +52,7 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="cart" element={<CartContainer />} />
             <Route path="product/:id" element={<ProductDetails/>}/>
+               <Route path="checkout" element={<Checkout />} />
          </Route>
       </Routes>
    );

@@ -1,0 +1,66 @@
+@use "../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+.container {
+  background-color: c.$Dominant3;
+  margin: 2rem 12rem 2rem 1.5rem;
+  padding: 2rem;
+  @include fsw;
+  font-family: c.$Secondary;
+
+  .title {
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid c.$Complementary0;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    font-size: 2.2rem;
+    margin-top: 2rem;
+    padding: 0 2rem;
+    .subtotal {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .delivery {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+    .promotion {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      // border-bottom: 0.1rem solid c.$Complementary0;
+    }
+  }
+  .total {
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 2rem;
+    margin-top: 1rem;
+    color: c.$Accent7;
+    border-top: 0.1rem solid c.$Complementary0;
+    font-weight: 900;
+  }
+  .orderButton {
+    display: flex;
+    justify-content: end;
+    Button {
+      border: 0.1rem solid c.$Complementary0;
+      font-size: 1.8rem;
+      padding: 0.8rem 3rem;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@use "../../../style/" as c;
+
+@mixin fsf($fz: 2rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-weight: $fw;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem !important;
+  @include fsf(2.4rem);
+  background-color: c.$Dominant4;
+  .voucher {
+    display: flex;
+    align-items: center;
+    border-right: 0.2rem solid c.$Complementary0;
+    .voucherImage {
+      margin-right: 2rem;
+      img {
+        width: 5rem;
+        height: 5rem;
+        margin-left: 2rem;
+      }
+    }
+  }
+  .reduce {
+    font-size: 2rem;
+  }
+}

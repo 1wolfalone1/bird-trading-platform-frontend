@@ -16,41 +16,41 @@ import { userStatus } from "../order/cartSlice";
 import { api } from './../../api/server/API';
 
 const textFieldStyle = {
-   input: {
-      color: Style.color.$Complementary0,
-      fontSize: "2.4rem",
-      fontFamily: Style.font.$Primary,
-   },
-   label: {
-      fontSize: "2.4rem",
-   },
+  input: {
+    color: Style.color.$Complementary0,
+    fontSize: "2.4rem",
+    fontFamily: Style.font.$Primary,
+  },
+  label: {
+    fontSize: "2.4rem",
+  },
 };
 const buttonLoginStyle = {
-   textTransform: "none",
-   fontSize: "3.2rem",
-   width: "80%",
+  textTransform: "none",
+  fontSize: "3.2rem",
+  width: "80%",
 };
 const formHelperText = {
-   style: {
-      fontSize: "1.6rem",
-      color: "red",
-      marginLeft: "0px",
-   },
+  style: {
+    fontSize: "1.6rem",
+    color: "red",
+    marginLeft: "0px",
+  },
 };
 const validationSchema = yup.object({
-   email: yup
-      .string("")
-      .email("Enter a valid email address")
-      .required("Email is required!"),
-   password: yup
-      .string("")
-      .min(8, "Password must be at least 8 characters!")
-      .required("Password is required!"),
+  email: yup
+    .string("")
+    .email("Enter a valid email address")
+    .required("Email is required!"),
+  password: yup
+    .string("")
+    .min(8, "Password must be at least 8 characters!")
+    .required("Password is required!"),
 });
 export default function Login() {
-   const [loginGoogleStatus, setLoginGoogleStatus] = useState();
-   const [userName, setUserName] = useState("");
-   const [password, setPassword] = useState("");
+  const [loginGoogleStatus, setLoginGoogleStatus] = useState();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
 
    const params = new URLSearchParams(window.location.search); // id=123
    const navigate = useNavigate();
@@ -109,7 +109,8 @@ export default function Login() {
       } catch (err) {
          console.log(err);
       }
-   };
+  };
+
 
    const handleLoginResponseData = (data, status) => {
       console.log(data, '111');
@@ -209,5 +210,6 @@ export default function Login() {
             </div>
          </div>
       </div>
-   );
+    </div>
+  );
 }

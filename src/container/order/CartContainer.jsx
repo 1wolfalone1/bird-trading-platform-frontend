@@ -163,6 +163,7 @@ export default function Cart() {
                               {item.discountedPrice}$
                            </Grid>
 
+
                            <Grid
                               margin={0}
                               sm={2}
