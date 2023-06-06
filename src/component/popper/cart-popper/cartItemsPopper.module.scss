@@ -56,3 +56,11 @@
 .divider {
    border-top: 1px solid c.$Accent5;
 }
+
+.emptyCart {
+   width: 50rem;
+   h1{ 
+      margin-bottom: 0;
+      color: c.$Accent1;
+   }
+}

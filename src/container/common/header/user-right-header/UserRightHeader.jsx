@@ -15,6 +15,8 @@ import {
    faShop,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import userInfoSlice, { logout } from "../../../../redux/global/userInfoSlice";
 
 const menuItemStyle = {
    width: "20rem",
@@ -30,9 +32,13 @@ const typoItemMenu = {
 export default function UserRightHeader({ user, totalCartItems }) {
    const [isActive, setIsActive] = React.useState(false);
    const [anchorEl, setAnchorEl] = useState(null);
+   const dispatch = useDispatch();
    const open = Boolean(anchorEl);
-   const handleClick = (event) => {};
    const navigate = useNavigate();
+   const handleLogout = () => {
+         dispatch(logout());
+         setAnchorEl(null);
+   };
    const handleClose = (link) => {
       return () => {
          setIsActive(!isActive);
@@ -126,7 +132,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
                   </Box>
                </MenuItem>
                <Divider className={clsx(s.divider)} />
-               <MenuItem onClick={handleClose("/logout")}>
+               <MenuItem onClick={handleLogout}>
                   <Box sx={menuItemStyle}>
                      <Typography sx={typoItemMenu}>Logout</Typography>
                      <FontAwesomeIcon

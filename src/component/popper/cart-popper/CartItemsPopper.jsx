@@ -8,7 +8,7 @@ import {
    Popper,
    Typography,
 } from "@mui/material";
-import React from "react";
+import React, { Fragment } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import s from "./cartItemsPopper.module.scss";
@@ -18,7 +18,7 @@ import { getListItemSelector } from "../../../container/order/cartSlice";
 import { useSelector } from "react-redux";
 import CartItemInPopper from "./cartItemInPopper/CartItemInPopper";
 import { useNavigate } from "react-router-dom";
-export default function CartItemsPopper({ totalCartItems }) {
+export default function CartItemsPopper({ totalCartItems,setValue }) {
    const [anchorEl, setAnchorEl] = useState();
    const cartItems = useSelector(getListItemSelector);
    const handleClick = (event) => {
@@ -69,20 +69,20 @@ export default function CartItemsPopper({ totalCartItems }) {
                         <div className={s.itemContainer}>
                            {cartItems.map((item, i) => {
                               return (
-                                 <>
+                                 <Fragment  key={item.id+ i}>
                                     {i === 0 ? (
                                        <CartItemInPopper
                                           item={item}
-                                          key={item.id}
+                                          key={item.id+ i}
                                        />
                                     ) : (
                                        <CartItemInPopper
                                           item={item}
-                                          key={item.id}
+                                          key={item.id + i + 1}
                                           className={s.divider}
                                        />
                                     )}
-                                 </>
+                                 </Fragment>
                               );
                            })}
                         </div>
@@ -103,7 +103,10 @@ export default function CartItemsPopper({ totalCartItems }) {
                   </div>
                </>
             ) : (
-               ""
+               <div className={s.emptyCart}>
+                  <h1>Your cart is empty</h1>
+                  <img src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/image/empty-cart2.svg" alt="" />
+               </div>
             )}
          </Popover>
       </>

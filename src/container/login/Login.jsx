@@ -51,6 +51,7 @@ export default function Login() {
    const [loginGoogleStatus, setLoginGoogleStatus] = useState();
    const [userName, setUserName] = useState("");
    const [password, setPassword] = useState("");
+
    const params = new URLSearchParams(window.location.search); // id=123
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -119,6 +120,9 @@ export default function Login() {
             info: data.userInfo
          }))
          callCookies();
+         navigate('/products');
+      } else if (status === 404) {
+         
       }
    };
    const callCookies = async() => {
@@ -127,7 +131,6 @@ export default function Login() {
          const data = await response.data;
          console.log(data);
       } catch (e) {
-         console.log("11111111111111");
          console.error(e);
       }
    }

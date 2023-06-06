@@ -5,6 +5,16 @@ import App from "./App";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import store from "./redux/store";
+import axios from "axios";
+
+axios.interceptors.response.use(response => {
+   console.log(response);
+   // Edit response config
+   return response;
+}, error => {
+   console.log(error);
+   return Promise.reject(error);
+});
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
    <React.StrictMode>
