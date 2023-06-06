@@ -1,0 +1,18 @@
+@use "../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+.vouchers {
+  background-color: c.$Dominant3;
+  margin: 4rem 12rem 4rem 1.5rem;
+  padding: 2rem;
+  .title {
+    font-family: c.$Secondary;
+    @include fsw;
+    border-bottom: 0.1rem solid c.$Complementary0;
+    padding-bottom: 1rem;
+  }
+}

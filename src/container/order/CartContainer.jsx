@@ -79,22 +79,22 @@ export default function Cart() {
       <Grid className={clsx(s.birdList)}>
         <Grid className={clsx(s.header)}>
           <Grid container columns={9}>
-            <Grid item sm={3} md={3} xl={3} className={clsx(s.item)}>
+            <Grid sm={3} md={3} xl={3} className={clsx(s.item)}>
               Item
             </Grid>
-            <Grid item sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
+            <Grid sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
               In Stock
             </Grid>
-            <Grid item sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
+            <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
               Price
             </Grid>
-            <Grid item sm={2} md={2} xl={2} className={clsx(s.quantityItem)}>
+            <Grid sm={2} md={2} xl={2} className={clsx(s.quantityItem)}>
               Quantity
             </Grid>
-            <Grid item sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
+            <Grid sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
               Total
             </Grid>
-            <Grid item sm={1} md={1} xl={1} className={clsx(s.remove)}>
+            <Grid sm={1} md={1} xl={1} className={clsx(s.remove)}>
               Remove
             </Grid>
           </Grid>
@@ -108,7 +108,7 @@ export default function Cart() {
               key={item.id}
               className={clsx(s.container)}
             >
-              <Grid item sm={3} md={3} xl={3} className={clsx(s.item)}>
+              <Grid sm={3} md={3} xl={3} className={clsx(s.item)}>
                 <div className={clsx(s.productContainer)}>
                   <img src={item.image} alt={item.name} />
                   <div className={clsx(s.productInfo)}>
@@ -121,14 +121,14 @@ export default function Cart() {
                   </div>
                 </div>
               </Grid>
-              <Grid item sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
+              <Grid sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
                 {item.stock}
               </Grid>
-              <Grid item sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
+              <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
                 {item.price}$
               </Grid>
 
-              <Grid item sm={2} md={2} xl={2} className={clsx(s.quantityItem)}>
+              <Grid sm={2} md={2} xl={2} className={clsx(s.quantityItem)}>
                 <Button
                   onClick={() => handleDecrement(item.id)}
                   disabled={item.quantity <= 1}
@@ -143,10 +143,10 @@ export default function Cart() {
                   +
                 </Button>
               </Grid>
-              <Grid item sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
+              <Grid sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
                 {item.price * item.quantity}$
               </Grid>
-              <Grid item sm={1} md={1} xl={1} className={clsx(s.remove)}>
+              <Grid sm={1} md={1} xl={1} className={clsx(s.remove)}>
                 <div className={clsx(s.removeButton)}>
                   <DeleteIcon
                     sx={{ fontSize: "6rem", marginTop: "4rem" }}

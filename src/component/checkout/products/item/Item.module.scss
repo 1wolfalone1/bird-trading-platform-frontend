@@ -1,0 +1,57 @@
+@use "../../../style/" as c;
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-weight: $fw;
+}
+
+.container {
+  @include fsf(2.4rem);
+  background-color: c.$Dominant4;
+  margin: 1rem 3rem !important;
+  max-height: 17.5rem;
+  .productImage {
+    img {
+      width: 17.5rem;
+      height: 17.5rem;
+    }
+  }
+  .productInfo {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    justify-content: center;
+    .shop {
+      display: flex;
+      align-items: flex-start;
+      // justify-content: space-between;
+      .shopImage {
+        margin-right: 2rem;
+        img {
+          width: 6rem;
+          height: 6rem;
+          border-radius: 50%;
+        }
+      }
+      .shopName {
+        font-size: 2rem;
+        margin: auto 0;
+      }
+    }
+  }
+  .productPrice {
+    font-size: 2rem;
+    margin: auto 0;
+
+    .price {
+      margin-left: 4rem;
+    }
+    .sale {
+    }
+  }
+}
