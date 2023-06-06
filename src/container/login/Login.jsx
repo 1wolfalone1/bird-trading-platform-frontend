@@ -49,8 +49,6 @@ const validationSchema = yup.object({
 });
 export default function Login() {
   const [loginGoogleStatus, setLoginGoogleStatus] = useState();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
 
    const params = new URLSearchParams(window.location.search); // id=123
    const navigate = useNavigate();
@@ -84,7 +82,6 @@ export default function Login() {
    }, []);
    const handleLogin = async () => {
       try {
-         console.log(userName, password);
          const e = await form.validateForm(form.values);
          form.setTouched(
             {
@@ -209,7 +206,6 @@ export default function Login() {
                </Link>
             </div>
          </div>
-      </div>
     </div>
   );
 }
