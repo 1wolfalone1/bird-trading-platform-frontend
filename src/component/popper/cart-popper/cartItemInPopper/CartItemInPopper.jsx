@@ -24,7 +24,7 @@ export default function CartItemInPopper({ item, className }) {
             </div>
             <div className={s.right}>
                <div className={s.price}>
-                  ${item.price} x {item.quantity}
+                  ${item.discountedPrice} x {item.cartQuantity}
                </div>
                <div className={s.remove}>
                   <IconButton color="Accent1"sx={{fontSize: '3rem'}} onClick={()=> {

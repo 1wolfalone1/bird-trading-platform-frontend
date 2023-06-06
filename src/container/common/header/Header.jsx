@@ -1,13 +1,6 @@
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
-import {
-   Badge,
-   Box,
-   MenuItem,
-   Select,
-   Tab,
-   Tabs,
-} from "@mui/material";
+import { Badge, Box, Button, MenuItem, Select, Tab, Tabs } from "@mui/material";
 import Style from "./../../../style/inline-style/style";
 import clsx from "clsx";
 import styled from "@emotion/styled";
@@ -17,14 +10,22 @@ import {
    faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { totalItemsSelector, userStatus } from "../../order/cartSlice";
 import GuestRightHeader from "./guest-right-header/GuestRightHeader";
 import { userInfoSelector } from "./../../../redux/global/userInfoSlice";
 import UserRightHeader from "./user-right-header/UserRightHeader";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import { birdApi } from "../../../api/server/products/BirdsAPI";
+import globalConfigSlice, {
+   navigateValueSelector,
+} from "../../../redux/global/globalConfigSlice";
+import { Suspense } from "react";
+import { api } from "./../../../api/server/API";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -37,20 +38,26 @@ const buttonStyle = {
 };
 
 export default function Header() {
+   const location = useLocation();
    const navigate = useNavigate();
+   const value = useSelector(navigateValueSelector);
    const [age, setAge] = useState("10");
-   const [value, setValue] = useState("1");
    const totalCartItems = useSelector(totalItemsSelector);
-
+   const dispatch = useDispatch();
+   useEffect(() => {
+      if (
+         window.location.pathname !== "/" &&
+         !window.location.pathname.toString().startsWith("/products")
+      ) {
+         dispatch(globalConfigSlice.actions.changeNavigateValue(3));
+      }
+   }, [location]);
+   useEffect(() => {
+      const response = birdApi.get("/pages/1");
+   }, []);
    const user = useSelector(userInfoSelector);
-   const handleNavChange = (event, newValue) => {
-      setValue(newValue);
-      notifyAddtoCart();
-   };
-   const notifyAddtoCart = () =>
-      toast("Add to cart successfully!", {
-         position: toast.POSITION.BOTTOM_LEFT,
-      });
+   const handleNavChange = (event, newValue) => {};
+
    const handleChange = (e) => {
       setAge(e.target.value);
    };
@@ -73,12 +80,13 @@ export default function Header() {
                      },
                   }}
                >
-                  <Tab value="1" label="Home" onClick={() => navigate("/")} />
+                  <Tab value={1} label="Home" onClick={() => navigate("/")} />
                   <Tab
-                     value="2"
+                     value={2}
                      label="Products"
                      onClick={() => navigate("/products")}
                   />
+                  <Tab value={3} label="" className={clsx(s.tabnone)} />
                </Tabs>
             </Box>
          </div>
@@ -142,10 +150,30 @@ export default function Header() {
             </div>
          </div>
          {user.status === userStatus.USER ? (
-            <UserRightHeader user={user}  totalCartItems={totalCartItems} />
+            <UserRightHeader user={user} totalCartItems={totalCartItems} />
          ) : (
             <GuestRightHeader totalCartItems={totalCartItems} />
          )}
+         {/* {
+            <Button
+               onClick={() => {
+                  const a = async () => {
+                    try {
+                     const res = await api.get("users", {
+                        params: { id: [1, 2, 3, 4, 5] },
+                     });
+                     const data = await res.data;
+                     console.log(data);
+                    }catch (err) {
+                     console.log(err);
+                    }
+                  };
+                  a();
+               }}
+            >
+               asdfasdfasdf
+            </Button>
+         } */}
       </div>
    );
 }

@@ -29,7 +29,9 @@ p {
     .container {
       background-color: c.$Complementary5;
       color: c.$Dominant2;
-      margin: 3rem 0;
+      margin: 1rem 0;
+      display: flex;
+      box-sizing: border-box !important;
       .item {
         .productContainer {
           display: flex;
@@ -55,22 +57,25 @@ p {
       }
 
       .stockItem {
-        padding: 6rem 0;
+        margin: auto 0;
       }
 
       .priceItem {
-        padding: 6rem 0;
+        margin: auto 0;
       }
 
       .quantityItem {
-        margin-top: 2.5rem;
+        margin: auto 0;
+        align-items: center;
+  
         button {
           font-size: 5rem;
         }
       }
 
       .totalPrice {
-        padding: 6rem 0;
+        margin: auto 0;
+
       }
 
       .remove {
@@ -85,14 +90,26 @@ p {
 }
 
 .voucherContainer {
+  display: flex;
   margin: 0 10rem;
+  
   Button {
     border: 1px solid c.$Complementary0;
     font-size: 2rem;
     a {
       text-decoration: none;
     }
+    flex-shrink: 0;
   }
+  .listVoucher {
+/* Firefox */
+    padding: 1rem;
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+  }
+
 }
 
 .totalOrders {
@@ -101,6 +118,8 @@ p {
   align-items: flex-end;
   margin-right: 10rem;
   .bill {
+    border-top: 2px solid rgb(25, 25, 25);
+    padding-top: 1rem;
     font-size: 3rem;
   }
   Button {
@@ -207,4 +226,11 @@ p {
 
 :global(.addButton-overlay) {
   background: $overlay;
+}
+.emptyCart {
+  width: 50%;
+  margin: 0 auto;
+  h1 {
+    margin-bottom: 0;
+  }
 }

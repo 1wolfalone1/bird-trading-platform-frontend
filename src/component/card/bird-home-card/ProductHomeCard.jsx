@@ -1,16 +1,18 @@
 import { Rating } from "@mui/material";
 import s from "./productHomeCard.module.scss";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductHomeCard({ product }) {
    const [value, setValue] = useState(2);
+   const navigate = useNavigate();
    return (
-      <div className={s.container} onClick={() => console.log("123123123123")}>
+      <div className={s.container} onClick={() => navigate(`/product/${product.id}`)}>
          <div className={s.img}>
             <img src={product.imgUrl} alt="" />
             <div className={s.floatContent}>
                <div className={s.price}>
-                  <span>{product.quantity}$</span>
+                  <span>{product.discountedPrice}$</span>
                </div>
                <div className={s.saleOff}>
                   <span>20% off</span>

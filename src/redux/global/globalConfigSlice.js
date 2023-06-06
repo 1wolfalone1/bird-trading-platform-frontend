@@ -20,10 +20,14 @@ const globalConfigSlice = createSlice({
             theme: "dark"
          }
       },
+      navigateValue: 1
    },
    reducers: {
       changeToastStyle: (state, action) => {
          state.toastStyle.name = action.payload;
+      },
+      changeNavigateValue: (state, action) => {
+         state.navigateValue = action.payload;
       },
    },
 });
@@ -32,3 +36,4 @@ export default globalConfigSlice;
 export const toastStyleSelector = state => state.globalConfigSlice.toastStyle;
 
 
+export const navigateValueSelector = state => state.globalConfigSlice.navigateValue;
