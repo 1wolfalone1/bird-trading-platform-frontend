@@ -1,0 +1,60 @@
+@use "../../../style/" as c;
+
+.container {
+   transition: 0.3s linear;
+   box-sizing: border-box;
+   display: flex;
+   align-items: stretch;
+   justify-content: space-between;
+   position: relative;
+   gap: 1rem;
+   max-width: 70rem;
+   &:hover {
+      background-color: rgba(49, 49, 49, 0.331);
+      cursor: pointer;
+   }
+   .image {
+      width: 10rem;
+      img {
+         width: 100%;
+      }
+   }
+   .content {
+      display: flex;
+      flex: 1;
+      padding: 1rem;
+      .left {
+         display: flex;
+         flex-direction: column;
+         justify-content: space-between;
+         font-size: 2rem;
+         color: rgb(190, 190, 190);
+         .productName {
+            display: -webkit-box;
+            color: c.$Dominant5;
+
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            font-size: 2.4rem;
+         }
+      }
+      .right {
+         margin-left: auto;
+         display: flex;
+         align-items: end;
+         flex-shrink: 0;
+         .remove {
+            position: absolute;
+            top: 0;
+            right: 0;
+         }
+         .price {
+            font-size: 2.4rem;
+            color: c.$Dominant2;
+         }
+      }
+   }
+}

@@ -1,0 +1,66 @@
+@use "../../style/" as c;
+
+.cartIcon {
+   width: 4.8rem;
+   height: 4.8rem;
+
+   circle,
+   path {
+      stroke: c.$Dominant5;
+   }
+}
+
+.itemContainer {
+   
+}
+.titleCartItem {
+   text-align: center;
+   span{
+      font-size: 3rem;
+      color: c.$Dominant2;
+   }
+   div {
+      margin: 0.2rem auto;
+      height: 0.1rem;
+      background-color: c.$Accent1;
+      width: 80%;
+   }
+}
+.popover {
+   :global(.MuiPaper-root) {
+      margin-top: 70px;
+      /* From https://css.glass */
+      background: rgba(21, 24, 34, 0.59);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(20.4px);
+      -webkit-backdrop-filter: blur(20.4px);
+      border: 1px solid rgba(22, 25, 36, 0.6);
+      overflow: hidden;
+   }
+}
+.container {
+   max-height: 54rem;
+   position: relative;
+   overflow-y: scroll;
+}
+.button {
+   border-top: 1px solid c.$Accent1;
+   display: flex;
+   flex: 1;
+   width: 100%;
+   justify-content: center;
+   bottom: 0;
+  
+}
+
+.divider {
+   border-top: 1px solid c.$Accent5;
+}
+
+.emptyCart {
+   width: 50rem;
+   h1{ 
+      margin-bottom: 0;
+      color: c.$Accent1;
+   }
+}

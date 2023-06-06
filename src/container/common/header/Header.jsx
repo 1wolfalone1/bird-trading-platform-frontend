@@ -1,19 +1,6 @@
-import React from "react";
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
-import {
-   Badge,
-   Box,
-   Button,
-   FormControl,
-   IconButton,
-   InputBase,
-   MenuItem,
-   Select,
-   Tab,
-   Tabs,
-   alpha,
-} from "@mui/material";
+import { Badge, Box, Button, MenuItem, Select, Tab, Tabs } from "@mui/material";
 import Style from "./../../../style/inline-style/style";
 import clsx from "clsx";
 import styled from "@emotion/styled";
@@ -21,15 +8,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
    faCartShopping,
    faMagnifyingGlass,
-   faRightToBracket,
-   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import LoginIcon from "../../../asset/icons/Login";
-import SignupIcon from "../../../asset/icons/Signup";
-import CartIcon from "./../../../asset/icons/Cart";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { totalItemsSelector, userStatus } from "../../order/cartSlice";
+import GuestRightHeader from "./guest-right-header/GuestRightHeader";
+import { userInfoSelector } from "./../../../redux/global/userInfoSlice";
+import UserRightHeader from "./user-right-header/UserRightHeader";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import { birdApi } from "../../../api/server/products/BirdsAPI";
+import globalConfigSlice, {
+   navigateValueSelector,
+} from "../../../redux/global/globalConfigSlice";
+import { Suspense } from "react";
+import { api } from "./../../../api/server/API";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -41,27 +37,27 @@ const buttonStyle = {
    textTransform: "none",
 };
 
-const buttonLogin = {
-   textTransform: "none",
-   fontFamily: Style.font.$Secondary,
-   color: Style.color.$Dominant1,
-   fontSize: "2.4rem",
-   fontWeight: 100,
-   lineHeight: "100%",
-   padding: "1rem 2.4rem",
-   "&.MuiButton-outlined": {
-      border: "1px solid " + Style.color.$Dominant1,
-   },
-   borderRadius: 35,
-};
-
 export default function Header() {
+   const location = useLocation();
    const navigate = useNavigate();
-   const [age, setAge] = React.useState("10");
-   const [value, setValue] = React.useState("1");
-   const handleNavChange = (event, newValue) => {
-      setValue(newValue);
-   };
+   const value = useSelector(navigateValueSelector);
+   const [age, setAge] = useState("10");
+   const totalCartItems = useSelector(totalItemsSelector);
+   const dispatch = useDispatch();
+   useEffect(() => {
+      if (
+         window.location.pathname !== "/" &&
+         !window.location.pathname.toString().startsWith("/products")
+      ) {
+         dispatch(globalConfigSlice.actions.changeNavigateValue(3));
+      }
+   }, [location]);
+   useEffect(() => {
+      const response = birdApi.get("/pages/1");
+   }, []);
+   const user = useSelector(userInfoSelector);
+   const handleNavChange = (event, newValue) => {};
+
    const handleChange = (e) => {
       setAge(e.target.value);
    };
@@ -84,12 +80,13 @@ export default function Header() {
                      },
                   }}
                >
-                  <Tab value="1" label="Home" onClick={() => navigate("/")} />
+                  <Tab value={1} label="Home" onClick={() => navigate("/")} />
                   <Tab
-                     value="2"
+                     value={2}
                      label="Products"
                      onClick={() => navigate("/products")}
                   />
+                  <Tab value={3} label="" className={clsx(s.tabnone)} />
                </Tabs>
             </Box>
          </div>
@@ -152,31 +149,31 @@ export default function Header() {
                />
             </div>
          </div>
-         <div className={s.navRight}>
+         {user.status === userStatus.USER ? (
+            <UserRightHeader user={user} totalCartItems={totalCartItems} />
+         ) : (
+            <GuestRightHeader totalCartItems={totalCartItems} />
+         )}
+         {/* {
             <Button
-               variant="outlined"
-               sx={buttonLogin}
                onClick={() => {
-                  navigate("/login");
+                  const a = async () => {
+                    try {
+                     const res = await api.get("users", {
+                        params: { id: [1, 2, 3, 4, 5] },
+                     });
+                     const data = await res.data;
+                     console.log(data);
+                    }catch (err) {
+                     console.log(err);
+                    }
+                  };
+                  a();
                }}
             >
-               Sign in <LoginIcon className={s.icon} />
+               asdfasdfasdf
             </Button>
-            <Button
-               variant="outlined"
-               sx={buttonLogin}
-               onClick={() => {
-                  navigate("/signup");
-               }}
-            >
-               Sign up <SignupIcon className={s.icon} />
-            </Button>
-            <IconButton color="Dominant1">
-               <Badge badgeContent={20} color="Accent1" sx={{}} max={10} overlap="circular">
-                  <CartIcon className={s.cartIcon}/>
-               </Badge>
-            </IconButton>
-         </div>
+         } */}
       </div>
    );
 }

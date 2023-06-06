@@ -63,22 +63,19 @@ export default createSlice({
          });
    },
 });
-const suffixTopProduct = '/topproduct';
+const suffixTopProduct = '/top-product';
 export const getBirds = createAsyncThunk("home/getBirds", async () => {
    const response = await birdApi.get(suffixTopProduct);
-   console.log(response.data, "data nee");
    return response.data;
 });
 export const getFood = createAsyncThunk("home/getFood", async () => {
    const response = await foodAPI.get(suffixTopProduct);
-   console.log(response.data, "data nee");
    return response.data;
 });
 export const getTopProducts = createAsyncThunk(
    "home/getTopProducts",
    async () => {
-      const response = await productAPI.get("/topproduct");
-      console.log(response.data, "data nee");
+      const response = await productAPI.get("/top-product");
       return response.data;
    }
 );
@@ -86,7 +83,6 @@ export const getAccessories = createAsyncThunk(
    "home/getAccessories",
    async () => {
       const response = await accessoriesAPI.get(suffixTopProduct);
-      console.log(response.data, "data nee");
       return response.data;
    }
 );

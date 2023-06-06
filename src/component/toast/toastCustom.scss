@@ -1,0 +1,26 @@
+.default {
+   & > .Toastify__toast {
+      background-color: #00000000;
+
+      background: rgba(41, 41, 41, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(0.3rem);
+      -webkit-backdrop-filter: blur(0.3rem);
+      border: 1px solid rgba(0, 12, 36, 0.3);
+   }
+}
+
+.add-to-cart {
+   margin-top: 8rem;
+   & > .Toastify__toast {
+      background-color: #00000000;
+      background: rgba(41, 41, 41, 0.7);
+      border-radius: 10px;
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(0.3rem);
+      -webkit-backdrop-filter: blur(0.3rem);
+      border: 1px solid rgba(0, 12, 36, 0.3);
+      
+   }
+}

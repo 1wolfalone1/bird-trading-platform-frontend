@@ -10,7 +10,6 @@ import BirdHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import { homeDataStatus } from "../../../container/home/HomeSlice";
 export default function HomeProductSlider({ products, title }) {
-   console.log(products, '1----------------------')
    return (
       <>
          {products.status === homeDataStatus.FULFILLED ? (
@@ -23,8 +22,8 @@ export default function HomeProductSlider({ products, title }) {
                   slidesPerView={4.5}
                   modules={[Thumbs]}
                   watchSlidesProgress
-                  onSlideChange={() => console.log("slide change")}
-                  onSwiper={(swiper) => console.log(swiper)}
+                  onSlideChange={() => {}}
+                  onSwiper={(swiper) => {}}
                >
                   {products.data.map((product) => (
                      <SwiperSlide key={product.id}>

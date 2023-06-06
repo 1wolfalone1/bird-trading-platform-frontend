@@ -83,14 +83,11 @@ export const slidePage = createAsyncThunk(
    "products/slide-page",
    async (page, { getState }) => {
       const state = getState();
-      console.log(
-         `/${state.productsPresentationData.typeProduct}/pages/${page}`
-      );
+  
       const res = await api.get(
          `/${state.productsPresentationData.typeProduct}/pages/${page}`
       );
 
-      console.log(res);
       const data = await res.data;
       return data;
    }

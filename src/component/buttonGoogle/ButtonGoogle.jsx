@@ -6,9 +6,11 @@ import RippleButton from "../button/ripple-button/RippleButton";
 
 export default function ButtonGoogle({ content, onClick }) {
    return (
-      <RippleButton onClick={onClick} className={clsx(s.buttonContainer)}>
+      <a href="https://thongtienthienphuot.shop/oauth2/authorize/google?redirect_uri=http://localhost:3000/login" alt="dsfafasdfasdf" >
+         <RippleButton onClick={onClick} className={clsx(s.buttonContainer)}>
             <span>{content}</span>
             <img src={googleLogo} alt="" />
-      </RippleButton>
+         </RippleButton>
+      </a>
    );
 }

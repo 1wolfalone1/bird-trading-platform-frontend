@@ -1,0 +1,16 @@
+@use '../../../style/' as c;
+
+.navRight {
+   display: flex;
+   gap: 1rem;
+   align-items: center;
+  
+   .icon {
+      margin-left: 0.4rem;
+      width: 3.2rem;
+      path {
+         fill: c.$Accent2;
+      }
+   }
+  
+}
