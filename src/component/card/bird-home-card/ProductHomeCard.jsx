@@ -7,15 +7,23 @@ export default function ProductHomeCard({ product }) {
    const [value, setValue] = useState(2);
    const navigate = useNavigate();
    return (
-      <div className={s.container} onClick={() => navigate(`/product/${product.id}`)}>
+      <div
+         className={s.container}
+         onClick={() => navigate(`/product/${product.id}`)}
+      >
          <div className={s.img}>
             <img src={product.imgUrl} alt="" />
             <div className={s.floatContent}>
                <div className={s.price}>
-                  <span>{product.discountedPrice}$</span>
+                  <span>
+                     <span style={{ textDecoration: "line-through", color: '#70ab75' }}>
+                        {product.price}$
+                     </span>{" "}
+                     {product.discountedPrice}$
+                  </span>
                </div>
                <div className={s.saleOff}>
-                  <span>20% off</span>
+                  <span>{(product.discountRate * 100).toFixed(0)}%</span>
                </div>
             </div>
          </div>
@@ -23,7 +31,7 @@ export default function ProductHomeCard({ product }) {
             <div className={s.name} title={product.name}>
                <span>{product.name}</span>
             </div>
-            
+
             <div className={s.shop}>
                <div className={s.shopAvatar}>
                   <img src={product.imgUrl} alt="" />

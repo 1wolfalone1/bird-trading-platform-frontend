@@ -42,7 +42,7 @@ export default function ProductCard({ product }) {
                   <span>
                      {product.discountedPrice}$
                      {product.discountRate ? (
-                        <>({product.discountRate}% off)</>
+                        <> - {(product.discountRate * 100).toFixed(0)}% off</>
                      ) : (
                         ""
                      )}

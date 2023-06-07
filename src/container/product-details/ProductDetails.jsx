@@ -74,13 +74,13 @@ export default function ProductDetails() {
                               {product.product.discountRate !== 0 ? (
                                  <>
                                     <span className={s.oldPrice}>
-                                       {product.price}$
+                                       {product.product.price}$
                                     </span>
                                     <span className={s.disPrice}>
                                        {product.product.discountedPrice}$
                                     </span>
                                     <span className={s.discount}>
-                                       {product.product.discountRate}%
+                                       {(product.product.discountRate * 100).toFixed(0)}%
                                     </span>
                                  </>
                               ) : (

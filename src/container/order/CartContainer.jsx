@@ -16,6 +16,7 @@ import cartSlice, {
 } from "./cartSlice";
 import DiscountIcon from "@mui/icons-material/Discount";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useNavigate } from "react-router-dom";
 const birdProducts = [
    {
       id: 1,
@@ -51,6 +52,7 @@ export default function Cart() {
    const dispatch = useDispatch();
    const total = useSelector(totalPriceSelector);
    const carts = useSelector(getListItemSelector);
+   const navigate = useNavigate();
    console.log(carts, "--------------------------------------");
 
    const handleChangeQuantity = (item) => {
@@ -286,7 +288,7 @@ export default function Cart() {
                </div>
                <div className={clsx(s.totalOrders)}>
                   <p className={clsx(s.bill)}>Total orders: {total}$</p>
-                  <Button>Order now</Button>
+                  <Button onClick={() => navigate('/checkout')}>Order now</Button>
                </div>
             </div>
          ) : (
