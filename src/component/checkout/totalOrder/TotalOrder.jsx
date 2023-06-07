@@ -3,7 +3,7 @@ import clsx from "clsx";
 import s from "./TotalOrder.module.scss";
 import { Button } from "@mui/material";
 import Popup from "reactjs-popup";
-import OrderBill from "../OrderBill";
+import OrderBill from "../orderBill/OrderBill";
 
 export default function TotalOrder() {
   const totalOrder = {
@@ -38,7 +38,7 @@ export default function TotalOrder() {
         </div>
         <div className={clsx(s.orderButton)}>
           <Popup className="addButton" modal trigger={<Button>Order</Button>}>
-            {(bill) => <OrderBill bill={bill} />}
+            {(close) => <OrderBill close={close} />}
           </Popup>
         </div>
       </div>

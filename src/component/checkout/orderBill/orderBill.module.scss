@@ -1,0 +1,89 @@
+@use "../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+.container {
+  background-color: c.$Dominant3;
+  padding: 5rem;
+  width: 100%;
+  @include fsf(2.4rem);
+  .header {
+    margin-bottom: 5rem;
+    margin-top: 0.5rem;
+    button {
+      color: c.$Complementary0;
+      cursor: pointer;
+      font-size: 7rem;
+      line-height: 0.9;
+      position: absolute;
+      right: 2.5rem;
+      top: 2.5rem;
+    }
+
+    button:hover {
+      color: red;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 3.6rem;
+      font-weight: 900;
+    }
+  }
+
+  .headerContainer {
+    padding: 0 2rem;
+    border-bottom: 0.1rem solid c.$Complementary0;
+    .headerContent {
+      margin-bottom: 2rem;
+      max-width: 90%;
+      .headerName {
+      }
+      .headerPrice {
+      }
+      .headerDiscount {
+      }
+    }
+  }
+  .billContainer {
+    padding: 0 2rem 2rem 2rem;
+    .billInfo {
+      .bill {
+        margin-top: 2rem;
+        max-width: 90%;
+        .name {
+        }
+        .price {
+        }
+        .discount {
+        }
+      }
+    }
+  }
+  .total {
+    // display: flex;
+    // justify-content: center;
+    font-size: 3rem;
+    border-top: 0.1rem solid c.$Complementary0;
+    padding: 2rem;
+    font-weight: 900;
+  }
+  .submitBtn {
+    display: flex;
+    justify-content: space-around;
+    Button {
+      // margin-top: 2rem;
+      font-size: 1.6rem;
+      padding: 0.6rem 2rem;
+      border: 0.1rem solid c.$Complementary0;
+    }
+  }
+}

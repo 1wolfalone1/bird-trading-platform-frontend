@@ -5,11 +5,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 export default function PaymentMethod(props) {
   const { id, image, method, discount, children } = props;
-  const [selectedMethodId, setSelectedMethodId] = useState(null);
-
-  const handleMethodChange = (event) => {
-    setSelectedMethodId(event.target.value);
-  };
 
   return (
     <Fragment>
