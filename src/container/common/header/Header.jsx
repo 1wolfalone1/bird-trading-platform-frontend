@@ -154,26 +154,30 @@ export default function Header() {
          ) : (
             <GuestRightHeader totalCartItems={totalCartItems} />
          )}
-         {/* {
-            <Button
-               onClick={() => {
-                  const a = async () => {
-                    try {
-                     const res = await api.get("users", {
-                        params: { id: [1, 2, 3, 4, 5] },
-                     });
-                     const data = await res.data;
-                     console.log(data);
-                    }catch (err) {
-                     console.log(err);
-                    }
-                  };
-                  a();
-               }}
-            >
-               asdfasdfasdf
-            </Button>
-         } */}
+         {
+            // <Button
+            //    onClick={() => {
+            //       const a = async () => {
+            //          try {
+            //             const id = [1, 2, 3, 4, 5];
+
+            //             const res = await api.get("/products/id", {
+            //                params: {
+            //                   id: [1, 2, 3, 4, 5, 7, 8],
+            //                }
+            //             });
+            //             const data = await res.data;
+            //             console.log(data);
+            //          } catch (err) {
+            //             console.log(err);
+            //          }
+            //       };
+            //       a();
+            //    }}
+            // >
+            //    asdfasdfasdf
+            // </Button>
+         }
       </div>
    );
 }

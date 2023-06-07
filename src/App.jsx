@@ -24,6 +24,7 @@ function App() {
    useEffect(() => {
       const cartObject = JSON.parse(localStorage.getItem("cart"));
       const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(cartObject);
       if (cartObject) {
          dispatch(cartSlice.actions.invokeCart(cartObject));
       }
@@ -32,6 +33,7 @@ function App() {
       }
    }, []);
    useEffect(() => {
+      
       if (cart.items !== null && cart.items.length > 0) {
          localStorage.setItem("cart", JSON.stringify(cart));
       }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./ServerConfig.js";
-import QueryString from "qs";
+import qs  from "qs";
 
 export const api = axios.create({
    baseURL: `${BASE_URL}`,
@@ -9,9 +9,7 @@ export const api = axios.create({
       "Access-Control-Allow-Origin": "*",
    },
 });
-// api.config.paramsSerializer = p => {
-//    return QueryString.stringify(p, {arrayFormat: 'brackets'})
-//  }
+api.defaults.paramsSerializer = params => qs.stringify(params, {arrayFormat: 'repeat'})
 api.interceptors.request.use(
    (config) => {
       if (!config.headers.Authorization) {
