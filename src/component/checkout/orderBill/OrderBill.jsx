@@ -49,9 +49,11 @@ export default function OrderBill({ close }) {
     <div className={clsx(s.container)}>
       <div className={clsx(s.header)}>
         <div className={clsx(s.title)}>Your bill</div>
-        <button onClick={close}>&times;</button>
+        <div className={clsx(s.closeButton)}>
+          <button onClick={close}>&times;</button>
+        </div>
       </div>
-      <Grid className={clsx(s.headerContainer)}>
+      <div className={clsx(s.headerContainer)}>
         <Grid container columns={12} className={clsx(s.headerContent)}>
           <Grid sm={8} md={8} xl={8} className={clsx(s.headerName)}>
             Product Name
@@ -59,11 +61,11 @@ export default function OrderBill({ close }) {
           <Grid sm={2} md={2} xl={2} className={clsx(s.headerPrice)}>
             Price
           </Grid>
-          <Grid sm={2} md={2} xl={2} className={clsx(s.headerDiscount)}>
+          <Grid sm={1} md={1} xl={1} className={clsx(s.headerDiscount)}>
             Discount
           </Grid>
         </Grid>
-      </Grid>
+      </div>
       <div className={clsx(s.billContainer)}>
         {bill.map((item) => (
           <Grid className={clsx(s.billInfo)}>
@@ -75,7 +77,7 @@ export default function OrderBill({ close }) {
                 {item.price}$
               </Grid>
               <Grid sm={1} md={1} xl={1} className={clsx(s.discount)}>
-                {item.discount}$(discount)
+                {item.discount}$
               </Grid>
             </Grid>
           </Grid>
@@ -83,7 +85,7 @@ export default function OrderBill({ close }) {
       </div>
       <div className={clsx(s.total)}>Total bill: {totalPrice}$</div>
       <div className={clsx(s.submitBtn)}>
-        <Button onClick={handleSubmitBtn}>Done</Button>
+        <Button onClick={handleSubmitBtn}>Place Order</Button>
       </div>
     </div>
   );

@@ -20,24 +20,28 @@ export default function TotalOrder() {
         <div className={clsx(s.title)}>Total Order</div>
         <div className={clsx(s.content)}>
           <div className={clsx(s.subtotal)}>
-            <div>Total amount of goods </div>
+            <div>Merchandise Subtotal: </div>
             <div>{totalOrder.subtotal}$</div>
           </div>
           <div className={clsx(s.delivery)}>
-            <div>Transport fee </div>
+            <div>Shipping Total: </div>
             <div>{totalOrder.delivery}$</div>
           </div>
           <div className={clsx(s.promotion)}>
-            <div>Promotion </div>
+            <div>Promotion: </div>
             <div>{totalOrder.promotion}$</div>
           </div>
         </div>
         <div className={clsx(s.total)}>
-          <div>Total payment</div>
+          <div>Total payment: </div>
           <div>{totalPrice}$</div>
         </div>
         <div className={clsx(s.orderButton)}>
-          <Popup className="addButton" modal trigger={<Button>Order</Button>}>
+          <Popup
+            className="addButton"
+            modal
+            trigger={<Button>Checkout</Button>}
+          >
             {(close) => <OrderBill close={close} />}
           </Popup>
         </div>

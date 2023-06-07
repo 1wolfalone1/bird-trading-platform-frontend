@@ -11,31 +11,22 @@
 }
 
 .container {
-  @include fsf(2.4rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 !important;
   background-color: c.$Dominant4;
-  margin: 1rem 3rem 0rem !important;
-  max-height: 14rem;
   .methodImage {
-    margin-top: 1rem;
     text-align: center;
     img {
-      width: 10rem;
-      height: 10rem;
+      width: 5rem;
+      height: 5rem;
     }
   }
-
   .methodName {
-    margin: auto 0;
+    @include fsf(2rem);
   }
 
-  .methodDiscount {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .discount {
-      font-size: 2rem;
-    }
-  }
   .buttonContainer {
     display: flex;
     align-items: center;
