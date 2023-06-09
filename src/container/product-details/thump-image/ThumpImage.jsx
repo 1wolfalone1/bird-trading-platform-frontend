@@ -31,8 +31,8 @@ export default function App({ images }) {
             modules={[FreeMode, Navigation, Thumbs]}
             className="mySwiper2"
          >
-            {images.map((image) => (
-               <SwiperSlide>
+            {images.map((image, i) => (
+               <SwiperSlide key={i}>
                   <img src={image} alt="" />
                </SwiperSlide>
             ))}
@@ -65,8 +65,8 @@ export default function App({ images }) {
             modules={[FreeMode, Navigation, Thumbs]}
             className="mySwiper"
          >
-            {images.map((image) => (
-               <SwiperSlide>
+            {images.map((image, i) => (
+               <SwiperSlide key={i}>
                   <img src={image} alt="" />
                </SwiperSlide>
             ))}

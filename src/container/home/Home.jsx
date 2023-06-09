@@ -24,11 +24,13 @@ export default function Home() {
    const food = useSelector(getFoodSelector);
    const topProduct = useSelector(getTopProductsSelector);
    const accessories = useSelector(getAccessoriesSelector);
+
    useEffect(() => {
       dispatch(getBirds());
       dispatch(getFood());
       dispatch(getAccessories());
       dispatch(getTopProducts());
+      console.log('asdfasfasf')
       dispatch(globalConfigSlice.actions.changeNavigateValue(1))
    }, []);
 

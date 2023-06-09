@@ -25,6 +25,7 @@ import Popup from "reactjs-popup";
 import OutlineInputCustom from "../input/outlinedInput/OutlineInputCustom";
 import ButtonControl from "./ButtonControl";
 import UpStar from "../../asset/icons/UpStar";
+import { api } from "../../api/server/API";
 
 const ratingCustomizer = {
    fontSize: "3.2rem",
