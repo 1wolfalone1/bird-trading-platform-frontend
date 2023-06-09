@@ -48,9 +48,7 @@ export default ({ close }) => {
       <div className={clsx(s.modal)}>
          <div className={clsx(s.headerVoucher)}>
             <div className={clsx(s.title)}>Select Vouchers</div>
-         
          </div>
-
          <div className={clsx(s.voucherListContainer)}>
             <Stack className={clsx(s.voucherList)}>
                {vouchers.map((item) => (

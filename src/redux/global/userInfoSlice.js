@@ -29,8 +29,7 @@ const userInfoSlice = createSlice({
 export default userInfoSlice;
 
 export const logout = createAsyncThunk("userInfo/logout", async () => {
-   // const res = await birdApi.get("/pages/1");
-   // const data = await res.data;
+
    const data = 0;
    localStorage.removeItem("userInfo");
    return data;

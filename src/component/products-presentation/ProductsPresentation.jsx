@@ -19,7 +19,7 @@ export default function ProductsPresentation() {
       k();
    }, []);
    return (
-      <div className={s.container}>
+      <div className={s.container}>``
          <Products products={data} />
          <ProductsSlider pageNumber={page} />
       </div>

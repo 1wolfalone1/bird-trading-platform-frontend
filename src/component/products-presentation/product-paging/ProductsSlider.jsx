@@ -1,24 +1,28 @@
 import { Pagination } from "@mui/material";
 import s from "./productsSlider.module.scss";
 import React, { useEffect } from "react";
-import { slidePage } from "../productsPresentationSlice";
-import { useDispatch } from "react-redux";
+import { pageSelector, slidePage } from "../productsPresentationSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function ProductsSlider({ pageNumber = 10 }) {
-   const [page, setPage] = React.useState(1);
-
+   const page = useSelector(pageSelector);
+   const [currentPage, setCurrentPage] = useState(1);
    const dispatch = useDispatch();
+   console.log(pageNumber, 'pagenumber -------------------------')
    const handleChange = (event, value) => {
-      setPage(value);
+      console.log(value);
+      dispatch(slidePage(value));
+      setCurrentPage(value);
    };
 
    useEffect(() => {
-      dispatch(slidePage(page));
+      console.log(page, '-------------page');
    }, [page]);
    return (
       <div className={s.containerSlider}>
          <Pagination
-            count={pageNumber}
+            count={page}
             showFirstButton
             showLastButton
             shape="rounded"
@@ -26,7 +30,7 @@ export default function ProductsSlider({ pageNumber = 10 }) {
             sx={{}}
             variant="outlined"
             color="Dominant0"
-            page={page}
+            page={currentPage}
             onChange={handleChange}
             
          />

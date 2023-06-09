@@ -17,6 +17,8 @@ import cartSlice, {
 import DiscountIcon from "@mui/icons-material/Discount";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useNavigate } from "react-router-dom";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 const birdProducts = [
    {
       id: 1,
@@ -54,7 +56,6 @@ export default function Cart() {
    const carts = useSelector(getListItemSelector);
    const navigate = useNavigate();
    console.log(carts, "--------------------------------------");
-
    const handleChangeQuantity = (item) => {
       return (e) => {
          dispatch(
@@ -140,7 +141,7 @@ export default function Cart() {
                                  <img src={item.imgUrl} alt={item.name} />
                                  <div className={clsx(s.productInfo)}>
                                     <div className={clsx(s.productName)}>
-                                       <h3>{item.shopOwner.shopName}</h3>
+                                       <h3>{item?.shopOwner?.shopName}</h3>
                                     </div>
                                     <div className={clsx(s.productShop)}>
                                        <h3>{item.name}</h3>
@@ -165,7 +166,6 @@ export default function Cart() {
                               {item.discountedPrice}$
                            </Grid>
 
-
                            <Grid
                               margin={0}
                               sm={2}
@@ -173,21 +173,28 @@ export default function Cart() {
                               xl={2}
                               className={clsx(s.quantityItem)}
                            >
-                              <div>
+                              <div
+                                 style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                 }}
+                              >
                                  <IconButton
+                                    
                                     onClick={() => {
                                        dispatch(
                                           cartSlice.actions.changeQuantity({
                                              ...item,
                                              cartQuantity:
-                                                item.cartQuantity - 1,
+                                                +item.cartQuantity - 1,
                                           })
                                        );
                                     }}
-                                    disabled={item.quantity <= 1}
+                                    disabled={item.cartQuantity <= 1}
                                     color="Dominant1"
                                  >
-                                    -
+                                    <RemoveCircleOutlineIcon sx={{ fontSize: "4rem", color: "#b3f684" }}/>
                                  </IconButton>
                                  <TextField
                                     value={item.cartQuantity}
@@ -195,29 +202,40 @@ export default function Cart() {
                                     sx={{
                                        input: {
                                           width: "3rem",
+                                          height: "2rem",
                                           fontSize: "2.4rem",
-                                          color: "white",
+                                          color: "#b3f684",
                                        },
                                     }}
                                  />
                                  <IconButton
+                                   
                                     onClick={() => {
                                        dispatch(
                                           cartSlice.actions.changeQuantity({
                                              ...item,
                                              cartQuantity:
-                                                item.cartQuantity + 1,
+                                                +item.cartQuantity + 1,
                                           })
                                        );
                                     }}
-                                    disabled={item.quantity >= item.stock}
+                                    disabled={
+                                       item.cartQuantity >= item.quantity
+                                    }
                                     color="Dominant1"
                                  >
-                                    +
+                                    <AddCircleOutlineIcon  sx={{ fontSize: "4rem", color: "#b3f684" }}/>
                                  </IconButton>
                               </div>
                               <div>
-                                 <span>asdfasdfasdfs</span>
+                                 <span
+                                    style={{
+                                       fontSize: "1.6rem",
+                                       color: "#490000",
+                                    }}
+                                 >
+                                    {item.notValidMessage}
+                                 </span>
                               </div>
                            </Grid>
                            <Grid
@@ -288,7 +306,9 @@ export default function Cart() {
                </div>
                <div className={clsx(s.totalOrders)}>
                   <p className={clsx(s.bill)}>Total orders: {total}$</p>
-                  <Button onClick={() => navigate('/checkout')}>Order now</Button>
+                  <Button onClick={() => navigate("/checkout")}>
+                     Order now
+                  </Button>
                </div>
             </div>
          ) : (

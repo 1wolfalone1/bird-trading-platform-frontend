@@ -97,10 +97,10 @@ export const changeTypeProduct = createAsyncThunk(
    "products/change-type",
    async (type, thunkAPI) => {
       thunkAPI.dispatch(productsPresentationSlices.actions.chagePageState(type));
-      const res = await api.get(
-         `/${type}/pages/1`
-      );
+      const res = await api.get(`/${type}/pages/1`);
       const data = await res.data;
       return data;
    }
 );
+
+export const pageSelector = state => state.productsPresentationData.products.page

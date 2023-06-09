@@ -25,7 +25,7 @@ import globalConfigSlice, {
    navigateValueSelector,
 } from "../../../redux/global/globalConfigSlice";
 import { Suspense } from "react";
-import { api } from "./../../../api/server/API";
+import { api } from "../../../api/server/API";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -52,9 +52,7 @@ export default function Header() {
          dispatch(globalConfigSlice.actions.changeNavigateValue(3));
       }
    }, [location]);
-   useEffect(() => {
-      const response = birdApi.get("/pages/1");
-   }, []);
+   
    const user = useSelector(userInfoSelector);
    const handleNavChange = (event, newValue) => {};
 
@@ -154,30 +152,33 @@ export default function Header() {
          ) : (
             <GuestRightHeader totalCartItems={totalCartItems} />
          )}
-         {
-            // <Button
-            //    onClick={() => {
-            //       const a = async () => {
-            //          try {
-            //             const id = [1, 2, 3, 4, 5];
+         {/* {
+            <Button
+               onClick={() => {
+                  const a = async () => {
+                     try {
+                        const id = [1, 2, 3, 4, 5];
 
-            //             const res = await api.get("/products/id", {
-            //                params: {
-            //                   id: [1, 2, 3, 4, 5, 7, 8],
-            //                }
-            //             });
-            //             const data = await res.data;
-            //             console.log(data);
-            //          } catch (err) {
-            //             console.log(err);
-            //          }
-            //       };
-            //       a();
-            //    }}
-            // >
-            //    asdfasdfasdf
-            // </Button>
-         }
+                        const res = await api.get("/products/id", {
+                           params: {
+                              id: [1, 2, 3, 4, 5, 7, 8],
+                              sort: 1,
+                              from: 100,
+                              to: 200
+                           }
+                        });
+                        console.log(res);
+                        const data = await res.data;
+                     } catch (err) {
+                        console.log(err);
+                     }
+                  };
+                  a();
+               }}
+            >
+               asdfasdfasdf
+            </Button>
+         } */}
       </div>
    );
 }

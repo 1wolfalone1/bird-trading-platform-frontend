@@ -13,42 +13,43 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import userInfoSlice from "../../redux/global/userInfoSlice";
 import { userStatus } from "../order/cartSlice";
-import { api } from './../../api/server/API';
+import { api } from "./../../api/server/API";
 
 const textFieldStyle = {
-  input: {
-    color: Style.color.$Complementary0,
-    fontSize: "2.4rem",
-    fontFamily: Style.font.$Primary,
-  },
-  label: {
-    fontSize: "2.4rem",
-  },
+   input: {
+      color: Style.color.$Complementary0,
+      fontSize: "2.4rem",
+      fontFamily: Style.font.$Primary,
+   },
+   label: {
+      fontSize: "2.4rem",
+   },
 };
 const buttonLoginStyle = {
-  textTransform: "none",
-  fontSize: "3.2rem",
-  width: "80%",
+   textTransform: "none",
+   fontSize: "3.2rem",
+   width: "80%",
 };
 const formHelperText = {
-  style: {
-    fontSize: "1.6rem",
-    color: "red",
-    marginLeft: "0px",
-  },
+   style: {
+      fontSize: "1.6rem",
+      color: "red",
+      marginLeft: "0px",
+   },
 };
 const validationSchema = yup.object({
-  email: yup
-    .string("")
-    .email("Enter a valid email address")
-    .required("Email is required!"),
-  password: yup
-    .string("")
-    .min(8, "Password must be at least 8 characters!")
-    .required("Password is required!"),
+   email: yup
+      .string("")
+      .email("Enter a valid email address")
+      .required("Email is required!"),
+   password: yup
+      .string("")
+      .min(8, "Password must be at least 8 characters!")
+      .required("Password is required!"),
 });
 export default function Login() {
-  const [loginGoogleStatus, setLoginGoogleStatus] = useState();
+   const [loginGoogleStatus, setLoginGoogleStatus] = useState();
+   const [loginEmailPasswordStatus, setLoginEmailPasswordStatus] = useState();
 
    const params = new URLSearchParams(window.location.search); // id=123
    const navigate = useNavigate();
@@ -71,9 +72,11 @@ export default function Login() {
       let error = params.get("error");
       if (token) {
          console.log(token);
-         dispatch(userInfoSlice.actions.changeAuthentication({
-            status: userStatus.USER,
-         }))
+         dispatch(
+            userInfoSlice.actions.changeAuthentication({
+               status: userStatus.USER,
+            })
+         );
          navigate("/");
       } else if (error) {
          navigate("/login");
@@ -91,47 +94,49 @@ export default function Login() {
             true
          );
          if (form.isValid) {
-
+            console.log('login--------------------------')
             const resposne = await authenticateAPI.post("", {
                email: form.values.email,
                password: form.values.password,
-            });
-            console.log(resposne)
+            })
             const data = await resposne.data;
-            console.log(data, '2')
-
             handleLoginResponseData(data, resposne.status);
-         } else {
+
          }
       } catch (err) {
+         const data = await err.response;
          console.log(err);
-      }
-  };
-
-
-   const handleLoginResponseData = (data, status) => {
-      console.log(data, '111');
-      if (status === 200) {
-         localStorage.setItem("token", JSON.stringify(data.token));
-         dispatch(userInfoSlice.actions.changeAuthentication({
-            status: userStatus.USER,
-            info: data.userInfo
-         }))
-         callCookies();
-         navigate('/products');
-      } else if (status === 404) {
-         
+         if(data.status === 401){
+            setLoginEmailPasswordStatus("Invalid email or password!")
+         }
       }
    };
-   const callCookies = async() => {
+
+   const handleLoginResponseData = (data, status) => {
+      console.log(data, "111");
+      if (status === 200) {
+         localStorage.setItem("token", JSON.stringify(data.token));
+         dispatch(
+            userInfoSlice.actions.changeAuthentication({
+               status: userStatus.USER,
+               info: data.userInfo,
+            })
+         );
+         callCookies();
+         navigate("/products");
+      } else if (status === 404) {
+
+      }
+   };
+   const callCookies = async () => {
       try {
-         const response = await api.get('/users/get-cookie')
+         const response = await api.get("/users/get-cookie");
          const data = await response.data;
          console.log(data);
       } catch (e) {
          console.error(e);
       }
-   }
+   };
    return (
       <div className={clsx(s.container)}>
          <div className={clsx(s.imgLeft)}>
@@ -174,6 +179,7 @@ export default function Login() {
                      fullWidth
                   />
                </div>
+               
                <div className={clsx(s.button)}>
                   <Button
                      sx={buttonLoginStyle}
@@ -184,6 +190,9 @@ export default function Login() {
                   >
                      Login
                   </Button>
+                  <div className={clsx(s.helpGooleText)}>
+                  {loginEmailPasswordStatus ? <span>{loginEmailPasswordStatus}</span> : ""}
+               </div>
                </div>
             </div>
             <div className={clsx(s.separate)}>
@@ -206,6 +215,6 @@ export default function Login() {
                </Link>
             </div>
          </div>
-    </div>
-  );
+      </div>
+   );
 }
