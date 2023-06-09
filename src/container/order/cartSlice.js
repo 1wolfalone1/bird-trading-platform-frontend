@@ -121,9 +121,16 @@ const cartSlice = createSlice({
       changeQuantity: (state, action) => {
          console.log(action.payload);
          let updatedPayload = action.payload; // Create a new variable to hold the updated payload
-
+         let count2 = 0;
          if (action.payload.isDetails) {
             updatedPayload = action.payload.cartObject; // Assign the updated payload to the new variable
+            if (action.payload.quantityAdded === 0) {
+               count2++;
+               state.status = {
+                  isValid: false,
+                  msg: "You are attempting to add a quantity that not valid.",
+               };
+            }
          }
 
          let count = 0; // Change const to let since the count will be incremented
@@ -148,8 +155,12 @@ const cartSlice = createSlice({
             if (count === 0) {
                state.items.push(updatedPayload);
             }
+            if (count2 === 0) {
+               state.status = {
+                  isValid: true,
+               };
+            }
          } else {
-            console.log("else ne");
             state.status = {
                isValid: false,
                msg: "You are attempting to add a quantity that exceeds the current available stock.",
@@ -177,6 +188,9 @@ const cartSlice = createSlice({
                return voucher;
             }
          });
+      },
+      changeStatus: (state, action) => {
+         state.status = action.payload.status;
       },
       // removeVoucher: (state, action) => {
       //    const voucherIndex = state.vouchers.findIndex((voucher) => voucher.id === action.payload);
