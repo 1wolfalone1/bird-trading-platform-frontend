@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import s from "./productDetails.module.scss";
 
 import React from "react";
@@ -43,6 +43,7 @@ function mapObjects(source, target) {
    return target;
 }
 export default function ProductDetails() {
+   const navigate = useNavigate();
    const param = useParams();
    const cartStatus = useSelector(getCartStatusSelector);
    const [product, setProduct] = useState();
@@ -50,6 +51,7 @@ export default function ProductDetails() {
    const cartQuantity = useSelector(getItemQuantity(product?.product?.id));
    const element = `${product?.product.description}`;
    const [quantity, setQuantity] = useState(0);
+   const [firstCall, setFirstCall] = useState(true);
    const notifyWarningAddtoCart = (message) =>
       toast(<AddToCartToast type={toastType.WARNING} msg={message} />, {
          position: toast.POSITION.TOP_RIGHT,
@@ -57,13 +59,22 @@ export default function ProductDetails() {
       });
    console.log(product);
    useEffect(() => {
-      if (!cartStatus.isValid) {
-         notifyWarningAddtoCart(cartStatus.msg);
+      console.log(firstCall);
+      if(!firstCall) {
+         if (!cartStatus.isValid) {
+            notifyWarningAddtoCart(cartStatus.msg);
+         } else {
+            toast(<AddToCartToast type={toastType.SUCCESS}/>, {
+               position: toast.POSITION.TOP_RIGHT,
+               autoClose: 1500,
+            });
+         }
       }
+      setFirstCall(false);
+
    }, [cartStatus]);
    const handleQuantityChange = (status) => {
       return (e) => {
-         console.log(e.target.value);
          let currentQuantity = cartQuantity;
          if (!cartQuantity) {
             currentQuantity = 0;
@@ -74,7 +85,6 @@ export default function ProductDetails() {
             }
          }
          if (status === quantityControlStatus.CHANGE) {
-            console.log(+currentQuantity + e.target.value);
             if (
                +currentQuantity + +e.target.value <= product.product.quantity &&
                +currentQuantity + +e.target.value >= 0
@@ -120,6 +130,7 @@ export default function ProductDetails() {
          cartSlice.actions.changeQuantity({
             cartObject: cartObject,
             isDetails: true,
+            quantityAdded: +quantity
          })
       );
    };
@@ -283,6 +294,7 @@ export default function ProductDetails() {
                                  sx={{ fontSize: "2.4rem", marginLeft: "1rem" }}
                                  variant="contained"
                                  color="error"
+                                 onClick={() => navigate('/checkout')}
                               >
                                  {" "}
                                  Order now
