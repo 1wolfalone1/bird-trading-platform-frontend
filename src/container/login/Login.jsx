@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import userInfoSlice from "../../redux/global/userInfoSlice";
 import { userStatus } from "../order/cartSlice";
 import { api } from "./../../api/server/API";
+import { errorAuthentication } from "../../config/constant";
 
 const textFieldStyle = {
    input: {
@@ -70,17 +71,9 @@ export default function Login() {
    useEffect(() => {
       let token = params.get("token");
       let error = params.get("error");
-      if (token) {
-         console.log(token);
-         dispatch(
-            userInfoSlice.actions.changeAuthentication({
-               status: userStatus.USER,
-            })
-         );
-         navigate("/");
-      } else if (error) {
-         navigate("/login");
-         setLoginGoogleStatus("You already have local account!!!");
+      console.log(error);
+      if(error == errorAuthentication.CONFLICT_GOOGLE_LOGIN) {
+         setLoginGoogleStatus('The email you provided is already registered in our system!')
       }
    }, []);
    const handleLogin = async () => {
@@ -114,7 +107,7 @@ export default function Login() {
 
    const handleLoginResponseData = (data, status) => {
       console.log(data, "111");
-      if (status === 200) {
+      if (status == 200) {
          localStorage.setItem("token", JSON.stringify(data.token));
          dispatch(
             userInfoSlice.actions.changeAuthentication({
@@ -205,7 +198,7 @@ export default function Login() {
                />
 
                <div className={clsx(s.helpGooleText)}>
-                  {loginGoogleStatus ? <span>{loginGoogleStatus}</span> : ""}
+                  {loginGoogleStatus ? <span>{loginGoogleStatus}</span> : loginGoogleStatus}
                </div>
             </div>
             <div className={clsx(s.linkBottom)}>

@@ -236,13 +236,8 @@ export default function SignUp() {
                <span>Or</span>
             </div>
             <div>
-               <ButtonGoogle content={"Sign up with Google"} />
+               <ButtonGoogle content={"Sign in with Google"} />
                <div className={clsx(s.helpGooleText)}>
-                  {signUpWithGoogle ? (
-                     ""
-                  ) : (
-                     <span>Sign in by Google failed! Try again</span>
-                  )}
                </div>
             </div>
             <div className={clsx(s.linkBottom)}>

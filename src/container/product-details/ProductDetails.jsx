@@ -21,7 +21,10 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom/client";
-import cartSlice, { getItemQuantity } from "../order/cartSlice";
+import cartSlice, {
+   getCartStatusSelector,
+   getItemQuantity,
+} from "../order/cartSlice";
 import AddToCartToast, {
    toastType,
 } from "../../component/toast/content/AddToCartToast";
@@ -41,18 +44,23 @@ function mapObjects(source, target) {
 }
 export default function ProductDetails() {
    const param = useParams();
+   const cartStatus = useSelector(getCartStatusSelector);
    const [product, setProduct] = useState();
    const dispatch = useDispatch();
    const cartQuantity = useSelector(getItemQuantity(product?.product?.id));
    const element = `${product?.product.description}`;
    const [quantity, setQuantity] = useState(0);
-   const notifyWarningAddtoCart = () =>
-      toast(<AddToCartToast type={toastType.WARNING} />, {
+   const notifyWarningAddtoCart = (message) =>
+      toast(<AddToCartToast type={toastType.WARNING} msg={message} />, {
          position: toast.POSITION.TOP_RIGHT,
          autoClose: 1500,
       });
    console.log(product);
-
+   useEffect(() => {
+      if (!cartStatus.isValid) {
+         notifyWarningAddtoCart(cartStatus.msg);
+      }
+   }, [cartStatus]);
    const handleQuantityChange = (status) => {
       return (e) => {
          console.log(e.target.value);
@@ -87,10 +95,12 @@ export default function ProductDetails() {
       };
    };
    const handleAddToCart = () => {
-      console.log("-0--------------------------");
-      console.log(product);
+      let currentCartQuantity = cartQuantity;
+      if (!cartQuantity) {
+         currentCartQuantity = 0;
+      }
       const cartObject = mapObjects(product.product, {
-         cartQuantity: quantity,
+         cartQuantity: +quantity + +currentCartQuantity,
          id: 0,
          name: "",
          imgUrl: "",
@@ -106,7 +116,6 @@ export default function ProductDetails() {
          },
       });
       console.log(cartObject, "-0--------------------------");
-      const isExist = cartQuantity;
       dispatch(
          cartSlice.actions.changeQuantity({
             cartObject: cartObject,

@@ -244,7 +244,7 @@ export default function Cart() {
                               xl={1}
                               className={clsx(s.totalPrice)}
                            >
-                              {item.price * item.cartQuantity}$
+                              {item.discountedPrice * item.cartQuantity}$
                            </Grid>
                            <Grid
                               sm={1}
@@ -305,7 +305,7 @@ export default function Cart() {
                   </div>
                </div>
                <div className={clsx(s.totalOrders)}>
-                  <p className={clsx(s.bill)}>Total orders: {total}$</p>
+                  <p className={clsx(s.bill)}>Total orders: {Number(total).toFixed(1)}$</p>
                   <Button onClick={() => navigate("/checkout")}>
                      Order now
                   </Button>

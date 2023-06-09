@@ -19,6 +19,7 @@ import cartSlice, {
 import { useDispatch, useSelector } from "react-redux";
 import userInfoSlice, { userInfoSelector } from "./redux/global/userInfoSlice";
 import ProductDetails from "./container/product-details/ProductDetails";
+import GetToken from "./container/get-token/GetToken";
 
 function App() {
    const cart = useSelector(getCartSelector);
@@ -57,6 +58,7 @@ function App() {
             <Route path="cart" element={<CartContainer />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="checkout" element={<Checkout />} />
+            <Route path="get-token" element={<GetToken />} />
          </Route>
       </Routes>
    );
