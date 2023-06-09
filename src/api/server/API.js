@@ -16,10 +16,9 @@ api.interceptors.request.use(
          const token = JSON.parse(localStorage.getItem("token"));
          console.log(token, '-------------------------------asdfasdfasdfasdf');
          if (token) {
-            // config.headers.Authorization = `Bearer ${token.accessToken}`;
+            config.headers.Authorization = `Bearer ${token.accessToken}`;
          }
       }
-
       return config;
    },
    (error) => Promise.reject(error)

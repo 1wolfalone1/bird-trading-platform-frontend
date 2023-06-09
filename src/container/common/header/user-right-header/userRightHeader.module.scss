@@ -30,7 +30,7 @@ $container-height: calc(c.$h-header - 3rem);
          display: flex;
          align-items: center;
          span {
-            margin: 0 1rem;
+            width: auto;
             color: c.$Dominant1;
             font-family: c.$Primary;
             font-weight: 400;
@@ -48,6 +48,7 @@ $container-height: calc(c.$h-header - 3rem);
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            word-break: break-all;
          }
       }
    }

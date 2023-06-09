@@ -26,7 +26,8 @@ export const toastType = {
    SUCCESS: 'success',
    WARNING: 'warning',
 }
-export default function AddToCartToast({ closeToast, toastProps, type }) {
+export default function AddToCartToast({ closeToast, toastProps, type, msg }) {
+
    console.log(type);
    return (
       <div className={clsx( s[type])}>
@@ -35,7 +36,7 @@ export default function AddToCartToast({ closeToast, toastProps, type }) {
          </div>
          <div className={s.info}>
             <span className={s.title}>{toastStatus[type].title}</span>
-            <span>{toastStatus[type].message}</span>
+            <span>{msg || toastStatus[type].message}</span>
          </div>
       </div>
    );

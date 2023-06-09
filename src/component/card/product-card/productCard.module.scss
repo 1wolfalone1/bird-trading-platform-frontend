@@ -93,7 +93,8 @@ $borderRadius: 0.8rem;
          flex-direction: column;
          justify-content: center;
          align-items: center;
-         padding: 1rem 3rem;
+         padding: 0 3rem;
+
          span {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -105,7 +106,7 @@ $borderRadius: 0.8rem;
             font-style: normal;
             font-weight: 500;
             font-size: 2rem;
-            line-height: 19px;
+            line-height: 4.5rem;
             color: c.$Accent7;
          }
       }

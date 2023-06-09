@@ -135,6 +135,7 @@ const cartSlice = createSlice({
             state.items = state.items.map((item) => {
                if (item.id === updatedPayload.id) {
                   count++;
+                  console.log(item);
                   item.cartQuantity = +updatedPayload.cartQuantity;
                   item.notValidMessage = "";
                   return item;
@@ -142,13 +143,17 @@ const cartSlice = createSlice({
                   return item;
                }
             });
-
+            console.log(current(state));
+            console.log(count);
             if (count === 0) {
                state.items.push(updatedPayload);
             }
-         } else if (updatedPayload.cartQuantity === 0) {
-            state.status.isValid = false;
-            state.status.msg = "Unable to add an item with a quantity of zero.";
+         } else {
+            console.log("else ne");
+            state.status = {
+               isValid: false,
+               msg: "You are attempting to add a quantity that exceeds the current available stock.",
+            };
          }
       },
 
@@ -226,13 +231,15 @@ export const invokeCart = createAsyncThunk("cart/invoke", async (carts) => {
    }
 });
 
-export const totalItemsSelector = (state) => state.cartSlice?.items.length;
+export const totalItemsSelector = (state) => state.cartSlice?.items?.length;
 
 export const getCartSelector = (state) => state.cartSlice;
 
 export const getListItemSelector = (state) => state.cartSlice.items;
 
 export const getVouchersSelector = (state) => state.cartSlice.vouchers;
+
+export const getCartStatusSelector = (state) => state.cartSlice.status;
 
 export const totalPriceSelector = createSelector(
    getListItemSelector,
