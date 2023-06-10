@@ -30,7 +30,7 @@ function App() {
       const cartObject = JSON.parse(localStorage.getItem("cart"));
       const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
       console.log(cartObject);
-      if (cartObject && cartObject.items !== null) {
+      if (cartObject && Array.isArray(cartObject.items)) {
          dispatch(invokeCart(cartObject));
       }
       if (userInfoObject) {

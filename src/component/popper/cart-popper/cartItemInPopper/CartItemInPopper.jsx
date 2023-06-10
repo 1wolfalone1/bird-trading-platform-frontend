@@ -16,7 +16,7 @@ export default function CartItemInPopper({ item, className }) {
          <div className={s.content}>
             <div className={s.left}>
                <div className={s.productName}>
-                  <span>{item.name}aasfdasfasfaasdfa  sfasfasdf sfasfd</span>
+                  <span>{item.name}</span>
                </div>
                <div className={s.shopName}>
                   <span>{item.shopOwner?.shopName}</span>
