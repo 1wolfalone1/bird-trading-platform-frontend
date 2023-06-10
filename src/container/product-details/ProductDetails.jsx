@@ -50,7 +50,7 @@ export default function ProductDetails() {
    const dispatch = useDispatch();
    const cartQuantity = useSelector(getItemQuantity(product?.product?.id));
    const element = `${product?.product.description}`;
-   const [quantity, setQuantity] = useState(0);
+   const [quantity, setQuantity] = useState(1);
    const [firstCall, setFirstCall] = useState(true);
    const notifyWarningAddtoCart = (message) =>
       toast(<AddToCartToast type={toastType.WARNING} msg={message} />, {
