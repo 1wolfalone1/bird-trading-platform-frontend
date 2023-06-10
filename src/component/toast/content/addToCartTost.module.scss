@@ -1,5 +1,24 @@
 @use "../../style/" as c;
 
+.success {
+   display: flex;
+   .icon {
+   }
+   .info {
+      display: flex;
+      flex-direction: column;
+      padding-left: 1rem;
+      .title {
+         font-size: 2.4rem;
+         margin-bottom: 0.4rem;
+         color: c.$Dominant1;
+      }
+      span{
+         font-size: 2rem;
+         color: c.$Accent3;
+      }
+   }
+}
 .container {
    display: flex;
    .icon {
@@ -16,6 +35,26 @@
       span{
          font-size: 2rem;
          color: c.$Accent4;
+      }
+   }
+}
+
+.warning {
+   display: flex;
+   .icon {
+   }
+   .info {
+      display: flex;
+      flex-direction: column;
+      padding-left: 1rem;
+      .title {
+         font-size: 2.4rem;
+         margin-bottom: 0.4rem;
+         color: yellow;
+      }
+      span{
+         font-size: 1.6rem;
+         color: rgb(178, 178, 0);
       }
    }
 }

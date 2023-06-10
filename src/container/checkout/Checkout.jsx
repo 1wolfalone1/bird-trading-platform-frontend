@@ -91,6 +91,7 @@ const vouchers = [
 ];
 
 export default function Checkout() {
+
   return (
     <div>
       <Grid container columns={11} className={clsx(s.container)}>

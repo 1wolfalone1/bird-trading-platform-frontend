@@ -9,10 +9,9 @@ import Details from "../../../asset/icons/Details";
 import Style from "../../../style/inline-style/style";
 import { useDispatch } from "react-redux";
 import cartSlice from "../../../container/order/cartSlice";
-import { ToastContainer, toast } from "react-toastify";
-import AddToCartToast from "../../toast/content/AddToCartToast";
+import {  toast } from "react-toastify";
+import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import globalConfigSlice from "../../../redux/global/globalConfigSlice";
-import { changeTypeProduct } from './../../products-presentation/productsPresentationSlice';
 import { useNavigate } from "react-router-dom";
 const ratingCustomizer = {
    fontSize: "3.2rem",
@@ -24,12 +23,12 @@ export default function ProductCard({ product }) {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const handleAddToCart = () => {
-      dispatch(cartSlice.actions.addToCart({ ...product, cartQuantity: 1 }));
+      dispatch(cartSlice.actions.addToCart({ ...product, cartQuantity: +1 }));
       dispatch(globalConfigSlice.actions.changeToastStyle("add-to-cart"));
       notifyAddtoCart();
    };
    const notifyAddtoCart = () =>
-      toast(<AddToCartToast />, {
+      toast(<AddToCartToast type={toastType.SUCCESS}/>, {
          position: toast.POSITION.TOP_RIGHT,
          autoClose: 1500,
       });
@@ -42,7 +41,7 @@ export default function ProductCard({ product }) {
                   <span>
                      {product.discountedPrice}$
                      {product.discountRate ? (
-                        <>({product.discountRate}% off)</>
+                        <> - {(product.discountRate * 100).toFixed(0)}% off</>
                      ) : (
                         ""
                      )}

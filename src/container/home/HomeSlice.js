@@ -43,6 +43,7 @@ export default createSlice({
          })
          .addCase(getTopProducts.fulfilled, (state, payload) => {
             state.topProduct.status = homeDataStatus.FULFILLED;
+
             state.topProduct.data = [...payload.payload];
          })
          .addCase(getAccessories.fulfilled, (state, payload) => {
@@ -63,7 +64,7 @@ export default createSlice({
          });
    },
 });
-const suffixTopProduct = '/top-product';
+const suffixTopProduct = "/top-product";
 export const getBirds = createAsyncThunk("home/getBirds", async () => {
    const response = await birdApi.get(suffixTopProduct);
    return response.data;
@@ -75,8 +76,14 @@ export const getFood = createAsyncThunk("home/getFood", async () => {
 export const getTopProducts = createAsyncThunk(
    "home/getTopProducts",
    async () => {
-      const response = await productAPI.get("/top-product");
-      return response.data;
+      try {
+         const response = await productAPI.get("/top-product");
+         console.log(response.data);
+         return response.data;
+      } catch (err) {
+         console.error(err);
+         throw err;
+      }
    }
 );
 export const getAccessories = createAsyncThunk(

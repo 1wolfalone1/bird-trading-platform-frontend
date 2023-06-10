@@ -4,6 +4,8 @@ import {
    createSelector,
 } from "@reduxjs/toolkit";
 import { current } from "@reduxjs/toolkit";
+import { api } from "../../api/server/API";
+import { toast } from "react-toastify";
 export const userStatus = {
    GUEST: 0,
    USER: 1,
@@ -14,7 +16,6 @@ export const userStatus = {
 const cartSlice = createSlice({
    name: "productState",
    initialState: {
-      
       items: [],
       vouchers: [
          {
@@ -90,9 +91,9 @@ const cartSlice = createSlice({
       ],
       total: 0,
       status: {
-         msg: '',
-         isValid: true
-      }
+         msg: "",
+         isValid: true,
+      },
    },
    reducers: {
       addToCart: (state, action) => {
@@ -100,7 +101,8 @@ const cartSlice = createSlice({
          state.items.map((item) => {
             if (item.id === action.payload.id) {
                count = count + 1;
-               item.cartQuantity = item.cartQuantity + action.payload.cartQuantity;
+               item.cartQuantity =
+                  item.cartQuantity + action.payload.cartQuantity;
                return item;
             } else {
                return item;
@@ -117,19 +119,55 @@ const cartSlice = createSlice({
          }
       },
       changeQuantity: (state, action) => {
+         console.log(action.payload);
+         let updatedPayload = action.payload; // Create a new variable to hold the updated payload
+         let count2 = 0;
+         if (action.payload.isDetails) {
+            updatedPayload = action.payload.cartObject; // Assign the updated payload to the new variable
+            if (action.payload.quantityAdded === 0) {
+               count2++;
+               state.status = {
+                  isValid: false,
+                  msg: "You are attempting to add a quantity that not valid.",
+               };
+            }
+         }
+
+         let count = 0; // Change const to let since the count will be incremented
+
          if (
-            action.payload.quantity >= action.payload.cartQuantity &&
-            action.payload.cartQuantity >= 0
+            updatedPayload.quantity >= +updatedPayload.cartQuantity &&
+            +updatedPayload.cartQuantity > 0
          ) {
-            state.items.map((item) => {
-               if (item.id === action.payload.id) {
-                  return (item.cartQuantity = action.payload.cartQuantity);
+            state.items = state.items.map((item) => {
+               if (item.id === updatedPayload.id) {
+                  count++;
+                  console.log(item);
+                  item.cartQuantity = +updatedPayload.cartQuantity;
+                  item.notValidMessage = "";
+                  return item;
                } else {
                   return item;
                }
             });
+            console.log(current(state));
+            console.log(count);
+            if (count === 0) {
+               state.items.push(updatedPayload);
+            }
+            if (count2 === 0) {
+               state.status = {
+                  isValid: true,
+               };
+            }
+         } else {
+            state.status = {
+               isValid: false,
+               msg: "You are attempting to add a quantity that exceeds the current available stock.",
+            };
          }
       },
+
       invokeCart: (state, action) => {
          return action.payload;
       },
@@ -151,6 +189,9 @@ const cartSlice = createSlice({
             }
          });
       },
+      changeStatus: (state, action) => {
+         state.status = action.payload.status;
+      },
       // removeVoucher: (state, action) => {
       //    const voucherIndex = state.vouchers.findIndex((voucher) => voucher.id === action.payload);
 
@@ -159,17 +200,60 @@ const cartSlice = createSlice({
       //    }
       //  },
    },
+   extraReducers: (builder) =>
+      builder
+         .addCase(invokeCart.fulfilled, (state, action) => {
+            state.items = action.payload;
+         })
+         .addCase(invokeCart.rejected, (state, action) => {
+            console.log(action.payload);
+         }),
 });
 
 export default cartSlice;
 
-export const totalItemsSelector = (state) => state.cartSlice?.items.length;
+export const invokeCart = createAsyncThunk("cart/invoke", async (carts) => {
+   if (carts.items.length !== 0) {
+      try {
+         const id = carts.items.map((cart) => cart.id);
+         const response = await api.get("products/id", {
+            params: {
+               id: id,
+            },
+         });
+         const data = response.data;
+         const newCarts = data.map((cart) => {
+            const newCart = carts.items.find((item) => item.id === cart.id);
+            if (newCart) {
+               const notValidMessage =
+                  newCart.cartQuantity > cart.quantity
+                     ? "The desired quantity of the product is currently unavailable."
+                     : "";
+               return {
+                  ...cart,
+                  cartQuantity: +newCart.cartQuantity,
+                  notValidMessage: notValidMessage,
+               };
+            }
+         });
+         return newCarts;
+      } catch (e) {
+         console.log(e);
+      }
+   } else {
+      console.error("Cart error");
+   }
+});
+
+export const totalItemsSelector = (state) => state.cartSlice?.items?.length;
 
 export const getCartSelector = (state) => state.cartSlice;
 
 export const getListItemSelector = (state) => state.cartSlice.items;
 
 export const getVouchersSelector = (state) => state.cartSlice.vouchers;
+
+export const getCartStatusSelector = (state) => state.cartSlice.status;
 
 export const totalPriceSelector = createSelector(
    getListItemSelector,
@@ -187,9 +271,15 @@ export const totalPriceSelector = createSelector(
          }
       }, 0);
       let totalPrice = total - promotion;
-      if(totalPrice < 0){
+      if (totalPrice < 0) {
          totalPrice = 0;
       }
       return totalPrice;
    }
 );
+
+export const getItemQuantity = (id) =>
+   createSelector(getListItemSelector, (items) => {
+      const item = items.find((item) => item.id === id);
+      return item?.cartQuantity;
+   });

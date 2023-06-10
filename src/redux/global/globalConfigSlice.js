@@ -15,7 +15,7 @@ const globalConfigSlice = createSlice({
    name: "productState",
    initialState: {
       toastStyle: {
-         name: "",
+         name: "default",
          props: {
             theme: "dark"
          }

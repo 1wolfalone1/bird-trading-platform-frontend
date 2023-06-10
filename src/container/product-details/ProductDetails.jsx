@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import s from "./productDetails.module.scss";
 
 import React from "react";
@@ -19,13 +19,121 @@ import BirdProperties from "./properties/BirdProperties";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom/client";
+import cartSlice, {
+   getCartStatusSelector,
+   getItemQuantity,
+} from "../order/cartSlice";
+import AddToCartToast, {
+   toastType,
+} from "../../component/toast/content/AddToCartToast";
+import { toast } from "react-toastify";
+const quantityControlStatus = {
+   DECREASE: -1,
+   CHANGE: 0,
+   INCREASE: 1,
+};
+function mapObjects(source, target) {
+   for (let property in source) {
+      if (target.hasOwnProperty(property)) {
+         target[property] = source[property];
+      }
+   }
+   return target;
+}
 export default function ProductDetails() {
+   const navigate = useNavigate();
    const param = useParams();
+   const cartStatus = useSelector(getCartStatusSelector);
    const [product, setProduct] = useState();
    const dispatch = useDispatch();
+   const cartQuantity = useSelector(getItemQuantity(product?.product?.id));
    const element = `${product?.product.description}`;
+   const [quantity, setQuantity] = useState(1);
+   const [firstCall, setFirstCall] = useState(true);
+   const notifyWarningAddtoCart = (message) =>
+      toast(<AddToCartToast type={toastType.WARNING} msg={message} />, {
+         position: toast.POSITION.TOP_RIGHT,
+         autoClose: 1500,
+      });
+   console.log(product);
+   useEffect(() => {
+      console.log(firstCall);
+      if(!firstCall) {
+         if (!cartStatus.isValid) {
+            notifyWarningAddtoCart(cartStatus.msg);
+         } else {
+            toast(<AddToCartToast type={toastType.SUCCESS}/>, {
+               position: toast.POSITION.TOP_RIGHT,
+               autoClose: 1500,
+            });
+         }
+      }
+      setFirstCall(false);
+
+   }, [cartStatus]);
+   const handleQuantityChange = (status) => {
+      return (e) => {
+         let currentQuantity = cartQuantity;
+         if (!cartQuantity) {
+            currentQuantity = 0;
+         }
+         if (status === quantityControlStatus.DECREASE) {
+            if (quantity > 0) {
+               setQuantity((state) => +state - 1);
+            }
+         }
+         if (status === quantityControlStatus.CHANGE) {
+            if (
+               +currentQuantity + +e.target.value <= product.product.quantity &&
+               +currentQuantity + +e.target.value >= 0
+            ) {
+               setQuantity(+e.target.value);
+            } else {
+               notifyWarningAddtoCart();
+            }
+         }
+         if (status === quantityControlStatus.INCREASE) {
+            console.log(quantity + currentQuantity, "--------------qqq------");
+            if (quantity + currentQuantity < product.product.quantity) {
+               setQuantity((state) => +state + 1);
+            } else {
+               notifyWarningAddtoCart();
+            }
+         }
+      };
+   };
+   const handleAddToCart = () => {
+      let currentCartQuantity = cartQuantity;
+      if (!cartQuantity) {
+         currentCartQuantity = 0;
+      }
+      const cartObject = mapObjects(product.product, {
+         cartQuantity: +quantity + +currentCartQuantity,
+         id: 0,
+         name: "",
+         imgUrl: "",
+         price: 0,
+         discountedPrice: 0,
+         discountRate: 0,
+         quantity: 0,
+         categoryId: 0,
+         shopOwner: {
+            id: 3,
+            shopName: "Bookstore",
+            imgUrl: null,
+         },
+      });
+      console.log(cartObject, "-0--------------------------");
+      dispatch(
+         cartSlice.actions.changeQuantity({
+            cartObject: cartObject,
+            isDetails: true,
+            quantityAdded: +quantity
+         })
+      );
+   };
    useEffect(() => {
       const getProducts = async () => {
          try {
@@ -63,7 +171,7 @@ export default function ProductDetails() {
                            <Divider orientation="vertical" color="error" />
                            <span>{product.product.star}</span>
                            <Rating
-                              value={product.star}
+                              value={product.product.star}
                               readOnly
                               precision={0.5}
                            />
@@ -74,13 +182,16 @@ export default function ProductDetails() {
                               {product.product.discountRate !== 0 ? (
                                  <>
                                     <span className={s.oldPrice}>
-                                       {product.price}$
+                                       {product.product.price}$
                                     </span>
                                     <span className={s.disPrice}>
                                        {product.product.discountedPrice}$
                                     </span>
                                     <span className={s.discount}>
-                                       {product.product.discountRate}%
+                                       {(
+                                          product.product.discountRate * 100
+                                       ).toFixed(0)}
+                                       %
                                     </span>
                                  </>
                               ) : (
@@ -120,11 +231,28 @@ export default function ProductDetails() {
                         <div className={s.quantity}>
                            <span className={s.titleQuantity}>Quantity: </span>
                            <div>
-                              <IconButton color="Accent7">
+                              <IconButton
+                                 color="Accent7"
+                                 onClick={handleQuantityChange(
+                                    quantityControlStatus.DECREASE
+                                 )}
+                              >
                                  <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
                               </IconButton>
-                              <input value={1} min={1} />
-                              <IconButton color="Accent7">
+                              <input
+                                 value={quantity}
+                                 min={1}
+                                 max={product.product.quantity}
+                                 onChange={handleQuantityChange(
+                                    quantityControlStatus.CHANGE
+                                 )}
+                              />
+                              <IconButton
+                                 color="Accent7"
+                                 onClick={handleQuantityChange(
+                                    quantityControlStatus.INCREASE
+                                 )}
+                              >
                                  <AddCircleIcon sx={{ fontSize: "3rem" }} />
                               </IconButton>
                            </div>
@@ -152,6 +280,7 @@ export default function ProductDetails() {
                                  sx={{ fontSize: "2.4rem" }}
                                  color="Accent7"
                                  variant="outlined"
+                                 onClick={handleAddToCart}
                               >
                                  Add to cart{" "}
                                  <ShoppingCartCheckoutIcon
@@ -165,6 +294,7 @@ export default function ProductDetails() {
                                  sx={{ fontSize: "2.4rem", marginLeft: "1rem" }}
                                  variant="contained"
                                  color="error"
+                                 onClick={() => navigate('/checkout')}
                               >
                                  {" "}
                                  Order now
@@ -176,7 +306,10 @@ export default function ProductDetails() {
                   <Divider />
                   <div className={s.description}>
                      <h1>Description</h1>
-                     <div dangerouslySetInnerHTML={{ __html: element }} className={s.content}/>
+                     <div
+                        dangerouslySetInnerHTML={{ __html: element }}
+                        className={s.content}
+                     />
                   </div>
                </div>
 

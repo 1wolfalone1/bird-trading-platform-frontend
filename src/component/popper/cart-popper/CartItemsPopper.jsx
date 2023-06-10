@@ -58,7 +58,7 @@ export default function CartItemsPopper({ totalCartItems,setValue }) {
             placement="bottom"
             className={clsx(s.popover)}
          >
-            {cartItems.length !== 0 ? (
+            {cartItems && cartItems.length !== 0 ? (
                <>
                   <div>
                      <div className={s.container}>

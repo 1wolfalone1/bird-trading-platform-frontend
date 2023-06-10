@@ -50,11 +50,7 @@ export default function Voucher({ close }) {
     <div className={clsx(s.modal)}>
       <div className={clsx(s.headerVoucher)}>
         <div className={clsx(s.title)}>Select Vouchers</div>
-        <button className={clsx(s.close)} onClick={close}>
-          &times;
-        </button>
       </div>
-
       <div className={clsx(s.voucherListContainer)}>
         <Stack className={clsx(s.voucherList)}>
           {vouchers.map((item) => (
