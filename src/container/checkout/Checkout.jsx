@@ -49,7 +49,7 @@ const payment = [
     id: 1,
     image:
       "https://www.nicepng.com/png/detail/19-194337_paypal-logo-transparent-png-paypal-logo-transparent.png",
-    method: "Payment using PayPal Wallet",
+    method: "PayPal Wallet",
     discount: 5,
     name: "PayPal",
   },
@@ -97,11 +97,11 @@ export default function Checkout() {
       <Grid container columns={11} className={clsx(s.container)}>
         <Grid sm={7} md={7} xl={7} className={clsx(s.left)}>
           <Products products={products} />
-          <Payment payment={payment} />
         </Grid>
         <Grid sm={4} md={4} xl={4} className={clsx(s.right)}>
           <Delivery />
           <Voucher vouchers={vouchers} />
+          <Payment payment={payment} />
           <TotalOrder />
         </Grid>
       </Grid>

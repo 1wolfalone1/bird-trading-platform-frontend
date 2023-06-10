@@ -2,7 +2,7 @@ import React, { Fragment, useState } from "react";
 import clsx from "clsx";
 import Style from "../../../style/inline-style/style";
 import s from "./Delivery.module.scss";
-import { TextField } from "@mui/material";
+import { TextField, Tooltip, Typography } from "@mui/material";
 
 export default function Delivery() {
   const deliveryInfo = {
@@ -82,18 +82,26 @@ export default function Delivery() {
               />
             </div>
           </div>
-          <div className={clsx(s.address)}>
-            <TextField
-              id="filled-basic"
-              value={address}
-              variant="filled"
-              color="Dominant0"
-              sx={textFieldStyle}
-              disabled={!isEditable}
-              fullWidth
-              onChange={handleChangeAddress}
-            />
-          </div>
+          <Tooltip
+            title={
+              <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                {address}
+              </Typography>
+            }
+          >
+            <div className={clsx(s.address)}>
+              <TextField
+                id="filled-basic"
+                value={address}
+                variant="filled"
+                color="Dominant0"
+                sx={textFieldStyle}
+                disabled={!isEditable}
+                fullWidth
+                onChange={handleChangeAddress}
+              />
+            </div>
+          </Tooltip>
         </div>
       </div>
     </Fragment>

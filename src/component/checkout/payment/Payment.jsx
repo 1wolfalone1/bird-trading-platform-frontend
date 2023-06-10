@@ -8,12 +8,12 @@ export default function Payment({ payment }) {
   return (
     <div>
       <div className={clsx(s.payment)}>
+        <div className={clsx(s.title)}>Payment Method</div>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="paypal"
+          defaultValue="PayPal"
           name="radio-buttons-group"
         >
-          <div className={clsx(s.title)}>Payment Method</div>
           {payment &&
             payment.map((item) => (
               <PaymentMethod
@@ -23,11 +23,7 @@ export default function Payment({ payment }) {
                 method={item.method}
                 discount={item.discount}
               >
-                <FormControlLabel
-                  value={item.name}
-                  control={<Radio />}
-                  // label={item.name}
-                />
+                <FormControlLabel value={item.name} control={<Radio />} />
               </PaymentMethod>
             ))}
         </RadioGroup>
