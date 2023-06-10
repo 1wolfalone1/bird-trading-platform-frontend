@@ -3,7 +3,7 @@
 
 export const URI_LOCAL_FRONTEND = 'http://localhost:3000'
 
-export const URI_FRONTEND = 'https://www.birdland2nd.store'
+export const URI_FRONTEND = 'http://www.birdland2nd.store'
 
 
 export const errorAuthentication = {

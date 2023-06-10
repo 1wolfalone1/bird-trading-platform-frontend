@@ -29,6 +29,7 @@ function App() {
    useEffect(() => {
       const cartObject = JSON.parse(localStorage.getItem("cart"));
       const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
+      console.log(cartObject);
       if (cartObject && cartObject.items !== null) {
          dispatch(invokeCart(cartObject));
       }
