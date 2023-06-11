@@ -7,42 +7,48 @@ import Payment from "../../component/checkout/payment/Payment";
 import Delivery from "../../component/checkout/delivery/Delivery";
 import Voucher from "../../component/checkout/voucher/Voucher";
 import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
+import { useSelector } from "react-redux";
+import {
+  getCartSelector,
+  getListItemSelector,
+  totalPriceSelector,
+} from "../order/cartSlice";
 
-const products = [
-  {
-    id: 1,
-    name: "Blue Jay Blue Jay Blue Jay",
-    shopName: "Shop 1",
-    image:
-      "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
-    shopAvt:
-      "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
-    price: 10,
-    sale: "5%",
-  },
-  {
-    id: 2,
-    name: "Cardinal Cardinal Cardinal",
-    shopName: "Shop 2",
-    image:
-      "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
-    shopAvt:
-      "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
-    price: 12,
-    sale: "10%",
-  },
-  {
-    id: 3,
-    name: "Hummingbird Hummingbird",
-    shopName: "Shop 3",
-    image:
-      "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
-    shopAvt:
-      "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
-    price: 8,
-    sale: "5%",
-  },
-];
+// const products = [
+//   {
+//     id: 1,
+//     name: "Blue Jay Blue Jay Blue Jay",
+//     shopName: "Shop 1",
+//     image:
+//       "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
+//     shopAvt:
+//       "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
+//     price: 10,
+//     sale: "5%",
+//   },
+//   {
+//     id: 2,
+//     name: "Cardinal Cardinal Cardinal",
+//     shopName: "Shop 2",
+//     image:
+//       "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
+//     shopAvt:
+//       "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
+//     price: 12,
+//     sale: "10%",
+//   },
+//   {
+//     id: 3,
+//     name: "Hummingbird Hummingbird",
+//     shopName: "Shop 3",
+//     image:
+//       "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
+//     shopAvt:
+//       "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
+//     price: 8,
+//     sale: "5%",
+//   },
+// ];
 
 const payment = [
   {
@@ -91,6 +97,11 @@ const vouchers = [
 ];
 
 export default function Checkout() {
+  const products = useSelector(getCartSelector);
+  console.log("list product: ", products);
+
+  const total = useSelector(totalPriceSelector);
+  console.log("total", total);
 
   return (
     <div>

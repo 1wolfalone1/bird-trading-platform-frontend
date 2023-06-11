@@ -55,7 +55,6 @@ export default function Cart() {
    const total = useSelector(totalPriceSelector);
    const carts = useSelector(getListItemSelector);
    const navigate = useNavigate();
-   console.log(carts, "--------------------------------------");
    const handleChangeQuantity = (item) => {
       return (e) => {
          dispatch(
