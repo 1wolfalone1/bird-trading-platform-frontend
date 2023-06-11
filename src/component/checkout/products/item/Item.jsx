@@ -4,8 +4,7 @@ import s from "./Item.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Fragment } from "react";
 
-const ProductItem = (props) => {
-  const { id, name, shopName, image, shopAvt, price, sale } = props;
+const ProductItem = ({ id, name, shopName, image, shopAvt, price, sale }) => {
   return (
     <Fragment>
       <Grid container columns={8} key={id} className={clsx(s.container)}>
