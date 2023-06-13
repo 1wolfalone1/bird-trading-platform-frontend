@@ -1,12 +1,5 @@
 export const userList = [
-    {
-        "id": 10,
-        "userName": "ahihi"
-    },
-    {
-        "id": 9,
-        "userName": "aliba"
-    },
+
     {
         "id": 3,
         "userName": "baba"

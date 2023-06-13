@@ -25,7 +25,7 @@ const MessageUserList = () => {
     <div  className={clsx(s.container)}>
       <DialogContent sx={{padding:  "0px", overflow: "hidden"}}>
           <DialogContentText className={clsx(s.messageTitle)}>
-            <b>Select a user:</b>
+            <b>Select a shop:</b>
           </DialogContentText>
           <ul className={clsx(s.memberList)}>
             {userList.map((user) => (
