@@ -6,8 +6,9 @@ import Bird from "../../../../asset/icons/Bird";
 import Accessories from "./../../../../asset/icons/Accessories";
 import Food from "./../../../../asset/icons/Food";
 import clsx from "clsx";
-import {
+import productsPresentationSlices, {
    changeTypeProduct,
+   filterByAll,
    typeProduct,
 } from "../../../../component/products-presentation/productsPresentationSlice";
 import { useDispatch } from "react-redux";
@@ -19,8 +20,8 @@ const buttonStyle = {
 };
 const listButton = [
    { button: Bird, id: 1, type: typeProduct.BIRDS },
-   { button: Accessories, id: 2, type: typeProduct.ACCESSORIES },
-   { button: Food, id: 3, type: typeProduct.FOODS },
+   { button: Accessories, id: 3, type: typeProduct.ACCESSORIES },
+   { button: Food, id: 2, type: typeProduct.FOODS },
 ];
 export default function ProductPageSideBar() {
    const [activePage, setActivePage] = useState(1);
@@ -29,7 +30,12 @@ export default function ProductPageSideBar() {
       return (e) => {
          console.log(button, "111111111111111111111111");
          setActivePage(button.id);
-         dispatch(changeTypeProduct(button.type));
+         // dispatch(changeTypeProduct(button.type));
+         dispatch(productsPresentationSlices.actions.chagePageState(button.type))
+         dispatch(productsPresentationSlices.actions.setCategory({key:"", category: button.id}))
+         dispatch(productsPresentationSlices.actions.resetListTypeProduct())
+         dispatch(productsPresentationSlices.actions.setPageNumber({key:"", pageNumber: 1}))
+         dispatch(filterByAll())
       };
    };
    return (

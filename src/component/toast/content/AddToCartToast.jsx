@@ -25,6 +25,7 @@ const toastStatus = {
 export const toastType = {
    SUCCESS: 'success',
    WARNING: 'warning',
+   WARNING_INPUT: 'warning'
 }
 export default function AddToCartToast({ closeToast, toastProps, type, msg }) {
 

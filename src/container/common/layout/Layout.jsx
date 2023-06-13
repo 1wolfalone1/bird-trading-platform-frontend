@@ -10,6 +10,7 @@ import Style from "../../../style/inline-style/style";
 import { ThemeProvider } from "@emotion/react";
 import { red } from "@mui/material/colors";
 import ToastCustom from "../../../component/toast/ToastCustom";
+import PopupMessage from "../../../component/message/PopupMessage";
 const theme = createTheme({
    palette: {
       Accent7: {
@@ -71,6 +72,7 @@ export default function Layout() {
                <Outlet />
             </div>
             <ToastCustom/>
+            <PopupMessage/>
             <Footer />
          </ThemeProvider>
       </>
