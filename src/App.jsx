@@ -39,7 +39,7 @@ function App() {
       }
    }, []);
    useEffect(() => {
-      if (cart.items !== null && cart.items.length > 0) {
+      if (cart.items !== null && Array.isArray(cart.items)) {
          localStorage.setItem("cart", JSON.stringify(cart));
       }
    }, [cart]);

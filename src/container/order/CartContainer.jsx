@@ -181,7 +181,6 @@ export default function Cart() {
                                  }}
                               >
                                  <IconButton
-                                    
                                     onClick={() => {
                                        dispatch(
                                           cartSlice.actions.changeQuantity({
@@ -194,7 +193,12 @@ export default function Cart() {
                                     disabled={item.cartQuantity <= 1}
                                     color="Dominant1"
                                  >
-                                    <RemoveCircleOutlineIcon sx={{ fontSize: "4rem", color: "#b3f684" }}/>
+                                    <RemoveCircleOutlineIcon
+                                       sx={{
+                                          fontSize: "4rem",
+                                          color: "#b3f684",
+                                       }}
+                                    />
                                  </IconButton>
                                  <TextField
                                     value={item.cartQuantity}
@@ -209,7 +213,6 @@ export default function Cart() {
                                     }}
                                  />
                                  <IconButton
-                                   
                                     onClick={() => {
                                        dispatch(
                                           cartSlice.actions.changeQuantity({
@@ -224,7 +227,12 @@ export default function Cart() {
                                     }
                                     color="Dominant1"
                                  >
-                                    <AddCircleOutlineIcon  sx={{ fontSize: "4rem", color: "#b3f684" }}/>
+                                    <AddCircleOutlineIcon
+                                       sx={{
+                                          fontSize: "4rem",
+                                          color: "#b3f684",
+                                       }}
+                                    />
                                  </IconButton>
                               </div>
                               <div>
@@ -244,7 +252,12 @@ export default function Cart() {
                               xl={1}
                               className={clsx(s.totalPrice)}
                            >
-                              {item.discountedPrice * item.cartQuantity}$
+                              {
+                                 Number(
+                                    item.discountedPrice * item.cartQuantity
+                                 ).toFixed(1)
+                              }
+                              $
                            </Grid>
                            <Grid
                               sm={1}
@@ -305,7 +318,9 @@ export default function Cart() {
                   </div>
                </div>
                <div className={clsx(s.totalOrders)}>
-                  <p className={clsx(s.bill)}>Total orders: {Number(total).toFixed(1)}$</p>
+                  <p className={clsx(s.bill)}>
+                     Total orders: {Number(total).toFixed(1)}$
+                  </p>
                   <Button onClick={() => navigate("/checkout")}>
                      Order now
                   </Button>
