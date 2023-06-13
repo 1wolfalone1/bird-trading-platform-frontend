@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HomeProductSlider from "../../component/slider/product/HomeProductSlider";
 import Accessories from "./../../asset/icons/Accessories";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import PopupMessage from "../../component/message/PopupMessage";
 export default function Home() {
    const dispatch = useDispatch();
    const birds = useSelector(getBirdsSelector);
