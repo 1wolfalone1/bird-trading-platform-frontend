@@ -27,29 +27,56 @@
       padding-bottom: 0.5rem;
     }
     .changeButton {
-      button {
+      Button {
         color: c.$Accent6;
-        @include fsf(2.5rem);
-        border-bottom: 0.1rem solid c.$Complementary0;
-        // padding-top: 1rem;
+        @include fsf(1.5rem);
+        border: 0.1rem solid c.$Complementary0;
+        margin-bottom: 1rem;
       }
-      button:hover {
+      Button:hover {
         cursor: pointer;
       }
     }
   }
   .info {
     .nameAndPhone {
+      @include fsf(2.4rem);
       display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
+      justify-content: center;
+      border-bottom: 0.1rem solid c.$Complementary0;
+
       .name {
+        width: 50%;
         border-right: 0.2rem solid c.$Complementary0;
+        margin-bottom: 1.5rem;
+      }
+      .errorName {
+        width: 50%;
+        border-right: 0.2rem solid c.$Complementary0;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        color: red;
       }
       .phone {
+        padding-left: 2rem;
+      }
+      .errorPhone {
+        padding-left: 2rem;
+        font-size: 1.8rem;
+        margin-top: 0.5rem;
+        color: red;
       }
     }
     .address {
+      @include fsf(2.4rem);
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .errorAddress {
+      @include fsf(1.8rem);
+      margin-top: 2rem;
+      text-align: center;
+      color: red;
     }
   }
 }

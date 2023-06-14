@@ -8,16 +8,22 @@ export default function Voucher({ vouchers }) {
     <div>
       <div className={clsx(s.vouchers)}>
         <div className={clsx(s.title)}>Vouchers</div>
-        {vouchers &&
-          vouchers.map((item) => (
-            <VoucherItem
-              key={item.id}
-              id={item.id}
-              image={item.image}
-              name={item.name}
-              reduce={item.reduce}
-            ></VoucherItem>
-          ))}
+        {vouchers?.discount && (
+          <VoucherItem
+            key={vouchers.id}
+            id={vouchers.id}
+            name={vouchers.discount?.name}
+            reduce={vouchers.discount?.discount}
+          ></VoucherItem>
+        )}
+        {vouchers?.shipping && (
+          <VoucherItem
+            key={vouchers.id}
+            id={vouchers.id}
+            name={vouchers.shipping?.name}
+            reduce="Freeship"
+          ></VoucherItem>
+        )}
       </div>
     </div>
   );

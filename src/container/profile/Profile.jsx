@@ -1,10 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import clsx from "clsx";
-import { TextField } from "@mui/material";
+import { TextField, Tooltip, Typography } from "@mui/material";
 import s from "./profile.module.scss";
 import Style from "../../style/inline-style/style";
 import img from "../../asset/leftImagLogin.jpg";
 import { faCity } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import userInfoSlice, {
+  userInfoSelector,
+} from "../../redux/global/userInfoSlice";
 
 const textFieldStyle = {
   input: {
@@ -19,15 +23,10 @@ const textFieldStyle = {
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || img);
-  const [fullName, setFullName] = useState("Huynh Van Phuot");
-  const [email, setEmail] = useState("phuothvse160205@fpt.edu.vn");
-  const [joinedOn, setJoinedOn] = useState("11/11/1111");
-  const [phoneNumber, setPhoneNumber] = useState("0123456789");
   const [isEditable, setIsEditable] = useState(false); // Editable state for the fields
-  const [city, setCity] = useState("HCM");
-  const [district, setDistrict] = useState("Thu Duc");
-  const [ward, setWard] = useState("Tan Phu");
-  const [street, setStreet] = useState("313 Hoang Huu Nam");
+  const dispatch = useDispatch();
+  const { info } = useSelector(userInfoSelector);
+  const [formInfo, setFormInfo] = useState(info);
 
   const handleUpdateAvatar = (e) => {
     const reader = new FileReader();
@@ -43,33 +42,77 @@ const Profile = () => {
 
   const handleSaveChange = () => {
     setIsEditable(!isEditable);
+    if (isEditable) {
+      dispatch(userInfoSlice.actions.updateUserInfo(formInfo));
+    }
   };
 
-  const handleChangeFullName = (e) => {
-    setFullName(e.target.value);
+  useEffect(() => {}, []);
+
+  const handleUpdateProfile = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "fullName":
+        setFormInfo((prev) => ({
+          ...prev,
+          fullName: value,
+        }));
+        break;
+      case "phoneNumber":
+        setFormInfo((prev) => ({
+          ...prev,
+          phoneNumber: value,
+        }));
+        break;
+      case "city":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            city: value,
+          },
+        }));
+        break;
+      case "district":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            district: value,
+          },
+        }));
+        break;
+      case "ward":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            ward: value,
+          },
+        }));
+        break;
+      case "street":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            street: value,
+          },
+        }));
+      default:
+        break;
+    }
   };
-  const handleChangePhoneNumber = (e) => {
-    setPhoneNumber(e.target.value);
-  };
-  const handleChangeCity = (e) => {
-    setCity(e.target.value);
-  };
-  const handleChangeDistrict = (e) => {
-    setDistrict(e.target.value);
-  };
-  const handleChangeWard = (e) => {
-    setWard(e.target.value);
-  };
-  const handleChangeStreet = (e) => {
-    setStreet(e.target.value);
-  };
+
+  console.log(formInfo);
+
   return (
     <Fragment>
       <h1>Your Profile</h1>
       <div className={clsx(s.profile)}>
         <div className={clsx(s.uploadImg)}>
           <div className={clsx(s.imgProfile)}>
-            <img src={avatar} alt="" />
+            <img src={formInfo?.imgUrl} alt="" />
           </div>
 
           <input
@@ -88,123 +131,208 @@ const Profile = () => {
           <div className={clsx(s.left)}>
             <div className={clsx(s.title)}>
               <span>Name:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={fullName}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangeFullName}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo?.fullName}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo?.fullName}
+                    variant="filled"
+                    color="Dominant0"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    name="fullName"
+                    onChange={(e) => handleUpdateProfile(e)}
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>Phone:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={phoneNumber}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangePhoneNumber}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo?.phoneNumber
+                      ? formInfo.phoneNumber
+                      : "Provide your phone number"}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo?.phoneNumber || ""}
+                    variant="filled"
+                    color="Dominant0"
+                    name="phoneNumber"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    onChange={(e) => handleUpdateProfile(e)}
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>Email:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={email}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled
-                  fullWidth
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.email}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.email}
+                    variant="filled"
+                    color="Dominant0"
+                    name="email"
+                    sx={textFieldStyle}
+                    disabled
+                    fullWidth
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>Joined:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={joinedOn}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled
-                  fullWidth
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.role}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.role}
+                    variant="filled"
+                    color="Dominant0"
+                    sx={textFieldStyle}
+                    disabled
+                    fullWidth
+                  />
+                </div>
+              </Tooltip>
             </div>
           </div>
           <div className={clsx(s.right)}>
             <div className={clsx(s.title)}>
               <span>City:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={city}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangeCity}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.address?.city
+                      ? formInfo.address.city
+                      : "Provide your city"}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.address?.city || ""}
+                    variant="filled"
+                    color="Dominant0"
+                    name="city"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    onChange={(e) => handleUpdateProfile(e)}
+                    // onChange={handleChangeCity}
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>District:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={district}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangeDistrict}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.address?.district
+                      ? formInfo.address.district
+                      : "Provide your district"}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.address?.district || ""}
+                    variant="filled"
+                    color="Dominant0"
+                    name="district"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    onChange={(e) => handleUpdateProfile(e)}
+                    // onChange={handleChangeDistrict}
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>Ward:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={ward}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangeWard}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.address?.ward
+                      ? formInfo.address.ward
+                      : "Provide your ward"}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.address?.ward || ""}
+                    variant="filled"
+                    color="Dominant0"
+                    name="ward"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    onChange={(e) => handleUpdateProfile(e)}
+                    // onChange={handleChangeWard}
+                  />
+                </div>
+              </Tooltip>
             </div>
             <div className={clsx(s.title)}>
               <span>Street:</span>
-              <div className={clsx(s.inputText)}>
-                <TextField
-                  id="filled-basic"
-                  value={street}
-                  variant="filled"
-                  color="Dominant0"
-                  sx={textFieldStyle}
-                  disabled={!isEditable}
-                  fullWidth
-                  onChange={handleChangeStreet}
-                />
-              </div>
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {formInfo.address?.street
+                      ? formInfo.address.street
+                      : "Provide your street"}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.inputText)}>
+                  <TextField
+                    id="filled-basic"
+                    value={formInfo.address?.street || ""}
+                    variant="filled"
+                    color="Dominant0"
+                    name="street"
+                    sx={textFieldStyle}
+                    disabled={!isEditable}
+                    fullWidth
+                    onChange={(e) => handleUpdateProfile(e)}
+                    // onChange={handleChangeStreet}
+                  />
+                </div>
+              </Tooltip>
             </div>
           </div>
         </div>
