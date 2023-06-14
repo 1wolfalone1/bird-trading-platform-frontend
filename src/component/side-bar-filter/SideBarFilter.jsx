@@ -26,24 +26,16 @@ import OutlineInputCustom from "../input/outlinedInput/OutlineInputCustom";
 import ButtonControl from "./ButtonControl";
 import UpStar from "../../asset/icons/UpStar";
 import { api } from "../../api/server/API";
+import { useDispatch, useSelector } from "react-redux";
+import productsPresentationSlices, { categorySelector, filterObjectSelector, getTypeOfProduct, productTypeSelector } from "../products-presentation/productsPresentationSlice";
 
 const ratingCustomizer = {
    fontSize: "3.2rem",
    color: Style.color.$Dominant6,
 };
-const typeOfProduct = [
-   "Oliver Hansen",
-   "Van Henry",
-   "April Tucker",
-   "Ralph Hubbard",
-   "Omar Alexander",
-   "Carlos Abbott",
-   "Miriam Wagner",
-   "Bradley Wilkerson",
-   "Virginia Andrews",
-   "Kelly Snyder",
-];
+
 const typeOfSort = ["Increase", "Decrease"];
+
 const MenuProps = {
    disableScrollLock: true,
    PaperProps: {
@@ -55,6 +47,7 @@ const MenuProps = {
       },
    },
 };
+
 const textFieldStyle = {
    input: {
       fontSize: "2rem",
@@ -63,33 +56,75 @@ const textFieldStyle = {
       fontSize: "2rem",
    },
 };
+
 const selectStyle = {
    fontSize: "2rem",
 };
 const ratingValue = [5, 4, 3, 2, 1];
 
 export default function SideBarFilter() {
+
+   const dispatch = useDispatch();
+
+   const getProductType = useSelector(productTypeSelector)
+
+   const getCategory = useSelector(categorySelector)
+
+   const filterObj = useSelector(filterObjectSelector)
+
+
    const ref = useRef();
-   const [personName, setPersonName] = React.useState([]);
+
+   const [listSlected, setListSlected] = React.useState([]);
+
    const [openPopup, setOpenPopup] = useState(false);
+
    const [typeTextValue, setTypeTextValue] = useState("...");
 
    useEffect(() => {
-      if (personName.length > 0) {
-         setTypeTextValue(personName.join(", "));
+      if (listSlected.length > 0) {
+         const textValue = listSlected.map( a => a.name).join(", ")
+         setTypeTextValue(textValue);
       } else {
          setTypeTextValue("...");
       }
-   }, [personName]);
-   const handleChange = (event) => {
+   }, [listSlected]);
+
+   useEffect( () => {
+      dispatch(getTypeOfProduct())
+      setListSlected([])
+   },[getCategory])
+
+   const handleSelectTypeChange = (event) => {  
       const {
          target: { value },
       } = event;
-      setPersonName(
+      setListSlected(
          // On autofill we get a stringified value.
          typeof value === "string" ? value.split(",") : value
       );
+      const exist = filterObj.ListTypeId
+      const listId = value.map(a => a.id)
+      console.log(value)
+      dispatch(productsPresentationSlices.actions.addToSelectedList({key: "" , valueTemp: listId}))
+      console.log(value)
    };
+    
+
+   const handleSeletetedStar = (star) => {
+      console.log(star)
+      dispatch(productsPresentationSlices.actions.setStar({key:"", star: star}))
+   }
+
+   const handleSortDirectChange = (event) => {
+      const {
+         target: { value },
+      } = event;
+      console.log(value)
+      dispatch(productsPresentationSlices.actions.setSortDirection({key:"", direction: value}))
+   }
+
+   console.log(filterObj)
 
    return (
       <div className={clsx(s.container)}>
@@ -124,33 +159,32 @@ export default function SideBarFilter() {
                         </InputLabel>
                         <Select
                            multiple
-                           value={personName}
-                           onChange={handleChange}
+                           value={listSlected}
+                           onChange={handleSelectTypeChange}
                            input={<OutlinedInput label="Categories" />}
                            renderValue={(selected) => {
-                              const renderValue = selected.join(", ");
-                              setTypeTextValue(renderValue);
-                              return renderValue;
+                              return typeTextValue;
+
                            }}
                            MenuProps={MenuProps}
                            fullWidth={true}
                            sx={selectStyle}
                         >
-                           {typeOfProduct.map((name) => (
-                              <MenuItem key={name} value={name}>
+                           {getProductType.map((item) => (
+                              <MenuItem key={item.id} value={item}>
                                  <Checkbox
-                                    checked={personName.indexOf(name) > -1}
+                                    checked={listSlected.indexOf(item) > -1}
                                     color="Dominant5"
                                  />
                                  <span style={{ fontSize: "2rem" }}>
-                                    {name}
+                                    {item.name}
                                  </span>
                               </MenuItem>
                            ))}
                         </Select>
                      </FormControl>
                   </Tooltip>
-                  <ButtonControl/>
+                  <ButtonControl setListSlected={setListSlected} isType={true}/>
                </div>
             </div>
             <div className={s.filterComponent}>
@@ -158,7 +192,7 @@ export default function SideBarFilter() {
                <div className={s.filter}>
                   {ratingValue.map((value) => (
                      <div
-                        onClick={() => {}}
+                        onClick={() => handleSeletetedStar(value)}
                         className={s.filterRating}
                         key={value}
                      >
@@ -183,13 +217,11 @@ export default function SideBarFilter() {
                         Sort price
                      </InputLabel>
                      <Select
-                        value={''}
-                        onChange={handleChange}
+                        value={filterObj.sortPrice}
+                        onChange={handleSortDirectChange}
                         input={<OutlinedInput label="Categories" />}
                         renderValue={(selected) => {
-                           const renderValue = selected.join(", ");
-                           setTypeTextValue(renderValue);
-                           return renderValue;
+                           return filterObj.sortPrice;
                         }}
                         MenuProps={MenuProps}
                         fullWidth={true}
@@ -208,14 +240,16 @@ export default function SideBarFilter() {
                      line={"1.6rem"}
                      color="Accent7"
                      label="From price"
+                     lower = {true}
                   />
                   <OutlineInputCustom
                      fs={"2rem"}
                      line={"1.6rem"}
                      color="Accent7"
                      label="To price"
+                     lower = {false}
                   />
-                  <ButtonControl/>
+                  <ButtonControl />
                </div>
             </div>
          </div>

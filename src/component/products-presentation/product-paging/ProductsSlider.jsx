@@ -1,7 +1,7 @@
 import { Pagination } from "@mui/material";
 import s from "./productsSlider.module.scss";
 import React, { useEffect } from "react";
-import { pageSelector, slidePage } from "../productsPresentationSlice";
+import productsPresentationSlices, { filterByAll, filterObjectSelector, pageSelector, slidePage } from "../productsPresentationSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -9,16 +9,21 @@ export default function ProductsSlider({ pageNumber = 10 }) {
    const page = useSelector(pageSelector);
    const [currentPage, setCurrentPage] = useState(1);
    const dispatch = useDispatch();
+   const filterObj = useSelector(filterObjectSelector)
    console.log(pageNumber, 'pagenumber -------------------------')
    const handleChange = (event, value) => {
       console.log(value);
-      dispatch(slidePage(value));
+      dispatch(productsPresentationSlices.actions.setPageNumber({key: "", pageNumber: value}))
+      // dispatch(slidePage(value));
+      console.log(filterObj.pageNumber + "trang obj")
       setCurrentPage(value);
+      dispatch(filterByAll())     
    };
 
    useEffect(() => {
+      setCurrentPage(filterObj.pageNumber);
       console.log(page, '-------------page');
-   }, [page]);
+   }, [page, filterObj.pageNumber]);
    return (
       <div className={s.containerSlider}>
          <Pagination
@@ -37,3 +42,5 @@ export default function ProductsSlider({ pageNumber = 10 }) {
       </div>
    );
 }
+
+

@@ -10,31 +10,31 @@ import BirdHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import { homeDataStatus } from "../../../container/home/HomeSlice";
 export default function HomeProductSlider({ products, title }) {
-   return (
-      <>
-         {products.status === homeDataStatus.FULFILLED ? (
-            <div className={clsx(s.container)}>
-               <div className={s.title}>
-                  <span>{title}</span>
-               </div>
-               <Swiper
-                  spaceBetween={"0rem"}
-                  slidesPerView={4.5}
-                  modules={[Thumbs]}
-                  watchSlidesProgress
-                  onSlideChange={() => {}}
-                  onSwiper={(swiper) => {}}
-               >
-                  {products.data.map((product) => (
-                     <SwiperSlide key={product.id}>
-                        <ProductHomeCard product={product} />
-                     </SwiperSlide>
-                  ))}
-               </Swiper>
-            </div>
-         ) : (
-            "fasdfasfasdfasdf"
-         )}
-      </>
-   );
+  return (
+    <>
+      {products.status === homeDataStatus.FULFILLED ? (
+        <div className={clsx(s.container)}>
+          <div className={s.title}>
+            <span>{title}</span>
+          </div>
+          <Swiper
+            spaceBetween={"0rem"}
+            slidesPerView={4.5}
+            modules={[Thumbs]}
+            watchSlidesProgress
+            onSlideChange={() => {}}
+            onSwiper={(swiper) => {}}
+          >
+            {products.data.map((product) => (
+              <SwiperSlide key={product.id}>
+                <ProductHomeCard product={product} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      ) : (
+        "fasdfasfasdfasdf"
+      )}
+    </>
+  );
 }

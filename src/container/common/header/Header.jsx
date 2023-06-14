@@ -26,6 +26,8 @@ import globalConfigSlice, {
 } from "../../../redux/global/globalConfigSlice";
 import { Suspense } from "react";
 import { api } from "../../../api/server/API";
+import productsPresentationSlices, { filterObjectSelector } from "../../../component/products-presentation/productsPresentationSlice";
+import { filterByAll } from "../../../component/products-presentation/productsPresentationSlice";
 library.add(faCartShopping);
 const buttonStyle = {
    fontSize: "3.8rem",
@@ -44,6 +46,8 @@ export default function Header() {
    const [age, setAge] = useState("10");
    const totalCartItems = useSelector(totalItemsSelector);
    const dispatch = useDispatch();
+   const filterObj = useSelector(filterObjectSelector)
+
    useEffect(() => {
       if (
          window.location.pathname !== "/" &&
@@ -59,6 +63,18 @@ export default function Header() {
    const handleChange = (e) => {
       setAge(e.target.value);
    };
+
+   const handleChangeName = (event) => {
+      const {name, value} = event.target
+      dispatch(productsPresentationSlices.actions.setName({key: "", name: value}))
+      console.log(value)
+   }
+
+   const handleSearch = () => {
+      console.log('an')
+      dispatch(filterByAll())
+   }
+
    return (
       <div className={s.container}>
          <div className={s.logo}>
@@ -90,9 +106,11 @@ export default function Header() {
          </div>
          <div className={s.searchBar}>
             <input
+               value={filterObj.name}
                type="text"
                placeholder="Search product here"
                className={clsx(s.searchInput)}
+               onChange={handleChangeName}
             />
             <div className={clsx(s.filter)}>
                <Select
@@ -142,6 +160,7 @@ export default function Header() {
                   </MenuItem>
                </Select>
                <FontAwesomeIcon
+                  onClick={handleSearch}
                   icon={faMagnifyingGlass}
                   className={clsx(s.icon)}
                />

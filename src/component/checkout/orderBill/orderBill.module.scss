@@ -1,0 +1,120 @@
+@use "../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+.container {
+  height: 60rem;
+  background-color: c.$Dominant3;
+  padding: 5rem;
+  width: 100%;
+  @include fsf(2.4rem);
+  .header {
+    padding-bottom: 3rem;
+    .closeButton {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        color: c.$Complementary0;
+        cursor: pointer;
+        font-size: 7rem;
+        line-height: 0.9;
+        position: absolute;
+        top: 4rem;
+      }
+
+      button:hover {
+        color: red;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-size: 3.6rem;
+      font-weight: 900;
+    }
+  }
+
+  .headerContainer {
+    padding: 0 2rem;
+    border-bottom: 0.1rem solid c.$Complementary0;
+
+    .headerContent {
+      margin-bottom: 2rem;
+      .headerName {
+      }
+      .headerPrice {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .headerQuantity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+  .billContainer {
+    padding: 0 2rem 2rem 2rem;
+    border-bottom: 0.1rem solid c.$Complementary0;
+    height: 40%;
+    overflow-y: scroll;
+    .billInfo {
+      .bill {
+        height: 70%;
+        margin-top: 2rem;
+        max-width: 100%;
+        .name {
+        }
+        .price {
+          display: flex;
+          justify-content: space-around;
+        }
+        .quantity {
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+  .payment {
+    padding: 1rem 0rem 0rem 2rem;
+  }
+  .shipping {
+    padding: 1rem 0rem 0rem 2rem;
+  }
+  .discount {
+    padding: 1rem 0rem 0rem 2rem;
+  }
+  .total {
+    display: flex;
+    justify-content: end;
+    font-size: 3rem;
+    padding: 2rem 0;
+    font-weight: 900;
+  }
+  .submitBtn {
+    display: flex;
+    justify-content: end;
+    Button {
+      background-color: c.$Complementary0;
+      color: c.$Dominant3;
+      font-family: c.$Secondary;
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      border: 0.1rem solid c.$Complementary0;
+    }
+    Button:hover {
+      color: c.$Accent7;
+      background-color: c.$Dominant5;
+    }
+  }
+}
