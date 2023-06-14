@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { birdApi } from "../../api/server/products/BirdsAPI";
 import { api } from "../../api/server/API";
+import { AirlineSeatFlatRounded } from "@mui/icons-material";
 
 export const ALL_SHOP = 0;
 export const DECREASE = 1;
@@ -16,7 +17,7 @@ export const typeProduct = {
    ACCESSORIES: "accessories",
 };
 
-const productsPresentationSlices =   createSlice({
+const productsPresentationSlices = createSlice({
    name: "productsPage",
    initialState: {
       status: STATUS_PENDING,
@@ -25,13 +26,9 @@ const productsPresentationSlices =   createSlice({
       filter: {
          type: [],
          rating: 0,
-         price: {
-            sort: INCREASE,
-            range: {
-               from: 0,
-               to: Number.MAX_VALUE,
-            },
-         },
+         sort: INCREASE,
+         from: 0,
+         to: Number.MAX_VALUE,
       },
       products: {
          page: 1,
@@ -45,7 +42,7 @@ const productsPresentationSlices =   createSlice({
       },
       chagePageState: (state, action) => {
          state.typeProduct = action.payload;
-      }
+      },
    },
    extraReducers: (builder) => {
       builder
@@ -61,12 +58,12 @@ const productsPresentationSlices =   createSlice({
             console.log(action);
          })
          .addCase(changeTypeProduct.pending, (state, action) => {
-            state.status =STATUS_PENDING;
+            state.status = STATUS_PENDING;
          })
          .addCase(changeTypeProduct.fulfilled, (state, action) => {
             state.products.data = action.payload.lists;
             state.products.page = action.payload.pageNumber;
-         })
+         });
    },
 });
 export default productsPresentationSlices;
@@ -83,7 +80,7 @@ export const slidePage = createAsyncThunk(
    "products/slide-page",
    async (page, { getState }) => {
       const state = getState();
-  
+
       const res = await api.get(
          `/${state.productsPresentationData.typeProduct}/pages/${page}`
       );
@@ -91,16 +88,18 @@ export const slidePage = createAsyncThunk(
       const data = await res.data;
       return data;
    }
-);
-
+)
 export const changeTypeProduct = createAsyncThunk(
    "products/change-type",
    async (type, thunkAPI) => {
-      thunkAPI.dispatch(productsPresentationSlices.actions.chagePageState(type));
+      thunkAPI.dispatch(
+         productsPresentationSlices.actions.chagePageState(type)
+      );
       const res = await api.get(`/${type}/pages/1`);
       const data = await res.data;
       return data;
    }
 );
 
-export const pageSelector = state => state.productsPresentationData.products.page
+export const pageSelector = (state) =>
+   state.productsPresentationData.products.page;

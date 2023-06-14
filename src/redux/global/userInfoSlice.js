@@ -29,7 +29,6 @@ const userInfoSlice = createSlice({
 export default userInfoSlice;
 
 export const logout = createAsyncThunk("userInfo/logout", async () => {
-
    const data = 0;
    localStorage.removeItem("userInfo");
    return data;

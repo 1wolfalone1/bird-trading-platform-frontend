@@ -52,7 +52,7 @@ export default function Header() {
          dispatch(globalConfigSlice.actions.changeNavigateValue(3));
       }
    }, [location]);
-   
+
    const user = useSelector(userInfoSelector);
    const handleNavChange = (event, newValue) => {};
 
@@ -147,38 +147,29 @@ export default function Header() {
                />
             </div>
          </div>
+         <Button
+            onClick={() => {
+               const a = async () => {
+                  try {
+                     const id = [1, 2, 3, 4, 5];
+                     window.location.replace('http://localhost:3001');
+                     const res = await api.get("/shop-owner/redirect/local");
+                     
+                     const data = await res.data;
+                  } catch (err) {
+                     console.log(err);
+                  }
+               };
+               a();
+            }}
+         >
+            asdfasdfasdfadfsasdfasdfasdfasd
+         </Button>
          {user.status === userStatus.USER ? (
             <UserRightHeader user={user} totalCartItems={totalCartItems} />
          ) : (
             <GuestRightHeader totalCartItems={totalCartItems} />
          )}
-         {/* {
-            <Button
-               onClick={() => {
-                  const a = async () => {
-                     try {
-                        const id = [1, 2, 3, 4, 5];
-
-                        const res = await api.get("/products/id", {
-                           params: {
-                              id: [1, 2, 3, 4, 5, 7, 8],
-                              sort: 1,
-                              from: 100,
-                              to: 200
-                           }
-                        });
-                        console.log(res);
-                        const data = await res.data;
-                     } catch (err) {
-                        console.log(err);
-                     }
-                  };
-                  a();
-               }}
-            >
-               asdfasdfasdf
-            </Button>
-         } */}
       </div>
    );
 }

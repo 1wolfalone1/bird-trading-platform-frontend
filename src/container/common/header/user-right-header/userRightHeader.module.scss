@@ -21,6 +21,7 @@ $container-height: calc(c.$h-header - 3rem);
       .avatar {
          width: $container-height;
          img {
+            padding: 2.5px 0 0 1px;
             border-radius: 100%;
             width: $container-height;
             height: $container-height;
