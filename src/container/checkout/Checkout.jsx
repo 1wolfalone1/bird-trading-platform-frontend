@@ -8,47 +8,12 @@ import Delivery from "../../component/checkout/delivery/Delivery";
 import Voucher from "../../component/checkout/voucher/Voucher";
 import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
 import { useSelector } from "react-redux";
-import {
-  getCartSelector,
-  getListItemSelector,
-  totalPriceSelector,
-} from "../order/cartSlice";
-
-// const products = [
-//   {
-//     id: 1,
-//     name: "Blue Jay Blue Jay Blue Jay",
-//     shopName: "Shop 1",
-//     image:
-//       "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
-//     shopAvt:
-//       "https://cdn.download.ams.birds.cornell.edu/api/v1/asset/302355171/1800",
-//     price: 10,
-//     sale: "5%",
-//   },
-//   {
-//     id: 2,
-//     name: "Cardinal Cardinal Cardinal",
-//     shopName: "Shop 2",
-//     image:
-//       "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
-//     shopAvt:
-//       "https://www.thespruce.com/thmb/MAIPOntEWbxzkwi-MQLeSKL_74c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/northern-cardinal-profile-387268-02-aa299072737b4de78180a11dfc110bc9.jpg",
-//     price: 12,
-//     sale: "10%",
-//   },
-//   {
-//     id: 3,
-//     name: "Hummingbird Hummingbird",
-//     shopName: "Shop 3",
-//     image:
-//       "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
-//     shopAvt:
-//       "https://www.birdnote.org/sites/default/files/annas-hummingbird-thriving-Becky-Matsubara-cc-crp.jpg",
-//     price: 8,
-//     sale: "5%",
-//   },
-// ];
+import { getCartSelector } from "../order/cartSlice";
+import { useState } from "react";
+import Popup from "reactjs-popup";
+import OrderBill from "../../component/checkout/orderBill/OrderBill";
+import { Button } from "@mui/material";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
 
 const payment = [
   {
@@ -65,55 +30,75 @@ const payment = [
       "https://www.inventicons.com/uploads/iconset/703/wm/512/Cash_on_delivery-98.png",
     method: "Cash on delivery (COD)",
     discount: 0,
-    name: "COD",
-  },
-  // {
-  //   id: 3,
-  //   image: "https://example.com/creditcard.png",
-  //   method: "Credit Card",
-  //   discount: 10,
-  // },
-];
-
-const deliveryInfo = {
-  customerName: "Huynh Van Phuot",
-  phone: "0123456789",
-  address: "Thu Duc City, HCM City",
-};
-
-const vouchers = [
-  {
-    id: 1,
-    image: "https://img.timviec.com.vn/2020/10/voucher-la-gi-3.jpg",
-    name: "Happy new year",
-    reduce: "3$",
-  },
-  {
-    id: 2,
-    image: "https://img.timviec.com.vn/2020/10/voucher-la-gi-3.jpg",
-    name: "Newbie",
-    reduce: "50%",
+    name: "Delivery",
   },
 ];
 
 export default function Checkout() {
-  const products = useSelector(getCartSelector);
-  console.log("list product: ", products);
+  const { items, voucherSelected } = useSelector(getCartSelector);
+  const [paymentType, setPaymentType] = useState();
+  const { info } = useSelector(userInfoSelector);
 
-  const total = useSelector(totalPriceSelector);
-  console.log("total", total);
+  const handleSelectPayment = (paymentName) => {
+    setPaymentType(paymentName);
+  };
+  console.log(paymentType);
 
+  let subTotal = Number(
+    items
+      .reduce(
+        (total, item) => total + item.discountedPrice * item.cartQuantity,
+        0
+      )
+      .toFixed(1)
+  );
+
+  let shipTotal = !voucherSelected.shipping
+    ? Number((0.05 * subTotal).toFixed(1))
+    : 0;
+
+  let promotion = voucherSelected.discount?.discount ?? 0;
+
+  const handleCheckout = () => {
+    return (
+      paymentType === undefined ||
+      info.address.street === null ||
+      info.address.ward === null ||
+      info.address.district === null ||
+      info.address.city === null ||
+      info.fullName === null ||
+      info.phoneNumber === null
+    );
+  };
+
+  console.log("paymentType:", paymentType);
   return (
     <div>
       <Grid container columns={11} className={clsx(s.container)}>
         <Grid sm={7} md={7} xl={7} className={clsx(s.left)}>
-          <Products products={products} />
+          <Products products={items} />
         </Grid>
         <Grid sm={4} md={4} xl={4} className={clsx(s.right)}>
-          <Delivery />
-          <Voucher vouchers={vouchers} />
-          <Payment payment={payment} />
-          <TotalOrder />
+          <Delivery userInfo={info} />
+          <Voucher vouchers={voucherSelected} />
+          <Payment
+            handleSelectPayment={handleSelectPayment}
+            payment={payment}
+          />
+          <TotalOrder
+            subTotal={subTotal}
+            shipTotal={shipTotal}
+            promotion={promotion}
+          />
+          <div className={clsx(s.orderButton)}>
+            <Popup
+              className="addButton"
+              modal
+              trigger=<Button disabled={handleCheckout()}>Check out</Button>
+            >
+              {(close) => <OrderBill close={close} paymentType={paymentType} />}
+            </Popup>
+          </div>
         </Grid>
       </Grid>
     </div>

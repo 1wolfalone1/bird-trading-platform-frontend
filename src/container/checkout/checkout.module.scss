@@ -1,1 +1,22 @@
 @use "../style/" as c;
+
+.orderButton {
+  margin: 2rem 12rem 2rem 1.5rem;
+  display: flex;
+  justify-content: end;
+
+  & > Button {
+    background-color: c.$Complementary6;
+    color: c.$Complementary0;
+    font-weight: 900;
+    font-family: c.$Secondary;
+    border: 0.1rem solid c.$Complementary0;
+    font-size: 2rem;
+    padding: 1rem 3rem;
+
+    &:hover {
+      color: c.$Accent7;
+      background-color: c.$Dominant5;
+    }
+  }
+}

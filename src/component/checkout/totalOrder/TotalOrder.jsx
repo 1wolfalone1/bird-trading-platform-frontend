@@ -1,19 +1,8 @@
 import React, { Fragment } from "react";
 import clsx from "clsx";
 import s from "./TotalOrder.module.scss";
-import { Button } from "@mui/material";
-import Popup from "reactjs-popup";
-import OrderBill from "../orderBill/OrderBill";
 
-export default function TotalOrder() {
-  const totalOrder = {
-    subtotal: 22,
-    delivery: 5,
-    promotion: 7,
-  };
-
-  const totalPrice =
-    totalOrder.subtotal + totalOrder.delivery - totalOrder.promotion;
+export default function TotalOrder({ subTotal, shipTotal, promotion }) {
   return (
     <Fragment>
       <div className={clsx(s.container)}>
@@ -21,29 +10,20 @@ export default function TotalOrder() {
         <div className={clsx(s.content)}>
           <div className={clsx(s.subtotal)}>
             <div>Merchandise Subtotal: </div>
-            <div>{totalOrder.subtotal}$</div>
+            <div>{subTotal}$</div>
           </div>
           <div className={clsx(s.delivery)}>
             <div>Shipping Total: </div>
-            <div>{totalOrder.delivery}$</div>
+            <div>{shipTotal}$</div>
           </div>
           <div className={clsx(s.promotion)}>
             <div>Promotion: </div>
-            <div>{totalOrder.promotion}$</div>
+            <div>{promotion}$</div>
           </div>
         </div>
         <div className={clsx(s.total)}>
           <div>Total payment: </div>
-          <div>{totalPrice}$</div>
-        </div>
-        <div className={clsx(s.orderButton)}>
-          <Popup
-            className="addButton"
-            modal
-            trigger={<Button>Checkout</Button>}
-          >
-            {(close) => <OrderBill close={close} />}
-          </Popup>
+          <div>{Number(subTotal + shipTotal - promotion).toFixed(1)}$</div>
         </div>
       </div>
     </Fragment>

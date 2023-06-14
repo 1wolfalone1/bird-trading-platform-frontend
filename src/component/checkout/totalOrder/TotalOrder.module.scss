@@ -41,26 +41,16 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 0.5rem;
-      // border-bottom: 0.1rem solid c.$Complementary0;
     }
   }
   .total {
     font-size: 2.7rem;
     display: flex;
     justify-content: space-between;
-    padding: 2rem 2rem;
+    padding: 2rem 2rem 0 2rem;
     margin-top: 1rem;
     color: c.$Accent7;
     border-top: 0.1rem solid c.$Complementary0;
     font-weight: 900;
-  }
-  .orderButton {
-    display: flex;
-    justify-content: end;
-    Button {
-      border: 0.1rem solid c.$Complementary0;
-      font-size: 1.8rem;
-      padding: 0.8rem 3rem;
-    }
   }
 }

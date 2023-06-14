@@ -8,12 +8,25 @@
 .products {
   background-color: c.$Dominant3;
   margin: 4rem 6rem 4rem 12rem;
-  padding: 2rem;
+  padding: 3rem;
   .title {
     @include fsw;
     font-family: c.$Secondary;
     margin: 0 3rem;
-    border-bottom: 0.3rem solid c.$Complementary0;
+    border-bottom: 0.2rem solid c.$Complementary0;
     padding-bottom: 1rem;
+  }
+  .productList {
+    @include fsw;
+    font-family: c.$Secondary;
+    margin: 0 3rem;
+    border-bottom: 0.2rem solid c.$Complementary0;
+    text-align: center;
+    .header {
+      font-family: c.$Secondary;
+      @include fsw;
+      text-align: center;
+      margin: 1rem 0;
+    }
   }
 }

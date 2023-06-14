@@ -13,7 +13,7 @@
 .container {
   @include fsf(2.4rem);
   background-color: c.$Dominant4;
-  margin: 1rem 3rem !important;
+  margin: 3rem !important;
   max-height: 17.5rem;
   .productImage {
     img {
@@ -24,34 +24,23 @@
   .productInfo {
     display: flex;
     flex-direction: column;
-    margin: auto 0;
     justify-content: center;
-    .shop {
-      display: flex;
-      align-items: flex-start;
-      // justify-content: space-between;
-      .shopImage {
-        margin-right: 2rem;
-        img {
-          width: 6rem;
-          height: 6rem;
-          border-radius: 50%;
-        }
-      }
-      .shopName {
-        font-size: 2rem;
-        margin: auto 0;
-      }
+    padding-left: 5rem;
+    .productName {
     }
+    .shopName {
+      font-size: 2rem;
+    }
+  }
+
+  .productQuantity {
+    font-size: 2rem;
+    margin: auto 0;
+    text-align: center;
   }
   .productPrice {
     font-size: 2rem;
     margin: auto 0;
-
-    .price {
-      margin-left: 4rem;
-    }
-    .sale {
-    }
+    text-align: center;
   }
 }
