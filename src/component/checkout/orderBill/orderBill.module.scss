@@ -10,6 +10,20 @@
   font-family: $ff;
 }
 
+@mixin button(
+  $padding: 1rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2.4rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
 .container {
   height: 60rem;
   background-color: c.$Dominant3;
@@ -65,7 +79,7 @@
   .billContainer {
     padding: 0 2rem 2rem 2rem;
     border-bottom: 0.1rem solid c.$Complementary0;
-    height: 40%;
+    height: 36%;
     overflow-y: scroll;
     .billInfo {
       .bill {
@@ -105,12 +119,7 @@
     display: flex;
     justify-content: end;
     Button {
-      background-color: c.$Complementary0;
-      color: c.$Dominant3;
-      font-family: c.$Secondary;
-      font-size: 2rem;
-      padding: 1rem 2rem;
-      border: 0.1rem solid c.$Complementary0;
+      @include button(1rem 2rem);
     }
     Button:hover {
       color: c.$Accent7;

@@ -106,7 +106,9 @@ export default function OrderBill({ close, paymentType }) {
           </Grid>
         ))}
       </div>
-      <div className={clsx(s.payment)}>Payment Method: {paymentType}</div>
+      <div className={clsx(s.payment)}>
+        Payment Method: {paymentType === "Delivery" ? "COD" : "PayPal"}
+      </div>
       <div className={clsx(s.shipping)}>Shipping Total: {shipTotal}$</div>
       <div className={clsx(s.discount)}>Promotion: {promotion}$</div>
       <div className={clsx(s.total)}>

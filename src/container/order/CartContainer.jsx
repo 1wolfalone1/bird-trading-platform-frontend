@@ -99,7 +99,7 @@ export default function Cart() {
                           <h3>{item?.shopOwner?.shopName}</h3>
                         </div>
                         <div className={clsx(s.productShop)}>
-                          <h3>{item.name}</h3>
+                          <h3>Shop: {item.name}</h3>
                         </div>
                       </div>
                     </div>

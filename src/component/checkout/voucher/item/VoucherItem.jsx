@@ -8,8 +8,14 @@ const VoucherItem = ({ id, name, reduce }) => {
     "https://img.meta.com.vn/Data/image/2020/10/29/freeship-la-gi-4.jpg";
   const imageDiscount =
     "https://www.pngall.com/wp-content/uploads/2016/04/Discount-PNG-Picture.png";
+  if (!id) {
+    console.log("No voucher chosen");
+    <div>You haven't chosen any vouchers</div>;
+  }
+
   return (
     <Fragment>
+      {console.log("Rendering vouchers")}
       <Grid container columns={10} key={id} className={clsx(s.container)}>
         <Grid sm={6} md={6} xl={6} className={clsx(s.voucher)}>
           <Grid className={clsx(s.voucherImage)}>
