@@ -14,20 +14,20 @@ import Popup from "reactjs-popup";
 import OrderBill from "../../component/checkout/orderBill/OrderBill";
 import { Button } from "@mui/material";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import COD from "../../asset/image/COD.avif";
+import PayPal from "../../asset/image/Paypal.avif";
 
 const payment = [
   {
     id: 1,
-    image:
-      "https://www.nicepng.com/png/detail/19-194337_paypal-logo-transparent-png-paypal-logo-transparent.png",
+    image: PayPal,
     method: "PayPal Wallet",
     discount: 5,
     name: "PayPal",
   },
   {
     id: 2,
-    image:
-      "https://www.inventicons.com/uploads/iconset/703/wm/512/Cash_on_delivery-98.png",
+    image: COD,
     method: "Cash on delivery (COD)",
     discount: 0,
     name: "Delivery",
@@ -38,7 +38,6 @@ export default function Checkout() {
   const { items, voucherSelected } = useSelector(getCartSelector);
   const [paymentType, setPaymentType] = useState();
   const { info } = useSelector(userInfoSelector);
-
   const handleSelectPayment = (paymentName) => {
     setPaymentType(paymentName);
   };
@@ -50,24 +49,24 @@ export default function Checkout() {
         (total, item) => total + item.discountedPrice * item.cartQuantity,
         0
       )
-      .toFixed(1)
+      .toFixed(2)
   );
 
   let shipTotal = !voucherSelected.shipping
-    ? Number((0.05 * subTotal).toFixed(1))
+    ? Number((0.05 * subTotal).toFixed(2))
     : 0;
 
   let promotion = voucherSelected.discount?.discount ?? 0;
 
   const handleCheckout = () => {
     return (
-      paymentType === undefined ||
-      info.address.street === null ||
-      info.address.ward === null ||
-      info.address.district === null ||
-      info.address.city === null ||
-      info.fullName === null ||
-      info.phoneNumber === null
+      !info.address?.street ||
+      !info.address?.ward ||
+      !info.address?.district ||
+      !info.address?.city ||
+      !info?.fullName ||
+      !info?.phoneNumber ||
+      paymentType === undefined
     );
   };
 
@@ -75,10 +74,10 @@ export default function Checkout() {
   return (
     <div>
       <Grid container columns={11} className={clsx(s.container)}>
-        <Grid sm={7} md={7} xl={7} className={clsx(s.left)}>
+        <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
           <Products products={items} />
         </Grid>
-        <Grid sm={4} md={4} xl={4} className={clsx(s.right)}>
+        <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
           <Delivery userInfo={info} />
           <Voucher vouchers={voucherSelected} />
           <Payment

@@ -1,18 +1,26 @@
 @use "../style/" as c;
 
+@mixin button(
+  $padding: 1rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2.4rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
 .orderButton {
   margin: 2rem 12rem 2rem 1.5rem;
   display: flex;
   justify-content: end;
 
-  & > Button {
-    background-color: c.$Complementary6;
-    color: c.$Complementary0;
-    font-weight: 900;
-    font-family: c.$Secondary;
-    border: 0.1rem solid c.$Complementary0;
-    font-size: 2rem;
-    padding: 1rem 3rem;
+  Button {
+    @include button(1rem 2rem, c.$Complementary0, c.$Complementary6);
 
     &:hover {
       color: c.$Accent7;

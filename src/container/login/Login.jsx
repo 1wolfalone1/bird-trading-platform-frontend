@@ -19,7 +19,7 @@ import { errorAuthentication } from "../../config/constant";
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
-    fontSize: "2.4rem",
+    fontSize: "2rem",
     fontFamily: Style.font.$Primary,
   },
   label: {

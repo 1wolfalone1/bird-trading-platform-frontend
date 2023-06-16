@@ -4,15 +4,7 @@ import s from "./Item.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Fragment } from "react";
 
-const ProductItem = ({
-  id,
-  name,
-  shopName,
-  quantity,
-  image,
-  shopAvt,
-  price,
-}) => {
+const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
   return (
     <Fragment>
       <Grid container columns={10} key={id} className={clsx(s.container)}>
@@ -33,7 +25,7 @@ const ProductItem = ({
         </Grid>
 
         <Grid sm={2} md={2} xl={2} className={clsx(s.productPrice)}>
-          <h3>{price}$</h3>
+          <h3>{Number(price).toFixed(2)}$</h3>
         </Grid>
       </Grid>
     </Fragment>

@@ -1,0 +1,86 @@
+@use "../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+@mixin button(
+  $padding: 1rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2.4rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  background-color: c.$Dominant3;
+  padding: 5rem;
+  @include fsf(2.4rem);
+  .header {
+    padding-bottom: 5rem;
+
+    .title {
+      text-align: center;
+      font-size: 3.6rem;
+      font-weight: 900;
+    }
+    .closeButton {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        color: c.$Complementary0;
+        cursor: pointer;
+        font-size: 7rem;
+        line-height: 0.9;
+        position: absolute;
+        top: 4rem;
+      }
+
+      button:hover {
+        color: red;
+      }
+    }
+  }
+
+  .information {
+    .nameAndPhone {
+      display: flex;
+      justify-content: space-between;
+      .name {
+      }
+      .phone {
+      }
+    }
+    .address {
+      margin: 5rem;
+    }
+    .street {
+      padding: 5rem;
+    }
+  }
+  .submitBtn {
+    display: flex;
+    justify-content: end;
+    Button {
+      @include button(1rem 2rem);
+    }
+    Button:hover {
+      color: c.$Accent7;
+      background-color: c.$Dominant5;
+    }
+  }
+}
