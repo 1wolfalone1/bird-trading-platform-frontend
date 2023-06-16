@@ -61,7 +61,6 @@ const textFieldStyle = {
     fontSize: "2rem",
   },
 };
-
 const selectStyle = {
   fontSize: "2rem",
 };
@@ -148,9 +147,7 @@ export default function SideBarFilter() {
           console.log("asfasfd");
           setOpenPopup((openPopup) => !openPopup);
         }}
-      >
-        <Filter className={s.iconFilter} /> <span>Search filter</span>
-      </div>
+      ></div>
       <div className={s.filterControl} ref={ref}>
         <div className={s.filterComponent}>
           <span className={s.title}>Type</span>

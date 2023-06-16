@@ -12,7 +12,8 @@
 
 .container {
   @include fsf(2.4rem);
-  background-color: c.$Dominant4;
+  background-color: c.$Complementary4;
+  color: c.$Dominant2;
   margin: 3rem !important;
   max-height: 17.5rem;
   .productImage {

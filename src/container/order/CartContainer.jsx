@@ -17,6 +17,7 @@ import DiscountIcon from "@mui/icons-material/Discount";
 import { useNavigate } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -25,6 +26,8 @@ export default function Cart() {
   const total = useSelector(totalPriceSelector);
   const carts = useSelector(getListItemSelector);
   const navigate = useNavigate();
+  const { status } = useSelector(userInfoSelector);
+  console.log("info", status);
   const handleChangeQuantity = (item) => {
     return (e) => {
       dispatch(
@@ -47,6 +50,16 @@ export default function Cart() {
       dispatch(cartSlice.actions.removeVoucher(item));
     };
   };
+
+  const handleOrderNowClick = () => {
+    console.log("iiiiiinfoooooooo", status);
+    if (status === 0) {
+      navigate("/login");
+    } else {
+      navigate("/checkout");
+    }
+  };
+
   return (
     <>
       {carts.length > 0 ? (
@@ -96,10 +109,10 @@ export default function Cart() {
                       <img src={item.imgUrl} alt={item.name} />
                       <div className={clsx(s.productInfo)}>
                         <div className={clsx(s.productName)}>
-                          <h3>{item?.shopOwner?.shopName}</h3>
+                          <h3>{item.name}</h3>
                         </div>
-                        <div className={clsx(s.productShop)}>
-                          <h3>Shop: {item.name}</h3>
+                        <div className={clsx(s.shopName)}>
+                          <h3>Shop: {item?.shopOwner?.shopName}</h3>
                         </div>
                       </div>
                     </div>
@@ -108,7 +121,7 @@ export default function Cart() {
                     {item.quantity}
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
-                    {item.discountedPrice}$
+                    {Number(item.discountedPrice).toFixed(2)}$
                   </Grid>
 
                   <Grid
@@ -189,7 +202,7 @@ export default function Cart() {
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
                     {Number(item.discountedPrice * item.cartQuantity).toFixed(
-                      1
+                      2
                     )}
                     $
                   </Grid>
@@ -270,9 +283,10 @@ export default function Cart() {
           </div>
           <div className={clsx(s.totalOrders)}>
             <p className={clsx(s.bill)}>
-              Total orders: {Number(total).toFixed(1)}$
+              Total orders: {Number(total).toFixed(2)}$
             </p>
-            <Button onClick={() => navigate("/checkout")}>Order now</Button>
+            <Button onClick={handleOrderNowClick}>Order now</Button>
+            {/*  => navigate("/checkout") */}
           </div>
         </div>
       ) : (

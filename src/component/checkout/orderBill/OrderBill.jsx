@@ -10,7 +10,6 @@ import { userInfoSelector } from "../../../redux/global/userInfoSlice";
 
 export default function OrderBill({ close, paymentType }) {
   const { items, voucherSelected } = useSelector(getCartSelector);
-  console.log(voucherSelected);
   const { info } = useSelector(userInfoSelector);
   let subTotal = Number(
     items
@@ -18,25 +17,36 @@ export default function OrderBill({ close, paymentType }) {
         (total, item) => total + item.discountedPrice * item.cartQuantity,
         0
       )
-      .toFixed(1)
+      .toFixed(2)
   );
 
+  console.log(subTotal);
   let shipTotal = !voucherSelected.shipping
-    ? Number((0.05 * subTotal).toFixed(1))
+    ? Number((0.05 * subTotal).toFixed(2))
     : 0;
 
   let promotion = voucherSelected.discount?.discount ?? 0;
 
-  console.log(info);
   const handleSubmitBtn = () => {
     // Create a data object with the required payload
-    const productOrder = items.reduce((order, item) => {
-      order[item.productId] = item.quantity;
-      return order;
+    const productOrder = items.reduce((acc, order) => {
+      return { ...acc, [order.id]: order.cartQuantity };
     }, {});
 
-    // const promotionId = voucherSelected.map((voucher) => voucher.id);
-    // console.log(promotionId);
+    const promotionId = [];
+    if (voucherSelected.shipping?.id) {
+      promotionId.push(voucherSelected.shipping.id);
+    }
+
+    if (voucherSelected.discount?.id) {
+      promotionId.push(voucherSelected.discount.id);
+    }
+    const totalPrice = () => {
+      return subTotal + shipTotal - promotion > 0
+        ? subTotal + shipTotal - promotion
+        : 0;
+    };
+
     const data = {
       userOrderDto: {
         email: info.email,
@@ -48,16 +58,15 @@ export default function OrderBill({ close, paymentType }) {
         city: info.address.city,
       },
       transactionDto: {
-        totalPrice: Number((subTotal + shipTotal - promotion).toFixed(1)),
-        promotionId: [],
-        paymentMethod: paymentType,
+        totalPrice: totalPrice(),
+        promotionId: promotionId,
+        paymentMethod: paymentType.toUpperCase(),
       },
       productOrder: productOrder,
     };
 
-    // Make a POST request to the backend API using Axios
     axios
-      .post("thongtienthienphuot.shop/api/v1/package-order", data)
+      .post("https://thongtienthienphuot.shop/api/v1/package-order", data)
       .then((response) => {
         // Handle the response from the backend, if needed
         console.log(response.data);
@@ -100,7 +109,7 @@ export default function OrderBill({ close, paymentType }) {
                 {item.cartQuantity}
               </Grid>
               <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
-                {Number(item.discountedPrice * item.cartQuantity).toFixed(1)}$
+                {Number(item.discountedPrice * item.cartQuantity).toFixed(2)}$
               </Grid>
             </Grid>
           </Grid>
@@ -110,9 +119,15 @@ export default function OrderBill({ close, paymentType }) {
         Payment Method: {paymentType === "Delivery" ? "COD" : "PayPal"}
       </div>
       <div className={clsx(s.shipping)}>Shipping Total: {shipTotal}$</div>
-      <div className={clsx(s.discount)}>Promotion: {promotion}$</div>
+      <div className={clsx(s.discount)}>
+        Promotion: {Number(promotion).toFixed(2)}$
+      </div>
       <div className={clsx(s.total)}>
-        Total bill: {Number(subTotal + shipTotal - promotion).toFixed(1)}$
+        Total bill:{" "}
+        {subTotal + shipTotal - promotion < 0
+          ? "0"
+          : Number(subTotal + shipTotal - promotion).toFixed(2)}
+        $
       </div>
       <div className={clsx(s.submitBtn)}>
         <Button onClick={handleSubmitBtn}>Place Order</Button>

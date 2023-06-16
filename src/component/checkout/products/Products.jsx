@@ -24,7 +24,7 @@ export default function Products({ products }) {
                 Quantity
               </Grid>
               <Grid sm={2} md={2} xl={2} className={clsx(s.price)}>
-                Price
+                Total
               </Grid>
             </Grid>
           </Grid>
@@ -38,7 +38,7 @@ export default function Products({ products }) {
               shopName={item.shopOwner.shopName}
               image={item.imgUrl}
               price={Number(item.discountedPrice * item.cartQuantity).toFixed(
-                1
+                2
               )}
               quantity={item.cartQuantity}
             ></Product>

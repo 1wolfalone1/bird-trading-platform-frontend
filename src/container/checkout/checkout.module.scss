@@ -19,7 +19,7 @@
   display: flex;
   justify-content: end;
 
-  & > Button {
+  Button {
     @include button(1rem 2rem, c.$Complementary0, c.$Complementary6);
 
     &:hover {

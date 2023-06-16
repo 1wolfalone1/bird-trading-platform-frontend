@@ -1,50 +1,48 @@
-@use '../style/' as c;
+@use "../style/" as c;
 
 .buttonContainer {
-   box-sizing: border-box;
+  box-sizing: border-box;
 
-   /* Auto layout */
+  /* Auto layout */
 
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   padding: 2rem 4rem;
-   gap: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 3rem;
+  gap: 10px;
 
-   width: fit-content;
-   height: 75px;
+  width: fit-content;
+  height: 7.5rem;
 
-   /* Dominant/5 */
+  /* Dominant/5 */
 
-   border: 1px solid c.$Accent7;
-   border-radius: 37px;
+  border: 1px solid c.$Accent7;
+  border-radius: 37px;
 
-   /* Inside auto layout */
+  /* Inside auto layout */
 
-   flex: none;
-   order: 5;
-   flex-grow: 0;
-   span {
-      font-weight: 500;
-      font-family: c.$Secondary;
-      font-style: normal;
-      font-size: 3.2rem;
-      line-height: 45px;
-      /* identical to box height */
+  flex: none;
+  order: 5;
+  flex-grow: 0;
+  span {
+    font-weight: 500;
+    font-family: c.$Secondary;
+    font-style: normal;
+    font-size: 3rem;
+    line-height: 45px;
+    /* identical to box height */
 
-      display: flex;
-      align-items: center;
-      text-align: center;
-      color: c.$Complementary1;
-   }
-   img {
-      height: 5rem;
-      margin-left: 0.8rem;
-      z-index: -1;
-      
-   }
-  
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: c.$Complementary1;
+  }
+  img {
+    height: 5rem;
+    margin-left: 0.8rem;
+    z-index: -1;
+  }
 }
 // .ripple {
 //    background-position: center;

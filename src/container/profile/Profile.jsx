@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import clsx from "clsx";
-import { TextField, Tooltip, Typography } from "@mui/material";
+import { Button, TextField, Tooltip, Typography } from "@mui/material";
 import s from "./profile.module.scss";
 import Style from "../../style/inline-style/style";
 import img from "../../asset/leftImagLogin.jpg";
@@ -99,6 +99,7 @@ const Profile = () => {
             street: value,
           },
         }));
+        break;
       default:
         break;
     }
@@ -122,7 +123,7 @@ const Profile = () => {
             hidden
             onChange={handleUpdateAvatar}
           />
-          <label className={clsx(s.edit_profile)} htmlFor="customFile">
+          <label className={clsx(s.editProfile)} htmlFor="customFile">
             Choose Avatar
           </label>
         </div>
@@ -338,13 +339,13 @@ const Profile = () => {
         </div>
       </div>
       <div className={clsx(s.containerButton)}>
-        <button
+        <Button
           type="button"
           className={clsx(s.saveChange)}
           onClick={handleSaveChange}
         >
           {isEditable ? "Save Change" : "Edit"}
-        </button>
+        </Button>
       </div>
     </Fragment>
   );

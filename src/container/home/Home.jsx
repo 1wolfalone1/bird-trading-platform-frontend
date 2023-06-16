@@ -41,9 +41,9 @@ export default function Home() {
         <HomeCarousel />
       </div>
       <div className={clsx(s.content)}>
-        <HomeProductSlider products={topProduct} title={"Top product"} />
+        <HomeProductSlider products={topProduct} title={"Top Products"} />
         <HomeProductSlider products={birds} title={"Birds"} />
-        <HomeProductSlider products={food} title={"Food"} />
+        <HomeProductSlider products={food} title={"Foods"} />
         <HomeProductSlider products={accessories} title={"Accessories"} />
       </div>
     </div>

@@ -4,25 +4,34 @@ import s from "../voucher/Voucher.module.scss";
 import VoucherItem from "./item/VoucherItem";
 
 export default function Voucher({ vouchers }) {
+  console.log(vouchers);
   return (
     <div>
       <div className={clsx(s.vouchers)}>
         <div className={clsx(s.title)}>Vouchers</div>
-        {vouchers?.discount && (
-          <VoucherItem
-            key={vouchers.id}
-            id={vouchers.id}
-            name={vouchers.discount?.name}
-            reduce={vouchers.discount?.discount}
-          ></VoucherItem>
-        )}
-        {vouchers?.shipping && (
-          <VoucherItem
-            key={vouchers.id}
-            id={vouchers.id}
-            name={vouchers.shipping?.name}
-            reduce="Freeship"
-          ></VoucherItem>
+        {vouchers.shipping !== null || vouchers.discount !== null ? (
+          <>
+            {vouchers?.discount && (
+              <VoucherItem
+                key={vouchers.id}
+                id={vouchers.id}
+                name={vouchers.discount?.name}
+                reduce={vouchers.discount?.discount}
+              ></VoucherItem>
+            )}
+            {vouchers?.shipping && (
+              <VoucherItem
+                key={vouchers.id}
+                id={vouchers.id}
+                name={vouchers.shipping?.name}
+                reduce="Freeship"
+              ></VoucherItem>
+            )}
+          </>
+        ) : (
+          <div className={clsx(s.errorVouchers)}>
+            You haven't choose any vouchers!
+          </div>
         )}
       </div>
     </div>

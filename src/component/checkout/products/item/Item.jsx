@@ -25,7 +25,7 @@ const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
         </Grid>
 
         <Grid sm={2} md={2} xl={2} className={clsx(s.productPrice)}>
-          <h3>{price}$</h3>
+          <h3>{Number(price).toFixed(2)}$</h3>
         </Grid>
       </Grid>
     </Fragment>
