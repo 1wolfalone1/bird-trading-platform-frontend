@@ -165,13 +165,13 @@ export const getTypeOfProduct = createAsyncThunk(
     console.log(state.productsPresentationData.typeProduct);
     try {
       if (state.productsPresentationData.typeProduct == typeProduct.BIRDS) {
-        const res = await api.get("/shop-owner/type-birds");
+        const res = await api.get("/shop-owner/types/birds");
         const data = await res.data;
         console.log(res.data);
         return data;
       }
       if (state.productsPresentationData.typeProduct == typeProduct.FOODS) {
-        const res = await api.get("/shop-owner/type-foods");
+        const res = await api.get("/shop-owner/types/foods");
         const data = await res.data;
         console.log(res.data);
         return data;
@@ -179,7 +179,7 @@ export const getTypeOfProduct = createAsyncThunk(
       if (
         state.productsPresentationData.typeProduct == typeProduct.ACCESSORIES
       ) {
-        const res = await api.get("/shop-owner/type-accessories");
+        const res = await api.get("/shop-owner/types/accessories");
         const data = await res.data;
         console.log(res.data);
         return data;
