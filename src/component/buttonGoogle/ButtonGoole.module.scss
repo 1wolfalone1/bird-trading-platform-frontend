@@ -9,11 +9,11 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   gap: 10px;
 
   width: fit-content;
-  height: 7.5rem;
+  height: 6.5rem;
 
   /* Dominant/5 */
 
@@ -29,7 +29,7 @@
     font-weight: 500;
     font-family: c.$Secondary;
     font-style: normal;
-    font-size: 3rem;
+    font-size: 2.4rem;
     line-height: 45px;
     /* identical to box height */
 
@@ -39,7 +39,7 @@
     color: c.$Complementary1;
   }
   img {
-    height: 5rem;
+    height: 4.5rem;
     margin-left: 0.8rem;
     z-index: -1;
   }

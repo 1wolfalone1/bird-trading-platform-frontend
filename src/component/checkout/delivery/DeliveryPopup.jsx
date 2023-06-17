@@ -1,4 +1,3 @@
-import $ from "jquery";
 import React, { useEffect, useState } from "react";
 import s from "./deliveryPopup.module.scss";
 import { useSelector } from "react-redux";
@@ -6,25 +5,25 @@ import { userInfoSelector } from "../../../redux/global/userInfoSlice";
 import Style from "../../../style/inline-style/style";
 import clsx from "clsx";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Button, TextField } from "@mui/material";
-import axios from "axios";
-import {
-  apiGetPublicDistrict,
-  apiGetPublicProvinces,
-  getAPIProvince,
-} from "../../../api/server/location/LocationAPI";
+import { Button, TextField, Tooltip, Typography } from "@mui/material";
 
 const textFieldStyle = {
   marginBottom: "2rem",
+  marginTop: "2rem",
   input: {
     color: Style.color.$Complementary0,
-    fontSize: "2rem",
     fontFamily: Style.font.$Primary,
+    fontSize: "2rem",
   },
   label: {
     fontSize: "2rem",
   },
+  ".MuiOutlinedInput-notchedOutline legend": {
+    fontSize: "1.5rem",
+  },
 };
+
+const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 export default function DeliveryPopup({ close }) {
   const { info } = useSelector(userInfoSelector);
@@ -32,70 +31,84 @@ export default function DeliveryPopup({ close }) {
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-  const [selectedProvince, setSelectedProvince] = useState("");
-  const [selectedDistrict, setSelectedDistrict] = useState("");
-  const [selectedWard, setSelectedWard] = useState("");
+  const [location, setLocation] = useState({
+    province: null,
+    district: null,
+    ward: null,
+  });
+  const selectOption = {
+    backgroundColor: "rgb(255, 235, 235)",
+    fontSize: "1.8rem",
+    height: "6rem",
+  };
 
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
   };
 
-  const handle = async () => {
-    const e = await fetch("https://provinces.open-api.vn/api/p/");
-    const data = await e.json();
-    console.log(data);
+  useEffect(() => {
+    loadProvinces();
+  }, []);
+
+  useEffect(() => {
+    if (location.province) {
+      loadDistricts(location.province.code);
+    }
+  }, [location.province]);
+
+  useEffect(() => {
+    if (location.district) {
+      loadWards(location.district.code);
+    }
+  }, [location.district]);
+
+  const handleProvinceChange = async (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      province: provinces?.find((item) => item.code == e.target.value),
+    }));
   };
 
-  handle();
+  const handleDistrictChange = async (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      district: districts?.find((item) => item.code == e.target.value),
+    }));
+  };
 
-  // const handleProvinceChange = (e) => {
-  //   const selectedProvinceCode = e.target.value;
-  //   setSelectedProvince(selectedProvinceCode);
-  //   setSelectedDistrict("");
-  //   setSelectedWard("");
+  const handleWardChange = (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      ward: wards?.find((item) => item.code == e.target.value),
+    }));
 
-  //   // Fetch districts based on the selected province code
-  //   fetchDistricts(selectedProvinceCode);
-  // };
+    console.log(location);
+  };
 
-  // const handleDistrictChange = (e) => {
-  //   const selectedDistrictCode = e.target.value;
-  //   setSelectedDistrict(selectedDistrictCode);
-  //   setSelectedWard("");
+  const loadProvinces = async () => {
+    const response = await fetch(`${LOCATION_API_URL}/p`);
+    if (response.ok) {
+      setProvinces(await response.json());
+    }
+  };
 
-  //   // Fetch wards based on the selected district code
-  //   fetchWards(selectedDistrictCode);
-  // };
+  const loadDistricts = async (pCode) => {
+    const response = await fetch(`${LOCATION_API_URL}/d`);
+    if (response.ok) {
+      let data = await response.json();
+      let districts = data.filter((d) => d?.province_code == pCode);
+      setDistricts(districts);
+    }
+  };
 
-  // const handleWardChange = (e) => {
-  //   const selectedWardCode = e.target.value;
-  //   setSelectedWard(selectedWardCode);
-  //   setSelectedWard("");
-  // };
-
-  // const fetchDistricts = async (provinceCode) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://provinces.open-api.vn/api/p/${provinceCode}?depth=2`
-  //     );
-  //     const data = await response.json();
-  //     setDistricts(data.districts);
-  //   } catch (error) {
-  //     console.error("Error fetching districts:", error);
-  //   }
-  // };
-
-  // const fetchWards = async (districtCode) => {
-  //   try {
-  //     const response = await fetch(
-  //       `https://provinces.open-api.vn/api/d/${districtCode}?depth=2`
-  //     );
-  //     const data = await response.json();
-  //     setWards(data.wards);
-  //   } catch (error) {
-  //     console.error("Error fetching wards:", error);
-  //   }
-  // };
+  const loadWards = async (dCode) => {
+    const response = await fetch(`${LOCATION_API_URL}/w`);
+    if (response.ok) {
+      let data = await response.json();
+      let wards = data.filter((w) => w?.district_code == dCode);
+      setWards(wards);
+    }
+  };
 
   return (
     <>
@@ -108,100 +121,131 @@ export default function DeliveryPopup({ close }) {
         </div>
         <div className={clsx(s.information)}>
           <Grid container columns={12} className={clsx(s.nameAndPhone)}>
-            <Grid sm={6} md={6} xl={6} className={clsx(s.name)}>
-              <TextField
-                id="fullName"
-                variant="filled"
-                color="Dominant0"
-                onChange={handleFullNameChange}
-                sx={textFieldStyle}
-                fullWidth
-              />
+            <Tooltip
+              title={
+                <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                  {info.fullName}
+                </Typography>
+              }
+            >
+              <Grid sm={6} md={6} xl={6} className={clsx(s.name)}>
+                <TextField
+                  id="fullName"
+                  label="Full Name"
+                  variant="outlined"
+                  color="Dominant0"
+                  value={info.fullName}
+                  onChange={handleFullNameChange}
+                  sx={textFieldStyle}
+                  fullWidth
+                />
+              </Grid>
+            </Tooltip>
+            <Tooltip
+              title={
+                <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                  {info.phoneNumber}
+                </Typography>
+              }
+            >
+              <Grid sm={6} md={6} xl={6} className={clsx(s.phone)}>
+                <TextField
+                  id="phoneNumber"
+                  label="Phone Number"
+                  variant="outlined"
+                  color="Dominant0"
+                  value={info.phoneNumber}
+                  onChange={handleFullNameChange}
+                  sx={textFieldStyle}
+                  fullWidth
+                />
+              </Grid>
+            </Tooltip>
+          </Grid>
+        </div>
+        <div className={clsx(s.addressContainer)}>
+          <Grid container spacing={1} className={clsx(s.address)}>
+            <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+              <select
+                id="province"
+                className={clsx(s.province)}
+                value={location?.province?.code}
+                onChange={handleProvinceChange}
+                style={selectOption}
+              >
+                <option value="">City</option>
+                {provinces &&
+                  provinces.map((province) => (
+                    <option
+                      key={province.code}
+                      value={province.code}
+                      name={province.name}
+                    >
+                      {province.name}
+                    </option>
+                  ))}
+              </select>
             </Grid>
-            <Grid sm={6} md={6} xl={6} className={clsx(s.phone)}>
-              <TextField
-                id="phoneNumber"
-                variant="filled"
-                color="Dominant0"
-                onChange={handleFullNameChange}
-                sx={textFieldStyle}
-                fullWidth
-              />
+            <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+              <select
+                id="district"
+                className={clsx(s.district)}
+                value={location?.district?.code}
+                onChange={handleDistrictChange}
+                style={selectOption}
+              >
+                <option value="">District</option>
+                {districts &&
+                  districts.map((district) => (
+                    <option
+                      key={district.code}
+                      value={district.code}
+                      name={district.name}
+                    >
+                      {district.name}
+                    </option>
+                  ))}
+              </select>
+            </Grid>
+            <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+              <select
+                id="ward"
+                className={clsx(s.ward)}
+                value={location?.ward?.code}
+                onChange={handleWardChange}
+                style={selectOption}
+              >
+                <option value="">Ward</option>
+                {wards &&
+                  wards.map((ward) => (
+                    <option key={ward.code} value={ward.code} name={ward.name}>
+                      {ward.name}
+                    </option>
+                  ))}
+              </select>
             </Grid>
           </Grid>
         </div>
-        <div className={clsx(s.address)}>
-          <div>
-            <select
-              id="province"
-              value={selectedProvince}
-              // onChange={handleProvinceChange}
-            >
-              <option disabled value="">
-                City
-              </option>
-              {provinces.map((province) => (
-                <option key={province.code} value={province.code}>
-                  {province.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              id="district"
-              value={selectedDistrict}
-              // onChange={handleDistrictChange}
-            >
-              <option disabled value="">
-                District
-              </option>
-              {districts.map((district) => (
-                <option key={district.code} value={district.code}>
-                  {district.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              id="ward"
-              value={selectedWard}
-              // onChange={handleWardChange}
-            >
-              <option disabled value="">
-                Ward
-              </option>
-              {wards.map((ward) => (
-                <option key={ward.code} value={ward.code}>
-                  {ward.name}
-                </option>
-              ))}
-            </select>
-
-            <div id="result">{`${selectedProvince}| ${selectedDistrict}| ${selectedWard}`}</div>
+        <Tooltip
+          title={
+            <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+              {`${info.address.street ? `${info.address.street} Street` : ""}`}
+            </Typography>
+          }
+        >
+          <div className={clsx(s.street)}>
+            <TextField
+              id="street"
+              label="Street Name, Building, House No"
+              variant="outlined"
+              color="Dominant0"
+              value=""
+              onChange={handleFullNameChange}
+              sx={textFieldStyle}
+              fullWidth
+            />
           </div>
-        </div>
-        <div className={clsx(s.address)}>
-          <TextField
-            id="address"
-            label="Address"
-            variant="filled"
-            color="Dominant0"
-            onChange={handleFullNameChange}
-            sx={textFieldStyle}
-            fullWidth
-          />
-        </div>
-        <div className={clsx(s.street)}>
-          <TextField
-            id="street"
-            label="Street Name, Building, House No"
-            variant="filled"
-            color="Dominant0"
-            onChange={handleFullNameChange}
-            sx={textFieldStyle}
-            fullWidth
-          />
-        </div>
+        </Tooltip>
         <div className={clsx(s.submitBtn)}>
           <Button>Submit</Button>
         </div>

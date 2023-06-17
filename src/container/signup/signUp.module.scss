@@ -28,7 +28,7 @@
     .title {
       font-family: c.$Secondary;
       font-weight: 400;
-      font-size: 6.4rem;
+      font-size: 5rem;
       padding: 2.4rem 0;
       color: #000000;
     }
@@ -53,13 +53,14 @@
   }
 
   .separate {
-    font-size: 3.2rem;
+    font-size: 3rem;
     padding: 0.8rem;
   }
 
   .linkBottom {
     color: c.$Complementary2;
     font-size: 2.4rem;
+    margin-bottom: 5rem;
     .link {
       text-decoration: none;
     }
@@ -71,5 +72,5 @@
     color: red;
     font-size: 2rem;
     padding: 10px;
- } 
+  }
 }

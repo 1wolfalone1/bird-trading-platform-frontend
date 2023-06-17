@@ -14,8 +14,6 @@ export const userStatus = {
   ADMIN: 4,
 };
 
-
-
 const cartSlice = createSlice({
   name: "productState",
   initialState: {
@@ -49,7 +47,6 @@ const cartSlice = createSlice({
       }
     },
     changeQuantity: (state, action) => {
-      console.log(action.payload);
       let updatedPayload = action.payload; // Create a new variable to hold the updated payload
       let count2 = 0;
       if (action.payload.isDetails) {
