@@ -23,9 +23,13 @@ const textFieldStyle = {
     fontFamily: Style.font.$Primary,
   },
   label: {
-    fontSize: "2.4rem",
+    fontSize: "2rem",
+  },
+  ".MuiOutlinedInput-notchedOutline legend": {
+    fontSize: "1.5rem",
   },
 };
+
 const buttonLoginStyle = {
   textTransform: "none",
   fontSize: "3.2rem",
@@ -142,7 +146,7 @@ export default function Login() {
             <TextField
               id="email"
               label="Email"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.email}
               onChange={form.handleChange}
@@ -156,7 +160,7 @@ export default function Login() {
               id="password"
               label="Password"
               type="password"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.password}
               onChange={form.handleChange}
@@ -177,7 +181,7 @@ export default function Login() {
               color="Accent7"
               onClick={handleLogin}
             >
-              Login
+              Sign in
             </Button>
             <div className={clsx(s.helpGooleText)}>
               {loginEmailPasswordStatus ? (

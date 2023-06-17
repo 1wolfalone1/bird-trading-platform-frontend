@@ -14,11 +14,14 @@ import { LoadingButton } from "@mui/lab";
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
-    fontSize: "1.6rem",
+    fontSize: "1.8rem",
     fontFamily: Style.font.$Primary,
   },
   label: {
-    fontSize: "2rem",
+    fontSize: "1.8rem",
+  },
+  ".MuiOutlinedInput-notchedOutline legend": {
+    fontSize: "1.5rem",
   },
 };
 
@@ -26,7 +29,7 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "2.4rem",
   width: "100%",
-  padding: "0.4",
+  padding: "0.8rem",
 };
 const formHelperText = {
   style: {
@@ -140,7 +143,7 @@ export default function SignUp() {
             <TextField
               id="email"
               label="Email"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.email}
               onChange={form.handleChange}
@@ -154,7 +157,7 @@ export default function SignUp() {
             <TextField
               id="name"
               label="Full Name"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.name}
               onChange={form.handleChange}
@@ -168,7 +171,7 @@ export default function SignUp() {
             <TextField
               id="phone"
               label="Phone Number"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.phone}
               onChange={form.handleChange}
@@ -183,7 +186,7 @@ export default function SignUp() {
               id="password"
               label="Password"
               type="password"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.password}
               onChange={form.handleChange}
@@ -198,7 +201,7 @@ export default function SignUp() {
               id="confirmPassword"
               label="Confirm Password"
               type="password"
-              variant="filled"
+              variant="outlined"
               color="Dominant0"
               value={form.values.confirmPassword}
               onChange={form.handleChange}
@@ -233,7 +236,7 @@ export default function SignUp() {
           <span>Or</span>
         </div>
         <div>
-          <ButtonGoogle content={"Sign in with Google"} />
+          <ButtonGoogle content={"Sign up with Google"} />
           <div className={clsx(s.helpGooleText)}></div>
         </div>
         <div className={clsx(s.linkBottom)}>

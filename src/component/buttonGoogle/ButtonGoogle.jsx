@@ -8,7 +8,7 @@ import { URI_FRONTEND, URI_LOCAL_FRONTEND } from "../../config/constant";
 export default function ButtonGoogle({ content, onClick }) {
   return (
     <a
-      href={`https://thongtienthienphuot.shop/oauth2/authorize/google?redirect_uri=${URI_LOCAL_FRONTEND}/get-token`}
+      href={`https://thongtienthienphuot.shop/oauth2/authorize/google?redirect_uri=${URI_FRONTEND}/get-token`}
       alt="dsfafasdfasdf"
       style={{ display: "flex", justifyContent: "center" }}
     >

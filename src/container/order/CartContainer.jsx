@@ -52,7 +52,6 @@ export default function Cart() {
   };
 
   const handleOrderNowClick = () => {
-    console.log("iiiiiinfoooooooo", status);
     if (status === 0) {
       navigate("/login");
     } else {
@@ -193,7 +192,7 @@ export default function Cart() {
                       <span
                         style={{
                           fontSize: "1.6rem",
-                          color: "#490000",
+                          color: "red",
                         }}
                       >
                         {item.notValidMessage}

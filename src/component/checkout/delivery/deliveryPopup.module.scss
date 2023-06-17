@@ -31,7 +31,7 @@
   padding: 5rem;
   @include fsf(2.4rem);
   .header {
-    padding-bottom: 5rem;
+    margin-bottom: 3rem;
 
     .title {
       text-align: center;
@@ -59,17 +59,31 @@
   .information {
     .nameAndPhone {
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       .name {
+        padding-right: 0.8rem;
       }
       .phone {
+        padding-left: 0.8rem;
       }
     }
+  }
+  .addressContainer {
     .address {
-      margin: 5rem;
-    }
-    .street {
-      padding: 5rem;
+      display: flex;
+      justify-content: space-between;
+      .province {
+        width: 100%;
+        border-radius: 0.5rem;
+      }
+      .district {
+        width: 100%;
+        border-radius: 0.5rem;
+      }
+      .ward {
+        width: 100%;
+        border-radius: 0.5rem;
+      }
     }
   }
   .submitBtn {
