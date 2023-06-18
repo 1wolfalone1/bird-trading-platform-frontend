@@ -41,7 +41,6 @@ export default function Checkout() {
   const handleSelectPayment = (paymentName) => {
     setPaymentType(paymentName);
   };
-  console.log(paymentType);
 
   let subTotal = Number(
     items
@@ -70,7 +69,6 @@ export default function Checkout() {
     );
   };
 
-  console.log("paymentType:", paymentType);
   return (
     <div>
       <Grid container columns={11} className={clsx(s.container)}>

@@ -20,7 +20,6 @@ export default function OrderBill({ close, paymentType }) {
       .toFixed(2)
   );
 
-  console.log(subTotal);
   let shipTotal = !voucherSelected.shipping
     ? Number((0.05 * subTotal).toFixed(2))
     : 0;
@@ -43,7 +42,7 @@ export default function OrderBill({ close, paymentType }) {
     }
     const totalPrice = () => {
       return subTotal + shipTotal - promotion > 0
-        ? subTotal + shipTotal - promotion
+        ? Number(subTotal + shipTotal - promotion).toFixed(2)
         : 0;
     };
 
