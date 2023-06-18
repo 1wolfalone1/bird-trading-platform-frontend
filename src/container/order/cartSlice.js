@@ -41,6 +41,7 @@ const cartSlice = createSlice({
       if (count === 0) state.items.push(action.payload);
     },
     removeItem: (state, action) => {
+      console.log(action.payload, "-", current(state));
       state.items = state.items.filter((item) => item.id !== action.payload.id);
       if (state.items.length === 0) {
         localStorage.removeItem("cart");

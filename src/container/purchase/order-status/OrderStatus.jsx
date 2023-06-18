@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { getCartSelector } from "../../order/cartSlice";
 import { userInfoSelector } from "../../../redux/global/userInfoSlice";
 import StatusNavbar from "../../../component/purchase/order-status/header/status/StatusNavbar";
+import Action from "../../../component/purchase/order-status/header/action/Action";
 
 export default function OrderStatus() {
   const { items, voucherSelected } = useSelector(getCartSelector);
@@ -17,6 +18,7 @@ export default function OrderStatus() {
       <div className={clsx(s.headerContainer)}>
         <div className={clsx(s.statusNavbar)}>
           <StatusNavbar />
+          <Action></Action>
         </div>
         <div className={clsx(s.action)}></div>
       </div>

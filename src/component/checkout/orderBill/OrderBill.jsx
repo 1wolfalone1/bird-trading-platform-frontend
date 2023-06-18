@@ -45,6 +45,7 @@ export default function OrderBill({ close, paymentType }) {
         ? Number(subTotal + shipTotal - promotion).toFixed(2)
         : 0;
     };
+    console.log("total price:", totalPrice());
 
     const data = {
       userOrderDto: {
