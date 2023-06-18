@@ -1,0 +1,35 @@
+@use "../../../../style/" as c;
+
+@mixin fsw($fz: 2rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .icon {
+      border: 0.5rem solid c.$Complementary0;
+      padding: 1rem;
+      margin-bottom: 2rem;
+      border-radius: 50%;
+      img {
+        width: 5rem;
+        height: 5rem;
+      }
+    }
+    .description {
+      @include fsf();
+    }
+  }
+}

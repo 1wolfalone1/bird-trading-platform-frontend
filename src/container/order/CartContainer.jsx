@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import cartSlice, {
   getListItemSelector,
   getVoucherSelectedSelector,
-  getVouchersSelector,
   totalPriceSelector,
 } from "./cartSlice";
 import DiscountIcon from "@mui/icons-material/Discount";

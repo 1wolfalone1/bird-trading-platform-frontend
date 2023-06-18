@@ -21,6 +21,8 @@ import userInfoSlice, { userInfoSelector } from "./redux/global/userInfoSlice";
 import ProductDetails from "./container/product-details/ProductDetails";
 import GetToken from "./container/get-token/GetToken";
 import PopupMessage from "./component/message/PopupMessage";
+import OrderStatus from "./container/purchase/order-status/OrderStatus";
+import OrderHistory from "./container/purchase/order-history/OrderHistory";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -62,6 +64,8 @@ function App() {
         <Route path="checkout" element={<Checkout />} />
         <Route path="get-token" element={<GetToken />} />
         <Route path="popup-message" element={<PopupMessage />} />
+        <Route path="order-status" element={<OrderStatus />} />
+        <Route path="order-history" element={<OrderHistory />} />
       </Route>
     </Routes>
   );
