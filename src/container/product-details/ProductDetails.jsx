@@ -168,7 +168,10 @@ export default function ProductDetails() {
           <div className={s.detail}>
             <div className={s.summaryProduct}>
               <div className={s.listImage}>
-                <ThumpImage images={product.listImages} />
+                <ThumpImage
+                  images={product.listImages}
+                  video={product.product.videoUrl}
+                />
               </div>
               <div className={s.content}>
                 <div className={s.productName}>

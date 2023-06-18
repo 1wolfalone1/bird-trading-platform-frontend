@@ -1,8 +1,15 @@
 @use "../productDetails.module.scss" as productDetails;
 
 $thumpSize: calc(productDetails.$imgWidth/5);
+.mySwiper2 {
+  .swiper-wrapper {
+    display: flex;
+    align-items: center;
+  }
+}
 .mySwiper .swiper-slide {
-  height: 100%;
+  display: flex;
+  align-items: center;
   width: $thumpSize !important;
   height: $thumpSize !important;
   opacity: 0.4;

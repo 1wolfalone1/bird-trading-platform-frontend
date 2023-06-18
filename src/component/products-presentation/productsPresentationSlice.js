@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import { birdApi } from "../../api/server/products/BirdsAPI";
 import { api } from "../../api/server/API";
 
@@ -200,7 +200,6 @@ export const filterByAll = createAsyncThunk(
         params: state.productsPresentationData.filter,
       });
       const data = await res.data;
-      console.log(data);
       dispatch(
         productsPresentationSlices.actions.setStar({ key: "", star: 0 })
       );
