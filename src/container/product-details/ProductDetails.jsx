@@ -31,6 +31,7 @@ import AddToCartToast, {
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import { SmsIcon } from '@mui/icons-material/Sms';
 const quantityControlStatus = {
    DECREASE: -1,
    CHANGE: 0,
@@ -262,10 +263,12 @@ export default function ProductDetails() {
                                     />
                                  </div>
                                  <div className={s.right}>
-                                    <Button>Chat now </Button>
-                                    <div className={s.name}>
-                                       {product.product.shopOwner.shopName}
-                                    </div>
+                                    <IconButton>
+                                       <SmsIcon
+                                          sx={{ fontSize: "5rem" }}
+                                          color={"Accent7"}
+                                       />
+                                    </IconButton>
                                  </div>
                               </div>
                            </div>
@@ -371,7 +374,7 @@ export default function ProductDetails() {
                <div className={s.review}></div>
             </div>
          ) : (
-            "loaddding"
+            <></>
          )}
       </>
    );
