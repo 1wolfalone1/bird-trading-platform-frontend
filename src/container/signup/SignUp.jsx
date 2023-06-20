@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import s from "./signUp.module.scss";
 import React, { useState } from "react";
-import img from "../../asset/leftImgRegistration.jpg";
 import { Button, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
