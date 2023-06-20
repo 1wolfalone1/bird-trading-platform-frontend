@@ -3,9 +3,12 @@ import React from "react";
 import Grid from "@mui/material/Unstable_Grid2";
 import s from "./statusNavbar.module.scss";
 import StatusButton from "./StatusButton";
-import orderPlaced from "../../../../../asset/image/orderPlaced.png";
-import orderShippedOut from "../../../../../asset/image/ship.png";
-import orderReceived from "../../../../../asset/image/received.png";
+const orderPlaced =
+  "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/orderPlaced.png";
+const orderShippedOut =
+  "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/ship.png";
+const orderReceived =
+  "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/received.png";
 
 export default function StatusNavbar() {
   return (

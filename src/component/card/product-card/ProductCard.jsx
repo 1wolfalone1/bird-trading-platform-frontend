@@ -22,7 +22,8 @@ export default function ProductCard({ product }) {
   const uuid = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleAddToCart = () => {
+  const handleAddToCart = (event) => {
+    event.stopPropagation();
     dispatch(cartSlice.actions.addToCart({ ...product, cartQuantity: +1 }));
     dispatch(globalConfigSlice.actions.changeToastStyle("add-to-cart"));
     notifyAddtoCart();
@@ -34,7 +35,10 @@ export default function ProductCard({ product }) {
     });
   return (
     <>
-      <div className={s.container}>
+      <div
+        className={s.container}
+        onClick={() => navigate(`/product/${product.id}`)}
+      >
         <div className={s.image}>
           <img src={product.imgUrl} alt="" className={s.imageProduct} />
           <div className={s.price}>

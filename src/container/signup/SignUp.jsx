@@ -132,7 +132,10 @@ export default function SignUp() {
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.imgLeft)}>
-        <img src={img} alt="" />
+        <img
+          src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
+          alt="Sign up"
+        />
       </div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>

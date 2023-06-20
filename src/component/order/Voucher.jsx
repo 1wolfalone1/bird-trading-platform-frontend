@@ -130,10 +130,8 @@ export default function Voucher({ close }) {
           </RadioGroup>
         </Stack>
       </div>
-      <div>
-        <Button className={clsx(s.submitBtn)} onClick={close}>
-          Done
-        </Button>
+      <div className={clsx(s.submitBtn)}>
+        <Button onClick={close}>Done</Button>
       </div>
     </div>
   );

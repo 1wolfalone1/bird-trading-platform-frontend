@@ -74,8 +74,17 @@ export default function Header() {
     console.log(value);
   };
 
+  document.addEventListener(
+    "keypress",
+    function (e) {
+      if (e.key === "Enter") {
+        dispatch(filterByAll());
+      }
+    },
+    false
+  );
+
   const handleSearch = () => {
-    console.log("an");
     dispatch(filterByAll());
   };
 
@@ -199,7 +208,6 @@ export default function Header() {
                   a();
                }}
             >
-               asdfasdfasdf
             </Button>
          } */}
     </div>

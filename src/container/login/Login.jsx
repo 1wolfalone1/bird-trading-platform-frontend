@@ -74,7 +74,7 @@ export default function Login() {
   });
   useEffect(() => {
     let error = params.get("error");
-    console.log(error);
+    console.log("error", error);
     if (error == errorAuthentication.CONFLICT_GOOGLE_LOGIN) {
       setLoginGoogleStatus(
         "The email you provided is already registered in our system!"
@@ -135,7 +135,10 @@ export default function Login() {
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.imgLeft)}>
-        <img src={img} alt="" />
+        <img
+          src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/login.png"
+          alt="Login"
+        />
       </div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>

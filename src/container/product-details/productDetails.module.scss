@@ -1,6 +1,20 @@
 @use "../style/" as c;
 
 $imgWidth: 65rem;
+@mixin button(
+  $padding: 0.5rem,
+  $color: c.$Complementary0,
+  $backgroundColor: c.$Dominant5
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
 .container {
   padding: 5rem 16rem;
   .detail {
@@ -44,7 +58,7 @@ $imgWidth: 65rem;
           display: flex;
           flex-direction: row;
           align-items: flex-start;
-          padding: 8px 0 0px;
+          padding: 1rem 3rem;
           gap: 1rem;
           border-bottom: 0.1rem solid c.$Accent7;
           span {
@@ -57,52 +71,87 @@ $imgWidth: 65rem;
         .mainContent {
           display: flex;
           flex-direction: column;
+          margin: 2rem;
           gap: 1rem;
           .price {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            padding: 3.4rem 4rem;
-            gap: 10px;
-            .oldPrice {
-              font-family: "Segoe UI";
-              font-style: normal;
-              font-weight: 400;
-              font-size: 4rem;
-              line-height: 43px;
-              display: flex;
-              align-items: center;
-              text-align: center;
-              text-decoration-line: line-through;
-              color: #606060;
-            }
-            .disPrice {
-              font-family: "Segoe UI";
-              font-style: normal;
-              font-weight: 400;
-              font-size: 4.8rem;
-              line-height: 53px;
-              display: flex;
-              align-items: center;
-              text-align: center;
-              color: rgb(158, 0, 0);
-            }
-            .discount {
+            justify-content: space-between;
+            padding: 1rem 5rem 0 0;
+            .countPrice {
               display: flex;
               flex-direction: row;
-              align-items: flex-start;
-              padding: 0.5rem 1rem;
-              /* Complementary/4 */
-              background: c.$Complementary4;
-              font-family: "Segoe UI";
-              font-style: normal;
-              font-weight: 600;
-              font-size: 2.4rem;
+              align-items: center;
+              gap: 10px;
+              .oldPrice {
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 4rem;
+                line-height: 43px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                text-decoration-line: line-through;
+                color: #606060;
+              }
+              .disPrice {
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 4.8rem;
+                line-height: 53px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: rgb(158, 0, 0);
+              }
+              .discount {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 0.5rem 1rem;
+                /* Complementary/4 */
+                background-color: c.$Complementary4;
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 2.4rem;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                /* Dominant/1 */
+                color: #cdffa6;
+              }
+            }
+            .shop {
               display: flex;
               align-items: center;
-              text-align: center;
-              /* Dominant/1 */
-              color: #cdffa6;
+              .image {
+                width: 8rem;
+                height: 8rem;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 1rem;
+                img {
+                  width: 100%;
+                }
+              }
+              .right {
+                display: flex;
+                flex-direction: column;
+
+                Button {
+                  @include button();
+                  &:hover {
+                    background-color: c.$Complementary3;
+                    color: c.$Dominant1;
+                  }
+                }
+                .name {
+                  font-size: 2rem;
+                  color: c.$Accent6;
+                }
+              }
             }
           }
           .type {
@@ -131,6 +180,7 @@ $imgWidth: 65rem;
           font-size: 3rem;
           display: flex;
           align-items: center;
+          margin-left: 2rem;
           gap: 1rem;
           input {
             border: 1px solid #000000;
@@ -150,21 +200,6 @@ $imgWidth: 65rem;
           margin-top: 2.4rem;
           align-items: center;
           padding-right: 5rem;
-          .shop {
-            .image {
-              width: 8rem;
-              height: 8rem;
-              border-radius: 100%;
-              overflow: hidden;
-              img {
-                width: 100%;
-              }
-            }
-            .name {
-              font-size: 3rem;
-              color: c.$Accent6;
-            }
-          }
         }
       }
     }

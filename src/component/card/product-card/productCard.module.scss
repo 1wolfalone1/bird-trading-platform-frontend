@@ -2,14 +2,6 @@
 
 $borderRadius: 0.8rem;
 .container {
-  &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 0 2.4rem #00000066;
-    .image {
-      border-radius: 0;
-    }
-  }
-
   transition: 0.2s ease-in-out;
 
   width: 100%;
@@ -186,5 +178,10 @@ $borderRadius: 0.8rem;
       margin: 0.8rem $marginContent;
       align-items: center;
     }
+  }
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 2.4rem #00000066;
+    cursor: pointer;
   }
 }

@@ -86,8 +86,7 @@ export default function CartItemsPopper({ totalCartItems, setValue }) {
               </div>
               <div className={s.button}>
                 <Button
-                  sx={{ fontSize: "3rem" }}
-                  color="Accent1"
+                  // color="Accent1"
                   fullWidth
                   onClick={() => {
                     navigate("/cart");

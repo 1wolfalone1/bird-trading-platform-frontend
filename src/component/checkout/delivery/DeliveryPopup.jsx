@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import s from "./deliveryPopup.module.scss";
-import { useSelector } from "react-redux";
-import { userInfoSelector } from "../../../redux/global/userInfoSlice";
+import { useDispatch, useSelector } from "react-redux";
+import userInfoSlice, {
+  userInfoSelector,
+} from "../../../redux/global/userInfoSlice";
 import Style from "../../../style/inline-style/style";
 import clsx from "clsx";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -27,19 +29,27 @@ const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 export default function DeliveryPopup({ close }) {
   const { info } = useSelector(userInfoSelector);
+  const [formInfo, setFormInfo] = useState(info);
   const [fullName, setFullName] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
+  const dispatch = useDispatch();
+
   const [location, setLocation] = useState({
     province: null,
     district: null,
     ward: null,
   });
+
   const selectOption = {
     backgroundColor: "rgb(255, 235, 235)",
-    fontSize: "1.8rem",
+    fontSize: "2rem",
     height: "6rem",
+  };
+  const handleSubmit = () => {
+    dispatch(userInfoSlice.actions.updateUserInfo(formInfo));
+    close();
   };
 
   const handleFullNameChange = (e) => {
@@ -110,6 +120,62 @@ export default function DeliveryPopup({ close }) {
     }
   };
 
+  const handleUpdateProfile = (e) => {
+    const { name, value } = e.target;
+    switch (name) {
+      case "fullName":
+        setFormInfo((prev) => ({
+          ...prev,
+          fullName: value,
+        }));
+        break;
+      case "phoneNumber":
+        setFormInfo((prev) => ({
+          ...prev,
+          phoneNumber: value,
+        }));
+        break;
+      case "city":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            city: value,
+          },
+        }));
+        break;
+      case "district":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            district: value,
+          },
+        }));
+        break;
+      case "ward":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            ward: value,
+          },
+        }));
+        break;
+      case "street":
+        setFormInfo((prev) => ({
+          ...prev,
+          address: {
+            ...prev.address,
+            street: value,
+          },
+        }));
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <>
       <div className={clsx(s.container)}>
@@ -134,8 +200,9 @@ export default function DeliveryPopup({ close }) {
                   label="Full Name"
                   variant="outlined"
                   color="Dominant0"
-                  value={info.fullName}
-                  onChange={handleFullNameChange}
+                  value={formInfo?.fullName}
+                  name="fullName"
+                  onChange={(e) => handleUpdateProfile(e)}
                   sx={textFieldStyle}
                   fullWidth
                 />
@@ -154,8 +221,9 @@ export default function DeliveryPopup({ close }) {
                   label="Phone Number"
                   variant="outlined"
                   color="Dominant0"
-                  value={info.phoneNumber}
-                  onChange={handleFullNameChange}
+                  value={formInfo?.phoneNumber}
+                  name="phoneNumber"
+                  onChange={(e) => handleUpdateProfile(e)}
                   sx={textFieldStyle}
                   fullWidth
                 />
@@ -238,16 +306,17 @@ export default function DeliveryPopup({ close }) {
               id="street"
               label="Street Name, Building, House No"
               variant="outlined"
+              name="street"
               color="Dominant0"
-              value=""
-              onChange={handleFullNameChange}
+              value={formInfo.address?.street || ""}
+              onChange={(e) => handleUpdateProfile(e)}
               sx={textFieldStyle}
               fullWidth
             />
           </div>
         </Tooltip>
         <div className={clsx(s.submitBtn)}>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </div>
       </div>
     </>
