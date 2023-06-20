@@ -6,22 +6,22 @@
   color: $color;
 }
 
-@mixin inputField {
-  .title {
-    display: flex;
-    flex-direction: row;
-    align-items: end;
-    padding-bottom: 5rem;
-    @include text(600, 2.5rem);
-    .inputText {
-      margin-left: 3rem;
-      width: 40rem;
-    }
-  }
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-}
+// @mixin inputField {
+//   .title {
+//     display: flex;
+//     flex-direction: row;
+//     align-items: end;
+//     padding-bottom: 5rem;
+//     @include text(600, 2.5rem);
+//     .inputText {
+//       margin-left: 3rem;
+//       width: 40rem;
+//     }
+//   }
+//   display: flex;
+//   flex-direction: column;
+//   align-items: end;
+// }
 
 @mixin button($padding: 1rem 2rem, $color: c.$Complementary0) {
   border: 1px solid c.$Complementary0;
@@ -32,7 +32,7 @@
   color: $color;
 }
 
-$heightAvatar: 30rem;
+$heightAvatar: 24rem;
 
 h1 {
   font-family: c.$Secondary;
@@ -45,7 +45,6 @@ h1 {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 45rem;
   font-family: c.$Secondary;
   border: 0 solid c.$Complementary0;
 
@@ -53,8 +52,12 @@ h1 {
     display: flex;
     flex-direction: column;
     margin-left: 20rem;
+    .disabled {
+      display: none;
+    }
 
     .imgProfile {
+      margin-top: 6rem;
       img {
         height: $heightAvatar;
         width: $heightAvatar;
@@ -77,18 +80,20 @@ h1 {
       background-color: c.$Dominant5;
     }
   }
+
   .showInfo {
     display: flex;
     flex-direction: column;
-    // justify-content: end;
-    padding: 0 10rem;
-    .left {
-      // @include inputField();
+    height: 30rem;
+    justify-content: space-between;
+    padding: 7rem 0 0 10rem;
+    .info {
+      .title {
+        column-gap: 2rem;
+        row-gap: 2rem;
+      }
     }
-
-    .right {
-      // margin-left: 10rem;
-      // @include inputField();
+    .addressInfo {
       .addressContainer {
         .address {
           display: flex;
@@ -117,7 +122,8 @@ h1 {
 
   Button {
     @include button();
-    margin-right: 31rem;
+    margin-top: 3rem;
+    margin-right: 28rem;
   }
   Button:hover {
     color: c.$Accent7;

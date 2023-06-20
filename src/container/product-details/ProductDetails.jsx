@@ -21,6 +21,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom/client";
+import SmsIcon from "@mui/icons-material/Sms";
+
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
@@ -258,7 +260,14 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        <Button onClick={() => handleChatNow(product.product.shopOwner)}>Chat now </Button>
+                        {/* <Button>Chat now </Button> */}
+                        <IconButton>
+                          <SmsIcon
+                            sx={{ fontSize: "5rem" }}
+                            color={"Accent7"}
+                            onClick={() => handleChatNow(product.product.shopOwner)}
+                          />
+                        </IconButton>
                         <div className={s.name}>
                           {product.product.shopOwner.shopName}
                         </div>

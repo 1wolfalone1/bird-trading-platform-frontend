@@ -43,6 +43,7 @@ export default function Checkout() {
   const { items, voucherSelected } = useSelector(getCartSelector);
   const [paymentType, setPaymentType] = useState();
   const { info } = useSelector(userInfoSelector);
+  const [data, setData] = useState();
   const handleSelectPayment = (paymentName) => {
     setPaymentType(paymentName);
   };
@@ -94,23 +95,26 @@ export default function Checkout() {
       ? Number(subTotal + shipTotal - promotion).toFixed(2)
       : 0;
   };
-  const data = {
-    userOrderDto: {
-      email: info.email,
-      name: info.fullName,
-      phoneNumber: info.phoneNumber,
-      street: info.address?.street,
-      ward: info.address?.ward,
-      district: info.address?.district,
-      city: info.address?.city,
-    },
-    transactionDto: {
-      totalPrice: totalPrice(),
-      promotionId: promotionId,
-      paymentMethod: "PAYPAL",
-    },
-    productOrder: productOrder,
-  };
+  useEffect(() => {
+    console.log(info, data);
+    setData({
+      userOrderDto: {
+        email: info.email,
+        name: info.fullName,
+        phoneNumber: info.phoneNumber,
+        street: info.address?.street,
+        ward: info.address?.ward,
+        district: info.address?.district,
+        city: info.address?.city,
+      },
+      transactionDto: {
+        totalPrice: totalPrice(),
+        promotionId: promotionId,
+        paymentMethod: "PAYPAL",
+      },
+      productOrder: productOrder,
+    });
+  }, [info]);
 
   const params = new URLSearchParams(window.location.search);
   useEffect(() => {
@@ -118,15 +122,14 @@ export default function Checkout() {
     if (status === "success") {
       const paymentId = params.get("paymentId");
       const PayerID = params.get("PayerID");
-      console.log(data);
       api
         .post("/package-order", data, {
           params: { paymentId: paymentId, PayerID: PayerID },
         })
         .then((response) => {
           console.log(response.data, response.paymentId, response.PayerID);
-          // dispatch(cartSlice.actions.removeCart());
-          // localStorage.removeItem("cart");
+          dispatch(cartSlice.actions.removeCart());
+          localStorage.removeItem("cart");
           navigate("/order-status");
         })
         .catch((error) => {
