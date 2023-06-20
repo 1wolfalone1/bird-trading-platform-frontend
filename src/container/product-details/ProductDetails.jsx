@@ -371,7 +371,8 @@ export default function ProductDetails() {
                <div className={s.review}></div>
             </div>
          ) : (
-            "loaddding"
+            <>
+            </>
          )}
       </>
    );
