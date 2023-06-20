@@ -121,6 +121,7 @@ export default function Login() {
       callCookies();
       navigate("/products");
     } else if (status === 404) {
+      console.log(status)
     }
   };
   const callCookies = async () => {

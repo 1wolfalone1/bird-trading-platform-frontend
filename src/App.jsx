@@ -30,21 +30,15 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const cartObject = JSON.parse(localStorage.getItem("cart"));
+    console.log(userInfo, 'appppppppppppppppppppppppppppppppppppppppppp');
     const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
-    console.log(cartObject);
-    if (cartObject && Array.isArray(cartObject.items)) {
-      dispatch(invokeCart(cartObject));
+    if (cart && Array.isArray(cart.items)) {
+      dispatch(invokeCart(cart));
     }
     if (userInfoObject) {
       dispatch(userInfoSlice.actions.invokeUserInfo(userInfoObject));
     }
   }, []);
-  useEffect(() => {
-    if (cart.items !== null && Array.isArray(cart.items)) {
-      localStorage.setItem("cart", JSON.stringify(cart));
-    }
-  }, [cart]);
   useEffect(() => {
     if (userInfo.status !== userStatus.GUEST) {
       localStorage.setItem("userInfo", JSON.stringify(userInfo));

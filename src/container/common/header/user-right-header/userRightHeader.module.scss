@@ -53,8 +53,43 @@ $container-height: calc(c.$h-header - 3rem);
         user-select: none;
         word-break: break-all;
       }
-    }
-  }
+      .avatar {
+         width: $container-height;
+         img {
+            border-radius: 100%;
+            width: $container-height;
+            height: $container-height;
+            padding: 4px 0px 0px 0px;
+            margin-left: -1px;
+         }
+      }
+      .userName {
+         display: flex;
+         align-items: center;
+         span {
+            width: auto;
+            color: c.$Dominant1;
+            font-family: c.$Primary;
+            font-weight: 400;
+            font-size: 2.4rem;
+            line-height: 2.4rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-word;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            word-break: break-all;
+         }
+      }
+   }
+}
 }
 .iconMenu {
   width: 3rem;

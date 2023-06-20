@@ -124,6 +124,7 @@ export default function SideBarFilter() {
     );
   };
 
+
   const handleSortDirectChange = (event) => {
     const {
       target: { value },
@@ -136,6 +137,7 @@ export default function SideBarFilter() {
       })
     );
   };
+
 
   console.log(filterObj);
 

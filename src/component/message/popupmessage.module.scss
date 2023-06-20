@@ -1,5 +1,44 @@
 @use "../style/" as c;
 
+// .container {
+//     position: fixed;
+//     bottom: 20px;
+//     right: 20px;
+//     z-index: 999;
+    
+//     .btnchat {
+//         padding: 10px;
+//         background-color: c.$Dominant1;
+//         color: c.$Complementary3;
+//         border-radius: 10px;
+//         width: 120px;
+//         height: 60px;
+//         font-size: 14px;
+//         font-weight: 600;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         position: relative;
+//         &:hover{
+//             background-color: c.$Complementary3;
+//             color: c.$Dominant1;
+//         }
+
+//         .numUnread {
+//             position: absolute;
+//             top: 0;
+//             right: 0;
+//             padding: 0px 4px 4px 0px;
+//             color: c.$Accent6;
+//         }
+//     }   
+
+//     .css-3bmhjh-MuiPaper-root-MuiPopover-paper {
+//         overflow-y: hidden !important;
+//         overflow-x: hidden !important;
+//         background-color: black;
+//     }
+
 @mixin button(
   $padding: 1rem 2rem,
   $color: c.$Complementary0,
@@ -12,6 +51,7 @@
   text-transform: none;
   color: $color;
   background-color: $backgroundColor;
+
 }
 
 .container {
@@ -22,9 +62,22 @@
 
   Button {
     @include button();
+    justify-content: center;
+    align-items: center;
+    position: relative;
     &:hover {
       background-color: c.$Complementary3;
       color: c.$Dominant1;
+    }
+
+    .numUnread {
+        font-size: 14px;
+        font-weight: bold;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 0px 4px 4px 0px;
+        color: c.$Accent6;
     }
   }
 
