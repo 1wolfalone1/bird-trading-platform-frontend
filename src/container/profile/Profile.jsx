@@ -46,9 +46,9 @@ const Profile = () => {
   });
 
   const selectOption = {
-    backgroundColor: "rgb(255, 235, 235)",
+    backgroundColor: "rgb(228, 223, 209)",
     fontSize: "2rem",
-    height: "6rem",
+    height: "7rem",
   };
 
   useEffect(() => {
@@ -236,7 +236,7 @@ const Profile = () => {
         </div>
 
         <div className={clsx(s.showInfo)}>
-          <Grid container className={clsx(s.left)}>
+          <Grid spacing={1} container className={clsx(s.info)}>
             <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
               <Tooltip
                 title={
@@ -311,7 +311,7 @@ const Profile = () => {
               </Tooltip>
             </Grid>
           </Grid>
-          <div className={clsx(s.right)}>
+          <div className={clsx(s.addressInfo)}>
             <div className={clsx(s.addressContainer)}>
               <Grid container spacing={1} className={clsx(s.address)}>
                 <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
@@ -320,6 +320,7 @@ const Profile = () => {
                     className={clsx(s.province)}
                     value={location?.province?.code}
                     onChange={handleProvinceChange}
+                    disabled={!isEditable}
                     style={selectOption}
                   >
                     <option value="">City</option>
@@ -340,6 +341,7 @@ const Profile = () => {
                     id="district"
                     className={clsx(s.district)}
                     value={location?.district?.code}
+                    disabled={!isEditable}
                     onChange={handleDistrictChange}
                     style={selectOption}
                   >
@@ -361,6 +363,7 @@ const Profile = () => {
                     id="ward"
                     className={clsx(s.ward)}
                     value={location?.ward?.code}
+                    disabled={!isEditable}
                     onChange={handleWardChange}
                     style={selectOption}
                   >
@@ -378,31 +381,32 @@ const Profile = () => {
                   </select>
                 </Grid>
               </Grid>
-              <Tooltip
-                title={
-                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {`${
-                      info.address.street ? `${info.address.street} Street` : ""
-                    }`}
-                  </Typography>
-                }
-              >
-                <div className={clsx(s.street)}>
-                  <TextField
-                    id="street"
-                    variant="outlined"
-                    name="street"
-                    label="Street Name, Building, House No"
-                    color="Dominant0"
-                    value={formInfo.address?.street || ""}
-                    onChange={(e) => handleUpdateProfile(e)}
-                    sx={textFieldStyle}
-                    fullWidth
-                  />
-                </div>
-              </Tooltip>
             </div>
           </div>
+          <Tooltip
+            title={
+              <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                {`${
+                  info.address.street ? `${info.address.street} Street` : ""
+                }`}
+              </Typography>
+            }
+          >
+            <div className={clsx(s.street)}>
+              <TextField
+                id="street"
+                variant="outlined"
+                name="street"
+                label="Street Name, Building, House No"
+                color="Dominant0"
+                disabled={!isEditable}
+                value={formInfo.address?.street || ""}
+                onChange={(e) => handleUpdateProfile(e)}
+                sx={textFieldStyle}
+                fullWidth
+              />
+            </div>
+          </Tooltip>
         </div>
       </div>
       <div className={clsx(s.containerButton)}>
