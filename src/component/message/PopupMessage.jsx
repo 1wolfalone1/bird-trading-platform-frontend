@@ -1,74 +1,83 @@
-
-import React, { useEffect, useRef } from 'react';
-import NavigationIcon from '@mui/icons-material/Navigation';
-import MessageContent from './message-content/MessageContent';
-import MessageUserList from './message-username/MessageUserList';
-import { Badge, Box, Button, Dialog, Fab, Grid, Paper, Popover, ThemeProvider, Typography, createTheme } from '@mui/material';
-import { useState } from 'react';
+import React, { useEffect, useRef } from "react";
+import NavigationIcon from "@mui/icons-material/Navigation";
+import MessageContent from "./message-content/MessageContent";
+import MessageUserList from "./message-username/MessageUserList";
+import {
+   Badge,
+   Box,
+   Button,
+   Dialog,
+   Fab,
+   Grid,
+   Paper,
+   Popover,
+   ThemeProvider,
+   Typography,
+   createTheme,
+} from "@mui/material";
+import { useState } from "react";
 import s from "./popupmessage.module.scss";
-import clsx from 'clsx';
-import { Cancel, Message, Pages } from '@mui/icons-material';
-import styled from '@emotion/styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { userInfoSelector } from '../../redux/global/userInfoSlice';
-import SockJS from 'sockjs-client';
-import { over } from 'stompjs';
-import messageSlice, { getListUser, messageSelector } from './messageSlice';
-import moment from 'moment';
-
+import clsx from "clsx";
+import { Cancel, Message, Pages } from "@mui/icons-material";
+import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import SockJS from "sockjs-client";
+import { over } from "stompjs";
+import messageSlice, { getListUser, messageSelector } from "./messageSlice";
+import moment from "moment";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
-  right: 4,
-  top: 13,
-  border: `1px solid ${theme.palette.background.paper}`,
-  padding: '0 2px',
-  marginRight: '10px',
-  '& .MuiBadge-badge': {
-    fontSize: '1.5rem', // Adjust the size as needed
-  },
+   right: 4,
+   top: 13,
+   border: `1px solid ${theme.palette.background.paper}`,
+   padding: "0 2px",
+   marginRight: "10px",
+   "& .MuiBadge-badge": {
+      fontSize: "1.5rem", // Adjust the size as needed
+   },
 }));
-
 
 var stompClient = null;
 const PopupMessage = () => {
+   const dispatch = useDispatch();
 
-  const dispatch = useDispatch();
+   const { status, info } = useSelector(userInfoSelector);
+   console.log(status, "statusssssssssssssssssssssssssssssssssssssssss");
+   const [anchorEl, setAnchorEl] = useState(null);
 
-  const {status, info} = useSelector(userInfoSelector)
+   const audioRef = useRef(null);
 
-  const [anchorEl, setAnchorEl] = useState(null);
+   const open = Boolean(anchorEl);
 
-  const audioRef = useRef(null);
+   const id = open ? "popup-message" : undefined;
 
-  const open = Boolean(anchorEl);
+   const { userList, numberUnread, numRead, currentShopIDSelect } =
+      useSelector(messageSelector);
 
-  const id = open ? 'popup-message' : undefined;
+   const [unread, setUnread] = useState(numberUnread);
 
-  const {userList, numberUnread, numRead, currentShopIDSelect} = useSelector(messageSelector);
+   const [message, setMessage] = useState("");
 
-  const [unread, setUnread] = useState(numberUnread);
+   useEffect(() => {
+      connect(status);
+      refreshUnread();
+   }, [status]);
 
-  const [message, setMessage] = useState('');
+   useEffect(() => {
+      handleReadMessage();
+   }, [numRead]);
 
-  useEffect( () => {
-    connect(status);
-    refreshUnread();
-  }, [status])
-
-  useEffect ( () => {
-    handleReadMessage();
-  }, [numRead])
-
-  useEffect( () => {
-    handleMessageArrive(message, open, currentShopIDSelect);
-    handleNewMessage(" ");
-    console.log('Get an mesasge')
-  },[message])
+   useEffect(() => {
+      handleMessageArrive(message, open, currentShopIDSelect);
+      handleNewMessage(" ");
+      console.log("Get an mesasge");
+   }, [message]);
 
   //socket js
   const connect = (status)=>{
     if (status === 1) {
-      let Sock = new SockJS('http://localhost:8080/ws');
+      let Sock = new SockJS('https://thongtienthienphuot.shop/ws');
       stompClient = over(Sock);
       stompClient.connect({},onConnected, onError);
     }
@@ -77,38 +86,46 @@ const PopupMessage = () => {
   const onConnected = () => {
       stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage);
       console.log("Connect to channel message");
-    
-  }
-  const onError = (err) => {
-    console.log(err);  
-  }
+   };
+   const onError = (err) => {
+      console.log(err);
+   };
 
-  const onPrivateMessage = (payload) => {
-    const message = JSON.parse(payload.body);  
-    dispatch(messageSlice.actions.increaseNumberUnread());    
-    setMessage(message);
-  };
-  // end socket
-  
-  const refreshUnread = async () => {
-    if(status === 1) {
-      const data = await dispatch(getListUser())
-      console.log('hereh in status');
-      if(data?.payload) {
-        const numUnread = data?.payload?.reduce((accumulator, user) => accumulator + user.unread, 0) || 0;
-        dispatch(messageSlice.actions.setNumberUnread({key: "",numberUnread: numUnread}))
-        setUnread(numUnread)
+   const onPrivateMessage = (payload) => {
+      const message = JSON.parse(payload.body);
+      dispatch(messageSlice.actions.increaseNumberUnread());
+      setMessage(message);
+   };
+   // end socket
+
+   const refreshUnread = async () => {
+      if (status === 1) {
+         const data = await dispatch(getListUser());
+         console.log("hereh in status");
+         if (data?.payload) {
+            const numUnread =
+               data?.payload?.reduce(
+                  (accumulator, user) => accumulator + user.unread,
+                  0
+               ) || 0;
+            dispatch(
+               messageSlice.actions.setNumberUnread({
+                  key: "",
+                  numberUnread: numUnread,
+               })
+            );
+            setUnread(numUnread);
+         }
       }
-    }    
-  }
+   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+   const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+   const handleClose = () => {
+      setAnchorEl(null);
+   };
 
   //This function use to handle message when user get an message
   const handleMessageArrive = (message, open, currentShopIDSelect) => {
@@ -125,40 +142,50 @@ const PopupMessage = () => {
         currentShopIDSelect: currentShopIDSelect}))
       console.log('here is an curent shop id select',currentShopIDSelect);
     }else {
+      console.log('open ne', open);
       console.log('have run funtion handle MessageArrive')
       setUnread(numberUnread);
     }
   }
 
-  //this function use to reset number unread message of button CHAT NOW
-  const handleReadMessage = () => {
-    const newNumUnread = unread - numRead;
-    dispatch(messageSlice.actions.setNumberUnread({key: "",numberUnread: unread - numRead}))
-    setUnread(newNumUnread);
-  }
-  //audio when have new message
-  const handleNewMessage = (message) => {
-    try {
-      console.log(message)
-      const audio = new Audio('https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3');
-      // Play the notification sound
-      // audioRef.current.play();
-      var resp = audio.play();
-      if (resp!== undefined) {
-          resp.then(_ => {
-            audio.play();
-            // autoplay starts!
-            // Stop the audio playback after 1 second
-          setTimeout(() => {
-            // audioRef.current.pause();
-            // audioRef.current.currentTime = 0;
-            audio.pause();
-            audio.currentTime = 0;
-          }, 1000);
-      }).catch(error => {
-          console.log(error)
-      });
-      }
+   //this function use to reset number unread message of button CHAT NOW
+   const handleReadMessage = () => {
+      const newNumUnread = unread - numRead;
+      dispatch(
+         messageSlice.actions.setNumberUnread({
+            key: "",
+            numberUnread: unread - numRead,
+         })
+      );
+      setUnread(newNumUnread);
+   };
+   //audio when have new message
+   const handleNewMessage = (message) => {
+      try {
+         console.log(message);
+         const audio = new Audio(
+            "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3"
+         );
+         // Play the notification sound
+         // audioRef.current.play();
+         var resp = audio.play();
+         if (resp !== undefined) {
+            resp
+               .then((_) => {
+                  audio.play();
+                  // autoplay starts!
+                  // Stop the audio playback after 1 second
+                  setTimeout(() => {
+                     // audioRef.current.pause();
+                     // audioRef.current.currentTime = 0;
+                     audio.pause();
+                     audio.currentTime = 0;
+                  }, 1000);
+               })
+               .catch((error) => {
+                  console.log(error);
+               });
+         }
 
       
 
@@ -169,62 +196,77 @@ const PopupMessage = () => {
       console.log(error);
     }
   };
-  console.log('here is num unread golobal ', userList)
+  console.log('here is num unread golobal ', numberUnread)
 
-  return (
-   <>
-   {
-    status == 1 &&  
-    <div className={clsx(s.container)}>
-      {/* <audio src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3" preload="auto" ref={audioRef} /> */}
-      <Button 
-              variant="contained"
-              color="primary"
-              onClick={handleClick}
-              className={clsx(s.btnchat)}
-              >
-        Your Chat 
-        {unread !== 0 && <div className={clsx(s.numUnread)}>({unread})</div>}
-
-      </Button>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-        PaperProps={{
-          style: {
-            overflow: "hidden",
-          },
-        }}
-        className={clsx(s.popover)}
-      >
-        <div>
-          <div className={clsx(s.warrperBtnClose)}>
-            <Cancel onClick={handleClose} className={clsx(s.btnClose)} />
-          </div>
-          <Grid container className={clsx(s.messagecontent)}>
-            <Grid item xs={4} sm={4} md={4} className={clsx(s.userList)}>
-              <MessageUserList />
-            </Grid>
-            <Grid item xs={8} sm={8} md={8} className={clsx(s.messageChat)}>
-              <MessageContent />
-            </Grid>
-          </Grid>
-        </div>
-      </Popover>
-  </div>
-   }
-   </>
-  );
+   return (
+      <>
+         {status == 1 && (
+            <div className={clsx(s.container)}>
+               {/* <audio src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3" preload="auto" ref={audioRef} /> */}
+               <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleClick}
+                  className={clsx(s.btnchat)}
+               >
+                  Your Chat
+                  {unread !== 0 && (
+                     <div className={clsx(s.numUnread)}>({unread})</div>
+                  )}
+               </Button>
+               <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                     vertical: "bottom",
+                     horizontal: "right",
+                  }}
+                  transformOrigin={{
+                     vertical: "top",
+                     horizontal: "right",
+                  }}
+                  PaperProps={{
+                     style: {
+                        overflow: "hidden",
+                     },
+                  }}
+                  className={clsx(s.popover)}
+               >
+                  <div>
+                     <div className={clsx(s.warrperBtnClose)}>
+                        <Cancel
+                           onClick={handleClose}
+                           className={clsx(s.btnClose)}
+                        />
+                     </div>
+                     <Grid container className={clsx(s.messagecontent)}>
+                        <Grid
+                           item
+                           xs={4}
+                           sm={4}
+                           md={4}
+                           className={clsx(s.userList)}
+                        >
+                           <MessageUserList />
+                        </Grid>
+                        <Grid
+                           item
+                           xs={8}
+                           sm={8}
+                           md={8}
+                           className={clsx(s.messageChat)}
+                        >
+                           <MessageContent />
+                        </Grid>
+                     </Grid>
+                  </div>
+               </Popover>
+            </div>
+         )}
+      </>
+   );
 };
 
 export default PopupMessage;

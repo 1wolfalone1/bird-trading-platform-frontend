@@ -15,6 +15,7 @@ import userInfoSlice from "../../redux/global/userInfoSlice";
 import { userStatus } from "../order/cartSlice";
 import { api } from "./../../api/server/API";
 import { errorAuthentication } from "../../config/constant";
+import { motion } from 'framer-motion';
 
 const textFieldStyle = {
   input: {
@@ -121,6 +122,7 @@ export default function Login() {
       callCookies();
       navigate("/products");
     } else if (status === 404) {
+      console.log(status)
     }
   };
   const callCookies = async () => {
@@ -132,14 +134,29 @@ export default function Login() {
       console.error(e);
     }
   };
+  const handleChange = (e) => {
+    console.log(e.target.value, 'image change');
+  }
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.imgLeft)}>
+      <motion.div
+        initial={{
+          x: '-100%'
+        }}
+        animate={{
+          x: 0,
+          transition: {
+            duration: 0.5,
+          }
+        }}
+      className={clsx(s.imgLeft)}>
         <img
           src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/login.png"
           alt="Login"
+          onLoadCapture={handleChange}
         />
-      </div>
+        
+      </motion.div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
           <span>Sign in</span>
