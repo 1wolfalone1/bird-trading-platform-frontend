@@ -8,20 +8,20 @@ import { callFirstPage } from "./productsPresentationSlice";
 import { getProducts } from "./productsSelector";
 
 export default function ProductsPresentation() {
-   const [listProduct, setListProduct] = useState([]);
-   const dispatch = useDispatch();
-   const products = useSelector(getProducts);
-   const { data, page } = products;
-   useEffect(() => {
-      const k = async () => {
-         await dispatch(callFirstPage());
-      };
-      k();
-   }, []);
-   return (
-      <div className={s.container}>``
-         <Products products={data} />
-         <ProductsSlider pageNumber={page} />
-      </div>
-   );
+  const [listProduct, setListProduct] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector(getProducts);
+  const { data, page } = products;
+  useEffect(() => {
+    const k = async () => {
+      await dispatch(callFirstPage());
+    };
+    k();
+  }, []);
+  return (
+    <div className={s.container}>
+      <Products products={data} />
+      <ProductsSlider pageNumber={page} />
+    </div>
+  );
 }

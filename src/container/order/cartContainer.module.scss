@@ -152,7 +152,7 @@ $fz: 3rem;
   position: relative;
 
   .headerVoucher {
-    padding-top: 2rem;
+    padding: 2rem 0;
     color: c.$Accent5;
     font-size: 3.6rem;
     font-weight: bolder;
@@ -206,20 +206,18 @@ $fz: 3rem;
     }
   }
   .submitBtn {
-    padding: 1rem 3.6rem;
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-left: 45rem;
-    background-color: c.$Complementary4;
-    color: c.$Dominant5;
-    border: 1px solid c.$Complementary0;
-    font-family: c.$Secondary;
-  }
-
-  .submitBtn:hover {
-    border: 1px solid c.$Complementary0;
-    background-color: c.$Dominant5;
-    color: c.$Complementary0;
+    display: flex;
+    justify-content: flex-end;
+    Button {
+      // padding: 1rem 3.6rem;
+      margin: 2rem 0;
+      margin-right: 4rem;
+      @include button(0.5rem 2rem);
+      &:hover {
+        color: c.$Accent7;
+        background-color: c.$Dominant5;
+      }
+    }
   }
 }
 

@@ -9,17 +9,25 @@ import { useDispatch, useSelector } from "react-redux";
 import userInfoSlice, {
   userInfoSelector,
 } from "../../redux/global/userInfoSlice";
+import axios from "axios";
+import { api } from "../../api/server/API";
+import Grid from "@mui/material/Unstable_Grid2";
 
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
-    fontSize: "2.4rem",
     fontFamily: Style.font.$Primary,
-    fullWidth: true,
-    paddingTop: "1.2rem",
-    paddingBottom: "0.8rem",
+    fontSize: "2rem",
+  },
+  label: {
+    fontSize: "2rem",
+  },
+  ".MuiOutlinedInput-notchedOutline legend": {
+    fontSize: "1.5rem",
   },
 };
+
+const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 const Profile = () => {
   const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || img);
@@ -27,6 +35,85 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { info } = useSelector(userInfoSelector);
   const [formInfo, setFormInfo] = useState(info);
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+
+  const [location, setLocation] = useState({
+    province: null,
+    district: null,
+    ward: null,
+  });
+
+  const selectOption = {
+    backgroundColor: "rgb(255, 235, 235)",
+    fontSize: "2rem",
+    height: "6rem",
+  };
+
+  useEffect(() => {
+    loadProvinces();
+  }, []);
+
+  useEffect(() => {
+    if (location.province) {
+      loadDistricts(location.province.code);
+    }
+  }, [location.province]);
+
+  useEffect(() => {
+    if (location.district) {
+      loadWards(location.district.code);
+    }
+  }, [location.district]);
+
+  const handleProvinceChange = async (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      province: provinces?.find((item) => item.code == e.target.value),
+    }));
+  };
+
+  const handleDistrictChange = async (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      district: districts?.find((item) => item.code == e.target.value),
+    }));
+  };
+
+  const handleWardChange = (e) => {
+    setLocation((prev) => ({
+      ...prev,
+      ward: wards?.find((item) => item.code == e.target.value),
+    }));
+
+    console.log(location);
+  };
+
+  const loadProvinces = async () => {
+    const response = await fetch(`${LOCATION_API_URL}/p`);
+    if (response.ok) {
+      setProvinces(await response.json());
+    }
+  };
+
+  const loadDistricts = async (pCode) => {
+    const response = await fetch(`${LOCATION_API_URL}/d`);
+    if (response.ok) {
+      let data = await response.json();
+      let districts = data.filter((d) => d?.province_code == pCode);
+      setDistricts(districts);
+    }
+  };
+
+  const loadWards = async (dCode) => {
+    const response = await fetch(`${LOCATION_API_URL}/w`);
+    if (response.ok) {
+      let data = await response.json();
+      let wards = data.filter((w) => w?.district_code == dCode);
+      setWards(wards);
+    }
+  };
 
   const handleUpdateAvatar = (e) => {
     const reader = new FileReader();
@@ -40,10 +127,32 @@ const Profile = () => {
     reader.readAsDataURL(e.target.files[0]);
   };
 
+  const data = {
+    email: formInfo.email,
+    fullName: formInfo.fullName,
+    phoneNumber: formInfo.phoneNumber,
+    street: formInfo.address.street,
+    ward: formInfo.address.ward,
+    district: formInfo.address.district,
+    city: formInfo.address.city,
+  };
+
+  async function updateProfile(data) {
+    try {
+      const response = await api.put("/users/update-profile", data);
+      console.log(response.data); // You can handle the response here
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  console.log("data", data);
+
   const handleSaveChange = () => {
     setIsEditable(!isEditable);
+
     if (isEditable) {
       dispatch(userInfoSlice.actions.updateUserInfo(formInfo));
+      updateProfile(data);
     }
   };
 
@@ -105,8 +214,6 @@ const Profile = () => {
     }
   };
 
-  console.log(formInfo);
-
   return (
     <Fragment>
       <h1>Your Profile</h1>
@@ -129,9 +236,8 @@ const Profile = () => {
         </div>
 
         <div className={clsx(s.showInfo)}>
-          <div className={clsx(s.left)}>
-            <div className={clsx(s.title)}>
-              <span>Name:</span>
+          <Grid container className={clsx(s.left)}>
+            <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
@@ -143,8 +249,9 @@ const Profile = () => {
                   <TextField
                     id="filled-basic"
                     value={formInfo?.fullName}
-                    variant="filled"
+                    variant="outlined"
                     color="Dominant0"
+                    label="Full Name"
                     sx={textFieldStyle}
                     disabled={!isEditable}
                     fullWidth
@@ -153,9 +260,8 @@ const Profile = () => {
                   />
                 </div>
               </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>Phone:</span>
+            </Grid>
+            <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
@@ -169,8 +275,9 @@ const Profile = () => {
                   <TextField
                     id="filled-basic"
                     value={formInfo?.phoneNumber || ""}
-                    variant="filled"
+                    variant="outlined"
                     color="Dominant0"
+                    label="Phone Number"
                     name="phoneNumber"
                     sx={textFieldStyle}
                     disabled={!isEditable}
@@ -179,9 +286,8 @@ const Profile = () => {
                   />
                 </div>
               </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>Email:</span>
+            </Grid>
+            <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
@@ -193,7 +299,8 @@ const Profile = () => {
                   <TextField
                     id="filled-basic"
                     value={formInfo.email}
-                    variant="filled"
+                    variant="outlined"
+                    label="Email"
                     color="Dominant0"
                     name="email"
                     sx={textFieldStyle}
@@ -202,135 +309,95 @@ const Profile = () => {
                   />
                 </div>
               </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>Joined:</span>
-              <Tooltip
-                title={
-                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.role}
-                  </Typography>
-                }
-              >
-                <div className={clsx(s.inputText)}>
-                  <TextField
-                    id="filled-basic"
-                    value={formInfo.role}
-                    variant="filled"
-                    color="Dominant0"
-                    sx={textFieldStyle}
-                    disabled
-                    fullWidth
-                  />
-                </div>
-              </Tooltip>
-            </div>
-          </div>
+            </Grid>
+          </Grid>
           <div className={clsx(s.right)}>
-            <div className={clsx(s.title)}>
-              <span>City:</span>
+            <div className={clsx(s.addressContainer)}>
+              <Grid container spacing={1} className={clsx(s.address)}>
+                <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+                  <select
+                    id="province"
+                    className={clsx(s.province)}
+                    value={location?.province?.code}
+                    onChange={handleProvinceChange}
+                    style={selectOption}
+                  >
+                    <option value="">City</option>
+                    {provinces &&
+                      provinces.map((province) => (
+                        <option
+                          key={province.code}
+                          value={province.code}
+                          name={province.name}
+                        >
+                          {province.name}
+                        </option>
+                      ))}
+                  </select>
+                </Grid>
+                <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+                  <select
+                    id="district"
+                    className={clsx(s.district)}
+                    value={location?.district?.code}
+                    onChange={handleDistrictChange}
+                    style={selectOption}
+                  >
+                    <option value="">District</option>
+                    {districts &&
+                      districts.map((district) => (
+                        <option
+                          key={district.code}
+                          value={district.code}
+                          name={district.name}
+                        >
+                          {district.name}
+                        </option>
+                      ))}
+                  </select>
+                </Grid>
+                <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
+                  <select
+                    id="ward"
+                    className={clsx(s.ward)}
+                    value={location?.ward?.code}
+                    onChange={handleWardChange}
+                    style={selectOption}
+                  >
+                    <option value="">Ward</option>
+                    {wards &&
+                      wards.map((ward) => (
+                        <option
+                          key={ward.code}
+                          value={ward.code}
+                          name={ward.name}
+                        >
+                          {ward.name}
+                        </option>
+                      ))}
+                  </select>
+                </Grid>
+              </Grid>
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.address?.city
-                      ? formInfo.address.city
-                      : "Provide your city"}
+                    {`${
+                      info.address.street ? `${info.address.street} Street` : ""
+                    }`}
                   </Typography>
                 }
               >
-                <div className={clsx(s.inputText)}>
+                <div className={clsx(s.street)}>
                   <TextField
-                    id="filled-basic"
-                    value={formInfo.address?.city || ""}
-                    variant="filled"
-                    color="Dominant0"
-                    name="city"
-                    sx={textFieldStyle}
-                    disabled={!isEditable}
-                    fullWidth
-                    onChange={(e) => handleUpdateProfile(e)}
-                    // onChange={handleChangeCity}
-                  />
-                </div>
-              </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>District:</span>
-              <Tooltip
-                title={
-                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.address?.district
-                      ? formInfo.address.district
-                      : "Provide your district"}
-                  </Typography>
-                }
-              >
-                <div className={clsx(s.inputText)}>
-                  <TextField
-                    id="filled-basic"
-                    value={formInfo.address?.district || ""}
-                    variant="filled"
-                    color="Dominant0"
-                    name="district"
-                    sx={textFieldStyle}
-                    disabled={!isEditable}
-                    fullWidth
-                    onChange={(e) => handleUpdateProfile(e)}
-                    // onChange={handleChangeDistrict}
-                  />
-                </div>
-              </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>Ward:</span>
-              <Tooltip
-                title={
-                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.address?.ward
-                      ? formInfo.address.ward
-                      : "Provide your ward"}
-                  </Typography>
-                }
-              >
-                <div className={clsx(s.inputText)}>
-                  <TextField
-                    id="filled-basic"
-                    value={formInfo.address?.ward || ""}
-                    variant="filled"
-                    color="Dominant0"
-                    name="ward"
-                    sx={textFieldStyle}
-                    disabled={!isEditable}
-                    fullWidth
-                    onChange={(e) => handleUpdateProfile(e)}
-                    // onChange={handleChangeWard}
-                  />
-                </div>
-              </Tooltip>
-            </div>
-            <div className={clsx(s.title)}>
-              <span>Street:</span>
-              <Tooltip
-                title={
-                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.address?.street
-                      ? formInfo.address.street
-                      : "Provide your street"}
-                  </Typography>
-                }
-              >
-                <div className={clsx(s.inputText)}>
-                  <TextField
-                    id="filled-basic"
-                    value={formInfo.address?.street || ""}
-                    variant="filled"
-                    color="Dominant0"
+                    id="street"
+                    variant="outlined"
                     name="street"
-                    sx={textFieldStyle}
-                    disabled={!isEditable}
-                    fullWidth
+                    label="Street Name, Building, House No"
+                    color="Dominant0"
+                    value={formInfo.address?.street || ""}
                     onChange={(e) => handleUpdateProfile(e)}
-                    // onChange={handleChangeStreet}
+                    sx={textFieldStyle}
+                    fullWidth
                   />
                 </div>
               </Tooltip>

@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import s from "./orderBill.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Button } from "@mui/material";
 import axios from "axios";
-import { getCartSelector } from "../../../container/order/cartSlice";
-import { useSelector } from "react-redux";
+import cartSlice, { getCartSelector } from "../../../container/order/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { userInfoSelector } from "../../../redux/global/userInfoSlice";
+import { useNavigate } from "react-router-dom";
+import { api } from "../../../api/server/API";
+import { toast } from "react-toastify";
+import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
+import { useEffect } from "react";
 
 export default function OrderBill({ close, paymentType }) {
   const { items, voucherSelected } = useSelector(getCartSelector);
   const { info } = useSelector(userInfoSelector);
+  const [formInfo, setFormInfo] = useState(info);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   let subTotal = Number(
     items
       .reduce(
@@ -45,8 +54,6 @@ export default function OrderBill({ close, paymentType }) {
         ? Number(subTotal + shipTotal - promotion).toFixed(2)
         : 0;
     };
-    console.log("total price:", totalPrice());
-
     const data = {
       userOrderDto: {
         email: info.email,
@@ -65,14 +72,38 @@ export default function OrderBill({ close, paymentType }) {
       productOrder: productOrder,
     };
 
-    axios
-      .post("https://thongtienthienphuot.shop/api/v1/package-order", data)
+    api
+      .post("/package-order", data)
       .then((response) => {
         // Handle the response from the backend, if needed
+        if (paymentType === "PayPal") {
+          if (response.data.successCode == 200) {
+            window.location.href = response.data.successMessage.substring(10);
+          }
+        }
+        if (paymentType === "Delivery") {
+          if (response.data.successCode == 200) {
+            dispatch(cartSlice.actions.removeCart());
+            localStorage.removeItem("cart");
+            navigate("/order-status");
+          }
+          if (response.data.errorCode == 406) {
+          }
+        }
         console.log(response.data);
       })
       .catch((error) => {
         // Handle any errors that occurred during the request
+        const errorMessage = "Order failed! Please check again!";
+        const notifyAddtoCart = () =>
+          toast(
+            <AddToCartToast type={toastType.WARNING} msg={errorMessage} />,
+            {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1500,
+            }
+          );
+        notifyAddtoCart();
         console.error(error);
       });
   };
@@ -130,7 +161,7 @@ export default function OrderBill({ close, paymentType }) {
         $
       </div>
       <div className={clsx(s.submitBtn)}>
-        <Button onClick={handleSubmitBtn}>Place Order</Button>
+        <Button onClick={handleSubmitBtn}>Place order</Button>
       </div>
     </div>
   );

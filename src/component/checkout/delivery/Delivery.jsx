@@ -3,12 +3,10 @@ import clsx from "clsx";
 import Style from "../../../style/inline-style/style";
 import s from "./delivery.module.scss";
 import { Button, Tooltip, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import Popup from "reactjs-popup";
 import DeliveryPopup from "./DeliveryPopup";
 
 export default function Delivery({ userInfo }) {
-  const navigate = useNavigate();
   return (
     <Fragment>
       <div className={clsx(s.container)}>

@@ -103,7 +103,6 @@ export default function ProductDetails() {
         }
       }
       if (status === quantityControlStatus.INCREASE) {
-        console.log(quantity + currentQuantity, "--------------qqq------");
         if (quantity + currentQuantity < product.product.quantity) {
           setQuantity((state) => +state + 1);
         } else {
@@ -133,7 +132,6 @@ export default function ProductDetails() {
         imgUrl: null,
       },
     });
-    console.log(cartObject, "-0--------------------------");
     dispatch(
       cartSlice.actions.changeQuantity({
         cartObject: cartObject,
@@ -141,6 +139,37 @@ export default function ProductDetails() {
         quantityAdded: +quantity,
       })
     );
+  };
+
+  const handleOrderNow = () => {
+    let currentCartQuantity = cartQuantity;
+    if (!cartQuantity) {
+      currentCartQuantity = 0;
+    }
+    const cartObject = mapObjects(product.product, {
+      cartQuantity: +quantity + +currentCartQuantity,
+      id: 0,
+      name: "",
+      imgUrl: "",
+      price: 0,
+      discountedPrice: 0,
+      discountRate: 0,
+      quantity: 0,
+      categoryId: 0,
+      shopOwner: {
+        id: 3,
+        shopName: "Bookstore",
+        imgUrl: null,
+      },
+    });
+    dispatch(
+      cartSlice.actions.changeQuantity({
+        cartObject: cartObject,
+        isDetails: true,
+        quantityAdded: +quantity,
+      })
+    );
+    navigate("/cart");
   };
   useEffect(() => {
     const getProducts = async () => {
@@ -190,23 +219,37 @@ export default function ProductDetails() {
                 </div>
                 <div className={s.mainContent}>
                   <div className={s.price}>
-                    {product.product.discountRate !== 0 ? (
-                      <>
-                        <span className={s.oldPrice}>
+                    <div className={s.countPrice}>
+                      {product.product.discountRate !== 0 ? (
+                        <>
+                          <span className={s.oldPrice}>
+                            {Number(product.product.price).toFixed(2)}$
+                          </span>
+                          <span className={s.disPrice}>
+                            {Number(product.product.discountedPrice).toFixed(2)}
+                            $
+                          </span>
+                          <span className={s.discount}>
+                            {(product.product.discountRate * 100).toFixed(0)}%
+                          </span>
+                        </>
+                      ) : (
+                        <span className={s.disPrice}>
                           {Number(product.product.price).toFixed(2)}$
                         </span>
-                        <span className={s.disPrice}>
-                          {Number(product.product.discountedPrice).toFixed(2)}$
-                        </span>
-                        <span className={s.discount}>
-                          {(product.product.discountRate * 100).toFixed(0)}%
-                        </span>
-                      </>
-                    ) : (
-                      <span className={s.disPrice}>
-                        {Number(product.product.price).toFixed(2)}$
-                      </span>
-                    )}
+                      )}
+                    </div>
+                    <div className={s.shop}>
+                      <div className={s.image}>
+                        <img src={product.product.shopOwner.imgUrl} alt="" />
+                      </div>
+                      <div className={s.right}>
+                        <Button>Chat now </Button>
+                        <div className={s.name}>
+                          {product.product.shopOwner.shopName}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className={s.type}>
                     <span>
@@ -269,15 +312,6 @@ export default function ProductDetails() {
                   </span>
                 </div>
                 <div className={s.footer}>
-                  <div className={s.shop}>
-                    <div className={s.image}>
-                      <img src={product.product.shopOwner.imgUrl} alt="" />
-                    </div>
-                    <div className={s.name}>
-                      <span>{product.product.shopOwner.shopName}</span>
-                    </div>
-                  </div>
-
                   <div className={s.buttonControl}>
                     <Button
                       sx={handleButton}
@@ -297,7 +331,7 @@ export default function ProductDetails() {
                       sx={handleButton}
                       variant="contained"
                       color="error"
-                      onClick={() => navigate("/checkout")}
+                      onClick={handleOrderNow}
                     >
                       {" "}
                       Order now
