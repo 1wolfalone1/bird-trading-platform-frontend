@@ -35,16 +35,7 @@ export default function ProductCard({ product }) {
       console.log(statusQuantity);
       if (statusQuantity.isValid) {
       } else {
-         // toast(
-         //    <AddToCartToast
-         //       type={toastType.WARNING}
-         //       msg={statusQuantity.msg}
-         //    />,
-         //    {
-         //       position: toast.POSITION.TOP_RIGHT,
-         //       autoClose: 1500,
-         //    }
-         // );
+        
       }
    };
    return (
