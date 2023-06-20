@@ -32,7 +32,7 @@
   color: $color;
 }
 
-$heightAvatar: 30rem;
+$heightAvatar: 24rem;
 
 h1 {
   font-family: c.$Secondary;
@@ -52,8 +52,12 @@ h1 {
     display: flex;
     flex-direction: column;
     margin-left: 20rem;
+    .disabled {
+      display: none;
+    }
 
     .imgProfile {
+      margin-top: 6rem;
       img {
         height: $heightAvatar;
         width: $heightAvatar;
@@ -119,7 +123,7 @@ h1 {
   Button {
     @include button();
     margin-top: 3rem;
-    margin-right: 26rem;
+    margin-right: 28rem;
   }
   Button:hover {
     color: c.$Accent7;
