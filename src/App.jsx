@@ -23,6 +23,7 @@ import GetToken from "./container/get-token/GetToken";
 import PopupMessage from "./component/message/PopupMessage";
 import OrderStatus from "./container/purchase/order-status/OrderStatus";
 import OrderHistory from "./container/purchase/order-history/OrderHistory";
+import CreateShop from "./container/create-shop/CreateShop";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -66,6 +67,7 @@ function App() {
         <Route path="popup-message" element={<PopupMessage />} />
         <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
+        <Route path="create-shop" element={<CreateShop />} />
       </Route>
     </Routes>
   );

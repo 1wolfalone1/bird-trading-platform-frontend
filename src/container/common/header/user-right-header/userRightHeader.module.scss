@@ -24,6 +24,7 @@ $container-height: calc(c.$h-header - 3rem);
       img {
         border-radius: 50%;
         margin-left: 0.5rem;
+        margin-top: 0.25rem;
         width: $container-height - 1rem;
         height: $container-height - 1rem;
       }

@@ -12,6 +12,7 @@ import userInfoSlice, {
 import axios from "axios";
 import { api } from "../../api/server/API";
 import Grid from "@mui/material/Unstable_Grid2";
+import { dataAsyncUrlToFile, objectToBlob } from "../../utils/myUtils";
 
 const textFieldStyle = {
   input: {
@@ -30,20 +31,28 @@ const textFieldStyle = {
 const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 const Profile = () => {
-  const [avatar, setAvatar] = useState(localStorage.getItem("avatar") || img);
+  const [avatar, setAvatar] = useState();
   const [isEditable, setIsEditable] = useState(false); // Editable state for the fields
   const dispatch = useDispatch();
   const { info } = useSelector(userInfoSelector);
-  const [formInfo, setFormInfo] = useState(info);
-  const [provinces, setProvinces] = useState([]);
+  const [formInfo, setFormInfo] = useState({
+    ...info,
+    address: {
+      city: {
+        name: info.address?.city,
+      },
+      district: {
+        name: info.address?.district,
+      },
+      ward: {
+        name: info.address?.ward,
+      },
+    },
+  });
+
+  const [cities, setCities] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [wards, setWards] = useState([]);
-
-  const [location, setLocation] = useState({
-    province: null,
-    district: null,
-    ward: null,
-  });
 
   const selectOption = {
     backgroundColor: "rgb(228, 223, 209)",
@@ -52,48 +61,56 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    loadProvinces();
+    loadCities();
   }, []);
 
   useEffect(() => {
-    if (location.province) {
-      loadDistricts(location.province.code);
+    if (formInfo.address?.city) {
+      loadDistricts(formInfo.address?.city.code);
+      setWards([]);
     }
-  }, [location.province]);
+  }, [formInfo.address?.city]);
 
   useEffect(() => {
-    if (location.district) {
-      loadWards(location.district.code);
+    if (formInfo.address?.district) {
+      loadWards(formInfo.address?.district.code);
     }
-  }, [location.district]);
+  }, [formInfo.address?.district]);
 
-  const handleProvinceChange = async (e) => {
-    setLocation((prev) => ({
+  const handleCityChange = async (e) => {
+    setFormInfo((prev) => ({
       ...prev,
-      province: provinces?.find((item) => item.code == e.target.value),
+      address: {
+        city: cities?.find((item) => item.code == e.target.value),
+      },
     }));
   };
 
   const handleDistrictChange = async (e) => {
-    setLocation((prev) => ({
+    setFormInfo((prev) => ({
       ...prev,
-      district: districts?.find((item) => item.code == e.target.value),
+      address: {
+        ...prev.address,
+        district: districts?.find((item) => item.code == e.target.value),
+        ward: null,
+      },
     }));
   };
 
   const handleWardChange = (e) => {
-    setLocation((prev) => ({
+    setFormInfo((prev) => ({
       ...prev,
-      ward: wards?.find((item) => item.code == e.target.value),
+      address: {
+        ...prev.address,
+        ward: wards?.find((item) => item.code == e.target.value),
+      },
     }));
-
-    console.log(location);
   };
 
-  const loadProvinces = async () => {
+  const loadCities = async () => {
     const response = await fetch(`${LOCATION_API_URL}/p`);
     if (response.ok) {
-      setProvinces(await response.json());
+      setCities(await response.json());
     }
   };
 
@@ -116,47 +133,65 @@ const Profile = () => {
   };
 
   const handleUpdateAvatar = (e) => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    console.log(files, "file ne");
     const reader = new FileReader();
     reader.onload = () => {
-      if (reader.readyState === 2) {
-        const newAvatar = reader.result;
-        setAvatar(newAvatar);
-        localStorage.setItem("avatar", newAvatar); // Save the avatar URL in Local Storage
-      }
+      const newAvatar = reader.result;
+      setAvatar({
+        src: newAvatar,
+        obj: files[0],
+      });
     };
-    reader.readAsDataURL(e.target.files[0]);
-  };
-
-  const data = {
-    email: formInfo.email,
-    fullName: formInfo.fullName,
-    phoneNumber: formInfo.phoneNumber,
-    street: formInfo.address.street,
-    ward: formInfo.address.ward,
-    district: formInfo.address.district,
-    city: formInfo.address.city,
+    if (files[0]) reader?.readAsDataURL(files[0]);
   };
 
   async function updateProfile(data) {
     try {
-      const response = await api.put("/users/update-profile", data);
-      console.log(response.data); // You can handle the response here
+      const formData = new FormData();
+
+      if (avatar?.obj) {
+        const avatarBlob = await dataAsyncUrlToFile(avatar.src);
+        formData.append("image", avatarBlob);
+      }
+      const dataBlob = objectToBlob(data);
+      formData.append("data", dataBlob);
+      const response = await api.put("/users/update-profile", formData, {
+        headers: {
+          "Content-type": "multipart/form-data",
+        },
+      });
+      console.log(response.data);
+      // You can handle the response here
     } catch (error) {
       console.error(error);
     }
   }
-  console.log("data", data);
 
   const handleSaveChange = () => {
     setIsEditable(!isEditable);
 
     if (isEditable) {
-      dispatch(userInfoSlice.actions.updateUserInfo(formInfo));
-      updateProfile(data);
+      const { city, district, ward, street } = formInfo.address;
+      const updatedData = {
+        ...formInfo,
+        address: {
+          city: city?.name,
+          district: district?.name,
+          ward: ward?.name,
+          street: street,
+        },
+      };
+      updateProfile(updatedData);
+      // dispatch(userInfoSlice.actions.updateUserInfo(formInfo));
     }
   };
-
-  useEffect(() => {}, []);
 
   const handleUpdateProfile = (e) => {
     const { name, value } = e.target;
@@ -171,33 +206,6 @@ const Profile = () => {
         setFormInfo((prev) => ({
           ...prev,
           phoneNumber: value,
-        }));
-        break;
-      case "city":
-        setFormInfo((prev) => ({
-          ...prev,
-          address: {
-            ...prev.address,
-            city: value,
-          },
-        }));
-        break;
-      case "district":
-        setFormInfo((prev) => ({
-          ...prev,
-          address: {
-            ...prev.address,
-            district: value,
-          },
-        }));
-        break;
-      case "ward":
-        setFormInfo((prev) => ({
-          ...prev,
-          address: {
-            ...prev.address,
-            ward: value,
-          },
         }));
         break;
       case "street":
@@ -220,9 +228,15 @@ const Profile = () => {
       <div className={clsx(s.profile)}>
         <div className={clsx(s.uploadImg)}>
           <div className={clsx(s.imgProfile)}>
-            <img src={formInfo?.imgUrl} alt="" />
+            <img
+              src={
+                avatar?.src ||
+                info?.imgUrl ||
+                "https://static.thenounproject.com/png/5034901-200.png"
+              }
+              alt="Avatar"
+            />
           </div>
-
           <input
             type="file"
             name="avatar"
@@ -230,7 +244,10 @@ const Profile = () => {
             hidden
             onChange={handleUpdateAvatar}
           />
-          <label className={clsx(s.editProfile)} htmlFor="customFile">
+          <label
+            className={clsx(s.editProfile, isEditable ? "" : s.disabled)}
+            htmlFor="customFile"
+          >
             Choose Avatar
           </label>
         </div>
@@ -241,7 +258,9 @@ const Profile = () => {
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo?.fullName}
+                    {formInfo?.fullName
+                      ? formInfo.fullName
+                      : "Provide your full name"}
                   </Typography>
                 }
               >
@@ -291,7 +310,7 @@ const Profile = () => {
               <Tooltip
                 title={
                   <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                    {formInfo.email}
+                    {formInfo?.email ? formInfo.email : "Provide your email"}
                   </Typography>
                 }
               >
@@ -316,22 +335,23 @@ const Profile = () => {
               <Grid container spacing={1} className={clsx(s.address)}>
                 <Grid sm={4} md={4} xl={4} className={clsx(s.gridItem)}>
                   <select
-                    id="province"
-                    className={clsx(s.province)}
-                    value={location?.province?.code}
-                    onChange={handleProvinceChange}
+                    id="city"
+                    className={clsx(s.city)}
+                    value={formInfo.address?.city?.code}
+                    onChange={handleCityChange}
                     disabled={!isEditable}
                     style={selectOption}
+                    required
                   >
-                    <option value="">City</option>
-                    {provinces &&
-                      provinces.map((province) => (
+                    <option value="">{formInfo.address?.city?.name}</option>
+                    {cities &&
+                      cities.map((city) => (
                         <option
-                          key={province.code}
-                          value={province.code}
-                          name={province.name}
+                          key={city.code}
+                          value={city.code}
+                          name={city.name}
                         >
-                          {province.name}
+                          {city.name}
                         </option>
                       ))}
                   </select>
@@ -340,12 +360,13 @@ const Profile = () => {
                   <select
                     id="district"
                     className={clsx(s.district)}
-                    value={location?.district?.code}
+                    value={formInfo.address?.district?.code}
                     disabled={!isEditable}
                     onChange={handleDistrictChange}
                     style={selectOption}
+                    required
                   >
-                    <option value="">District</option>
+                    <option value="">{formInfo.address?.district?.name}</option>
                     {districts &&
                       districts.map((district) => (
                         <option
@@ -362,12 +383,13 @@ const Profile = () => {
                   <select
                     id="ward"
                     className={clsx(s.ward)}
-                    value={location?.ward?.code}
+                    value={formInfo.address?.ward?.code}
                     disabled={!isEditable}
                     onChange={handleWardChange}
                     style={selectOption}
+                    required
                   >
-                    <option value="">Ward</option>
+                    <option value="">{formInfo.address?.ward?.name}</option>
                     {wards &&
                       wards.map((ward) => (
                         <option
@@ -387,7 +409,9 @@ const Profile = () => {
             title={
               <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
                 {`${
-                  info.address.street ? `${info.address.street} Street` : ""
+                  formInfo.address?.street
+                    ? `${formInfo.address?.street} Street`
+                    : ""
                 }`}
               </Typography>
             }

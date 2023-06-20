@@ -1,9 +1,10 @@
 import clsx from "clsx";
-import s from "./signUp.module.scss";
+import s from "./createShop.module.scss";
 import React, { useState } from "react";
 import { Button, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
+import Grid from "@mui/material/Unstable_Grid2";
 import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
 import * as yup from "yup";
 import { useFormik } from "formik";
@@ -28,7 +29,7 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "2.4rem",
   width: "100%",
-  padding: "0.8rem",
+  padding: "15.rem 1rem",
 };
 const formHelperText = {
   style: {
@@ -50,7 +51,7 @@ const validationSchema = yup.object({
   password: yup.string("").required("Password is required!"),
   confirmPassword: yup.string("").required("Confirm password is required!"),
 });
-export default function SignUp() {
+export default function CreateShop() {
   const [signUpWithGoogle, setSignUpWithGoogle] = useState();
   const [isVerifyProcess, setIsVerifyProcess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -133,15 +134,15 @@ export default function SignUp() {
       <div className={clsx(s.imgLeft)}>
         <img
           src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
-          alt="Sign up"
+          alt="Create Shop Account"
         />
       </div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
-          <span>Create Account</span>
+          <span>Create Shop Account</span>
         </div>
-        <form className={clsx(s.inputContainer)}>
-          <div className={clsx(s.inputText)}>
+        <Grid container spacing={1} className={clsx(s.inputContainer)}>
+          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
             <TextField
               id="email"
               label="Email"
@@ -156,6 +157,8 @@ export default function SignUp() {
               sx={textFieldStyle}
               fullWidth
             />
+          </Grid>
+          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
             <TextField
               id="name"
               label="Full Name"
@@ -170,6 +173,8 @@ export default function SignUp() {
               FormHelperTextProps={formHelperText}
               fullWidth
             />
+          </Grid>
+          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
             <TextField
               id="phone"
               label="Phone Number"
@@ -184,6 +189,10 @@ export default function SignUp() {
               FormHelperTextProps={formHelperText}
               fullWidth
             />
+          </Grid>
+        </Grid>
+        <Grid container spacing={1} className={clsx(s.info)}>
+          <Grid sm={6} md={6} xl={6} className={clsx(s.title)}>
             <TextField
               id="password"
               label="Password"
@@ -199,6 +208,8 @@ export default function SignUp() {
               FormHelperTextProps={formHelperText}
               fullWidth
             />
+          </Grid>
+          <Grid sm={6} md={6} xl={6} className={clsx(s.title)}>
             <TextField
               id="confirmPassword"
               label="Confirm Password"
@@ -219,33 +230,20 @@ export default function SignUp() {
               sx={textFieldStyle}
               fullWidth
             />
-          </div>
-          <div className={clsx(s.button)}>
-            <LoadingButton
-              sx={buttonRegisterStyle}
-              variant="outlined"
-              color="Accent7"
-              fullWidth
-              loading={loading}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Sign up
-            </LoadingButton>
-          </div>
-        </form>
-        <div className={clsx(s.separate)}>
-          <span>Or</span>
-        </div>
-        <div>
-          <ButtonGoogle content={"Sign up with Google"} />
-          <div className={clsx(s.helpGooleText)}></div>
-        </div>
-        <div className={clsx(s.linkBottom)}>
-          Already have an account?{" "}
-          <Link to="/login" className={clsx(s.link)}>
-            Sign in
-          </Link>
+          </Grid>
+        </Grid>
+        <div className={clsx(s.button)}>
+          <LoadingButton
+            sx={buttonRegisterStyle}
+            variant="outlined"
+            color="Accent7"
+            fullWidth
+            loading={loading}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Create Account
+          </LoadingButton>
         </div>
       </div>
     </div>
