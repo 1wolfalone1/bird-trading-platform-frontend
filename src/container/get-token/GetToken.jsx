@@ -24,6 +24,7 @@ export default function GetToken() {
             const getUserInfo = async () => {
                const res = await api.get(`/info${location.search}`);
                const data = await res.data;
+               console.log(data)
                dispatch(
                   userInfoSlice.actions.changeAuthentication({
                      status: userStatus.USER,

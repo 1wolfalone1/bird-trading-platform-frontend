@@ -35,7 +35,7 @@ const PopupMessage = () => {
   const dispatch = useDispatch();
 
   const {status, info} = useSelector(userInfoSelector)
-
+  console.log(status, 'statusssssssssssssssssssssssssssssssssssssssss');
   const [anchorEl, setAnchorEl] = useState(null);
 
   const audioRef = useRef(null);
