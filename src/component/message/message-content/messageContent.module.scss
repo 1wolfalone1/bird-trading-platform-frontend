@@ -44,87 +44,91 @@ $sendIconWidth: 40px;
         &::-webkit-scrollbar-thumb {
         background-color: #888; /* Customize the color of the scrollbar thumb */
         }
-
-            .messageItem {
-                margin-top: 14px;
-                margin-bottom: 14px;
-                display: flex;
-                @include flex-direct();
-                width: 100%;
-
-                .messageData {
-                    padding: 10px 10px 16px 10px;
+            .messagecontainer {
+                padding: 10px;
+                .messageItem {
+                    margin-top: 14px;
+                    margin-bottom: 14px;
+                    display: flex;
+                    @include flex-direct();
+                    width: 100%;
+                    min-width: 100px;
+    
+                    .messageData {
+                        padding: 10px 10px 16px 10px;
+                        position: relative;
+                        max-width: 60%;
+                        background-color: rgba(0, 0, 0, 0.1);
+                    }
+    
+                    .messageTime {
+                        position: absolute;
+                        font-size: 10px;
+                        font-weight: 400;
+                        bottom: 0;
+                        right: 0;
+                    }
+                }
+    
+                .messageItemSelf {
+                    margin-top: 14px;
+                    margin-bottom: 14px;
+                    display: flex;
+                    @include flex-direct(end);
+                    width: 100%;
                     position: relative;
-                    max-width: 60%;
-                    background-color: rgba(0, 0, 0, 0.1);
 
-                }
-
-                .messageTime {
-                    position: absolute;
-                    font-size: 10px;
-                    font-weight: 400;
-                    bottom: 0;
-                    right: 0;
-                }
-            }
-
-            .messageItemSelf {
-                margin-top: 14px;
-                margin-bottom: 14px;
-                display: flex;
-                @include flex-direct(end);
-                width: 100%;
-                position: relative;
-                
-                .messageData {
-                    max-width: 60%;
-                    padding: 10px 10px 16px 10px;
-                    background-color: c.$Accent1;
-                }
-
-                .messageTime {
-                    position: absolute;
-                    font-size: 10px;
-                    font-weight: 400;
-                    bottom: 0;
-                    right: 0;
+                    .messageData {
+                        min-width: 30px;
+                        max-width: 60%;
+                        padding: 10px 10px 16px 10px;
+                        background-color: c.$Accent1;
+                    }
+    
+                    .messageTime {
+                        position: absolute;
+                        font-size: 10px;
+                        font-weight: 400;
+                        bottom: 0;
+                        right: 0;
+                    }
                 }
             }
         }
     }
     
-    .wrapperInputSend {
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        margin-left: 10px;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        bottom: 0px;
-        max-height: $inputSendMessage;
+    
+}
+.wrapperInputSend {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    bottom: 0px;
+    max-height: $inputSendMessage;
+    width: 100%;
+    z-index: 2;
+
+    .inputBox {
+        overflow-y: auto;
         width: 100%;
-        z-index: 2;
-
-        .inputBox {
-            overflow-y: auto;
-            width: 100%;
+        height: $inputSendMessage;
+        
+        .inputSend {
             height: $inputSendMessage;
-            
-            .inputSend {
-                height: $inputSendMessage;
-                width: 100%;
-                font-size: 14px;
-            }
+            width: 100%;
+            font-size: 14px;
         }
+    }
 
-        .sendIcon {
-            padding: 20px;
-            color: c.$Accent7;
-            font-size: 24px;
-            &:hover {
-                cursor: pointer;
-                background-color: c.$Dominant1;
-            }
+    .sendIcon {
+        padding: 20px;
+        color: c.$Accent7;
+        font-size: 24px;
+        &:hover {
+            cursor: pointer;
+            background-color: c.$Dominant1;
         }
     }
 }
