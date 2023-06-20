@@ -30,6 +30,7 @@ import AddToCartToast, {
 } from "../../component/toast/content/AddToCartToast";
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
+import messageSlice from "../../component/message/messageSlice";
 const quantityControlStatus = {
   DECREASE: -1,
   CHANGE: 0,
@@ -53,6 +54,8 @@ export default function ProductDetails() {
   const element = `${product?.product.description}`;
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
+
+
   const handleButton = {
     fontSize: "2.4rem",
     fontFamily: Style.font.$Primary,
@@ -190,6 +193,17 @@ export default function ProductDetails() {
   }, []);
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
+
+  //this function use to add shop into a uselist and chat
+  const handleChatNow = (shop) => { 
+    const updateShop = {
+      ...shop,
+      unread: 0
+    }
+    dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}))
+    console.log(shop)
+  }
+    
   return (
     <>
       {product ? (
@@ -244,7 +258,7 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        <Button>Chat now </Button>
+                        <Button onClick={() => handleChatNow(product.product.shopOwner)}>Chat now </Button>
                         <div className={s.name}>
                           {product.product.shopOwner.shopName}
                         </div>

@@ -25,7 +25,7 @@ const MessageContent = () => {
 
   const divRef = useRef(null);
 
-  const {messageList, currentShopIDSelect} = useSelector(messageSelector)
+  const {messageList, currentShopIDSelect, userList} = useSelector(messageSelector)
 
   const {info} = useSelector(userInfoSelector)
 
@@ -69,13 +69,14 @@ const MessageContent = () => {
     const updatedValues = {
       ...values,
       id: uni,
-      date: moment().format('YYYY-MM-DD[T]HH:mm:ss.SSS'),
+      date: moment().format('YYYY-MM-DD[T]HH:mm:ss.SSSZ'),
       shopID: currentShopIDSelect,
     }; 
     resetForm();
-    dispatch(messageSlice.actions.addMessage({ key: "", message: updatedValues }));
-    dispatch(sendMessage(updatedValues));
-    console.log(updatedValues);
+    dispatch(messageSlice.actions.addMessage({  message: updatedValues }));
+    // dispatch(sendMessage(updatedValues));
+    dispatch(messageSlice.actions.setReadMessage({userList: userList, id: currentShopIDSelect})); 
+    console.log("here is curren shop id select: ", currentShopIDSelect);
   };
 
   const validationSchema = Yup.object( {

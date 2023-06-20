@@ -68,7 +68,7 @@ const PopupMessage = () => {
   //socket js
   const connect = (status)=>{
     if (status === 1) {
-      let Sock = new SockJS('https://thongtienthienphuot.shop/ws');
+      let Sock = new SockJS('http://localhost:8080/ws');
       stompClient = over(Sock);
       stompClient.connect({},onConnected, onError);
     }
@@ -125,7 +125,6 @@ const PopupMessage = () => {
         currentShopIDSelect: currentShopIDSelect}))
       console.log('here is an curent shop id select',currentShopIDSelect);
     }else {
-      console.log('open ne', open);
       console.log('have run funtion handle MessageArrive')
       setUnread(numberUnread);
     }
@@ -170,7 +169,7 @@ const PopupMessage = () => {
       console.log(error);
     }
   };
-  console.log('here is num unread golobal ', numberUnread)
+  console.log('here is num unread golobal ', userList)
 
   return (
    <>
