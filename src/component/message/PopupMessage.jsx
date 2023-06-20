@@ -74,16 +74,16 @@ const PopupMessage = () => {
       console.log("Get an mesasge");
    }, [message]);
 
-   //socket js
-   const connect = (status) => {
-      if (status === 1) {
-         let Sock = new SockJS("https://thongtienthienphuot.shop/ws");
-         stompClient = over(Sock);
-         stompClient.connect({}, onConnected, onError);
-      }
-   };
-   console.log("status", status);
-   const onConnected = () => {
+  //socket js
+  const connect = (status)=>{
+    if (status === 1) {
+      let Sock = new SockJS('https://thongtienthienphuot.shop/ws');
+      stompClient = over(Sock);
+      stompClient.connect({},onConnected, onError);
+    }
+}
+  console.log('status', status)
+  const onConnected = () => {
       stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage);
       console.log("Connect to channel message");
    };
@@ -127,30 +127,26 @@ const PopupMessage = () => {
       setAnchorEl(null);
    };
 
-   //This function use to handle message when user get an message
-   const handleMessageArrive = (message, open, currentShopIDSelect) => {
-      const updateMessage = {
-         ...message,
-         date: moment(message.date, "YYYY-MM-DD[T]HH:mm:ss.SSS"),
-      };
-      if (open) {
-         // also need update the out side
-         setUnread(numberUnread);
-         // update unread in user list
-         dispatch(
-            messageSlice.actions.updateMessagePopoverOpenUser({
-               userList: userList,
-               message: updateMessage,
-               currentShopIDSelect: currentShopIDSelect,
-            })
-         );
-         console.log("here is an curent shop id select", currentShopIDSelect);
-      } else {
-         console.log("open ne", open);
-         console.log("have run funtion handle MessageArrive");
-         setUnread(numberUnread);
-      }
-   };
+  //This function use to handle message when user get an message
+  const handleMessageArrive = (message, open, currentShopIDSelect) => {
+    const updateMessage = {
+      ...message,
+      date: moment(message.date,'YYYY-MM-DD[T]HH:mm:ss.SSS'),
+    }
+    if(open) {
+      // also need update the out side     
+      setUnread(numberUnread);
+      // update unread in user list
+      dispatch(messageSlice.actions.updateMessagePopoverOpenUser({userList: userList,
+        message: updateMessage,
+        currentShopIDSelect: currentShopIDSelect}))
+      console.log('here is an curent shop id select',currentShopIDSelect);
+    }else {
+      console.log('open ne', open);
+      console.log('have run funtion handle MessageArrive')
+      setUnread(numberUnread);
+    }
+  }
 
    //this function use to reset number unread message of button CHAT NOW
    const handleReadMessage = () => {
@@ -191,14 +187,16 @@ const PopupMessage = () => {
                });
          }
 
-         // Handle the message
-         // ...
-      } catch (error) {
-         // Handle the error
-         console.log(error);
-      }
-   };
-   console.log("here is num unread golobal ", numberUnread);
+      
+
+      // Handle the message
+      // ...
+    } catch (error) {
+      // Handle the error
+      console.log(error);
+    }
+  };
+  console.log('here is num unread golobal ', numberUnread)
 
    return (
       <>
