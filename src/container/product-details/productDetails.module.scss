@@ -6,13 +6,11 @@ $imgWidth: 65rem;
   $color: c.$Complementary0,
   $backgroundColor: c.$Dominant5
 ) {
-  border: 1px solid c.$Complementary0;
   font-size: 2rem;
   font-family: c.$Secondary;
   padding: $padding;
   text-transform: none;
   color: $color;
-  background-color: $backgroundColor;
 }
 
 .container {
@@ -137,15 +135,8 @@ $imgWidth: 65rem;
                 }
               }
               .right {
-                display: flex;
-                flex-direction: column;
-
                 Button {
                   @include button();
-                  &:hover {
-                    background-color: c.$Complementary3;
-                    color: c.$Dominant1;
-                  }
                 }
                 .name {
                   font-size: 2rem;
