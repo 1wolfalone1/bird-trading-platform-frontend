@@ -12,7 +12,7 @@ import cartSlice, { getCartSelector } from "../order/cartSlice";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import OrderBill from "../../component/checkout/orderBill/OrderBill";
-import { Button } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import COD from "../../asset/image/COD.avif";
 import PayPal from "../../asset/image/Paypal.avif";
@@ -46,14 +46,15 @@ export default function Checkout() {
    const [paymentType, setPaymentType] = useState();
    const userInfo = useSelector(userInfoSelector);
    const [data, setData] = useState();
+   const [openBackDrop, setBackDrop] = useState(false);
    const { tempDataOrder } = useSelector(globalConfigSliceSelector);
-   const flag= useRef(false);
+   const flag = useRef(false);
    const handleSelectPayment = (paymentName) => {
       setPaymentType(paymentName);
    };
    const navigate = useNavigate();
    const dispatch = useDispatch();
-   console.log(userInfo, 'infoooooooooooooooooooo');
+   console.log(userInfo, "infoooooooooooooooooooo");
    let subTotal = Number(
       items
          .reduce(
@@ -127,13 +128,14 @@ export default function Checkout() {
 
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
-      let status = params.get("status");
-      console.log(status, "here is status");
-      if (status === "success") {
-         console.log(tempDataOrder, flag);
-         const paymentId = params.get("paymentId");
-         const PayerID = params.get("PayerID");
-         if (flag.current === false) {
+     let status = params.get("status");
+     console.log(status, "here is status");
+     if (status === "success") {
+       console.log(tempDataOrder, flag);
+       const paymentId = params.get("paymentId");
+       const PayerID = params.get("PayerID");
+       if (flag.current === false) {
+           setBackDrop(true);
             api.post("/package-order", tempDataOrder, {
                params: { paymentId: paymentId, PayerID: PayerID },
             })
@@ -153,43 +155,51 @@ export default function Checkout() {
          }
       }
       return () => {
-        flag.current = true;
-      }
+         flag.current = true;
+      };
    }, []);
 
    return (
-      <div>
-         <Grid container columns={11} className={clsx(s.container)}>
-            <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
-               <Products products={items} />
+      <>
+         <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openBackDrop}
+         >
+            <CircularProgress color="inherit" />
+         </Backdrop>
+         <div>
+            <Grid container columns={11} className={clsx(s.container)}>
+               <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
+                  <Products products={items} />
+               </Grid>
+               <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
+                  <Delivery userInfo={userInfo?.info} />
+                  <Voucher vouchers={voucherSelected} />
+                  <Payment
+                     handleSelectPayment={handleSelectPayment}
+                     payment={payment}
+                  />
+                  <TotalOrder
+                     subTotal={subTotal}
+                     shipTotal={shipTotal}
+                     promotion={promotion}
+                  />
+                  <div className={clsx(s.orderButton)}>
+                     <Popup
+                        className="addButton"
+                        modal
+                        trigger=<Button disabled={handleCheckout()}>
+                           Check out
+                        </Button>
+                     >
+                        {(close) => (
+                           <OrderBill close={close} paymentType={paymentType} />
+                        )}
+                     </Popup>
+                  </div>
+               </Grid>
             </Grid>
-            <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
-               <Delivery userInfo={userInfo?.info} />
-               <Voucher vouchers={voucherSelected} />
-               <Payment
-                  handleSelectPayment={handleSelectPayment}
-                  payment={payment}
-               />
-               <TotalOrder
-                  subTotal={subTotal}
-                  shipTotal={shipTotal}
-                  promotion={promotion}
-               />
-               <div className={clsx(s.orderButton)}>
-                  <Popup
-                     className="addButton"
-                     modal
-                     trigger=<Button disabled={handleCheckout()}>
-                        Check out
-                     </Button>
-                  >
-                     {(close) => (
-                        <OrderBill close={close} paymentType={paymentType} />
-                     )}
-                  </Popup>
-               </div>
-            </Grid>
-         </Grid>
-      </div>
+         </div>
+      </>
    );
 }
