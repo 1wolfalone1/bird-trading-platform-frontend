@@ -6,8 +6,8 @@ import clsx from "clsx";
 import styled from "@emotion/styled";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-   faCartShopping,
-   faMagnifyingGlass,
+  faCartShopping,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,156 +22,169 @@ import axios from "axios";
 import { useEffect } from "react";
 import { birdApi } from "../../../api/server/products/BirdsAPI";
 import globalConfigSlice, {
-   navigateValueSelector,
+  navigateValueSelector,
 } from "../../../redux/global/globalConfigSlice";
 import { Suspense } from "react";
 import { api } from "../../../api/server/API";
-import productsPresentationSlices, { filterObjectSelector } from "../../../component/products-presentation/productsPresentationSlice";
+import productsPresentationSlices, {
+  filterObjectSelector,
+} from "../../../component/products-presentation/productsPresentationSlice";
 import { filterByAll } from "../../../component/products-presentation/productsPresentationSlice";
 library.add(faCartShopping);
 const buttonStyle = {
-   fontSize: "3.8rem",
-   color: Style.color.$Dominant1,
-   fontFamily: Style.font.$Secondary,
-   fontWeight: 100,
-   padding: "1.5rem 1rem",
-   lineHeight: "100%",
-   textTransform: "none",
+  fontSize: "3.8rem",
+  color: Style.color.$Dominant1,
+  fontFamily: Style.font.$Secondary,
+  fontWeight: 100,
+  padding: "1.5rem 1rem",
+  lineHeight: "100%",
+  textTransform: "none",
 };
 
 export default function Header() {
-   const location = useLocation();
-   const navigate = useNavigate();
-   const value = useSelector(navigateValueSelector);
-   const [age, setAge] = useState("10");
-   const totalCartItems = useSelector(totalItemsSelector);
-   const dispatch = useDispatch();
-   const filterObj = useSelector(filterObjectSelector)
+  const location = useLocation();
+  const navigate = useNavigate();
+  const value = useSelector(navigateValueSelector);
+  const [age, setAge] = useState("10");
+  const totalCartItems = useSelector(totalItemsSelector);
+  const dispatch = useDispatch();
+  const filterObj = useSelector(filterObjectSelector);
 
-   useEffect(() => {
-      if (
-         window.location.pathname !== "/" &&
-         !window.location.pathname.toString().startsWith("/products")
-      ) {
-         dispatch(globalConfigSlice.actions.changeNavigateValue(3));
+  useEffect(() => {
+    if (
+      window.location.pathname !== "/" &&
+      !window.location.pathname.toString().startsWith("/products")
+    ) {
+      dispatch(globalConfigSlice.actions.changeNavigateValue(3));
+    }
+  }, [location]);
+
+  const user = useSelector(userInfoSelector);
+  const handleNavChange = (event, newValue) => {};
+
+  const handleChange = (e) => {
+    setAge(e.target.value);
+  };
+
+  const handleChangeName = (event) => {
+    const { name, value } = event.target;
+    dispatch(
+      productsPresentationSlices.actions.setName({ key: "", name: value })
+    );
+    console.log(value);
+  };
+
+  document.addEventListener(
+    "keypress",
+    function (e) {
+      if (e.key === "Enter") {
+        dispatch(filterByAll());
       }
-   }, [location]);
-   
-   const user = useSelector(userInfoSelector);
-   const handleNavChange = (event, newValue) => {};
+    },
+    false
+  );
 
-   const handleChange = (e) => {
-      setAge(e.target.value);
-   };
+  const handleSearch = () => {
+    dispatch(filterByAll());
+  };
 
-   const handleChangeName = (event) => {
-      const {name, value} = event.target
-      dispatch(productsPresentationSlices.actions.setName({key: "", name: value}))
-      console.log(value)
-   }
-
-   const handleSearch = () => {
-      console.log('an')
-      dispatch(filterByAll())
-   }
-
-   return (
-      <div className={s.container}>
-         <div className={s.logo}>
-            <img src={logo} alt="logo" />
-         </div>
-         <div className={s.navLeft}>
-            <Box sx={{ width: "100%" }}>
-               <Tabs
-                  value={value}
-                  onChange={handleNavChange}
-                  aria-label="wrapped label tabs example"
-                  color="Dominant1"
-                  className={clsx(s.tabs)}
-                  TabIndicatorProps={{
-                     sx: {
-                        backgroundColor: Style.color.$Accent1,
-                     },
-                  }}
-               >
-                  <Tab value={1} label="Home" onClick={() => navigate("/")} />
-                  <Tab
-                     value={2}
-                     label="Products"
-                     onClick={() => navigate("/products")}
-                  />
-                  <Tab value={3} label="" className={clsx(s.tabnone)} />
-               </Tabs>
-            </Box>
-         </div>
-         <div className={s.searchBar}>
-            <input
-               value={filterObj.name}
-               type="text"
-               placeholder="Search product here"
-               className={clsx(s.searchInput)}
-               onChange={handleChangeName}
+  return (
+    <div className={s.container}>
+      <div className={s.logo}>
+        <img src={logo} alt="logo" />
+      </div>
+      <div className={s.navLeft}>
+        <Box sx={{ width: "100%" }}>
+          <Tabs
+            value={value}
+            onChange={handleNavChange}
+            aria-label="wrapped label tabs example"
+            color="Dominant1"
+            className={clsx(s.tabs)}
+            TabIndicatorProps={{
+              sx: {
+                backgroundColor: Style.color.$Accent1,
+              },
+            }}
+          >
+            <Tab value={1} label="Home" onClick={() => navigate("/")} />
+            <Tab
+              value={2}
+              label="Products"
+              onClick={() => navigate("/products")}
             />
-            <div className={clsx(s.filter)}>
-               <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  onChange={handleChange}
-                  sx={{ fontSize: "2.4rem", height: "4rem" }}
-                  MenuProps={{
-                     disableScrollLock: true,
-                     style: {
-                        color: "white",
-                     },
-                  }}
-               >
-                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
-                     Ten
-                  </MenuItem>
-                  <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
-                     Twenty
-                  </MenuItem>
-                  <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
-                     Thirty
-                  </MenuItem>
-               </Select>
-               <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  onChange={handleChange}
-                  sx={{ fontSize: "2.4rem", height: "4rem" }}
-                  MenuProps={{
-                     disableScrollLock: true,
-                     style: {
-                        color: Style.color.$Dominant1,
-                     },
-                  }}
-               >
-                  <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
-                     Ten
-                  </MenuItem>
-                  <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
-                     Twenty
-                  </MenuItem>
-                  <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
-                     Thirty
-                  </MenuItem>
-               </Select>
-               <FontAwesomeIcon
-                  onClick={handleSearch}
-                  icon={faMagnifyingGlass}
-                  className={clsx(s.icon)}
-               />
-            </div>
-         </div>
-         {user.status === userStatus.USER ? (
-            <UserRightHeader user={user} totalCartItems={totalCartItems} />
-         ) : (
-            <GuestRightHeader totalCartItems={totalCartItems} />
-         )}
-         {/* {
+            <Tab value={3} label="" className={clsx(s.tabnone)} />
+          </Tabs>
+        </Box>
+      </div>
+      <div className={s.searchBar}>
+        <input
+          value={filterObj.name}
+          type="text"
+          placeholder="Search product here"
+          className={clsx(s.searchInput)}
+          onChange={handleChangeName}
+        />
+        <div className={clsx(s.filter)}>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            onChange={handleChange}
+            sx={{ fontSize: "2.4rem", height: "4rem" }}
+            MenuProps={{
+              disableScrollLock: true,
+              style: {
+                color: "white",
+              },
+            }}
+          >
+            <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
+              Ten
+            </MenuItem>
+            <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
+              Twenty
+            </MenuItem>
+            <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
+              Thirty
+            </MenuItem>
+          </Select>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={age}
+            onChange={handleChange}
+            sx={{ fontSize: "2.4rem", height: "4rem", marginLeft: "0.5rem" }}
+            MenuProps={{
+              disableScrollLock: true,
+              style: {
+                color: Style.color.$Dominant1,
+              },
+            }}
+          >
+            <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
+              Ten
+            </MenuItem>
+            <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
+              Twenty
+            </MenuItem>
+            <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
+              Thirty
+            </MenuItem>
+          </Select>
+          <FontAwesomeIcon
+            onClick={handleSearch}
+            icon={faMagnifyingGlass}
+            className={clsx(s.icon)}
+          />
+        </div>
+      </div>
+      {user.status === userStatus.USER ? (
+        <UserRightHeader user={user} totalCartItems={totalCartItems} />
+      ) : (
+        <GuestRightHeader totalCartItems={totalCartItems} />
+      )}
+      {/* {
             <Button
                onClick={() => {
                   const a = async () => {
@@ -195,9 +208,8 @@ export default function Header() {
                   a();
                }}
             >
-               asdfasdfasdf
             </Button>
          } */}
-      </div>
-   );
+    </div>
+  );
 }

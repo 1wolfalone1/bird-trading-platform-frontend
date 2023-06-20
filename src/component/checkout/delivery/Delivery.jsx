@@ -1,107 +1,74 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import clsx from "clsx";
 import Style from "../../../style/inline-style/style";
-import s from "./Delivery.module.scss";
-import { TextField, Tooltip, Typography } from "@mui/material";
+import s from "./delivery.module.scss";
+import { Button, Tooltip, Typography } from "@mui/material";
+import Popup from "reactjs-popup";
+import DeliveryPopup from "./DeliveryPopup";
 
-export default function Delivery() {
-  const deliveryInfo = {
-    customerName: "Huynh Van Phuot",
-    phone: "0123456789",
-    address: "Tan Phu Ward, Thu Duc City, HCM City",
-  };
-  const [isEditable, setIsEditable] = useState(false); // Editable state for the fields
-  const [name, setName] = useState(deliveryInfo.customerName);
-  const [phone, setPhone] = useState(deliveryInfo.phone);
-  const [address, setAddress] = useState(deliveryInfo.address);
-
-  const textFieldStyle = {
-    input: {
-      color: Style.color.$Complementary0,
-      fontSize: "2.4rem",
-      fontFamily: Style.font.$Primary,
-      fullWidth: true,
-      paddingTop: "0.6rem",
-      paddingBottom: "0.6rem",
-      textAlign: "center",
-    },
-  };
-
-  const handleChangeName = (e) => {
-    setName(e.target.value);
-  };
-  const handleChangePhone = (e) => {
-    setPhone(e.target.value);
-  };
-  const handleChangeAddress = (e) => {
-    setAddress(e.target.value);
-  };
-  const handleSaveChange = () => {
-    setIsEditable(!isEditable);
-  };
-
+export default function Delivery({ userInfo }) {
   return (
     <Fragment>
       <div className={clsx(s.container)}>
         <div className={clsx(s.header)}>
           <div className={clsx(s.title)}>Delivery To</div>
+
           <div className={clsx(s.changeButton)}>
-            <button
-              type="button"
-              className={clsx(s.changeInfo)}
-              onClick={handleSaveChange}
+            <Popup
+              className="addButton"
+              modal
+              trigger={<Button>Change information</Button>}
             >
-              {isEditable ? "Submit" : "Change"}
-            </button>
+              {(close) => <DeliveryPopup close={close} />}
+            </Popup>
           </div>
+
+          {/* <div className={clsx(s.changeButton)}>
+            <Button onClick={() => navigate("/profile")}>
+              Change information
+            </Button>
+          </div> */}
         </div>
         <div className={clsx(s.info)}>
           <div className={clsx(s.nameAndPhone)}>
-            <div className={clsx(s.name)}>
-              <TextField
-                id="filled-basic"
-                value={name}
-                variant="filled"
-                color="Dominant0"
-                sx={textFieldStyle}
-                disabled={!isEditable}
-                fullWidth
-                onChange={handleChangeName}
-              />
-            </div>
-            <div className={clsx(s.phone)}>
-              <TextField
-                id="filled-basic"
-                value={phone}
-                variant="filled"
-                color="Dominant0"
-                sx={textFieldStyle}
-                disabled={!isEditable}
-                fullWidth
-                onChange={handleChangePhone}
-              />
-            </div>
+            {userInfo?.fullName && (
+              <div className={clsx(s.name)}>{userInfo.fullName}</div>
+            )}
+            {!userInfo?.fullName && (
+              <div className={clsx(s.errorName)}>Provide your name!</div>
+            )}
+
+            {userInfo?.phoneNumber && (
+              <div className={clsx(s.phone)}>{userInfo.phoneNumber}</div>
+            )}
+            {!userInfo?.phoneNumber && (
+              <div className={clsx(s.errorPhone)}>Provide your number!</div>
+            )}
           </div>
-          <Tooltip
-            title={
-              <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                {address}
-              </Typography>
-            }
-          >
-            <div className={clsx(s.address)}>
-              <TextField
-                id="filled-basic"
-                value={address}
-                variant="filled"
-                color="Dominant0"
-                sx={textFieldStyle}
-                disabled={!isEditable}
-                fullWidth
-                onChange={handleChangeAddress}
-              />
+          {userInfo?.address?.street &&
+            userInfo?.address?.ward &&
+            userInfo?.address?.district &&
+            userInfo?.address?.city && (
+              <Tooltip
+                title={
+                  <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
+                    {`${userInfo?.address.street} Street, ${userInfo?.address.ward} Ward, ${userInfo?.address.district} District, ${userInfo?.address.city} City`}
+                  </Typography>
+                }
+              >
+                <div className={clsx(s.address)}>
+                  {`${userInfo?.address.street} Street, ${userInfo?.address.ward} Ward, ${userInfo?.address.district} District, ${userInfo?.address.city} City`}
+                </div>
+              </Tooltip>
+            )}
+          {(!userInfo?.address?.street ||
+            !userInfo?.address?.ward ||
+            !userInfo?.address?.district ||
+            !userInfo?.address?.city) && (
+            <div className={clsx(s.errorAddress)}>
+              Provide full your address!
             </div>
-          </Tooltip>
+          )}
         </div>
       </div>
     </Fragment>

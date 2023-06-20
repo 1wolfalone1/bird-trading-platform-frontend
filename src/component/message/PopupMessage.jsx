@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import MessageContent from './message-content/MessageContent';
@@ -27,8 +28,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+
 var stompClient = null;
 const PopupMessage = () => {
+
   const dispatch = useDispatch();
 
   const {status, info} = useSelector(userInfoSelector)
@@ -65,7 +68,7 @@ const PopupMessage = () => {
   //socket js
   const connect = (status)=>{
     if (status === 1) {
-      let Sock = new SockJS('http://localhost:8080/ws');
+      let Sock = new SockJS('https://thongtienthienphuot.shop/ws');
       stompClient = over(Sock);
       stompClient.connect({},onConnected, onError);
     }
@@ -183,6 +186,7 @@ const PopupMessage = () => {
               >
         Your Chat 
         {unread !== 0 && <div className={clsx(s.numUnread)}>({unread})</div>}
+
       </Button>
       <Popover
         id={id}
@@ -190,33 +194,33 @@ const PopupMessage = () => {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
+          vertical: "bottom",
+          horizontal: "right",
         }}
         transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
+          vertical: "top",
+          horizontal: "right",
         }}
         PaperProps={{
           style: {
-            overflow: "hidden"
-          }
+            overflow: "hidden",
+          },
         }}
         className={clsx(s.popover)}
       >
-      <div >
-        <div className={clsx(s.warrperBtnClose)}>
-          <Cancel  onClick={handleClose} className={clsx(s.btnClose)}/>
+        <div>
+          <div className={clsx(s.warrperBtnClose)}>
+            <Cancel onClick={handleClose} className={clsx(s.btnClose)} />
+          </div>
+          <Grid container className={clsx(s.messagecontent)}>
+            <Grid item xs={4} sm={4} md={4} className={clsx(s.userList)}>
+              <MessageUserList />
+            </Grid>
+            <Grid item xs={8} sm={8} md={8} className={clsx(s.messageChat)}>
+              <MessageContent />
+            </Grid>
+          </Grid>
         </div>
-        <Grid container className={clsx(s.messagecontent)}>
-          <Grid item xs={4} sm={4} md={4} className={clsx(s.userList)} >
-            <MessageUserList />
-          </Grid>
-          <Grid item xs={8} sm={8} md={8} className={clsx(s.messageChat)}  >
-            <MessageContent />
-          </Grid>
-        </Grid>
-      </div>
       </Popover>
   </div>
    }

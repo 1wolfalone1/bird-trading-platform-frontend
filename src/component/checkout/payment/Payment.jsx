@@ -4,15 +4,16 @@ import s from "../payment/Payment.module.scss";
 import PaymentMethod from "./paymentMethod/PaymentMethod";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
-export default function Payment({ payment }) {
+export default function Payment({ payment, handleSelectPayment }) {
   return (
     <div>
       <div className={clsx(s.payment)}>
         <div className={clsx(s.title)}>Payment Method</div>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="PayPal"
+          // defaultValue="PayPal"
           name="radio-buttons-group"
+          onChange={(e) => handleSelectPayment(e.target.value)}
         >
           {payment &&
             payment.map((item) => (

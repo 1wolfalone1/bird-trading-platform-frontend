@@ -104,9 +104,10 @@ const messageSlice = createSlice({
               const updatedUserList = action.payload.userList.map((item) => {
                 if (item.id === currentShopID) {
                   // Update the unread count
+                  const unread = item.unread + 1;
                   return {
                     ...item,
-                    unread: 1,
+                    unread: unread,
                   };
                 }
                 return item;

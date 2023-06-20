@@ -15,4 +15,9 @@
     border-bottom: 0.1rem solid c.$Complementary0;
     padding-bottom: 1rem;
   }
+  .errorVouchers {
+    @include fsw(1.8rem);
+    margin-top: 2rem;
+    text-align: center;
+  }
 }

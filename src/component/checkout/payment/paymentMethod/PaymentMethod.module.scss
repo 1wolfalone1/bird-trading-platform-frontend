@@ -14,13 +14,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 0 !important;
-  background-color: c.$Dominant4;
+  margin-top: 1rem !important;
+  background-color: c.$Complementary4;
+  color: c.$Dominant2;
+  // border: 0.1px solid c.$Complementary0;
   .methodImage {
-    text-align: center;
+    // text-align: center;
+    margin: auto 0;
+    background-color: white;
     img {
-      width: 5rem;
-      height: 5rem;
+      width: 10rem;
+      height: 10rem;
     }
   }
   .methodName {
@@ -33,6 +37,7 @@
     justify-content: center;
     .button {
       svg {
+        color: c.$Dominant2;
         font-size: 4rem;
       }
     }

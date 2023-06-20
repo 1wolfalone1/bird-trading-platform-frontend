@@ -10,7 +10,22 @@
   font-family: $ff;
 }
 
+@mixin button(
+  $padding: 1rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2.4rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
 .container {
+  height: 60rem;
   background-color: c.$Dominant3;
   padding: 5rem;
   width: 100%;
@@ -26,7 +41,7 @@
         font-size: 7rem;
         line-height: 0.9;
         position: absolute;
-        top: 3.8rem;
+        top: 4rem;
       }
 
       button:hover {
@@ -44,52 +59,71 @@
   .headerContainer {
     padding: 0 2rem;
     border-bottom: 0.1rem solid c.$Complementary0;
+
     .headerContent {
       margin-bottom: 2rem;
-      max-width: 90%;
       .headerName {
-        margin-right: 1rem;
       }
       .headerPrice {
-        margin-right: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
-      .headerDiscount {
+      .headerQuantity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
   .billContainer {
     padding: 0 2rem 2rem 2rem;
+    border-bottom: 0.1rem solid c.$Complementary0;
+    height: 36%;
+    overflow-y: scroll;
     .billInfo {
       .bill {
+        height: 70%;
         margin-top: 2rem;
-        max-width: 90%;
+        max-width: 100%;
         .name {
-          margin-right: 1rem;
         }
         .price {
-          margin-right: 1rem;
+          display: flex;
+          justify-content: space-around;
         }
-        .discount {
+        .quantity {
+          display: flex;
+          justify-content: space-around;
         }
       }
     }
   }
+  .payment {
+    padding: 1rem 0rem 0rem 2rem;
+  }
+  .shipping {
+    padding: 1rem 0rem 0rem 2rem;
+  }
+  .discount {
+    padding: 1rem 0rem 0rem 2rem;
+  }
   .total {
-    // display: flex;
-    // justify-content: center;
+    display: flex;
+    justify-content: end;
     font-size: 3rem;
-    border-top: 0.1rem solid c.$Complementary0;
-    padding: 2rem;
+    padding: 2rem 0;
     font-weight: 900;
   }
   .submitBtn {
     display: flex;
-    justify-content: space-around;
+    justify-content: end;
     Button {
-      // margin-top: 2rem;
-      font-size: 1.6rem;
-      padding: 1rem 2rem;
-      border: 0.1rem solid c.$Complementary0;
+      @include button(1rem 2rem);
+    }
+    Button:hover {
+      color: c.$Accent7;
+      background-color: c.$Dominant5;
     }
   }
 }

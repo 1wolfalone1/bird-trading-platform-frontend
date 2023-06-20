@@ -7,6 +7,7 @@ import globalConfigSlice from "./global/globalConfigSlice";
 import messageSlice from "../component/message/messageSlice";
 
 const store = configureStore({
+
    reducer: {
       userInfoSlice: userInfoSlice.reducer,
       homeData: HomeSlice.reducer,
@@ -17,3 +18,4 @@ const store = configureStore({
    }
 })
 export default store;
+

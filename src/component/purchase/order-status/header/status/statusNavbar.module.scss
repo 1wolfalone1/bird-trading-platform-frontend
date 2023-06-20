@@ -1,0 +1,26 @@
+@use "../../../../style/" as c;
+
+.container {
+  .orderPlaced {
+  }
+  .orderShippedOut {
+  }
+  .orderReceived {
+  }
+  .stepperLine1 {
+    position: absolute;
+    top: (c.$h-header)+8.25rem;
+    left: 45.8rem;
+    width: 23.9%;
+    height: 1.5rem;
+    background: rgb(224, 224, 224);
+  }
+  .stepperLine2 {
+    position: absolute;
+    top: (c.$h-header)+8.25rem;
+    right: 45.8rem;
+    width: 23.9%;
+    height: 1.5rem;
+    background: rgb(224, 224, 224);
+  }
+}

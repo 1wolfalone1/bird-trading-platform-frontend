@@ -4,7 +4,7 @@ import s from "./PaymentMethod.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 
 export default function PaymentMethod(props) {
-  const { id, image, method, discount, children } = props;
+  const { id, image, method, children } = props;
 
   return (
     <Fragment>

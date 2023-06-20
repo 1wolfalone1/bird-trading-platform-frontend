@@ -1,0 +1,96 @@
+@use "../../style/" as c;
+//////////////////asfdasdfasfasdfasdfasfd
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+@mixin button(
+  $padding: 1rem 2rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 1.8rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
+@mixin format() {
+  text-align: center;
+  width: 50%;
+  margin-bottom: 1.9rem;
+}
+
+.container {
+  background-color: c.$Dominant3;
+  margin: 4rem 12rem 2rem 1.5rem;
+  padding: 2rem;
+  .header {
+    @include fsw;
+    font-family: c.$Secondary;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    border-bottom: 0.1rem solid c.$Complementary0;
+    margin-bottom: 2rem;
+
+    .title {
+      padding-bottom: 0.5rem;
+    }
+    .changeButton {
+      Button {
+        @include button(0.5rem 1rem, c.$Complementary0, c.$Dominant3);
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  .info {
+    .nameAndPhone {
+      @include fsf(2.4rem);
+      display: flex;
+      justify-content: center;
+      border-bottom: 0.1rem solid c.$Complementary0;
+
+      .name {
+        @include format();
+        border-right: 0.2rem solid c.$Complementary0;
+      }
+      .errorName {
+        @include format();
+        border-right: 0.2rem solid c.$Complementary0;
+        font-size: 1.8rem;
+        line-height: 3rem;
+        color: red;
+      }
+      .phone {
+        @include format();
+      }
+      .errorPhone {
+        @include format();
+        font-size: 1.8rem;
+        line-height: 3rem;
+        color: red;
+      }
+    }
+    .address {
+      @include fsf(2.4rem);
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .errorAddress {
+      @include fsf(1.8rem);
+      margin-top: 2rem;
+      text-align: center;
+      color: red;
+    }
+  }
+}

@@ -1,180 +1,216 @@
 @use "../style/" as c;
 
 $imgWidth: 65rem;
+@mixin button(
+  $padding: 0.5rem,
+  $color: c.$Complementary0,
+  $backgroundColor: c.$Dominant5
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2rem;
+  font-family: c.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+}
+
 .container {
-   padding: 5rem 16rem;
-   .detail {
-      background-color: c.$Dominant3;
+  padding: 5rem 16rem;
+  .detail {
+    background-color: c.$Dominant3;
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    gap: 10px;
+    box-shadow: 0px 0px 15px #6262628f;
+    border: 1px solid #000000;
+    .summaryProduct {
       display: flex;
-      flex-direction: column;
-      padding: 0px;
-      gap: 10px;
-      box-shadow: 0px 0px 15px #6262628f;
-      border: 1px solid #000000;
-      .summaryProduct {
-         display: flex;
-         .listImage {
-            width: $imgWidth;
-            flex-shrink: 0;
-            img {
-               height: $imgWidth;
-               width: $imgWidth;
+      .listImage {
+        width: $imgWidth;
+        flex-shrink: 0;
+        img {
+          height: $imgWidth;
+          width: $imgWidth;
+        }
+      }
+      .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding-left: 2.4rem;
+        .productName {
+          display: flex;
+          justify-content: center;
+          margin-top: 2.4rem;
+          span {
+            font-family: "SeoulHangang";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 40px;
+            color: #000000;
+          }
+        }
+        .metric {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 1rem 3rem;
+          gap: 1rem;
+          border-bottom: 0.1rem solid c.$Accent7;
+          span {
+            font-family: "Segoe UI";
+            font-style: normal;
+            font-weight: 400;
+            font-size: 2rem;
+          }
+        }
+        .mainContent {
+          display: flex;
+          flex-direction: column;
+          margin: 2rem;
+          gap: 1rem;
+          .price {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 5rem 0 0;
+            .countPrice {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              gap: 10px;
+              .oldPrice {
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 4rem;
+                line-height: 43px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                text-decoration-line: line-through;
+                color: #606060;
+              }
+              .disPrice {
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 400;
+                font-size: 4.8rem;
+                line-height: 53px;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                color: rgb(158, 0, 0);
+              }
+              .discount {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 0.5rem 1rem;
+                /* Complementary/4 */
+                background-color: c.$Complementary4;
+                font-family: "Segoe UI";
+                font-style: normal;
+                font-weight: 600;
+                font-size: 2.4rem;
+                display: flex;
+                align-items: center;
+                text-align: center;
+                /* Dominant/1 */
+                color: #cdffa6;
+              }
             }
-         }
-         .content {
-            flex: 1;
+            .shop {
+              display: flex;
+              align-items: center;
+              .image {
+                width: 8rem;
+                height: 8rem;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 1rem;
+                img {
+                  width: 100%;
+                }
+              }
+              .right {
+                display: flex;
+                flex-direction: column;
+
+                Button {
+                  @include button();
+                  &:hover {
+                    background-color: c.$Complementary3;
+                    color: c.$Dominant1;
+                  }
+                }
+                .name {
+                  font-size: 2rem;
+                  color: c.$Accent6;
+                }
+              }
+            }
+          }
+          .type {
+            font-size: 3.2rem;
+            & > span > span {
+              color: c.$Complementary2;
+            }
+          }
+          .tag {
+            font-size: 3.2rem;
+          }
+          .commonProperties {
+            font-family: "Segoe UI";
+            font-style: normal;
+            font-size: 3.2rem;
+            line-height: 32px;
+            /* identical to box height */
+
             display: flex;
             flex-direction: column;
-            width: 100%;
-            padding-left: 2.4rem;
-            .productName {
-               display: flex;
-               justify-content: center;
-               margin-top: 2.4rem;
-               span {
-                  font-family: "SeoulHangang";
-                  font-style: normal;
-                  font-weight: 400;
-                  font-size: 40px;
-                  line-height: 40px;
-                  color: #000000;
-               }
-            }
-            .metric {
-               display: flex;
-               flex-direction: row;
-               align-items: flex-start;
-               padding: 8px 0 0px;
-               gap: 1rem;
-               border-bottom: 0.1rem solid c.$Accent7;
-               span {
-                  font-family: "Segoe UI";
-                  font-style: normal;
-                  font-weight: 400;
-                  font-size: 2rem;
-               }
-            }
-            .mainContent {
-               display: flex;
-               flex-direction: column;
-               gap: 1rem;
-               .price {
-                  display: flex;
-                  flex-direction: row;
-                  align-items: center;
-                  padding: 3.4rem 4rem;
-                  gap: 10px;
-                  .oldPrice {
-                     font-family: "Segoe UI";
-                     font-style: normal;
-                     font-weight: 400;
-                     font-size: 4rem;
-                     line-height: 43px;
-                     display: flex;
-                     align-items: center;
-                     text-align: center;
-                     text-decoration-line: line-through;
-                     color: #606060;
-                  }
-                  .disPrice {
-                     font-family: "Segoe UI";
-                     font-style: normal;
-                     font-weight: 400;
-                     font-size: 4.8rem;
-                     line-height: 53px;
-                     display: flex;
-                     align-items: center;
-                     text-align: center;
-                     color: rgb(158, 0, 0);
-                  }
-                  .discount {
-                     display: flex;
-                     flex-direction: row;
-                     align-items: flex-start;
-                     padding: 0.5rem 1rem;
-                     /* Complementary/4 */
-                     background: c.$Complementary4;
-                     font-family: "Segoe UI";
-                     font-style: normal;
-                     font-weight: 600;
-                     font-size: 2.4rem;
-                     display: flex;
-                     align-items: center;
-                     text-align: center;
-                     /* Dominant/1 */
-                     color: #cdffa6;
-                  }
-               }
-               .type {
-                  font-size: 3.2rem;
-                  & > span > span {
-                     color: c.$Complementary2;
-                  }
-               }
-               .tag {
-                  font-size: 3.2rem;
-               }
-               .commonProperties {
-                  font-family: "Segoe UI";
-                  font-style: normal;
-                  font-size: 3.2rem;
-                  line-height: 32px;
-                  /* identical to box height */
 
-                  display: flex;
-                  flex-direction: column;
-
-                  color: #000000;
-               }
-            }
-            .quantity {
-               font-size: 3rem;
-               display: flex;
-               align-items: center;
-               gap: 1rem;
-               input {
-                  border: 1px solid #000000;
-                  font-size: 3rem;
-                  width: 5rem;
-                  text-align: center;
-               }
-               .stock {
-                  font-size: 2.4rem;
-                  color: c.$Complementary5;
-               }
-            }
-            .footer {
-               display: flex;
-               justify-content: space-between;
-               margin-top: 2.4rem;
-               align-items: center;
-               padding-right: 1rem;
-               .shop {
-                  .image {
-                     width: 8rem;
-                     height: 8rem;
-                     border-radius: 100%;
-                     overflow: hidden;
-                     img {
-                        width: 100%;
-                     }
-                  }
-                  .name {
-                     font-size: 3rem;
-                     color: c.$Accent6;
-                  }
-               }
-            }
-         }
-      }
-      .description {
-         border-top: 1px solid #1d1d1d;
-         .content {
+            color: #000000;
+          }
+        }
+        .quantity {
+          font-size: 3rem;
+          display: flex;
+          align-items: center;
+          margin-left: 2rem;
+          gap: 1rem;
+          input {
+            border: 1px solid #000000;
             font-size: 3rem;
-            padding: 5rem;
-         }
+            width: 5rem;
+            text-align: center;
+          }
+          .stock {
+            font-size: 2.4rem;
+            color: c.$Complementary5;
+          }
+        }
+        .footer {
+          display: flex;
+          align-items: center;
+          //  justify-content: end;
+          margin-top: 2.4rem;
+          align-items: center;
+          padding-right: 5rem;
+        }
       }
-   }
-   .review {
-   }
+    }
+    .description {
+      border-top: 1px solid #1d1d1d;
+      .content {
+        font-size: 3rem;
+        padding: 5rem;
+      }
+    }
+  }
+  .review {
+  }
 }
