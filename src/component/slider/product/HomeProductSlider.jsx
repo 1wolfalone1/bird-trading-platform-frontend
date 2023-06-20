@@ -9,32 +9,44 @@ import "swiper/css/thumbs";
 import BirdHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
 import { homeDataStatus } from "../../../container/home/HomeSlice";
+import globalConfigSlice, {
+   globalConfigSliceSelector,
+} from "./../../../redux/global/globalConfigSlice";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 export default function HomeProductSlider({ products, title }) {
-  return (
-    <>
-      {products.status === homeDataStatus.FULFILLED ? (
-        <div className={clsx(s.container)}>
-          <div className={s.title}>
-            <span>{title}</span>
-          </div>
-          <Swiper
-            spaceBetween={"0rem"}
-            slidesPerView={4.5}
-            modules={[Thumbs]}
-            watchSlidesProgress
-            onSlideChange={() => {}}
-            onSwiper={(swiper) => {}}
-          >
-            {products.data.map((product) => (
-              <SwiperSlide key={product.id}>
-                <ProductHomeCard product={product} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-      ) : (
-        "fasdfasfasdfasdf"
-      )}
-    </>
-  );
+   const dispatch = useDispatch();
+   useEffect(() => {
+      console.log(products.status);
+      const flag = products.status === 1 ? false : true;
+      console.log(flag, 'flag neeeeeeeeeeeeeeeeeeeeeee')
+      dispatch(globalConfigSlice.actions.changeBackDrops(flag));
+   }, [products.status]);
+   return (
+      <>
+         {products.status === homeDataStatus.FULFILLED ? (
+            <div className={clsx(s.container)}>
+               <div className={s.title}>
+                  <span>{title}</span>
+               </div>
+               <Swiper
+                  spaceBetween={"0rem"}
+                  slidesPerView={4.5}
+                  modules={[Thumbs]}
+                  watchSlidesProgress
+                  onSlideChange={() => {}}
+                  onSwiper={(swiper) => {}}
+               >
+                  {products.data.map((product) => (
+                     <SwiperSlide key={product.id}>
+                        <ProductHomeCard product={product} />
+                     </SwiperSlide>
+                  ))}
+               </Swiper>
+            </div>
+         ) : (
+            <></>
+         )}
+      </>
+   );
 }
