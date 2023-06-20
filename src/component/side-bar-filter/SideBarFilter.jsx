@@ -103,7 +103,7 @@ export default function SideBarFilter() {
          // On autofill we get a stringified value.
          typeof value === "string" ? value.split(",") : value
       );
-      const exist = filterObj.ListTypeId
+
       const listId = value.map(a => a.id)
       console.log(value)
       dispatch(productsPresentationSlices.actions.addToSelectedList({key: "" , valueTemp: listId}))

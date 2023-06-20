@@ -5,7 +5,7 @@
     bottom: 20px;
     right: 20px;
     z-index: 999;
-
+    
     .btnchat {
         padding: 10px;
         background-color: c.$Dominant1;
@@ -15,9 +15,21 @@
         height: 60px;
         font-size: 14px;
         font-weight: 600;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
         &:hover{
             background-color: c.$Complementary3;
             color: c.$Dominant1;
+        }
+
+        .numUnread {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0px 4px 4px 0px;
+            color: c.$Accent6;
         }
     }   
 
