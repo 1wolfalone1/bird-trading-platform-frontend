@@ -40,6 +40,11 @@ const theme = createTheme({
     },
     Accent7: {
       main: "rgb(4, 0, 30)",
+      contrastText: "rgb(205, 255, 166)",
+    },
+    Accent8: {
+      main: "rgb(14, 10, 35)",
+      contrastText: "rgb(205, 255, 166)",
     },
     Accent1: {
       main: "rgb(178, 223, 255)",
