@@ -74,7 +74,7 @@ const MessageContent = () => {
     }; 
     resetForm();
     dispatch(messageSlice.actions.addMessage({  message: updatedValues }));
-    // dispatch(sendMessage(updatedValues));
+    dispatch(sendMessage(updatedValues));
     dispatch(messageSlice.actions.setReadMessage({userList: userList, id: currentShopIDSelect})); 
     console.log("here is curren shop id select: ", currentShopIDSelect);
   };
@@ -89,7 +89,9 @@ const MessageContent = () => {
   console.log(currentShopIDSelect, "day la shop is")
   return (
     <div className={clsx(s.container)}>
-        <span className={clsx(s.shopName)}>Shop Name</span>
+        <span className={clsx(s.shopName)}>
+          {userList.find(item => item.id === currentShopIDSelect)?.shopName}
+        </span>
       
         <div className={clsx(s.messageContent)}>
             <ul className={clsx(s.messageList)} ref={containerRef}>

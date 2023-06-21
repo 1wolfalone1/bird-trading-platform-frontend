@@ -43,19 +43,22 @@ const PopupMessage = () => {
    const dispatch = useDispatch();
 
    const { status, info } = useSelector(userInfoSelector);
-   console.log(status, "statusssssssssssssssssssssssssssssssssssssssss");
    const [anchorEl, setAnchorEl] = useState(null);
 
    const audioRef = useRef(null);
 
-   const open = Boolean(anchorEl);
+  const {userList, numberUnread, numRead,
+     currentShopIDSelect, isOpen} = useSelector(messageSelector);
 
-   const id = open ? "popup-message" : undefined;
+  // const [anchorEl, setAnchorEl] = useState(isOpen);
 
-   const { userList, numberUnread, numRead, currentShopIDSelect } =
-      useSelector(messageSelector);
+  // const open = Boolean(anchorEl);
 
-   const [unread, setUnread] = useState(numberUnread);
+  const [open, setOpen] = useState(isOpen);
+
+  const id = open ? "popup-message" : undefined;
+
+  const [unread, setUnread] = useState(numberUnread);
 
    const [message, setMessage] = useState("");
 
@@ -63,6 +66,7 @@ const PopupMessage = () => {
       connect(status);
       refreshUnread();
    }, [status]);
+
 
    useEffect(() => {
       handleReadMessage();
@@ -74,6 +78,10 @@ const PopupMessage = () => {
       console.log("Get an mesasge");
    }, [message]);
 
+  useEffect( () => {
+    setOpen(isOpen)
+  },[isOpen])
+
   //socket js
   const connect = (status)=>{
     if (status === 1) {
@@ -83,13 +91,17 @@ const PopupMessage = () => {
     }
 }
   console.log('status', status)
+
   const onConnected = () => {
-      stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage);
+      stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage, onError);
       console.log("Connect to channel message");
-   };
-   const onError = (err) => {
-      console.log(err);
-   };
+    
+  }
+
+  const onError = (err) => {
+    console.log(err);  
+  }
+
 
    const onPrivateMessage = (payload) => {
       const message = JSON.parse(payload.body);
@@ -119,19 +131,23 @@ const PopupMessage = () => {
       }
    };
 
-   const handleClick = (event) => {
-      setAnchorEl(event.currentTarget);
-   };
+  const handleClick = (event) => {
+    // setAnchorEl(event.currentTarget);
+    setOpen(true);
+  };
 
-   const handleClose = () => {
-      setAnchorEl(null);
-   };
+  const handleClose = () => {
+    // setAnchorEl(null);
+    setOpen(false);
+    dispatch(messageSlice.actions.setOpenPopup({isOpen: false}));
+  };
+
 
   //This function use to handle message when user get an message
   const handleMessageArrive = (message, open, currentShopIDSelect) => {
     const updateMessage = {
       ...message,
-      date: moment(message.date,'YYYY-MM-DD[T]HH:mm:ss.SSS'),
+      date: moment(message?.date,'YYYY-MM-DD[T]HH:mm:ss.SSS'),
     }
     if(open) {
       // also need update the out side     
@@ -196,77 +212,61 @@ const PopupMessage = () => {
       console.log(error);
     }
   };
-  console.log('here is num unread golobal ', numberUnread)
+  console.log('here is num open  ', open)
 
-   return (
-      <>
-         {status == 1 && (
-            <div className={clsx(s.container)}>
-               {/* <audio src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3" preload="auto" ref={audioRef} /> */}
-               <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleClick}
-                  className={clsx(s.btnchat)}
-               >
-                  Your Chat
-                  {unread !== 0 && (
-                     <div className={clsx(s.numUnread)}>({unread})</div>
-                  )}
-               </Button>
-               <Popover
-                  id={id}
-                  open={open}
-                  anchorEl={anchorEl}
-                  onClose={handleClose}
-                  anchorOrigin={{
-                     vertical: "bottom",
-                     horizontal: "right",
-                  }}
-                  transformOrigin={{
-                     vertical: "top",
-                     horizontal: "right",
-                  }}
-                  PaperProps={{
-                     style: {
-                        overflow: "hidden",
-                     },
-                  }}
-                  className={clsx(s.popover)}
-               >
-                  <div>
-                     <div className={clsx(s.warrperBtnClose)}>
-                        <Cancel
-                           onClick={handleClose}
-                           className={clsx(s.btnClose)}
-                        />
-                     </div>
-                     <Grid container className={clsx(s.messagecontent)}>
-                        <Grid
-                           item
-                           xs={4}
-                           sm={4}
-                           md={4}
-                           className={clsx(s.userList)}
-                        >
-                           <MessageUserList />
-                        </Grid>
-                        <Grid
-                           item
-                           xs={8}
-                           sm={8}
-                           md={8}
-                           className={clsx(s.messageChat)}
-                        >
-                           <MessageContent />
-                        </Grid>
-                     </Grid>
-                  </div>
-               </Popover>
-            </div>
-         )}
-      </>
-   );
+  return (
+   <>
+   {
+    status == 1 &&  
+    <div className={clsx(s.container)}>
+      <Button 
+              variant="contained"
+              color="primary"
+              onClick={handleClick}
+              className={clsx(s.btnchat)}
+              >
+        Your Chat 
+        {unread !== 0 && <div className={clsx(s.numUnread)}>({unread})</div>}
+
+      </Button>
+      <Popover
+        id={id}
+        open={open}
+        // anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        PaperProps={{
+          style: {
+            overflow: "hidden",
+          },
+        }}
+        className={clsx(s.popover)}
+      >
+        <div>
+          <div className={clsx(s.warrperBtnClose)}>
+            <Cancel onClick={handleClose} className={clsx(s.btnClose)} />
+          </div>
+          <Grid container className={clsx(s.messagecontent)}>
+            <Grid item xs={4} sm={4} md={4} className={clsx(s.userList)}>
+              <MessageUserList />
+            </Grid>
+            <Grid item xs={8} sm={8} md={8} className={clsx(s.messageChat)}>
+              <MessageContent />
+            </Grid>
+          </Grid>
+        </div>
+      </Popover>
+  </div>
+   }
+   </>
+  );
 };
 
 export default PopupMessage;

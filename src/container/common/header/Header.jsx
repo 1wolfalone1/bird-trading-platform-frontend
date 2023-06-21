@@ -83,6 +83,9 @@ export default function Header() {
     console.log(value);
   };
 
+  const handleSearch = () => {
+    dispatch(filterByAll());
+  }
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -90,6 +93,7 @@ export default function Header() {
     } catch (error) {
       console.error(error);
     }
+
   };
 
   return (
