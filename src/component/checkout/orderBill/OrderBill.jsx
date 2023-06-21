@@ -3,7 +3,6 @@ import clsx from "clsx";
 import s from "./orderBill.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Button } from "@mui/material";
-import axios from "axios";
 import cartSlice, { getCartSelector } from "../../../container/order/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { userInfoSelector } from "../../../redux/global/userInfoSlice";
@@ -11,12 +10,10 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../../api/server/API";
 import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
-import { useEffect } from "react";
 
 export default function OrderBill({ close, paymentType }) {
   const { items, voucherSelected } = useSelector(getCartSelector);
   const { info } = useSelector(userInfoSelector);
-  const [formInfo, setFormInfo] = useState(info);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -90,7 +87,6 @@ export default function OrderBill({ close, paymentType }) {
           if (response.data.errorCode == 406) {
           }
         }
-        console.log(response.data);
       })
       .catch((error) => {
         // Handle any errors that occurred during the request
@@ -108,6 +104,7 @@ export default function OrderBill({ close, paymentType }) {
       });
   };
 
+  console.log(items);
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.header)}>
@@ -131,8 +128,8 @@ export default function OrderBill({ close, paymentType }) {
       </div>
       <div className={clsx(s.billContainer)}>
         {items.map((item) => (
-          <Grid className={clsx(s.billInfo)}>
-            <Grid container columns={12} key={item.id} className={clsx(s.bill)}>
+          <Grid className={clsx(s.billInfo)} key={item.id}>
+            <Grid container columns={12} className={clsx(s.bill)}>
               <Grid sm={7} md={7} xl={7} className={clsx(s.name)}>
                 {item.name}
               </Grid>

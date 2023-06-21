@@ -31,7 +31,6 @@ export default function Home() {
     dispatch(getFood());
     dispatch(getAccessories());
     dispatch(getTopProducts());
-    console.log("asdfasfasf");
     dispatch(globalConfigSlice.actions.changeNavigateValue(1));
   }, []);
 
