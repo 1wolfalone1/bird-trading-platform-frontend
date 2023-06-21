@@ -164,7 +164,7 @@ export default function SignUp() {
           <div className={clsx(s.title)}>
             <span>Create Account</span>
           </div>
-          <form className={clsx(s.inputContainer)}>
+          <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
             <div className={clsx(s.inputText)}>
               <TextField
                 id="email"
