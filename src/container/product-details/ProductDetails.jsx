@@ -31,7 +31,6 @@ import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
 
-import SmsIcon  from "@mui/icons-material/Sms";
 
 const quantityControlStatus = {
   DECREASE: -1,
