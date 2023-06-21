@@ -259,6 +259,6 @@ export const totalPriceSelector = createSelector(
 
 export const getItemQuantity = (id) =>
    createSelector(getListItemSelector, (items) => {
-      const item = items.find((item) => item.id === id);
+      const item = items?.find((item) => item.id === id);
       return item?.cartQuantity;
    });
