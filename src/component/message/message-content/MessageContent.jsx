@@ -89,7 +89,9 @@ const MessageContent = () => {
   console.log(currentShopIDSelect, "day la shop is")
   return (
     <div className={clsx(s.container)}>
-        <span className={clsx(s.shopName)}>Shop Name</span>
+        <span className={clsx(s.shopName)}>
+          {userList.find(item => item.id === currentShopIDSelect)?.shopName}
+        </span>
       
         <div className={clsx(s.messageContent)}>
             <ul className={clsx(s.messageList)} ref={containerRef}>

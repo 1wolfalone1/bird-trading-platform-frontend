@@ -74,15 +74,15 @@ export default function Header() {
     console.log(value);
   };
 
-  document.addEventListener(
-    "keypress",
-    function (e) {
-      if (e.key === "Enter") {
-        dispatch(filterByAll());
-      }
-    },
-    false
-  );
+  // document.addEventListener(
+  //   "keypress",
+  //   function (e) {
+  //     if (e.key === "Enter") {
+  //       dispatch(filterByAll());
+  //     }
+  //   },
+  //   false
+  // );
 
   const handleSearch = () => {
     dispatch(filterByAll());

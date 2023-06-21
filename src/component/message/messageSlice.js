@@ -7,6 +7,7 @@ const messageSlice = createSlice({
     name: 'messageSlice',
     initialState:{
         message: {
+            isOpen: false,
             currentShopIDSelect: 0,
             numRead: 0,
             numberUnread: 0,
@@ -18,6 +19,9 @@ const messageSlice = createSlice({
         }
     },
     reducers: {
+        setOpenPopup: (state, action) => {
+          state.message.isOpen = action.payload.isOpen;
+        },
         setMessageList: (state, action) => {
             state.message.messageList = action.payload
         },
@@ -154,15 +158,19 @@ const messageSlice = createSlice({
           }
         },
         addShopIntoUserList: (state, action) => {
-          console.log('vao ch')
-          console.log(action.payload.shop, "shop ")
-          const existShop = state.message.userList?.filter(item => item.id === action.payload.shop.id)
+          const { shop,  } = action.payload;
+          console.log(shop, "shop");
+          
+          const existShop = state.message.userList.find(item => item.id === shop.id);
           console.log("here is an so sanh", existShop);
-          if(existShop.length === 0){
-            console.log('co vao day')
-            state.message.userList.push(action.payload.shop)
+          
+          if (!existShop) {
+            console.log('co vao day');
+            const updatedUserList = [shop, ...state.message.userList];
+            return { ...state, message: { ...state.message, userList: updatedUserList } };
           }
-          console.log(current(state.message.userList))
+          
+          return state;
         }
             
     },

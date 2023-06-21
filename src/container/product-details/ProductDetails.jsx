@@ -32,7 +32,7 @@ import AddToCartToast, {
 } from "../../component/toast/content/AddToCartToast";
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
-import messageSlice from "../../component/message/messageSlice";
+import messageSlice, { messageSelector } from "../../component/message/messageSlice";
 const quantityControlStatus = {
   DECREASE: -1,
   CHANGE: 0,
@@ -56,7 +56,6 @@ export default function ProductDetails() {
   const element = `${product?.product.description}`;
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
-
 
   const handleButton = {
     fontSize: "2.4rem",
@@ -200,9 +199,12 @@ export default function ProductDetails() {
   const handleChatNow = (shop) => { 
     const updateShop = {
       ...shop,
-      unread: 0
+      unread: 1
     }
-    dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}))
+    console.log('shop ne', updateShop);
+    dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}));
+    dispatch(messageSlice.actions.setOpenPopup({isOpen: true}));
+    dispatch(messageSlice.actions.setCurrentShopIDSelect({shopID: shop.id}))
     console.log(shop)
   }
     

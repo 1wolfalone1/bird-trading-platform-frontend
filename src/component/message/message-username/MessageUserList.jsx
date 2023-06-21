@@ -30,10 +30,13 @@ const MessageUserList = () => {
 
   const {userList, messageList} = useSelector(messageSelector)
 
+  const [activeBgColor, setActiveBgColor] = useState('');
+
   const getMessage =  async (id) => {
       dispatch(getListMessage(id))
       dispatch(messageSlice.actions.setReadMessage({userList: userList , id: id})); 
       console.log(id)
+      setActiveBgColor(id)
   }
   console.log('here is an userList', userList)
   return (
@@ -44,7 +47,7 @@ const MessageUserList = () => {
           </DialogContentText>
           <ul className={clsx(s.memberList)}>
             {userList?.map((item) => (
-              <li  key={item.id} className={clsx(s.memberItem)} onClick={() => getMessage(item.id)} >
+              <li  key={item.id} className={clsx(s.memberItem, {[s.activeMemberUser]: item.id === activeBgColor})} onClick={() => getMessage(item.id)} >
                 <div className={clsx(s.member)}>
                   <img src={item.imgUrl} className={clsx(s.avatarShop)}/>
                   <span className={clsx(s.shopName)}>{item.shopName}</span>

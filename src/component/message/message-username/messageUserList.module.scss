@@ -42,6 +42,11 @@
         &:hover {
             background-color: #dcdada;
         }
+
+        &:visited{
+            background-color: #dcdada;
+        }
+        
         .member {
             padding: 10px;
             // background: #eee;
@@ -62,6 +67,9 @@
                 font-size: 12px;
                 font-weight: bold;
                 margin-left: 10px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
         }
         .unread{
@@ -86,4 +94,8 @@
         
     }
 
+}
+
+.activeMemberUser {
+    background-color: #dcdada;
 }
