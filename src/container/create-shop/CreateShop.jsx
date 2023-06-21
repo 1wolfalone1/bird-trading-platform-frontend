@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import s from "./createShop.module.scss";
 import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { registerAPI } from "../../api/server/RegisterAPI";
 import { LoadingButton } from "@mui/lab";
+import ReactQuill from "react-quill";
 
 const textFieldStyle = {
   input: {
@@ -29,7 +30,7 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "2.4rem",
   width: "100%",
-  padding: "15.rem 1rem",
+  padding: "1.2rem 0rem",
 };
 const formHelperText = {
   style: {
@@ -41,7 +42,7 @@ const formHelperText = {
 const validationSchema = yup.object({
   email: yup
     .string("")
-    .email("Enter a valid email address")
+    .email("Email address is not valid!")
     .required("Email is required!"),
   name: yup.string("").required("Name is required!"),
   phone: yup
@@ -50,12 +51,23 @@ const validationSchema = yup.object({
     .required("Phone number is required!"),
   password: yup.string("").required("Password is required!"),
   confirmPassword: yup.string("").required("Confirm password is required!"),
+  address: yup.string("").required("Address is required!"),
 });
 export default function CreateShop() {
-  const [signUpWithGoogle, setSignUpWithGoogle] = useState();
+  const [avatar, setAvatar] = useState();
   const [isVerifyProcess, setIsVerifyProcess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState("");
+  const onFormSubmit = async (e) => {
+    try {
+      console.log(e);
+      e.preventDefault();
+      handleSubmit();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const form = useFormik({
     initialValues: {
       email: "",
@@ -64,6 +76,7 @@ export default function CreateShop() {
       password: "",
       confirmPassword: "",
       matchPassword: "",
+      address: "",
     },
     initialErrors: {
       email: "",
@@ -72,11 +85,13 @@ export default function CreateShop() {
       password: "",
       confirmPassword: "",
       matchPassword: "",
+      address: "",
     },
     validationSchema: validationSchema,
     validateOnChange: true,
     validateOnBlur: true,
   });
+
   const handleSubmit = async () => {
     console.log(form.values);
     const e = await form.validateForm(form.values);
@@ -128,124 +143,151 @@ export default function CreateShop() {
       }
     }
   };
+
+  const handleUpdateAvatar = (e) => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const newAvatar = reader.result;
+      setAvatar({
+        src: newAvatar,
+        obj: files[0],
+      });
+    };
+    if (files[0]) reader?.readAsDataURL(files[0]);
+  };
+
   console.log(form.errors);
   return (
-    <div className={clsx(s.container)}>
-      <div className={clsx(s.imgLeft)}>
-        <img
-          src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
-          alt="Create Shop Account"
+    <Grid container className={clsx(s.container)}>
+      <Grid sm={3} md={3} xl={3} className={clsx(s.uploadImg)}>
+        <div className={clsx(s.imgProfile)}>
+          <img
+            src={
+              avatar?.src ||
+              "https://static.thenounproject.com/png/5034901-200.png"
+            }
+            alt="Avatar"
+          />
+        </div>
+        <input
+          type="file"
+          name="avatar"
+          id="customFile"
+          hidden
+          onChange={handleUpdateAvatar}
         />
-      </div>
-      <div className={clsx(s.contentRight)}>
+        <label className={clsx(s.editProfile)} htmlFor="customFile">
+          Choose Avatar
+        </label>
+      </Grid>
+      <Grid sm={9} md={9} xl={9} className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
           <span>Create Shop Account</span>
         </div>
-        <Grid container spacing={1} className={clsx(s.inputContainer)}>
-          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
+        <form onSubmit={onFormSubmit} className={clsx(s.formBordered)}>
+          <Grid container spacing={1} className={clsx(s.info)}>
+            <Grid sm={6} md={6} xl={6} className={clsx(s.password)}>
+              <TextField
+                id="name"
+                label="Shop Name"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.name}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.name && Boolean(form.errors.name)}
+                helperText={form.touched.name && form.errors.name}
+                sx={textFieldStyle}
+                FormHelperTextProps={formHelperText}
+                fullWidth
+              />
+            </Grid>
+            <Grid sm={6} md={6} xl={6} className={clsx(s.password)}>
+              <TextField
+                id="phone"
+                label="Phone Number"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.phone}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.phone && Boolean(form.errors.phone)}
+                helperText={form.touched.phone && form.errors.phone}
+                sx={textFieldStyle}
+                FormHelperTextProps={formHelperText}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
+          <Grid className={clsx(s.address)}>
             <TextField
-              id="email"
-              label="Email"
+              id="address"
+              label="City, District, Ward, Street Name, Building, House No"
               variant="outlined"
               color="Dominant0"
-              value={form.values.email}
+              value={form.values.address}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
-              error={form.touched.email && Boolean(form.errors.email)}
-              helperText={form.touched.email && form.errors.email}
+              error={form.touched.address && Boolean(form.errors.address)}
+              helperText={form.touched.address && form.errors.address}
               FormHelperTextProps={formHelperText}
               sx={textFieldStyle}
               fullWidth
             />
           </Grid>
-          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
+
+          {/* <ReactQuill 
+          theme={this.state.theme}
+          onChange={this.handleChange}
+          value={this.state.editorHtml}
+          modules={Editor.modules}
+          formats={Editor.formats}
+          bounds={'.app'}
+          placeholder={this.props.placeholder}
+         /> */}
+          <Grid className={clsx(s.description)}>
             <TextField
-              id="name"
-              label="Full Name"
+              id="description"
+              label="Description"
               variant="outlined"
               color="Dominant0"
-              value={form.values.name}
-              onChange={form.handleChange}
-              onBlur={form.handleBlur}
-              error={form.touched.name && Boolean(form.errors.name)}
-              helperText={form.touched.name && form.errors.name}
-              sx={textFieldStyle}
-              FormHelperTextProps={formHelperText}
-              fullWidth
-            />
-          </Grid>
-          <Grid sm={4} md={4} xl={4} className={clsx(s.title)}>
-            <TextField
-              id="phone"
-              label="Phone Number"
-              variant="outlined"
-              color="Dominant0"
-              value={form.values.phone}
-              onChange={form.handleChange}
-              onBlur={form.handleBlur}
-              error={form.touched.phone && Boolean(form.errors.phone)}
-              helperText={form.touched.phone && form.errors.phone}
-              sx={textFieldStyle}
-              FormHelperTextProps={formHelperText}
-              fullWidth
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={1} className={clsx(s.info)}>
-          <Grid sm={6} md={6} xl={6} className={clsx(s.title)}>
-            <TextField
-              id="password"
-              label="Password"
-              type="password"
-              variant="outlined"
-              color="Dominant0"
-              value={form.values.password}
-              onChange={form.handleChange}
-              onBlur={form.handleBlur}
-              error={form.touched.password && Boolean(form.errors.password)}
-              helperText={form.touched.password && form.errors.password}
-              sx={textFieldStyle}
-              FormHelperTextProps={formHelperText}
-              fullWidth
-            />
-          </Grid>
-          <Grid sm={6} md={6} xl={6} className={clsx(s.title)}>
-            <TextField
-              id="confirmPassword"
-              label="Confirm Password"
-              type="password"
-              variant="outlined"
-              color="Dominant0"
-              value={form.values.confirmPassword}
+              value={form.values.description}
               onChange={form.handleChange}
               onBlur={form.handleBlur}
               error={
-                form.touched.confirmPassword &&
-                Boolean(form.errors.confirmPassword)
+                form.touched.description && Boolean(form.errors.description)
               }
-              helperText={
-                form.touched.confirmPassword && form.errors.confirmPassword
-              }
+              helperText={form.touched.description && form.errors.description}
               FormHelperTextProps={formHelperText}
               sx={textFieldStyle}
               fullWidth
             />
           </Grid>
-        </Grid>
-        <div className={clsx(s.button)}>
-          <LoadingButton
-            sx={buttonRegisterStyle}
-            variant="outlined"
-            color="Accent7"
-            fullWidth
-            loading={loading}
-            type="button"
-            onClick={handleSubmit}
-          >
-            Create Account
-          </LoadingButton>
-        </div>
-      </div>
-    </div>
+
+          <Grid className={clsx(s.button)}>
+            <Button type="submit" className={clsx(s.iconButton)}>
+              <LoadingButton
+                sx={buttonRegisterStyle}
+                variant="outlined"
+                color="Accent7"
+                fullWidth
+                loading={loading}
+                type="button"
+                onClick={handleSubmit}
+              >
+                Create Account
+              </LoadingButton>
+            </Button>
+          </Grid>
+        </form>
+      </Grid>
+    </Grid>
   );
 }

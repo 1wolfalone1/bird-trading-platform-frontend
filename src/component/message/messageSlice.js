@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { userList } from "./message-username/userListData";
 import { api } from "../../api/server/API";
 import { DatasetLinked } from "@mui/icons-material";
@@ -25,11 +25,15 @@ const messageSlice = createSlice({
             state.message.messageList.messageListData.push(action.payload.message) 
         },
         setReadMessage: (state, action) => {
+          console.log(
+            'have read message'
+          , action.payload.id)
           var numberRead = 0;
             const updatedUserList = action.payload.userList.map(item => {
                 if (item.id === action.payload.id) {
                   //get number unread
                   numberRead = item.unread;
+                  console.log('have jum in here number read', numberRead);
                   return {
                     ...item,
                     unread: 0
@@ -148,6 +152,17 @@ const messageSlice = createSlice({
               };
             }
           }
+        },
+        addShopIntoUserList: (state, action) => {
+          console.log('vao ch')
+          console.log(action.payload.shop, "shop ")
+          const existShop = state.message.userList?.filter(item => item.id === action.payload.shop.id)
+          console.log("here is an so sanh", existShop);
+          if(existShop.length === 0){
+            console.log('co vao day')
+            state.message.userList.push(action.payload.shop)
+          }
+          console.log(current(state.message.userList))
         }
             
     },

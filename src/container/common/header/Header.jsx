@@ -1,6 +1,15 @@
 import s from "./header.module.scss";
 import logo from "../../../asset/logo=light.svg";
-import { Badge, Box, Button, MenuItem, Select, Tab, Tabs } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  Select,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import Style from "./../../../style/inline-style/style";
 import clsx from "clsx";
 import styled from "@emotion/styled";
@@ -74,18 +83,13 @@ export default function Header() {
     console.log(value);
   };
 
-  document.addEventListener(
-    "keypress",
-    function (e) {
-      if (e.key === "Enter") {
-        dispatch(filterByAll());
-      }
-    },
-    false
-  );
-
-  const handleSearch = () => {
-    dispatch(filterByAll());
+  const onFormSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      dispatch(filterByAll());
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -117,7 +121,7 @@ export default function Header() {
           </Tabs>
         </Box>
       </div>
-      <div className={s.searchBar}>
+      <form onSubmit={onFormSubmit} className={s.searchBar}>
         <input
           value={filterObj.name}
           type="text"
@@ -172,13 +176,15 @@ export default function Header() {
               Thirty
             </MenuItem>
           </Select>
-          <FontAwesomeIcon
-            onClick={handleSearch}
-            icon={faMagnifyingGlass}
-            className={clsx(s.icon)}
-          />
+
+          <IconButton type="submit">
+            <FontAwesomeIcon
+              icon={faMagnifyingGlass}
+              className={clsx(s.icon)}
+            />
+          </IconButton>
         </div>
-      </div>
+      </form>
       {user.status === userStatus.USER ? (
         <UserRightHeader user={user} totalCartItems={totalCartItems} />
       ) : (
