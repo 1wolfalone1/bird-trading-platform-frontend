@@ -30,17 +30,12 @@ const MessageUserList = () => {
 
   const {userList, messageList} = useSelector(messageSelector)
 
-  useEffect( () => {
-    dispatch(getListUser())
-  }, [])
-
   const getMessage =  async (id) => {
       dispatch(getListMessage(id))
       dispatch(messageSlice.actions.setReadMessage({userList: userList , id: id})); 
       console.log(id)
   }
-
-console.log(messageList)
+  console.log('here is an userList', userList)
   return (
     <div  className={clsx(s.container)}>
       <DialogContent sx={{padding:  "0px", overflow: "hidden"}}>
