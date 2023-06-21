@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import s from "./signUp.module.scss";
 import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
 import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
@@ -28,7 +28,7 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "2.4rem",
   width: "100%",
-  padding: "0.8rem",
+  padding: "1rem",
 };
 const formHelperText = {
   style: {
@@ -55,6 +55,17 @@ export default function SignUp() {
   const [isVerifyProcess, setIsVerifyProcess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState("");
+
+  const onFormSubmit = async (e) => {
+    try {
+      console.log(e);
+      e.preventDefault();
+      handleSubmit();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const form = useFormik({
     initialValues: {
       email: "",
@@ -76,6 +87,7 @@ export default function SignUp() {
     validateOnChange: true,
     validateOnBlur: true,
   });
+
   const handleSubmit = async () => {
     console.log(form.values);
     const e = await form.validateForm(form.values);
@@ -140,7 +152,7 @@ export default function SignUp() {
         <div className={clsx(s.title)}>
           <span>Create Account</span>
         </div>
-        <form className={clsx(s.inputContainer)}>
+        <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
           <div className={clsx(s.inputText)}>
             <TextField
               id="email"
@@ -221,17 +233,19 @@ export default function SignUp() {
             />
           </div>
           <div className={clsx(s.button)}>
-            <LoadingButton
-              sx={buttonRegisterStyle}
-              variant="outlined"
-              color="Accent7"
-              fullWidth
-              loading={loading}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Sign up
-            </LoadingButton>
+            <IconButton type="submit" className={clsx(s.iconButton)}>
+              <LoadingButton
+                sx={buttonRegisterStyle}
+                variant="outlined"
+                color="Accent7"
+                fullWidth
+                loading={loading}
+                type="button"
+                onClick={handleSubmit}
+              >
+                Sign up
+              </LoadingButton>
+            </IconButton>
           </div>
         </form>
         <div className={clsx(s.separate)}>

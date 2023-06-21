@@ -59,6 +59,16 @@ export default function Login() {
   const params = new URLSearchParams(window.location.search); // id=123
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const onFormSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      handleLogin();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const form = useFormik({
     initialValues: {
       email: "",
@@ -81,6 +91,7 @@ export default function Login() {
       );
     }
   }, []);
+
   const handleLogin = async () => {
     try {
       const e = await form.validateForm(form.values);
@@ -144,7 +155,7 @@ export default function Login() {
         <div className={clsx(s.title)}>
           <span>Sign in</span>
         </div>
-        <div className={clsx(s.inputContainer)}>
+        <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
           <div className={clsx(s.inputText)}>
             <TextField
               id="email"
@@ -183,6 +194,7 @@ export default function Login() {
               fullWidth
               color="Accent7"
               onClick={handleLogin}
+              type="submit"
             >
               Sign in
             </Button>
@@ -194,7 +206,7 @@ export default function Login() {
               )}
             </div>
           </div>
-        </div>
+        </form>
         <div className={clsx(s.separate)}>
           <span>Or</span>
         </div>

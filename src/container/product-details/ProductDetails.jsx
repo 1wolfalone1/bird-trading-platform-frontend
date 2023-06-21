@@ -6,9 +6,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api } from "../../api/server/API";
 import clsx from "clsx";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import { FreeMode, Navigation, Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -20,7 +17,6 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
-import ReactDOM from "react-dom/client";
 import SmsIcon from "@mui/icons-material/Sms";
 
 import cartSlice, {
@@ -246,7 +242,6 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        {/* <Button>Chat now </Button> */}
                         <IconButton>
                           <SmsIcon
                             sx={{ fontSize: "5rem" }}
