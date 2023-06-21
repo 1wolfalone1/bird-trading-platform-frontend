@@ -74,7 +74,7 @@ const MessageContent = () => {
     }; 
     resetForm();
     dispatch(messageSlice.actions.addMessage({  message: updatedValues }));
-    // dispatch(sendMessage(updatedValues));
+    dispatch(sendMessage(updatedValues));
     dispatch(messageSlice.actions.setReadMessage({userList: userList, id: currentShopIDSelect})); 
     console.log("here is curren shop id select: ", currentShopIDSelect);
   };

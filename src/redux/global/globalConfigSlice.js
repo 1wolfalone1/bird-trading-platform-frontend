@@ -20,7 +20,10 @@ const globalConfigSlice = createSlice({
             theme: "dark"
          }
       },
-      navigateValue: 1
+      navigateValue: 1,
+      tempDataOrder: {
+      },
+      isBackdrop: false,
    },
    reducers: {
       changeToastStyle: (state, action) => {
@@ -29,6 +32,12 @@ const globalConfigSlice = createSlice({
       changeNavigateValue: (state, action) => {
          state.navigateValue = action.payload;
       },
+      saveTempDataOrder: (state, action) => {
+         state.tempDataOrder = action.payload;
+      },
+      changeBackDrops: (state, action) => {
+         state.isBackdrop = action.payload;
+      }
    },
 });
 export default globalConfigSlice;
@@ -37,3 +46,7 @@ export const toastStyleSelector = state => state.globalConfigSlice.toastStyle;
 
 
 export const navigateValueSelector = state => state.globalConfigSlice.navigateValue;
+
+export const globalConfigSliceSelector = state => state.globalConfigSlice;
+
+export const backDropSelector = state => state.globalConfigSlice.isBackdrop;

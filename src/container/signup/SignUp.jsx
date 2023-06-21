@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import s from "./signUp.module.scss";
 import React, { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import { Link } from "react-router-dom";
 import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { registerAPI } from "../../api/server/RegisterAPI";
 import { LoadingButton } from "@mui/lab";
-
+import { motion } from "framer-motion";
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
@@ -28,7 +28,7 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "2.4rem",
   width: "100%",
-  padding: "0.8rem",
+  padding: "1rem",
 };
 const formHelperText = {
   style: {
@@ -55,6 +55,17 @@ export default function SignUp() {
   const [isVerifyProcess, setIsVerifyProcess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [emailConfirm, setEmailConfirm] = useState("");
+
+  const onFormSubmit = async (e) => {
+    try {
+      console.log(e);
+      e.preventDefault();
+      handleSubmit();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const form = useFormik({
     initialValues: {
       email: "",
@@ -76,6 +87,7 @@ export default function SignUp() {
     validateOnChange: true,
     validateOnBlur: true,
   });
+
   const handleSubmit = async () => {
     console.log(form.values);
     const e = await form.validateForm(form.values);
@@ -129,18 +141,143 @@ export default function SignUp() {
   };
   console.log(form.errors);
   return (
-    <div className={clsx(s.container)}>
-      <div className={clsx(s.imgLeft)}>
-        <img
-          src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
-          alt="Sign up"
-        />
+    <>
+      <div className={clsx(s.container)}>
+        <motion.div
+          initial={{
+            x: "-100%",
+          }}
+          animate={{
+            x: 0,
+            transition: {
+              duration: 0.5,
+            },
+          }}
+          className={clsx(s.imgLeft)}
+        >
+          <img
+            src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
+            alt="Sign up"
+          />
+        </motion.div>
+        <div className={clsx(s.contentRight)}>
+          <div className={clsx(s.title)}>
+            <span>Create Account</span>
+          </div>
+          <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
+            <div className={clsx(s.inputText)}>
+              <TextField
+                id="email"
+                label="Email"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.email}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.email && Boolean(form.errors.email)}
+                helperText={form.touched.email && form.errors.email}
+                FormHelperTextProps={formHelperText}
+                sx={textFieldStyle}
+                fullWidth
+              />
+              <TextField
+                id="name"
+                label="Full Name"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.name}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.name && Boolean(form.errors.name)}
+                helperText={form.touched.name && form.errors.name}
+                sx={textFieldStyle}
+                FormHelperTextProps={formHelperText}
+                fullWidth
+              />
+              <TextField
+                id="phone"
+                label="Phone Number"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.phone}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.phone && Boolean(form.errors.phone)}
+                helperText={form.touched.phone && form.errors.phone}
+                sx={textFieldStyle}
+                FormHelperTextProps={formHelperText}
+                fullWidth
+              />
+              <TextField
+                id="password"
+                label="Password"
+                type="password"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.password}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={form.touched.password && Boolean(form.errors.password)}
+                helperText={form.touched.password && form.errors.password}
+                sx={textFieldStyle}
+                FormHelperTextProps={formHelperText}
+                fullWidth
+              />
+              <TextField
+                id="confirmPassword"
+                label="Confirm Password"
+                type="password"
+                variant="outlined"
+                color="Dominant0"
+                value={form.values.confirmPassword}
+                onChange={form.handleChange}
+                onBlur={form.handleBlur}
+                error={
+                  form.touched.confirmPassword &&
+                  Boolean(form.errors.confirmPassword)
+                }
+                helperText={
+                  form.touched.confirmPassword && form.errors.confirmPassword
+                }
+                FormHelperTextProps={formHelperText}
+                sx={textFieldStyle}
+                fullWidth
+              />
+            </div>
+            <div className={clsx(s.button)}>
+              <LoadingButton
+                sx={buttonRegisterStyle}
+                variant="outlined"
+                color="Accent7"
+                fullWidth
+                loading={loading}
+                type="button"
+                onClick={handleSubmit}
+              >
+                Sign up
+              </LoadingButton>
+            </div>
+          </form>
+          <div className={clsx(s.separate)}>
+            <span>Or</span>
+          </div>
+          <div>
+            <ButtonGoogle content={"Sign up with Google"} />
+            <div className={clsx(s.helpGooleText)}></div>
+          </div>
+          <div className={clsx(s.linkBottom)}>
+            Already have an account?{" "}
+            <Link to="/login" className={clsx(s.link)}>
+              Sign in
+            </Link>
+          </div>
+        </div>
       </div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
           <span>Create Account</span>
         </div>
-        <form className={clsx(s.inputContainer)}>
+        <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
           <div className={clsx(s.inputText)}>
             <TextField
               id="email"
@@ -221,17 +358,19 @@ export default function SignUp() {
             />
           </div>
           <div className={clsx(s.button)}>
-            <LoadingButton
-              sx={buttonRegisterStyle}
-              variant="outlined"
-              color="Accent7"
-              fullWidth
-              loading={loading}
-              type="button"
-              onClick={handleSubmit}
-            >
-              Sign up
-            </LoadingButton>
+            <IconButton type="submit" className={clsx(s.iconButton)}>
+              <LoadingButton
+                sx={buttonRegisterStyle}
+                variant="outlined"
+                color="Accent7"
+                fullWidth
+                loading={loading}
+                type="button"
+                onClick={handleSubmit}
+              >
+                Sign up
+              </LoadingButton>
+            </IconButton>
           </div>
         </form>
         <div className={clsx(s.separate)}>
@@ -248,6 +387,6 @@ export default function SignUp() {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 }

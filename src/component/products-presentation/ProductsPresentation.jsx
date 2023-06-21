@@ -8,20 +8,31 @@ import { callFirstPage } from "./productsPresentationSlice";
 import { getProducts } from "./productsSelector";
 
 export default function ProductsPresentation() {
-  const [listProduct, setListProduct] = useState([]);
-  const dispatch = useDispatch();
-  const products = useSelector(getProducts);
-  const { data, page } = products;
-  useEffect(() => {
-    const k = async () => {
-      await dispatch(callFirstPage());
-    };
-    k();
-  }, []);
-  return (
-    <div className={s.container}>
-      <Products products={data} />
-      <ProductsSlider pageNumber={page} />
-    </div>
-  );
+   const [listProduct, setListProduct] = useState([]);
+   const dispatch = useDispatch();
+   const products = useSelector(getProducts);
+   const { data, page } = products;
+   useEffect(() => {
+      const k = async () => {
+         await dispatch(callFirstPage());
+      };
+      k();
+   }, []);
+   return (
+      <div className={s.container}>
+         {data ? (
+            <Products products={data} />
+         ) : (
+            <>
+               <div className={s.itemNotFound}>
+                  <img
+                     src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/No_Product_Found.png"
+                     alt=""
+                  />
+               </div>
+            </>
+         )}
+         <ProductsSlider pageNumber={page} />
+      </div>
+   );
 }

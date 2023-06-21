@@ -1,15 +1,43 @@
 @use "../style/" as c;
+
+@mixin text($fw: 600, $fz: 3rem, $color: c.$Complementary0) {
+  font-weight: $fw;
+  font-size: $fz;
+  color: $color;
+}
+
+$heightAvatar: 30rem;
+
 .container {
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  padding: 0px;
 
-  .imgLeft {
-    max-height: calc(100vh - c.$h-header);
-    max-width: 40vw;
-    img {
-      width: 100%;
+  .uploadImg {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+    .imgProfile {
+      img {
+        height: $heightAvatar;
+        width: $heightAvatar;
+        border-radius: 50%;
+      }
+    }
+
+    .editProfile {
+      @include text(400, 2rem);
+      text-decoration: none;
+      border: 1px solid c.$Complementary0;
+      padding: 2rem 0;
+      text-align: center;
+      cursor: pointer;
+      width: $heightAvatar;
+    }
+
+    .editProfile:hover {
+      color: c.$Accent7;
+      background-color: c.$Dominant5;
     }
   }
 
@@ -27,23 +55,46 @@
       font-family: c.$Secondary;
       font-weight: 400;
       font-size: 5rem;
-      padding: 2.4rem 0;
+      padding: 5rem 0.5rem;
       color: #000000;
     }
+    .formBordered {
+      width: 95%;
+      .inputContainer {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        .input {
+          padding-bottom: 2.5rem;
+          width: calc(100% / 3);
+        }
+      }
 
-    .inputContainer {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      //   .inputText {
-      //     padding: 1rem 0 3rem 0;
-      //     display: flex;
-      //     flex-direction: column;
-      //     gap: 1.6rem;
-      //   }
+      .info {
+        display: flex;
+        width: 100%;
+        padding-bottom: 2.5rem;
+        .password {
+          width: 50%;
+        }
+      }
+
+      .address {
+        display: flex;
+        width: 100%;
+        padding: 0rem 0.5rem 2.5rem 0.5rem;
+      }
+
+      .description {
+        display: flex;
+        width: 100%;
+        padding: 0rem 0.5rem 2.5rem 0.5rem;
+      }
       .button {
-        text-align: center;
-        width: 70%;
+        .iconButton {
+          width: 100%;
+          padding: 0rem 0.5rem;
+        }
       }
     }
   }

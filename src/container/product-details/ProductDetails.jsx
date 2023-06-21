@@ -6,9 +6,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { api } from "../../api/server/API";
 import clsx from "clsx";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import { FreeMode, Navigation, Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
@@ -20,9 +17,9 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
-import ReactDOM from "react-dom/client";
 import SmsIcon from "@mui/icons-material/Sms";
 
+import ReactDOM from "react-dom/client";
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
@@ -32,7 +29,9 @@ import AddToCartToast, {
 } from "../../component/toast/content/AddToCartToast";
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
-import messageSlice, { messageSelector } from "../../component/message/messageSlice";
+import messageSlice, { getListMessage, messageSelector } from "../../component/message/messageSlice";
+import globalConfigSlice from "../../redux/global/globalConfigSlice";
+
 const quantityControlStatus = {
   DECREASE: -1,
   CHANGE: 0,
@@ -178,11 +177,14 @@ export default function ProductDetails() {
   useEffect(() => {
     const getProducts = async () => {
       try {
+        dispatch(globalConfigSlice.actions.changeBackDrops(true));
         const response = await api.get(`/products/${param.id}`);
         const data = await response.data;
         console.log(data);
         setProduct(data);
+        dispatch(globalConfigSlice.actions.changeBackDrops(false));
       } catch (error) {
+        dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
       }
     };
@@ -205,9 +207,11 @@ export default function ProductDetails() {
     dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}));
     dispatch(messageSlice.actions.setOpenPopup({isOpen: true}));
     dispatch(messageSlice.actions.setCurrentShopIDSelect({shopID: shop.id}))
+    dispatch(getListMessage(shop.id))
     console.log(shop)
   }
     
+
   return (
     <>
       {product ? (
@@ -262,7 +266,6 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        {/* <Button>Chat now </Button> */}
                         <IconButton>
                           <SmsIcon
                             sx={{ fontSize: "5rem" }}
@@ -270,9 +273,6 @@ export default function ProductDetails() {
                             onClick={() => handleChatNow(product.product.shopOwner)}
                           />
                         </IconButton>
-                        <div className={s.name}>
-                          {product.product.shopOwner.shopName}
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -378,7 +378,7 @@ export default function ProductDetails() {
           <div className={s.review}></div>
         </div>
       ) : (
-        "loaddding"
+        <></>
       )}
     </>
   );

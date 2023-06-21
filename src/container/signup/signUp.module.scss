@@ -46,8 +46,11 @@
         gap: 1.6rem;
       }
       .button {
-        text-align: center;
-        width: 70%;
+        width: 72%;
+        // padding: 1rem 0rem;
+        .iconButton {
+          width: 100%;
+        }
       }
     }
   }

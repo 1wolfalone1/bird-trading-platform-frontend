@@ -15,6 +15,7 @@ import userInfoSlice from "../../redux/global/userInfoSlice";
 import { userStatus } from "../order/cartSlice";
 import { api } from "./../../api/server/API";
 import { errorAuthentication } from "../../config/constant";
+import { motion } from 'framer-motion';
 
 const textFieldStyle = {
   input: {
@@ -59,6 +60,16 @@ export default function Login() {
   const params = new URLSearchParams(window.location.search); // id=123
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const onFormSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      handleLogin();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const form = useFormik({
     initialValues: {
       email: "",
@@ -74,13 +85,13 @@ export default function Login() {
   });
   useEffect(() => {
     let error = params.get("error");
-    console.log("error", error);
     if (error == errorAuthentication.CONFLICT_GOOGLE_LOGIN) {
       setLoginGoogleStatus(
         "The email you provided is already registered in our system!"
       );
     }
   }, []);
+
   const handleLogin = async () => {
     try {
       const e = await form.validateForm(form.values);
@@ -121,6 +132,7 @@ export default function Login() {
       callCookies();
       navigate("/products");
     } else if (status === 404) {
+      console.log(status)
     }
   };
   const callCookies = async () => {
@@ -132,19 +144,31 @@ export default function Login() {
       console.error(e);
     }
   };
+
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.imgLeft)}>
+      <motion.div
+        initial={{
+          x: '-100%'
+        }}
+        animate={{
+          x: 0,
+          transition: {
+            duration: 0.5,
+          }
+        }}
+      className={clsx(s.imgLeft)}>
         <img
           src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/login.png"
           alt="Login"
         />
-      </div>
+        
+      </motion.div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
           <span>Sign in</span>
         </div>
-        <div className={clsx(s.inputContainer)}>
+        <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
           <div className={clsx(s.inputText)}>
             <TextField
               id="email"
@@ -183,6 +207,7 @@ export default function Login() {
               fullWidth
               color="Accent7"
               onClick={handleLogin}
+              type="submit"
             >
               Sign in
             </Button>
@@ -194,7 +219,7 @@ export default function Login() {
               )}
             </div>
           </div>
-        </div>
+        </form>
         <div className={clsx(s.separate)}>
           <span>Or</span>
         </div>
