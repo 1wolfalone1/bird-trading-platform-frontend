@@ -67,8 +67,8 @@ export default function Header() {
       dispatch(globalConfigSlice.actions.changeNavigateValue(3));
     }
   }, [location]);
-
   const user = useSelector(userInfoSelector);
+  console.log(user)
   const handleNavChange = (event, newValue) => {};
 
   const handleChange = (e) => {

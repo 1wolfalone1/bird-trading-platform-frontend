@@ -19,6 +19,7 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
 import SmsIcon from "@mui/icons-material/Sms";
 
+import ReactDOM from "react-dom/client";
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
@@ -28,6 +29,8 @@ import AddToCartToast, {
 } from "../../component/toast/content/AddToCartToast";
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
+import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import { SmsIcon } from "@mui/icons-material/Sms";
 const quantityControlStatus = {
   DECREASE: -1,
   CHANGE: 0,
@@ -172,11 +175,14 @@ export default function ProductDetails() {
   useEffect(() => {
     const getProducts = async () => {
       try {
+        dispatch(globalConfigSlice.actions.changeBackDrops(true));
         const response = await api.get(`/products/${param.id}`);
         const data = await response.data;
         console.log(data);
         setProduct(data);
+        dispatch(globalConfigSlice.actions.changeBackDrops(false));
       } catch (error) {
+        dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
       }
     };
@@ -248,9 +254,6 @@ export default function ProductDetails() {
                             color={"Accent7"}
                           />
                         </IconButton>
-                        <div className={s.name}>
-                          {product.product.shopOwner.shopName}
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -356,7 +359,7 @@ export default function ProductDetails() {
           <div className={s.review}></div>
         </div>
       ) : (
-        "loaddding"
+        <></>
       )}
     </>
   );

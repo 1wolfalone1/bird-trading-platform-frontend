@@ -1,12 +1,26 @@
-import { DialogContent, DialogContentText } from '@mui/material'
+import { Badge, DialogContent, DialogContentText } from '@mui/material'
 import clsx from 'clsx'
 import React from 'react'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import s from './messageUserList.module.scss'
-import { getListUser } from '../messageSlice'
+import messageSlice, { getListMessage, getListUser, messageSelector} from '../messageSlice'
 import { useEffect } from 'react'
-import { userList } from './userListData'
+import { Message, ModeComment, Visibility } from '@mui/icons-material'
+import styled from '@emotion/styled'
+import axios from 'axios'
+
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  right: 0,
+  top: 0,
+  border: `1px solid ${theme.palette.background.paper}`,
+  padding: '0 2px',
+  marginRight: '10px',
+  '& .MuiBadge-badge': {
+    fontSize: '1.5rem', // Adjust the size as needed
+  },
+}));
 
 const MessageUserList = () => {
 
@@ -14,13 +28,19 @@ const MessageUserList = () => {
 
   const dispatch = useDispatch()
 
+  const {userList, messageList} = useSelector(messageSelector)
+
   useEffect( () => {
-    // setUserList(us)
+    dispatch(getListUser())
   }, [])
-  const freshChannelChat = () => {
-    getListUser()
+
+  const getMessage =  async (id) => {
+      dispatch(getListMessage(id))
+      dispatch(messageSlice.actions.setReadMessage({userList: userList , id: id})); 
+      console.log(id)
   }
 
+console.log(messageList)
   return (
     <div  className={clsx(s.container)}>
       <DialogContent sx={{padding:  "0px", overflow: "hidden"}}>
@@ -28,12 +48,17 @@ const MessageUserList = () => {
             <b>Select a shop:</b>
           </DialogContentText>
           <ul className={clsx(s.memberList)}>
-            {userList.map((user) => (
-              <li  key={user.id}>
+            {userList?.map((item) => (
+              <li  key={item.id} className={clsx(s.memberItem)} onClick={() => getMessage(item.id)} >
                 <div className={clsx(s.member)}>
-                  <img src='https://yt3.ggpht.com/a/AATXAJyF9vTwfHwac_AXt5dBptXIs2kcMDu7tcnAPw=s900-c-k-c0xffffffff-no-rj-mo' className={clsx(s.avatarShop)}/>
-                  <span className={clsx(s.shopName)}>{user.userName}</span>
+                  <img src={item.imgUrl} className={clsx(s.avatarShop)}/>
+                  <span className={clsx(s.shopName)}>{item.shopName}</span>
                 </div>
+                {
+                  <StyledBadge color="primary" badgeContent={item.unread} className={clsx(s.unread)} sx={item.unread === 0 ? {visibility: 'hidden'} : null}>
+                    <Message className={clsx(s.unreadIcon)}/>
+                  </StyledBadge>
+                }
               </li>
             ))}
           </ul>

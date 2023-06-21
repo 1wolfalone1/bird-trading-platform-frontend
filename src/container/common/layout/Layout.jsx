@@ -5,17 +5,18 @@ import Footer from "../footer/Footer";
 import s from "./layout.module.scss";
 import { Outlet } from "react-router-dom";
 import clsx from "clsx";
-import { createTheme } from "@mui/material";
+import { Backdrop, CircularProgress, createTheme } from "@mui/material";
 import Style from "../../../style/inline-style/style";
 import { ThemeProvider } from "@emotion/react";
 import { red } from "@mui/material/colors";
 import ToastCustom from "../../../component/toast/ToastCustom";
 import PopupMessage from "../../../component/message/PopupMessage";
+import { useSelect } from "@mui/base";
+import { useSelector } from "react-redux";
+import { backDropSelector } from "../../../redux/global/globalConfigSlice";
 const theme = createTheme({
   palette: {
-    Accent7: {
-      main: Style.color.$Accent7,
-    },
+
     Complementary: {
       main: "#5e5e5e",
     },
@@ -63,18 +64,26 @@ const theme = createTheme({
 });
 
 export default function Layout() {
-  return (
-    <>
-      <ThemeProvider theme={theme}>
-        <Header />
-        <div className={clsx(s.content)}>
-          <div className={clsx(s.extraSpace)}></div>
-          <Outlet />
-        </div>
-        <ToastCustom />
-        <PopupMessage />
-        <Footer />
-      </ThemeProvider>
-    </>
-  );
+
+   const openBackDrop = useSelector(backDropSelector);
+   return (
+      <>
+         <ThemeProvider theme={theme}>
+            <Header />
+            <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={openBackDrop}
+         >
+            <CircularProgress color="inherit" />
+         </Backdrop>
+            <div className={clsx(s.content)}>
+               <div className={clsx(s.extraSpace)}></div>
+               <Outlet />
+            </div>
+            <ToastCustom/>
+            <PopupMessage/>
+            <Footer />
+         </ThemeProvider>
+      </>
+   );
 }
