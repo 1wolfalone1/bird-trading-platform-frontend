@@ -46,6 +46,7 @@ const Profile = () => {
    const dispatch = useDispatch();
    const { info } = useSelector(userInfoSelector);
    const [openModel, setOpenModel] = useState(false);
+   const [triggers, setTriggers] = useState(0);
    const [formInfo, setFormInfo] = useState({
       ...info,
       address: "",
@@ -155,6 +156,13 @@ const Profile = () => {
    };
 
    async function updateProfile(data) {
+      console.log(data);
+      console.log(address, '-------herere ne');
+      const dataTransfer = {
+        ...data, 
+        address: address
+      }
+      console.log(dataTransfer, 'dataTransfer')
       try {
          const formData = new FormData();
 
@@ -162,14 +170,14 @@ const Profile = () => {
             const avatarBlob = await dataAsyncUrlToFile(avatar.src);
             formData.append("image", avatarBlob);
          }
-         const dataBlob = objectToBlob(data);
+         const dataBlob = objectToBlob(dataTransfer);
          formData.append("data", dataBlob);
          const response = await api.put("/users/update-profile", formData, {
             headers: {
                "Content-type": "multipart/form-data",
             },
          });
-         console.log(response.data);
+         console.log(response.data, 'response data');
          // You can handle the response here
       } catch (error) {
          console.error(error);
@@ -216,7 +224,6 @@ const Profile = () => {
             break;
       }
    };
-   console.log(formInfo?.address, "form addresss");
    return (
       <Fragment>
          <h1>Your Profile</h1>
@@ -339,13 +346,11 @@ const Profile = () => {
                <Tooltip
                   title={
                      <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                        {`${
-                           formInfo.address ? `${formInfo.address} Street` : ""
-                        }`}
+                        {address}
                      </Typography>
                   }
                >
-                  <Grid2 container sx={{ width: "100%" }}>
+                  <Grid2 container sx={{ width: "80rem" }}>
                      <Grid2
                         xs={8}
                         sx={{
@@ -357,15 +362,15 @@ const Profile = () => {
                         }}
                      >
                         <Typography
+                           noWrap
                            sx={{
                               fontSize: "2.4rem",
                               paddingLeft: "1rem",
                               color: "#7d7d7d",
+                              width: "100%",
                            }}
                         >
-                           {formInfo?.address
-                              ? formInfo?.address
-                              : "You don't have address"}
+                           {address ? address : "You don't have address"}
                         </Typography>
                      </Grid2>
                      <Grid2 xs={4} sx={{ display: "flex" }}>
@@ -415,7 +420,13 @@ const Profile = () => {
             aria-describedby="parent-modal-description"
          >
             <div className={s.model}>
-               <MapControl address={address} setAddress={setAddress} />
+               <MapControl
+                  address={address}
+                  setAddress={setAddress}
+                  triggerSave={triggers}
+                  w="70rem"
+                  h="40rem"
+               />
                <div className={s.buttonControl}>
                   <Button
                      onClick={() => setOpenModel(false)}
@@ -429,6 +440,7 @@ const Profile = () => {
                      variant="contained"
                      color="Accent8"
                      sx={{ fontSize: "1.6rem" }}
+                     onClick={() => setTriggers((state) => state + 1)}
                   >
                      Save
                   </Button>
