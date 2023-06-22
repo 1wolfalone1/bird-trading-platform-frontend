@@ -49,27 +49,50 @@ export default function Checkout() {
    const [openBackDrop, setBackDrop] = useState(false);
    const { tempDataOrder } = useSelector(globalConfigSliceSelector);
    const flag = useRef(false);
+   const [subTotal, setSubTotal] = useState();
+   const [shipTotal, setShipTotal] = useState();
+   const [promotion, setPromotion] = useState();
+   const [listShopOwersItems, setListShopOweersItems] = useState([]);
+
    const handleSelectPayment = (paymentName) => {
       setPaymentType(paymentName);
    };
    const navigate = useNavigate();
    const dispatch = useDispatch();
-   console.log(userInfo, "infoooooooooooooooooooo");
-   let subTotal = Number(
-      items
-         .reduce(
-            (total, item) => total + item.discountedPrice * item.cartQuantity,
-            0
+   useEffect(() => {
+      setSubTotal(
+         Number(
+            items
+               .reduce(
+                  (total, item) =>
+                     total + item.discountedPrice * item.cartQuantity,
+                  0
+               )
+               .toFixed(2)
          )
-         .toFixed(2)
-   );
-
-   let shipTotal = !voucherSelected.shipping
-      ? Number((0.05 * subTotal).toFixed(2))
-      : 0;
-
-   let promotion = voucherSelected.discount?.discount ?? 0;
-
+      );
+      setShipTotal(
+         !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
+      );
+      setPromotion(voucherSelected.discount?.discount ?? 0);
+      const listTemp = items.reduce((acc, item) => {
+         let count = 0;
+         acc.map((lists) => {
+            if (lists.id === item.shopOwner.id) {
+               count++;
+               return lists.data.push(item);
+            } else {
+               return lists;
+            }
+         });
+         if (count === 0) {
+            acc.push({ id: item.shopOwner.id, data: [item] });
+         }
+         return acc;
+      }, []);
+      console.log(listTemp, "listTemp ne ");
+      setListShopOweersItems(listTemp);
+   }, []);
    const handleCheckout = () => {
       const info = userInfo.info;
       return (
@@ -128,14 +151,14 @@ export default function Checkout() {
 
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
-     let status = params.get("status");
-     console.log(status, "here is status");
-     if (status === "success") {
-       console.log(tempDataOrder, flag);
-       const paymentId = params.get("paymentId");
-       const PayerID = params.get("PayerID");
-       if (flag.current === false) {
-           setBackDrop(true);
+      let status = params.get("status");
+      console.log(status, "here is status");
+      if (status === "success") {
+         console.log(tempDataOrder, flag);
+         const paymentId = params.get("paymentId");
+         const PayerID = params.get("PayerID");
+         if (flag.current === false) {
+            setBackDrop(true);
             api.post("/package-order", tempDataOrder, {
                params: { paymentId: paymentId, PayerID: PayerID },
             })
@@ -158,7 +181,7 @@ export default function Checkout() {
          flag.current = true;
       };
    }, []);
-
+   console.log(items);
    return (
       <>
          <Backdrop
@@ -170,7 +193,11 @@ export default function Checkout() {
          <div>
             <Grid container columns={11} className={clsx(s.container)}>
                <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
-                  <Products products={items} />
+                  {listShopOwersItems
+                     ? listShopOwersItems.map((lists) => (
+                          <Products products={lists.data} key={lists.id}/>
+                       ))
+                     : ""}
                </Grid>
                <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
                   <Delivery userInfo={userInfo?.info} />
