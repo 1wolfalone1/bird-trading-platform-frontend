@@ -52,7 +52,7 @@ export default function Delivery({ userInfo }) {
                   <div className={clsx(s.phone)}>{userInfo?.address}</div>
                )}
                {!userInfo?.address && (
-                  <div className={clsx(s.errorPhone)}>Provide your number!</div>
+                  <div className={clsx(s.errorAddress)}>Provide your number!</div>
                )}
             </div>
          </div>
