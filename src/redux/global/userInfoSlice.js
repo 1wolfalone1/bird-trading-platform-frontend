@@ -32,7 +32,7 @@ const userInfoSlice = createSlice({
          .addCase(invokeUserInfo.fulfilled, (state, action) => {
             return {
                status: 1,
-               info: action.payload.userInfo,
+               info: action.payload?.userInfo,
             };
          })
          .addCase(invokeUserInfo.rejected, (state, action) => {}),

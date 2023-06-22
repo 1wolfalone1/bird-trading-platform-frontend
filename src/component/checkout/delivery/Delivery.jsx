@@ -6,7 +6,8 @@ import { Button, Tooltip, Typography } from "@mui/material";
 import Popup from "reactjs-popup";
 import DeliveryPopup from "./DeliveryPopup";
 
-export default function Delivery({ userInfo }) {
+export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
+   console.log(deliveryInfo, 'delidfdfdfdfdfdfdfdf');
    return (
       <Fragment>
          <div className={clsx(s.container)}>
@@ -32,27 +33,30 @@ export default function Delivery({ userInfo }) {
             </div>
             <div className={clsx(s.info)}>
                <div className={clsx(s.nameAndPhone)}>
-                  {userInfo?.fullName && (
-                     <div className={clsx(s.name)}>{userInfo.fullName}</div>
+                  {deliveryInfo?.fullName && (
+                     <div className={clsx(s.name)}>{deliveryInfo.fullName}</div>
                   )}
-                  {!userInfo?.fullName && (
+                  {!deliveryInfo?.fullName && (
                      <div className={clsx(s.errorName)}>Provide your name!</div>
                   )}
-
-                  {userInfo?.phoneNumber && (
-                     <div className={clsx(s.phone)}>{userInfo.phoneNumber}</div>
+                  {deliveryInfo?.phoneNumber && (
+                     <div className={clsx(s.phone)}>
+                        {deliveryInfo.phoneNumber}
+                     </div>
                   )}
-                  {!userInfo?.phoneNumber && (
+                  {!deliveryInfo?.phoneNumber && (
                      <div className={clsx(s.errorPhone)}>
                         Provide your number!
                      </div>
                   )}
                </div>
-               {userInfo?.address && (
-                  <div className={clsx(s.phone)}>{userInfo?.address}</div>
+               {deliveryInfo?.address && (
+                  <div className={clsx(s.address)}>{deliveryInfo?.address}</div>
                )}
-               {!userInfo?.address && (
-                  <div className={clsx(s.errorAddress)}>Provide your number!</div>
+               {!deliveryInfo?.address && (
+                  <div className={clsx(s.errorAddress)}>
+                     Provide your number!
+                  </div>
                )}
             </div>
          </div>

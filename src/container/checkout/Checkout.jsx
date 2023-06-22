@@ -53,7 +53,11 @@ export default function Checkout() {
    const [shipTotal, setShipTotal] = useState();
    const [promotion, setPromotion] = useState();
    const [listShopOwersItems, setListShopOweersItems] = useState([]);
-
+   const [deliveryInfo, setDeliveryInfo] = useState({
+      fullName: "",
+      phoneNumber: "",
+      address: "",
+   });
    const handleSelectPayment = (paymentName) => {
       setPaymentType(paymentName);
    };
@@ -92,6 +96,12 @@ export default function Checkout() {
       }, []);
       console.log(listTemp, "listTemp ne ");
       setListShopOweersItems(listTemp);
+      console.log(userInfo, 'userrrrrrrrrrrrrrrrrinfo')
+      setDeliveryInfo({
+         fullName: userInfo.fullName,
+         phoneNumber: userInfo.phoneNumber,
+         address: userInfo.address,
+      });
    }, []);
    const handleCheckout = () => {
       const info = userInfo.info;
@@ -195,12 +205,15 @@ export default function Checkout() {
                <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
                   {listShopOwersItems
                      ? listShopOwersItems.map((lists) => (
-                          <Products products={lists.data} key={lists.id}/>
+                          <Products products={lists.data} key={lists.id} />
                        ))
                      : ""}
                </Grid>
                <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
-                  <Delivery userInfo={userInfo?.info} />
+                  <Delivery
+                     deliveryInfo={deliveryInfo}
+                     setDeliveryInfo={setDeliveryInfo}
+                  />
                   <Voucher vouchers={voucherSelected} />
                   <Payment
                      handleSelectPayment={handleSelectPayment}
