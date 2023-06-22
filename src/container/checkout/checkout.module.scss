@@ -1,9 +1,9 @@
 @use "../style/" as c;
 
 @mixin button(
-  $padding: 1rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
+  $padding: 1rem 2rem,
+  $color: c.$Complementary0,
+  $backgroundColor: c.$Complementary6
 ) {
   border: 1px solid c.$Complementary0;
   font-size: 2.4rem;
@@ -20,7 +20,7 @@
   justify-content: end;
 
   Button {
-    @include button(1rem 2rem, c.$Complementary0, c.$Complementary6);
+    @include button();
 
     &:hover {
       color: c.$Accent7;

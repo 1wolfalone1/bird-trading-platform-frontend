@@ -24,6 +24,7 @@ import PopupMessage from "./component/message/PopupMessage";
 import OrderStatus from "./container/purchase/order-status/OrderStatus";
 import OrderHistory from "./container/purchase/order-history/OrderHistory";
 import CreateShop from "./container/create-shop/CreateShop";
+import Shop from "./container/shop/Shop";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -31,7 +32,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(userInfo, 'appppppppppppppppppppppppppppppppppppppppppp');
+    console.log(userInfo, "appppppppppppppppppppppppppppppppppppppppppp");
     const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
     if (cart && Array.isArray(cart.items)) {
       dispatch(invokeCart(cart));
@@ -63,6 +64,7 @@ function App() {
         <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="create-shop" element={<CreateShop />} />
+        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );

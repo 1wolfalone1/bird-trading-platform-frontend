@@ -19,7 +19,6 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
 import SmsIcon from "@mui/icons-material/Sms";
 
-import ReactDOM from "react-dom/client";
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
@@ -29,8 +28,12 @@ import AddToCartToast, {
 } from "../../component/toast/content/AddToCartToast";
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
-import messageSlice, { getListMessage, messageSelector } from "../../component/message/messageSlice";
+import messageSlice, {
+  getListMessage,
+  messageSelector,
+} from "../../component/message/messageSlice";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
+
 import { userInfoSelector, userStatus } from "../../redux/global/userInfoSlice";
 
 const quantityControlStatus = {
@@ -56,7 +59,7 @@ export default function ProductDetails() {
   const element = `${product?.product.description}`;
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
-  const {status} = useSelector(userInfoSelector)
+  const { status } = useSelector(userInfoSelector);
 
   const handleButton = {
     fontSize: "2.4rem",
@@ -199,28 +202,40 @@ export default function ProductDetails() {
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
 
+  const formatNumber = (q) => {
+    return q.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
   //this function use to add shop into a uselist and chat
-  const handleChatNow = (shop) => { 
-    if(status === userStatus.USER){
-
+  const handleChatNow = (shop) => {
+    if (status === userStatus.USER) {
       const updateShop = {
         ...shop,
-        unread: 1
-      }
-      console.log('shop ne', updateShop);
-      dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}));
-      dispatch(messageSlice.actions.setOpenPopup({isOpen: true}));
-      dispatch(messageSlice.actions.setCurrentShopIDSelect({shopID: shop.id}))
-      dispatch(getListMessage(shop.id))
-      console.log(shop)
-    }else {
-      toast(<AddToCartToast type={toastType.WARNING_INPUT} msg={"You must Sign in to perform this function!"} />, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1500,
-     });
+        unread: 1,
+      };
+      console.log("shop ne", updateShop);
+      dispatch(messageSlice.actions.addShopIntoUserList({ shop: updateShop }));
+      dispatch(messageSlice.actions.setOpenPopup({ isOpen: true }));
+      dispatch(
+        messageSlice.actions.setCurrentShopIDSelect({ shopID: shop.id })
+      );
+      dispatch(getListMessage(shop.id));
+      console.log(shop);
+    } else {
+      toast(
+        <AddToCartToast
+          type={toastType.WARNING_INPUT}
+          msg={"You must Sign in to perform this function!"}
+        />,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1500,
+        }
+      );
     }
-  }
-    
+  };
 
   return (
     <>
@@ -254,20 +269,20 @@ export default function ProductDetails() {
                     <div className={s.countPrice}>
                       {product.product.discountRate !== 0 ? (
                         <>
-                          <span className={s.oldPrice}>
-                            {Number(product.product.price).toFixed(2)}$
-                          </span>
                           <span className={s.disPrice}>
-                            {Number(product.product.discountedPrice).toFixed(2)}
-                            $
+                            {formatNumber(product.product.discountedPrice)}
+                          </span>
+                          <span className={s.oldPrice}>
+                            {formatNumber(product.product.price)}
                           </span>
                           <span className={s.discount}>
                             {(product.product.discountRate * 100).toFixed(0)}%
+                            off
                           </span>
                         </>
                       ) : (
                         <span className={s.disPrice}>
-                          {Number(product.product.price).toFixed(2)}$
+                          {formatNumber(product.product.price)}
                         </span>
                       )}
                     </div>
@@ -280,9 +295,14 @@ export default function ProductDetails() {
                           <SmsIcon
                             sx={{ fontSize: "5rem" }}
                             color={"Accent7"}
-                            onClick={() => handleChatNow(product.product.shopOwner)}
+                            onClick={() =>
+                              handleChatNow(product.product.shopOwner)
+                            }
                           />
                         </IconButton>
+                        <div className={s.name}>
+                          {product.product.shopOwner.shopName}
+                        </div>
                       </div>
                     </div>
                   </div>
