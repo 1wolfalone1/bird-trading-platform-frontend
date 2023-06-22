@@ -5,6 +5,14 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import cartSlice from "../../../../container/order/cartSlice";
+
+const formatNumber = (q) => {
+  return q.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};
+
 export default function CartItemInPopper({ item, className }) {
   const dispatch = useDispatch();
   return (
@@ -23,7 +31,7 @@ export default function CartItemInPopper({ item, className }) {
         </div>
         <div className={s.right}>
           <div className={s.price}>
-            ${Number(item.discountedPrice).toFixed(2)} x {item.cartQuantity}
+            {formatNumber(item.discountedPrice)} x {item.cartQuantity}
           </div>
           <div className={s.remove}>
             <IconButton

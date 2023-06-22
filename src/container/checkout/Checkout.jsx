@@ -96,7 +96,6 @@ export default function Checkout() {
       }, []);
       console.log(listTemp, "listTemp ne ");
       setListShopOweersItems(listTemp);
-      console.log(userInfo, 'userrrrrrrrrrrrrrrrrinfo')
       setDeliveryInfo({
          fullName: userInfo.fullName,
          phoneNumber: userInfo.phoneNumber,

@@ -11,6 +11,13 @@ import { api } from "../../../api/server/API";
 import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 
+const formatNumber = (q) => {
+  return q.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};
+
 export default function OrderBill({ close, paymentType }) {
   const { items, voucherSelected } = useSelector(getCartSelector);
   const { info } = useSelector(userInfoSelector);
@@ -18,17 +25,13 @@ export default function OrderBill({ close, paymentType }) {
   const navigate = useNavigate();
 
   let subTotal = Number(
-    items
-      .reduce(
-        (total, item) => total + item.discountedPrice * item.cartQuantity,
-        0
-      )
-      .toFixed(2)
+    items.reduce(
+      (total, item) => total + item.discountedPrice * item.cartQuantity,
+      0
+    )
   );
 
-  let shipTotal = !voucherSelected.shipping
-    ? Number((0.05 * subTotal).toFixed(2))
-    : 0;
+  let shipTotal = !voucherSelected.shipping ? Number(0.05 * subTotal) : 0;
 
   let promotion = voucherSelected.discount?.discount ?? 0;
 
@@ -48,7 +51,7 @@ export default function OrderBill({ close, paymentType }) {
     }
     const totalPrice = () => {
       return subTotal + shipTotal - promotion > 0
-        ? Number(subTotal + shipTotal - promotion).toFixed(2)
+        ? formatNumber(subTotal + shipTotal - promotion)
         : 0;
     };
     const data = {
@@ -137,25 +140,29 @@ export default function OrderBill({ close, paymentType }) {
                 {item.cartQuantity}
               </Grid>
               <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
-                {Number(item.discountedPrice * item.cartQuantity).toFixed(2)}$
+                {formatNumber(item.discountedPrice * item.cartQuantity)}
               </Grid>
             </Grid>
           </Grid>
         ))}
       </div>
+      <div className={clsx(s.subTotal)}>
+        Merchandise Subtotal: {formatNumber(subTotal)}
+      </div>
+      <div className={clsx(s.shipping)}>
+        Shipping Total: {formatNumber(shipTotal)}
+      </div>
+      <div className={clsx(s.discount)}>
+        Promotion: {formatNumber(promotion)}
+      </div>
       <div className={clsx(s.payment)}>
         Payment Method: {paymentType === "Delivery" ? "COD" : "PayPal"}
       </div>
-      <div className={clsx(s.shipping)}>Shipping Total: {shipTotal}$</div>
-      <div className={clsx(s.discount)}>
-        Promotion: {Number(promotion).toFixed(2)}$
-      </div>
       <div className={clsx(s.total)}>
-        Total bill:{" "}
+        Total bill:
         {subTotal + shipTotal - promotion < 0
-          ? "0"
-          : Number(subTotal + shipTotal - promotion).toFixed(2)}
-        $
+          ? "$0.00"
+          : formatNumber(subTotal + shipTotal - promotion)}
       </div>
       <div className={clsx(s.submitBtn)}>
         <Button onClick={handleSubmitBtn}>Place order</Button>

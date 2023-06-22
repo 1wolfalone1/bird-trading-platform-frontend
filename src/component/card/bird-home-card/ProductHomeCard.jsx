@@ -4,8 +4,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductHomeCard({ product }) {
+  console.log("producttttt", product);
   const [value, setValue] = useState(2);
   const navigate = useNavigate();
+  const formatNumber = (q) => {
+    return q.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
+
   return (
     <div
       className={s.container}
@@ -18,32 +26,27 @@ export default function ProductHomeCard({ product }) {
             <span>
               {product.discountRate !== 0 ? (
                 <>
-                  <span className={s.oldPrice}>
-                    {Number(product.price).toFixed(2)}$
-                  </span>
                   <span className={s.disPrice}>
-                    {Number(product.discountedPrice).toFixed(2)}$
+                    {formatNumber(product.discountedPrice)}
                   </span>
-                  <span className={s.discount}>
-                    {(product.discountRate * 100).toFixed(0)}%
+                  <span className={s.oldPrice}>
+                    {formatNumber(product.price)}
                   </span>
                 </>
               ) : (
                 <span className={s.disPrice}>
-                  {Number(product.price).toFixed(2)}$
+                  {formatNumber(product.price)}
                 </span>
               )}
             </span>
           </div>
-          <div className={s.saleOff}>
-            <span>
-              {product.discountRate !== 0 ? (
-                <span>{(product.discountRate * 100).toFixed(0)}%</span>
-              ) : (
-                ""
-              )}
-            </span>
-          </div>
+          {product.discountRate !== 0 ? (
+            <div className={s.saleOff}>
+              <span>{(product.discountRate * 100).toFixed(0)}% off</span>
+            </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <div className={s.info}>
@@ -56,7 +59,7 @@ export default function ProductHomeCard({ product }) {
             <img src={product.imgUrl} alt="" />
           </div>
           <dir className={s.shopName}>
-            <span>{product.name}</span>
+            <span>{product.shopOwner.shopName}</span>
           </dir>
         </div>
         <div className={s.star}>

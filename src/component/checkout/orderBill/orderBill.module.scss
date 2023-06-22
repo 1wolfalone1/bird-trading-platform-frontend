@@ -25,7 +25,7 @@
 }
 
 .container {
-  height: 60rem;
+  height: 70rem;
   background-color: c.$Dominant3;
   padding: 5rem;
   width: 100%;
@@ -105,9 +105,15 @@
   .shipping {
     padding: 1rem 0rem 0rem 2rem;
   }
+
   .discount {
     padding: 1rem 0rem 0rem 2rem;
   }
+
+  .subTotal {
+    padding: 3rem 0rem 0rem 2rem;
+  }
+
   .total {
     display: flex;
     justify-content: end;
