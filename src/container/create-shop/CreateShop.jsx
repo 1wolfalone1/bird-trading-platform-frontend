@@ -149,10 +149,10 @@ export default function CreateShop() {
    };
    const postRegister = async (values) => {
       const dataTransfer = {
-         phoneNumber: values.phone,
+         phoneShop: +values.phone,
          shopName: values.name,
          description: values.description,
-         address: address,
+         shopAddress: address,
       };
       try {
          setLoading(true);
@@ -163,8 +163,13 @@ export default function CreateShop() {
          formData.append("image", avatarBlob);
          const dataBlob = objectToBlob(dataTransfer);
          formData.append("data", dataBlob);
-         const response = await api.post("", formData);
-
+         const response = await api.post("/shop-owner", formData, {
+            headers: {
+               "Content-type": "multipart/form-data",
+            },
+         });
+         const data = await response.data
+         console.log(data);
          setLoading(false);
       } catch (e) {
          console.log(e);

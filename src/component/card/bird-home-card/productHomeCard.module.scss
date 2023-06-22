@@ -39,6 +39,11 @@ $card-width: 28rem;
         background: c.$Complementary1-tag;
         box-shadow: 3px 3px 5px rgba(32, 33, 0, 0.515);
 
+        .oldPrice {
+          margin-left: 1rem;
+          text-decoration-line: line-through;
+          color: #606060;
+        }
         span {
           font-family: c.$Primary;
           font-style: normal;
@@ -60,14 +65,15 @@ $card-width: 28rem;
         box-sizing: border-box;
         /* Dominant/1 */
         padding: 0.5rem 1rem;
-        background: c.$Dominant1;
+        font-weight: 900;
+        background: c.$Complementary1-tag;
         span {
           font-family: c.$Secondary;
           font-style: normal;
           font-weight: 700;
           font-size: 1.82893rem;
           /* Accent/6 */
-          color: c.$Accent6;
+          color: c.$Dominant1;
         }
       }
     }
@@ -94,7 +100,7 @@ $card-width: 28rem;
         font-family: c.$Primary;
         font-style: normal;
         font-weight: 500;
-        font-size: 1.9rem;
+        font-size: 2.2rem;
 
         color: c.$Accent7;
       }
@@ -126,7 +132,7 @@ $card-width: 28rem;
           font-family: c.$Secondary;
           font-style: normal;
           font-weight: 600;
-          font-size: 1.6rem;
+          font-size: 1.8rem;
           /* identical to box height */
 
           color: #000000;

@@ -69,26 +69,12 @@
     }
   }
   .addressContainer {
-    .address {
-      display: flex;
-      justify-content: space-between;
-      .province {
-        width: 100%;
-        border-radius: 0.5rem;
-      }
-      .district {
-        width: 100%;
-        border-radius: 0.5rem;
-      }
-      .ward {
-        width: 100%;
-        border-radius: 0.5rem;
-      }
-    }
+    
   }
   .submitBtn {
     display: flex;
     justify-content: end;
+    margin-top: 1rem;
     Button {
       @include button(1rem 2rem);
     }

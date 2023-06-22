@@ -3,6 +3,12 @@ import clsx from "clsx";
 import s from "./Item.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Fragment } from "react";
+const formatNumber = (q) => {
+  return q.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};
 
 const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
   return (
@@ -13,10 +19,7 @@ const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
         </Grid>
         <Grid sm={5} md={5} xl={5} className={clsx(s.productInfo)}>
           <Grid className={clsx(s.productName)}>
-            <h3>{name}</h3>
-          </Grid>
-          <Grid className={clsx(s.shopName)}>
-            <h3>Shop: {shopName}</h3>
+            {name}
           </Grid>
         </Grid>
 
@@ -25,7 +28,7 @@ const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
         </Grid>
 
         <Grid sm={2} md={2} xl={2} className={clsx(s.productPrice)}>
-          <h3>{Number(price).toFixed(2)}$</h3>
+          <h3>{formatNumber(price)}</h3>
         </Grid>
       </Grid>
     </Fragment>

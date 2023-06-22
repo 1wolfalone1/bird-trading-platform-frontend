@@ -17,13 +17,14 @@ import cartSlice, {
   userStatus,
 } from "./container/order/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import userInfoSlice, { userInfoSelector } from "./redux/global/userInfoSlice";
+import userInfoSlice, { invokeUserInfo, userInfoSelector } from "./redux/global/userInfoSlice";
 import ProductDetails from "./container/product-details/ProductDetails";
 import GetToken from "./container/get-token/GetToken";
 import PopupMessage from "./component/message/PopupMessage";
 import OrderStatus from "./container/purchase/order-status/OrderStatus";
 import OrderHistory from "./container/purchase/order-history/OrderHistory";
 import CreateShop from "./container/create-shop/CreateShop";
+import Shop from "./container/shop/Shop";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -31,14 +32,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(userInfo, 'appppppppppppppppppppppppppppppppppppppppppp');
+    console.log(userInfo, "appppppppppppppppppppppppppppppppppppppppppp");
     const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
     if (cart && Array.isArray(cart.items)) {
-      console.log(cart, '--------------------------------------- ccart')
       dispatch(invokeCart(cart));
     }
     if (userInfoObject) {
-      dispatch(userInfoSlice.actions.invokeUserInfo(userInfoObject));
+
+      dispatch(invokeUserInfo(userInfoObject));
     }
   }, []);
   useEffect(() => {
@@ -63,6 +64,7 @@ function App() {
         <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="create-shop" element={<CreateShop />} />
+        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );

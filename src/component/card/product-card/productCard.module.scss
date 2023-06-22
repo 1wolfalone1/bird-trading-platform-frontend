@@ -5,12 +5,10 @@ $borderRadius: 0.8rem;
   transition: 0.2s ease-in-out;
 
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0px;
-
   /* Dominant/4 */
 
   background: #ffffff;
@@ -44,12 +42,41 @@ $borderRadius: 0.8rem;
       background: c.$Complementary1-tag;
       box-shadow: 3px 3px 5px rgba(32, 33, 0, 0.515);
 
+      .oldPrice {
+        margin-left: 1rem;
+        text-decoration-line: line-through;
+        color: #606060;
+      }
+
       span {
         font-family: c.$Primary;
         font-style: normal;
         font-weight: 350;
         font-size: 2rem;
         /* identical to box height */
+        color: c.$Dominant1;
+      }
+    }
+    .saleOff {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+
+      top: 0px;
+      right: 0px;
+      box-sizing: border-box;
+      /* Dominant/1 */
+      padding: 0.5rem 1rem;
+      font-weight: 900;
+      background: c.$Complementary1-tag;
+      span {
+        font-family: c.$Secondary;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 1.82893rem;
+        /* Accent/6 */
         color: c.$Dominant1;
       }
     }
@@ -66,10 +93,6 @@ $borderRadius: 0.8rem;
         font-weight: 400;
         font-size: 24px;
         line-height: 29px;
-        /* identical to box height */
-
-        /* Complementary/1 */
-
         color: #0a0a0a;
       }
     }
@@ -77,6 +100,7 @@ $borderRadius: 0.8rem;
   $marginContent: 1.6rem;
   .content {
     display: flex;
+    flex: 1;
     flex-direction: column;
     width: 100%;
     .name {
@@ -97,7 +121,7 @@ $borderRadius: 0.8rem;
         font-family: c.$Primary;
         font-style: normal;
         font-weight: 500;
-        font-size: 2rem;
+        font-size: 2.2rem;
         line-height: 4.5rem;
         color: c.$Accent7;
       }
@@ -120,18 +144,20 @@ $borderRadius: 0.8rem;
           width: 100%;
         }
       }
-      .name {
+      .shopName {
         padding: 0.8rem;
-
+        display: flex;
+        align-items: end;
         span {
           font-family: c.$Secondary;
-          font-size: 2.4rem;
+          font-size: 1.8rem;
           font-weight: 600;
           line-height: 2.4rem;
         }
       }
     }
     .categories {
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       // border: 1px solid #5e5e5e;
@@ -148,7 +174,7 @@ $borderRadius: 0.8rem;
         font-family: c.$Primary;
         font-style: normal;
         font-weight: 400;
-        font-size: 2rem;
+        font-size: 1.8rem;
         line-height: 2.4rem;
         color: #000000;
       }
@@ -176,6 +202,7 @@ $borderRadius: 0.8rem;
       display: flex;
       justify-content: space-between;
       margin: 0.8rem $marginContent;
+      margin-top: auto;
       align-items: center;
     }
   }

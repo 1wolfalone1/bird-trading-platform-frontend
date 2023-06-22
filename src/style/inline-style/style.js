@@ -29,6 +29,7 @@ const Style = {
       $Accent5: "rgb(152, 100, 147)",
       $Accent6: "rgb(144, 69, 106)",
       $Accent7: "rgb(4, 0, 30)",
+      $Money: "#a80000"
    },
 };
 

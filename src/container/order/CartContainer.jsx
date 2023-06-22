@@ -58,6 +58,13 @@ export default function Cart() {
     }
   };
 
+  const formatNumber = (q) => {
+    return q.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
+
   return (
     <>
       {carts.length > 0 ? (
@@ -119,7 +126,7 @@ export default function Cart() {
                     {item.quantity}
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
-                    {Number(item.discountedPrice).toFixed(2)}$
+                    {formatNumber(item.discountedPrice)}
                   </Grid>
 
                   <Grid
@@ -199,10 +206,7 @@ export default function Cart() {
                     </div>
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.totalPrice)}>
-                    {Number(item.discountedPrice * item.cartQuantity).toFixed(
-                      2
-                    )}
-                    $
+                    {formatNumber(item.discountedPrice * item.cartQuantity)}
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.remove)}>
                     <div className={clsx(s.removeButton)}>
@@ -280,11 +284,8 @@ export default function Cart() {
             </div>
           </div>
           <div className={clsx(s.totalOrders)}>
-            <p className={clsx(s.bill)}>
-              Total orders: {Number(total).toFixed(2)}$
-            </p>
+            <p className={clsx(s.bill)}>Total orders: {formatNumber(total)}</p>
             <Button onClick={handleOrderNowClick}>Order now</Button>
-            {/*  => navigate("/checkout") */}
           </div>
         </div>
       ) : (
