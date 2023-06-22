@@ -38,3 +38,4 @@ export const logout = createAsyncThunk("userInfo/logout", async () => {
 });
 
 export const userInfoSelector = (state) => state.userInfoSlice;
+export const userInfoDetailsSelector = (state) => state.userInfoSlice.info;
