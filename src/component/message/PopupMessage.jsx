@@ -85,7 +85,7 @@ const PopupMessage = () => {
   //socket js
   const connect = (status)=>{
     if (status === 1) {
-      let Sock = new SockJS('https://thongtienthienphuot.shop/ws');
+      let Sock = new SockJS('http://localhost:8080/ws');
       stompClient = over(Sock);
       stompClient.connect({},onConnected, onError);
     }
@@ -93,7 +93,11 @@ const PopupMessage = () => {
   console.log('status', status)
 
   const onConnected = () => {
-      stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage, onError);
+      try {
+        stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage, onError);
+      }catch(error) {
+        console.log(error);
+      }
       console.log("Connect to channel message");
     
   }

@@ -90,7 +90,7 @@ const MessageContent = () => {
   return (
     <div className={clsx(s.container)}>
         <span className={clsx(s.shopName)}>
-          {userList.find(item => item.id === currentShopIDSelect)?.shopName}
+          {userList?.find(item => item.id === currentShopIDSelect)?.shopName}
         </span>
       
         <div className={clsx(s.messageContent)}>

@@ -201,7 +201,7 @@ export const getListUser = createAsyncThunk(
         const state = getState();
         const userInfo = state.userInfoSlice.info
         try {
-        const res = await api.get(`/users/${userInfo?.id}/get-channel`);
+        const res = await api.get(`/users/${userInfo?.id}/channels`);
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));
@@ -217,7 +217,7 @@ export const getListMessage = createAsyncThunk(
         const state = getState();
         const userInfo = state.userInfoSlice.info
         try {
-          const res = await api.get(`/users/${userInfo?.id}/get-messages`, {params: {shopId: shopId}});
+          const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopId: shopId}});
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));
