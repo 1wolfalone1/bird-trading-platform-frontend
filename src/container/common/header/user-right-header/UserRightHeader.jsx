@@ -79,7 +79,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
   return (
     <>
       <div className={s.container}>
-      <NotiItemsPopper />
+      
         <div
           className={s.userControl}
           onClick={handleUserControlClick}
@@ -142,6 +142,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
             </Box>
           </MenuItem>
         </Menu>
+        <NotiItemsPopper />
         <CartItemsPopper totalCartItems={totalCartItems} />
       </div>
     </>
