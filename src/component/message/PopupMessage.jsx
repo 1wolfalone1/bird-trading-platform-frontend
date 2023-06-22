@@ -27,6 +27,7 @@ import { over } from "stompjs";
 import messageSlice, { getListUser, messageSelector } from "./messageSlice";
 import moment from "moment";
 
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
    right: 4,
    top: 13,
@@ -81,15 +82,20 @@ const PopupMessage = () => {
       setOpen(isOpen);
    }, [isOpen]);
 
-   //socket js
-   const connect = (status) => {
-      if (status === 1) {
-         let Sock = new SockJS("https://thongtienthienphuot.shop/ws");
-         stompClient = over(Sock);
-         stompClient.connect({}, onConnected, onError);
-      }
-   };
-   console.log("status", status);
+
+  //socket js
+  const connect = (status)=>{
+    const url = process.env.REACT_APP_URL_WEBSOCKET;
+    console.log(url, 'usrl')
+    if (status === 1) {
+      let Sock = new SockJS(`${url}`);
+      
+      stompClient = over(Sock);
+      stompClient.connect({},onConnected, onError);
+    }
+}
+  console.log('status', status)
+
 
    const onConnected = () => {
       try {
