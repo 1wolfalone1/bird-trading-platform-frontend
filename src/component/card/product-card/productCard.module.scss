@@ -5,12 +5,10 @@ $borderRadius: 0.8rem;
   transition: 0.2s ease-in-out;
 
   width: 100%;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 0px;
-
   /* Dominant/4 */
 
   background: #ffffff;
@@ -77,6 +75,7 @@ $borderRadius: 0.8rem;
   $marginContent: 1.6rem;
   .content {
     display: flex;
+    flex: 1;
     flex-direction: column;
     width: 100%;
     .name {
@@ -132,6 +131,7 @@ $borderRadius: 0.8rem;
       }
     }
     .categories {
+      flex-shrink: 0;
       display: flex;
       flex-direction: column;
       // border: 1px solid #5e5e5e;
@@ -176,6 +176,7 @@ $borderRadius: 0.8rem;
       display: flex;
       justify-content: space-between;
       margin: 0.8rem $marginContent;
+      margin-top: auto;
       align-items: center;
     }
   }

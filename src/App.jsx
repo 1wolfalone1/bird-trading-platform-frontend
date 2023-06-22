@@ -34,7 +34,6 @@ function App() {
     console.log(userInfo, 'appppppppppppppppppppppppppppppppppppppppppp');
     const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
     if (cart && Array.isArray(cart.items)) {
-      console.log(cart, '--------------------------------------- ccart')
       dispatch(invokeCart(cart));
     }
     if (userInfoObject) {
