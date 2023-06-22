@@ -2,8 +2,23 @@
 
 .container {
     margin: 0px 10px;
+    
     .notiIcon {
         width: 4.8rem;
         height: 4.8rem;
     }
+}
+.popoverNoti{
+    :global(.MuiPaper-root) {
+        margin-top: 20px;
+        /* From https://css.glass */
+        background: rgba(21, 24, 34, 0.59);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20.4px);
+        -webkit-backdrop-filter: blur(20.4px);
+        border: 1px solid rgba(22, 25, 36, 0.6);
+        overflow: hidden;
+        min-height: 500px;
+        min-width: 400px;
+      }
 }

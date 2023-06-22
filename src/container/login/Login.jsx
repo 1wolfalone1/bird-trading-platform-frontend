@@ -123,6 +123,7 @@ export default function Login() {
     console.log(data, "111");
     if (status == 200) {
       localStorage.setItem("token", JSON.stringify(data.token));
+      console.log(data, 'data ne')
       dispatch(
         userInfoSlice.actions.changeAuthentication({
           status: userStatus.USER,

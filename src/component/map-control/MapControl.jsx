@@ -2,6 +2,7 @@ import {
    Box,
    Button,
    ButtonGroup,
+   FormHelperText,
    IconButton,
    Skeleton,
    TextField,
@@ -22,7 +23,7 @@ import { useRef, useState } from "react";
 const lib = ["places"];
 const center = { lat: 48.8584, lng: 2.2945 };
 
-function MapControl({ address, setAddress }) {
+function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
    const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: "AIzaSyApYxFyr-42__SnJKnFCSDBM34rpkopYnU",
       libraries: lib,
@@ -33,6 +34,11 @@ function MapControl({ address, setAddress }) {
    const [duration, setDuration] = useState("");
    const [origin, setOrigin] = useState("");
    const [destination, setDestination] = useState("");
+   const [invalid, setInvalid] = useState("");
+   const addrStatus = useRef({
+      isValid: false,
+      addr: "",
+   });
    /** @type React.MutableRefObject<HTMLInputElement> */
    const originRef = useRef();
    /** @type React.MutableRefObject<HTMLInputElement> */
@@ -42,16 +48,30 @@ function MapControl({ address, setAddress }) {
       if (originRef !== undefined && originRef.current !== undefined) {
       }
    }, []);
-   if (!isLoaded) {
-      return <Skeleton />;
-   }
 
-   const checkValidAddress = async (addr) => {
+   useEffect(() => {
+      if (triggerSave !== 0) {
+         changeInfoAddress(originRef);
+      }
+   }, [triggerSave]);
+   const changeInfoAddress = async (originRef) => {
+      if (
+         originRef?.current !== undefined &&
+         originRef.current.value !== undefined
+      ) {
+         addrStatus.current.addr = originRef.current.value;
+         await checkValidAddress(addrStatus, setAddress);
+      } else {
+      }
+   };
+
+   const checkValidAddress = async (addrStatus, setAddress) => {
+      console.log(addrStatus);
       // eslint-disable-next-line no-undef
       const geocoder = new google.maps.Geocoder();
       geocoder.geocode(
          {
-            address: addr,
+            address: addrStatus.current.addr,
          },
          function (results, status) {
             // eslint-disable-next-line no-undef
@@ -62,8 +82,17 @@ function MapControl({ address, setAddress }) {
             ) {
                console.log(status, " successfully", results);
                // set it to the correct, formatted address if it's valid
-               addr = results[0].formatted_address;
+               setAddress(results[0].formatted_address);
+               setInvalid("");
+               setOpenModel(false);
             } else {
+               addrStatus.current = {
+                  addr: "",
+                  isValid: false,
+               };
+               setInvalid(
+                  "Invalid address! Consider utilizing autocompletion for better results."
+               );
                console.log(status, " failed", results);
                // show an error if it's not
             }
@@ -71,31 +100,32 @@ function MapControl({ address, setAddress }) {
       );
    };
    async function calculateRoute() {
-      if (
-         originRef.current.value === "" ||
-         destiantionRef.current.value === ""
-      ) {
-         return;
+      if (originRef?.current?.value === "") {
+         const results = await directionsService.route({
+            origin: originRef.current.value,
+            destination: destiantionRef.current.value,
+            // eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING,
+         });
       }
 
       // eslint-disable-next-line no-undef
       const directionsService = new google.maps.DirectionsService();
-
-      const origin2 = await checkValidAddress(originRef.current.value);
-      const destination2 = await checkValidAddress(
-         destiantionRef.current.value
-      );
-      console.log(origin2, " ", destination2);
-      const results = await directionsService.route({
-         origin: originRef.current.value,
-         destination: destiantionRef.current.value,
-         // eslint-disable-next-line no-undef
-         travelMode: google.maps.TravelMode.DRIVING,
-      });
-      console.log(results);
-      setDirectionsResponse(results);
-      setDistance(results.routes[0].legs[0].distance.text);
-      setDuration(results.routes[0].legs[0].duration.text);
+      console.log(originRef.current.value);
+      const origin2 = await checkValidAddress(originRef?.current?.value);
+      // const destination2 = await checkValidAddress(
+      //    destiantionRef.current.value
+      // );
+      // const results = await directionsService.route({
+      //    origin: originRef.current.value,
+      //    destination: destiantionRef.current.value,
+      //    // eslint-disable-next-line no-undef
+      //    travelMode: google.maps.TravelMode.DRIVING,
+      // });
+      // console.log(results);
+      // setDirectionsResponse(results);
+      // setDistance(results.routes[0].legs[0].distance.text);
+      // setDuration(results.routes[0].legs[0].duration.text);
    }
 
    function clearRoute() {
@@ -105,27 +135,99 @@ function MapControl({ address, setAddress }) {
       originRef.current.value = "";
       destiantionRef.current.value = "";
    }
+   const getLatLng = async (address) => {
+      if (
+         originRef.current !== undefined &&
+         originRef.current.value !== undefined
+      ) {
+         // eslint-disable-next-line no-undef
+         const geocoder = new google.maps.Geocoder();
+         const geocodeRes = await geocoder.geocode({
+            address:  originRef.current.value,
+         });
+         const geocodeResult = geocodeRes.results;
+         console.log(geocodeResult)
+         if (geocodeResult && geocodeResult.length > 0) {
+            console.log(geocodeResult[0].geometry.location)
+            const location = geocodeResult[0].geometry.location;
+            const lat = location.lat();
+            const lng = location.lng();
+            const latLng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            console.log(latLng);
+            return latLng;
+            // Use latLng as needed (e.g., for setting the marker position)
+            // new google.maps.Marker({
+            //   position: latLng,
+            //   map,
+            //   title: "Hello World!",
+            // });
+            
+         } else {
+            console.log(geocodeResult?.length)
 
+            return "";
+         }
+      }
+   };
+   const handleAutocompletChange = async (e) => {
+      if (originRef.current.value === "") {
+         return;
+      }
+
+      // eslint-disable-next-line no-undef
+
+      // const directionsService = new google.maps.DirectionsService();
+      // console.log(originRef.current);
+      // const results = await directionsService.route({
+      //    origin: originRef.current.value,
+      //    // eslint-disable-next-line no-undef
+      //    travelMode: google.maps.TravelMode.DRIVING,
+      // });
+      // console.log(results);
+      console.log(originRef.current.value, "origin");
+      const latLng = await getLatLng(originRef.current.value);
+      console.log(latLng)
+      // eslint-disable-next-line no-undef
+      new google.maps.Marker({
+         position: latLng,
+         map: map,
+         title: "Hello World!",
+      });
+      console.log(map)
+      if (map) {
+         map.setCenter(latLng);
+      }
+      // setDirectionsResponse(results);
+      // setDistance(results.routes[0].legs[0].distance.text);
+      // setDuration(results.routes[0].legs[0].duration.text);
+   };
+   if (!isLoaded) {
+      return <Skeleton />;
+   }
+   const handleCancel = () => {
+      originRef.current.value = address;
+   };
    return (
       <Box
          sx={{
             display: "flex",
             flexDirection: "column",
-            width: "700px",
+            width: w,
             gap: 1,
          }}
          className={clsx(s.container)}
       >
          <Box sx={{ display: "flex", gap: 1 }}>
             <Box sx={{ flex: 1 }}>
-               <Autocomplete className={"autocomplete"}>
+               <Autocomplete
+                  onPlaceChanged={handleAutocompletChange}
+                  className={"autocomplete"}
+               >
                   <TextField
                      inputRef={originRef}
-                     ref={originRef}
                      defaultValue={address}
                      type="text"
                      placeholder="Origin"
-                     autoComplete="off"
                      id="outlined-basic"
                      label="Enter Place"
                      variant="outlined"
@@ -140,6 +242,7 @@ function MapControl({ address, setAddress }) {
                            fontSize: "1.2rem",
                         },
                      }}
+                     error={invalid !== ""}
                      fullWidth
                   />
                </Autocomplete>
@@ -149,13 +252,15 @@ function MapControl({ address, setAddress }) {
                   variant="contained"
                   color="Accent8"
                   type="reset"
-                  onClick={calculateRoute}
+                  onClick={handleCancel}
                   sx={{ fontSize: "1.5rem" }}
                >
                   Cancel
                </Button>
             </Box>
-            {/* <Typography>Distance: {distance} </Typography>
+
+            {/* <Typogr
+            aphy>Distance: {distance} </Typogr>
             <Typography>Duration: {duration} </Typography>
             <IconButton
                aria-label="center back"
@@ -165,7 +270,13 @@ function MapControl({ address, setAddress }) {
                   map.setZoom(15);
                }} */}
          </Box>
-         <Box sx={{ width: "100%", height: "200px" }}>
+         <FormHelperText
+            error={invalid !== ""}
+            sx={{ fontSize: "1.3rem", paddingBottom: "1rem" }}
+         >
+            {invalid}
+         </FormHelperText>
+         <Box sx={{ width: "100%", height: h }}>
             {/* Google Map Box */}
             <GoogleMap
                center={center}

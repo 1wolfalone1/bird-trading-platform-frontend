@@ -4,6 +4,7 @@ import {
    Button,
    IconButton,
    Modal,
+   Skeleton,
    TextField,
    Tooltip,
    Typography,
@@ -14,6 +15,7 @@ import img from "../../asset/leftImagLogin.jpg";
 import { faCity } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import userInfoSlice, {
+   userInfoDetailsSelector,
    userInfoSelector,
 } from "../../redux/global/userInfoSlice";
 import axios from "axios";
@@ -24,6 +26,7 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import MapControl from "../../component/map-control/MapControl";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import ButtonControl from "./../../component/side-bar-filter/ButtonControl";
+import globalConfigSlice from "../../redux/global/globalConfigSlice";
 const textFieldStyle = {
    input: {
       color: Style.color.$Complementary0,
@@ -44,95 +47,17 @@ const Profile = () => {
    const [avatar, setAvatar] = useState();
    const [isEditable, setIsEditable] = useState(false); // Editable state for the fields
    const dispatch = useDispatch();
-   const { info } = useSelector(userInfoSelector);
+   const info = useSelector(userInfoDetailsSelector);
    const [openModel, setOpenModel] = useState(false);
-   const [formInfo, setFormInfo] = useState({
-      ...info,
-      address: "",
-   });
+   const [triggers, setTriggers] = useState(0);
+   const [formInfo, setFormInfo] = useState();
    const [address, setAddress] = useState();
-   console.log(formInfo, "form n e");
-   // const [cities, setCities] = useState([]);
-   // const [districts, setDistricts] = useState([]);
-   // const [wards, setWards] = useState([]);
-
-   // const selectOption = {
-   //   backgroundColor: "rgb(228, 223, 209)",
-   //   fontSize: "2rem",
-   //   height: "7rem",
-   // };
-
-   // useEffect(() => {
-   //   loadCities();
-   // }, []);
-
-   // useEffect(() => {
-   //   if (formInfo.address?.city) {
-   //     loadDistricts(formInfo.address?.city.code);
-   //     setWards([]);
-   //   }
-   // }, [formInfo.address?.city]);
-
-   // useEffect(() => {
-   //   if (formInfo.address?.district) {
-   //     loadWards(formInfo.address?.district.code);
-   //   }
-   // }, [formInfo.address?.district]);
-
-   // const handleCityChange = async (e) => {
-   //   setFormInfo((prev) => ({
-   //     ...prev,
-   //     address: {
-   //       city: cities?.find((item) => item.code == e.target.value),
-   //     },
-   //   }));
-   // };
-
-   // const handleDistrictChange = async (e) => {
-   //   setFormInfo((prev) => ({
-   //     ...prev,
-   //     address: {
-   //       ...prev.address,
-   //       district: districts?.find((item) => item.code == e.target.value),
-   //       ward: null,
-   //     },
-   //   }));
-   // };
-
-   // const handleWardChange = (e) => {
-   //   setFormInfo((prev) => ({
-   //     ...prev,
-   //     address: {
-   //       ...prev.address,
-   //       ward: wards?.find((item) => item.code == e.target.value),
-   //     },
-   //   }));
-   // };
-
-   // const loadCities = async () => {
-   //   const response = await fetch(`${LOCATION_API_URL}/p`);
-   //   if (response.ok) {
-   //     setCities(await response.json());
-   //   }
-   // };
-
-   // const loadDistricts = async (pCode) => {
-   //   const response = await fetch(`${LOCATION_API_URL}/d`);
-   //   if (response.ok) {
-   //     let data = await response.json();
-   //     let districts = data.filter((d) => d?.province_code == pCode);
-   //     setDistricts(districts);
-   //   }
-   // };
-
-   // const loadWards = async (dCode) => {
-   //   const response = await fetch(`${LOCATION_API_URL}/w`);
-   //   if (response.ok) {
-   //     let data = await response.json();
-   //     let wards = data.filter((w) => w?.district_code == dCode);
-   //     setWards(wards);
-   //   }
-   // };
+   useEffect(() => {
+      console.log(info, "info nefasdfasdfasdfasdfasdfasdfasdfasdf");
+      setFormInfo(info);
+      setAddress(info?.address);
+   }, [info]);
+   console.log(info, "info neasdfasdfasdfasdfasdfasd");
 
    const handleUpdateAvatar = (e) => {
       e.preventDefault();
@@ -155,6 +80,13 @@ const Profile = () => {
    };
 
    async function updateProfile(data) {
+      console.log(data);
+      console.log(address, "-------herere ne");
+      const dataTransfer = {
+         ...data,
+         address: address,
+      };
+      console.log(dataTransfer, "dataTransfer");
       try {
          const formData = new FormData();
 
@@ -162,14 +94,16 @@ const Profile = () => {
             const avatarBlob = await dataAsyncUrlToFile(avatar.src);
             formData.append("image", avatarBlob);
          }
-         const dataBlob = objectToBlob(data);
+         const dataBlob = objectToBlob(dataTransfer);
          formData.append("data", dataBlob);
          const response = await api.put("/users/update-profile", formData, {
             headers: {
                "Content-type": "multipart/form-data",
             },
          });
-         console.log(response.data);
+         console.log(response.data, "response data");
+         dispatch(userInfoSlice.actions.updateUserInfo(response.data));
+         localStorage.setItem("userInfo", JSON.stringify(response.data));
          // You can handle the response here
       } catch (error) {
          console.error(error);
@@ -203,20 +137,17 @@ const Profile = () => {
                phoneNumber: value,
             }));
             break;
-         case "street":
-            setFormInfo((prev) => ({
-               ...prev,
-               address: {
-                  ...prev.address,
-                  street: value,
-               },
-            }));
-            break;
          default:
             break;
       }
    };
-   console.log(formInfo?.address, "form addresss");
+   if (formInfo === undefined) {
+      console.log(formInfo);
+      dispatch(globalConfigSlice.actions.changeBackDrops(true));
+      return <Skeleton></Skeleton>;
+   }
+   dispatch(globalConfigSlice.actions.changeBackDrops(false));
+   console.log(formInfo);
    return (
       <Fragment>
          <h1>Your Profile</h1>
@@ -339,13 +270,11 @@ const Profile = () => {
                <Tooltip
                   title={
                      <Typography fontSize={"2rem"} color={Style.color.$Accent1}>
-                        {`${
-                           formInfo.address ? `${formInfo.address} Street` : ""
-                        }`}
+                        {address}
                      </Typography>
                   }
                >
-                  <Grid2 container sx={{ width: "100%" }}>
+                  <Grid2 container sx={{ width: "80rem" }}>
                      <Grid2
                         xs={8}
                         sx={{
@@ -357,15 +286,15 @@ const Profile = () => {
                         }}
                      >
                         <Typography
+                           noWrap
                            sx={{
                               fontSize: "2.4rem",
                               paddingLeft: "1rem",
                               color: "#7d7d7d",
+                              width: "100%",
                            }}
                         >
-                           {formInfo?.address
-                              ? formInfo?.address
-                              : "You don't have address"}
+                           {address ? address : "You don't have address"}
                         </Typography>
                      </Grid2>
                      <Grid2 xs={4} sx={{ display: "flex" }}>
@@ -380,7 +309,10 @@ const Profile = () => {
                            }}
                            fullWidth
                            variant="contained"
-                           onClick={() => setOpenModel(true)}
+                           onClick={() => {
+                              setOpenModel(true);
+                              setTriggers(0);
+                           }}
                         >
                            Change
                         </Button>
@@ -415,7 +347,14 @@ const Profile = () => {
             aria-describedby="parent-modal-description"
          >
             <div className={s.model}>
-               <MapControl address={address} setAddress={setAddress} />
+               <MapControl
+                  address={address}
+                  setAddress={setAddress}
+                  triggerSave={triggers}
+                  w="70rem"
+                  h="40rem"
+                  setOpenModel={setOpenModel}
+               />
                <div className={s.buttonControl}>
                   <Button
                      onClick={() => setOpenModel(false)}
@@ -429,6 +368,7 @@ const Profile = () => {
                      variant="contained"
                      color="Accent8"
                      sx={{ fontSize: "1.6rem" }}
+                     onClick={() => setTriggers((state) => state + 1)}
                   >
                      Save
                   </Button>
