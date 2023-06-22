@@ -3,6 +3,9 @@ import clsx from "clsx";
 import s from "../products/Products.module.scss";
 import Product from "./item/Item";
 import Grid from "@mui/material/Unstable_Grid2";
+import ShopTitle from "./shop-title/ShopTitle";
+import { Box, Typography } from "@mui/material";
+import Style from "../../../style/inline-style/style";
 
 const formatNumber = (q) => {
   return q.toLocaleString("en-US", {
@@ -12,15 +15,11 @@ const formatNumber = (q) => {
 };
 
 export default function Products({ products }) {
+  console.log(products);
   return (
     <div>
       <div className={clsx(s.products)}>
-        <div className={clsx(s.title)}>
-          Expected delivery at{" "}
-          {new Date(new Date().getTime() + 604800000).toLocaleDateString(
-            "en-GB"
-          )}
-        </div>
+        <ShopTitle shop={products[0].shopOwner} />
         <Grid className={clsx(s.productList)}>
           <Grid className={clsx(s.header)}>
             <Grid container columns={10}>
@@ -48,6 +47,34 @@ export default function Products({ products }) {
               quantity={item.cartQuantity}
             ></Product>
           ))}
+        <Grid container spacing={2}>
+          <Grid xs={9}></Grid>
+          <Grid xs={3}>
+            <Box sx={{ display: "flex" }}>
+              <Box
+                sx={{
+                  gap: "1rem",
+                  borderTop: "0.1rem solid #000000",
+                  flexShrink: "0",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <Typography variant="h4" sx={{ fontSize: "2.4rem" }}>
+                  Ship price:
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "2.4rem",
+                    color: Style.color.$Money,
+                  }}
+                >
+                  10$
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

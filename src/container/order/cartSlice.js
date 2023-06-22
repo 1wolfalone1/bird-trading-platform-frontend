@@ -32,13 +32,13 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       let count = 0;
-      console.log(current(state));
-
+      if (!state.items) {
+        state.items = [];
+      }
       state.items.map((item) => {
         if (item.id === action.payload.id) {
           count = count + 1;
           const newQuantity = item.cartQuantity + action.payload.cartQuantity;
-          console.log(newQuantity, item.quantity, "quantity");
           if (action.payload.quantity < newQuantity) {
             toast(
               <AddToCartToast
@@ -83,6 +83,10 @@ const cartSlice = createSlice({
     },
     changeQuantity: (state, action) => {
       let updatedPayload = action.payload; // Create a new variable to hold the updated payload
+      if (!state.items || !Array.isArray(state.items)) {
+        state.items = [];
+      }
+      console.log(current(state));
       let count2 = 0;
       if (action.payload.isDetails) {
         updatedPayload = action.payload.cartObject; // Assign the updated payload to the new variable
@@ -129,10 +133,6 @@ const cartSlice = createSlice({
         };
       }
     },
-
-    invokeCart: (state, action) => {
-      return action.payload;
-    },
     calculateTotal: (state, action) => {
       const total = state.items.reduce((total, item) => {
         return item.priceAfterDiscount * item.quantity;
@@ -174,16 +174,22 @@ const cartSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(invokeCart.fulfilled, (state, action) => {
-        state.items = action.payload;
+        console.log(action.payload, "invoke successFull ");
+        if (action.payload && Array.isArray(action.payload)) {
+          state.items = action.payload;
+        } else {
+          state.items = [];
+        }
       })
       .addCase(invokeCart.rejected, (state, action) => {
-        console.log(action.payload);
+        console.log(action.payload, "cart rejected");
       }),
 });
 
 export default cartSlice;
 
 export const invokeCart = createAsyncThunk("cart/invoke", async (carts) => {
+  console.log(carts, "invoke cartttttttttt");
   if (carts.items.length !== 0) {
     try {
       const id = carts.items.map((cart) => cart.id);
@@ -256,9 +262,6 @@ export const totalPriceSelector = createSelector(
 
 export const getItemQuantity = (id) =>
   createSelector(getListItemSelector, (items) => {
-    if (!items) {
-      items = [];
-    }
-    const item = items.find((item) => item.id === id);
+    const item = items?.find((item) => item.id === id);
     return item?.cartQuantity;
   });

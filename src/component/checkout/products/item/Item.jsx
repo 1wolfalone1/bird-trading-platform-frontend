@@ -19,10 +19,7 @@ const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
         </Grid>
         <Grid sm={5} md={5} xl={5} className={clsx(s.productInfo)}>
           <Grid className={clsx(s.productName)}>
-            <h3>{name}</h3>
-          </Grid>
-          <Grid className={clsx(s.shopName)}>
-            <h3>Shop: {shopName}</h3>
+            {name}
           </Grid>
         </Grid>
 

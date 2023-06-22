@@ -38,15 +38,13 @@ body {
 }
 .MuiMenuItem-root.Mui-selected {
   background-color: rgba(42, 69, 58, 0.542) !important;
-
 }
-.MuiPaper-root.MuiMenu-paper.MuiPopover-paper{ 
+.MuiPaper-root.MuiMenu-paper.MuiPopover-paper {
   background-color: #55555500 !important;
 }
 // -----------------------------------
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 // button {
@@ -85,8 +83,7 @@ code {
   transition: background 0.8s;
 }
 .ripple:hover {
-  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%)
-    center/15000%;
+  background: #0080605a radial-gradient(circle, transparent 1%, #0080605a 1%) center/15000%;
   cursor: pointer;
 }
 .ripple:active:hover {
@@ -102,9 +99,6 @@ button {
   outline: none;
 }
 
-* {
-  caret-color: transparent;
-}
 
 input {
   caret-color: c.$Complementary1;
@@ -147,4 +141,13 @@ input {
 
 a {
   text-decoration: none;
+}
+.pac-container {
+  z-index: 10000 !important;
+  span {
+    font-size: 1.6rem;
+  }
+}
+.ql-editor {
+  font-size: 2rem;
 }

@@ -17,7 +17,7 @@ import cartSlice, {
   userStatus,
 } from "./container/order/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import userInfoSlice, { userInfoSelector } from "./redux/global/userInfoSlice";
+import userInfoSlice, { invokeUserInfo, userInfoSelector } from "./redux/global/userInfoSlice";
 import ProductDetails from "./container/product-details/ProductDetails";
 import GetToken from "./container/get-token/GetToken";
 import PopupMessage from "./component/message/PopupMessage";
@@ -38,7 +38,8 @@ function App() {
       dispatch(invokeCart(cart));
     }
     if (userInfoObject) {
-      dispatch(userInfoSlice.actions.invokeUserInfo(userInfoObject));
+
+      dispatch(invokeUserInfo(userInfoObject));
     }
   }, []);
   useEffect(() => {

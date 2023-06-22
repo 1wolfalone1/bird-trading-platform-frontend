@@ -68,7 +68,7 @@ export default function Cart() {
   return (
     <>
       {carts.length > 0 ? (
-        <div>
+        <div className={s.container}>
           <p>Your cart have {carts.length} items</p>
           <Grid className={clsx(s.birdList)}>
             <Grid className={clsx(s.header)}>

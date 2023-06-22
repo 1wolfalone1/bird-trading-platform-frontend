@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import { userList } from "./message-username/userListData";
 import { api } from "../../api/server/API";
 import { DatasetLinked } from "@mui/icons-material";
@@ -7,6 +7,7 @@ const messageSlice = createSlice({
     name: 'messageSlice',
     initialState:{
         message: {
+            isOpen: false,
             currentShopIDSelect: 0,
             numRead: 0,
             numberUnread: 0,
@@ -18,6 +19,9 @@ const messageSlice = createSlice({
         }
     },
     reducers: {
+        setOpenPopup: (state, action) => {
+          state.message.isOpen = action.payload.isOpen;
+        },
         setMessageList: (state, action) => {
             state.message.messageList = action.payload
         },
@@ -25,11 +29,15 @@ const messageSlice = createSlice({
             state.message.messageList.messageListData.push(action.payload.message) 
         },
         setReadMessage: (state, action) => {
+          console.log(
+            'have read message'
+          , action.payload.id)
           var numberRead = 0;
             const updatedUserList = action.payload.userList.map(item => {
                 if (item.id === action.payload.id) {
                   //get number unread
                   numberRead = item.unread;
+                  console.log('have jum in here number read', numberRead);
                   return {
                     ...item,
                     unread: 0
@@ -148,6 +156,21 @@ const messageSlice = createSlice({
               };
             }
           }
+        },
+        addShopIntoUserList: (state, action) => {
+          const { shop,  } = action.payload;
+          console.log(shop, "shop");
+          
+          const existShop = state.message.userList.find(item => item.id === shop.id);
+          console.log("here is an so sanh", existShop);
+          
+          if (!existShop) {
+            console.log('co vao day');
+            const updatedUserList = [shop, ...state.message.userList];
+            return { ...state, message: { ...state.message, userList: updatedUserList } };
+          }
+          
+          return state;
         }
             
     },
@@ -178,7 +201,7 @@ export const getListUser = createAsyncThunk(
         const state = getState();
         const userInfo = state.userInfoSlice.info
         try {
-        const res = await api.get(`/users/${userInfo?.id}/get-channel`);
+        const res = await api.get(`/users/${userInfo?.id}/channels`);
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));
@@ -194,7 +217,7 @@ export const getListMessage = createAsyncThunk(
         const state = getState();
         const userInfo = state.userInfoSlice.info
         try {
-          const res = await api.get(`/users/${userInfo?.id}/get-messages`, {params: {shopId: shopId}});
+          const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopId: shopId}});
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));

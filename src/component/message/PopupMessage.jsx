@@ -47,12 +47,16 @@ const PopupMessage = () => {
 
   const audioRef = useRef(null);
 
-  const open = Boolean(anchorEl);
+  const { userList, numberUnread, numRead, currentShopIDSelect, isOpen } =
+    useSelector(messageSelector);
+
+  // const [anchorEl, setAnchorEl] = useState(isOpen);
+
+  // const open = Boolean(anchorEl);
+
+  const [open, setOpen] = useState(isOpen);
 
   const id = open ? "popup-message" : undefined;
-
-  const { userList, numberUnread, numRead, currentShopIDSelect } =
-    useSelector(messageSelector);
 
   const [unread, setUnread] = useState(numberUnread);
 
@@ -73,19 +77,36 @@ const PopupMessage = () => {
     console.log("Get an mesasge");
   }, [message]);
 
+  useEffect(() => {
+    setOpen(isOpen);
+  }, [isOpen]);
+
   //socket js
   const connect = (status) => {
+    const url = process.env.REACT_APP_URL_WEBSOCKET;
+    console.log(url, "usrl");
     if (status === 1) {
-      let Sock = new SockJS("https://thongtienthienphuot.shop/ws");
+      let Sock = new SockJS(`${url}`);
+
       stompClient = over(Sock);
       stompClient.connect({}, onConnected, onError);
     }
   };
   console.log("status", status);
+
   const onConnected = () => {
-    stompClient.subscribe(`/chatroom/${info.id}/user`, onPrivateMessage);
+    try {
+      stompClient.subscribe(
+        `/chatroom/${info.id}/user`,
+        onPrivateMessage,
+        onError
+      );
+    } catch (error) {
+      console.log(error);
+    }
     console.log("Connect to channel message");
   };
+
   const onError = (err) => {
     console.log(err);
   };
@@ -119,18 +140,21 @@ const PopupMessage = () => {
   };
 
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    // setAnchorEl(event.currentTarget);
+    setOpen(true);
   };
 
   const handleClose = () => {
-    setAnchorEl(null);
+    // setAnchorEl(null);
+    setOpen(false);
+    dispatch(messageSlice.actions.setOpenPopup({ isOpen: false }));
   };
 
   //This function use to handle message when user get an message
   const handleMessageArrive = (message, open, currentShopIDSelect) => {
     const updateMessage = {
       ...message,
-      date: moment(message.date, "YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      date: moment(message?.date, "YYYY-MM-DD[T]HH:mm:ss.SSS"),
     };
     if (open) {
       // also need update the out side
@@ -197,13 +221,12 @@ const PopupMessage = () => {
       console.log(error);
     }
   };
-  console.log("here is num unread golobal ", numberUnread);
+  console.log("here is num open  ", open);
 
   return (
     <>
       {status == 1 && (
         <div className={clsx(s.container)}>
-          {/* <audio src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3" preload="auto" ref={audioRef} /> */}
           <Button
             variant="contained"
             color="primary"
@@ -218,7 +241,7 @@ const PopupMessage = () => {
           <Popover
             id={id}
             open={open}
-            anchorEl={anchorEl}
+            // anchorEl={anchorEl}
             onClose={handleClose}
             anchorOrigin={{
               vertical: "bottom",

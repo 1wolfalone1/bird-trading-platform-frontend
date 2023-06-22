@@ -7,7 +7,15 @@
 }
 
 $heightAvatar: 30rem;
-
+.title {
+  width: 100%;
+  text-align: center;
+  font-family: c.$Secondary;
+  font-weight: 400;
+  font-size: 5rem;
+  padding: 5rem 0.5rem;
+  color: #000000;
+}
 .container {
   display: flex;
   flex-direction: row;
@@ -16,7 +24,6 @@ $heightAvatar: 30rem;
     display: flex;
     flex-direction: column;
     align-items: end;
-    justify-content: end;
     .imgProfile {
       img {
         height: $heightAvatar;
@@ -51,29 +58,20 @@ $heightAvatar: 30rem;
     align-self: stretch;
     flex-grow: 1;
 
-    .title {
-      font-family: c.$Secondary;
-      font-weight: 400;
-      font-size: 5rem;
-      padding: 5rem 0.5rem;
-      color: #000000;
-    }
+
     .formBordered {
-      width: 95%;
+      width: 80%;
+      display: flex;
+      flex-direction: column;
+      gap: 5rem;
       .inputContainer {
         display: flex;
         align-items: center;
-        width: 100%;
-        .input {
-          padding-bottom: 2.5rem;
-          width: calc(100% / 3);
-        }
+     
       }
 
       .info {
         display: flex;
-        width: 100%;
-        padding-bottom: 2.5rem;
         .password {
           width: 50%;
         }
@@ -82,17 +80,16 @@ $heightAvatar: 30rem;
       .address {
         display: flex;
         width: 100%;
-        padding: 0rem 0.5rem 2.5rem 0.5rem;
       }
 
       .description {
-        display: flex;
-        width: 100%;
-        padding: 0rem 0.5rem 2.5rem 0.5rem;
+     
       }
       .button {
+        display: flex;
+        justify-content: end;
         .iconButton {
-          width: 100%;
+          width: 50%;
           padding: 0rem 0.5rem;
         }
       }
@@ -119,5 +116,21 @@ $heightAvatar: 30rem;
     color: red;
     font-size: 2rem;
     padding: 10px;
+  }
+}
+.model {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: c.$Dominant3;
+  padding: 1rem 2rem;
+  height: fit-content;
+  border-radius: 5px;
+  .buttonControl {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
   }
 }
