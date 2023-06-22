@@ -25,7 +25,7 @@ const center = { lat: 48.8584, lng: 2.2945 };
 
 function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
    const { isLoaded } = useJsApiLoader({
-      googleMapsApiKey: "AIzaSyApYxFyr-42__SnJKnFCSDBM34rpkopYnU",
+      googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
       libraries: lib,
    });
    const [map, setMap] = useState(/** @type google.maps.Map */ (null));
@@ -39,6 +39,7 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
       isValid: false,
       addr: "",
    });
+   console.log(address);
    /** @type React.MutableRefObject<HTMLInputElement> */
    const originRef = useRef();
    /** @type React.MutableRefObject<HTMLInputElement> */
@@ -84,7 +85,9 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
                // set it to the correct, formatted address if it's valid
                setAddress(results[0].formatted_address);
                setInvalid("");
-               setOpenModel(false);
+               if(setOpenModel){
+                  setOpenModel(false);
+               }
             } else {
                addrStatus.current = {
                   addr: "",
