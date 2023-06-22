@@ -19,7 +19,6 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import { useDispatch, useSelector } from "react-redux";
 import SmsIcon from "@mui/icons-material/Sms";
 
-import ReactDOM from "react-dom/client";
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
@@ -30,7 +29,6 @@ import AddToCartToast, {
 import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
-import { SmsIcon } from "@mui/icons-material/Sms";
 const quantityControlStatus = {
   DECREASE: -1,
   CHANGE: 0,
@@ -194,6 +192,13 @@ export default function ProductDetails() {
   }, []);
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
+
+  const formatNumber = (q) => {
+    return q.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
   return (
     <>
       {product ? (
@@ -226,20 +231,20 @@ export default function ProductDetails() {
                     <div className={s.countPrice}>
                       {product.product.discountRate !== 0 ? (
                         <>
-                          <span className={s.oldPrice}>
-                            {Number(product.product.price).toFixed(2)}$
-                          </span>
                           <span className={s.disPrice}>
-                            {Number(product.product.discountedPrice).toFixed(2)}
-                            $
+                            {formatNumber(product.product.discountedPrice)}
+                          </span>
+                          <span className={s.oldPrice}>
+                            {formatNumber(product.product.price)}
                           </span>
                           <span className={s.discount}>
                             {(product.product.discountRate * 100).toFixed(0)}%
+                            off
                           </span>
                         </>
                       ) : (
                         <span className={s.disPrice}>
-                          {Number(product.product.price).toFixed(2)}$
+                          {formatNumber(product.product.price)}
                         </span>
                       )}
                     </div>
@@ -254,6 +259,9 @@ export default function ProductDetails() {
                             color={"Accent7"}
                           />
                         </IconButton>
+                        <div className={s.name}>
+                          {product.product.shopOwner.shopName}
+                        </div>
                       </div>
                     </div>
                   </div>

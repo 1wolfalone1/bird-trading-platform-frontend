@@ -9,19 +9,19 @@ import { useDispatch } from "react-redux";
 import globalConfigSlice from "../../../redux/global/globalConfigSlice";
 
 export default function ProductPageLayout() {
-   const { shopId } = useParams();
-   const dispatch = useDispatch();
+  const { shopId } = useParams();
+  const dispatch = useDispatch();
 
-   useEffect(() => {
-      dispatch(globalConfigSlice.actions.changeNavigateValue(2))
-   }, []);
-   return (
-      <>
-         <ProductPageSideBar />
-         <div className={clsx(s.content)}>
-            <ProductPageHeader />
-            <Outlet />
-         </div>
-      </>
-   );
+  useEffect(() => {
+    dispatch(globalConfigSlice.actions.changeNavigateValue(2));
+  }, []);
+  return (
+    <>
+      <ProductPageSideBar />
+      <div className={clsx(s.content)}>
+        <ProductPageHeader />
+        <Outlet />
+      </div>
+    </>
+  );
 }

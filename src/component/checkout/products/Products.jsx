@@ -4,6 +4,13 @@ import s from "../products/Products.module.scss";
 import Product from "./item/Item";
 import Grid from "@mui/material/Unstable_Grid2";
 
+const formatNumber = (q) => {
+  return q.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};
+
 export default function Products({ products }) {
   return (
     <div>
@@ -37,9 +44,7 @@ export default function Products({ products }) {
               name={item.name}
               shopName={item.shopOwner.shopName}
               image={item.imgUrl}
-              price={Number(item.discountedPrice * item.cartQuantity).toFixed(
-                2
-              )}
+              price={formatNumber(item.discountedPrice * item.cartQuantity)}
               quantity={item.cartQuantity}
             ></Product>
           ))}
