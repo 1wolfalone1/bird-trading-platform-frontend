@@ -31,6 +31,7 @@ import { toast } from "react-toastify";
 import Style from "../../style/inline-style/style";
 import messageSlice, { getListMessage, messageSelector } from "../../component/message/messageSlice";
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import { userInfoSelector, userStatus } from "../../redux/global/userInfoSlice";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -55,6 +56,7 @@ export default function ProductDetails() {
   const element = `${product?.product.description}`;
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
+  const {status} = useSelector(userInfoSelector)
 
   const handleButton = {
     fontSize: "2.4rem",
@@ -199,16 +201,24 @@ export default function ProductDetails() {
 
   //this function use to add shop into a uselist and chat
   const handleChatNow = (shop) => { 
-    const updateShop = {
-      ...shop,
-      unread: 1
+    if(status === userStatus.USER){
+
+      const updateShop = {
+        ...shop,
+        unread: 1
+      }
+      console.log('shop ne', updateShop);
+      dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}));
+      dispatch(messageSlice.actions.setOpenPopup({isOpen: true}));
+      dispatch(messageSlice.actions.setCurrentShopIDSelect({shopID: shop.id}))
+      dispatch(getListMessage(shop.id))
+      console.log(shop)
+    }else {
+      toast(<AddToCartToast type={toastType.WARNING_INPUT} msg={"You must Sign in to perform this function!"} />, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1500,
+     });
     }
-    console.log('shop ne', updateShop);
-    dispatch(messageSlice.actions.addShopIntoUserList({shop: updateShop}));
-    dispatch(messageSlice.actions.setOpenPopup({isOpen: true}));
-    dispatch(messageSlice.actions.setCurrentShopIDSelect({shopID: shop.id}))
-    dispatch(getListMessage(shop.id))
-    console.log(shop)
   }
     
 

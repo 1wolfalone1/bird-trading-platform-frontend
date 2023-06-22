@@ -146,7 +146,6 @@ export default function SideBarFilter() {
       <div
         className={clsx(s.title)}
         onClick={() => {
-          console.log("asfasfd");
           setOpenPopup((openPopup) => !openPopup);
         }}
       ></div>

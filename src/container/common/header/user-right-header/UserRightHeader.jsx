@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import userInfoSlice, { logout } from "../../../../redux/global/userInfoSlice";
+import NotiItemsPopper from "../../../../component/popper/noti-poper/NotiItemsPopper";
 
 const menuItemStyle = {
   width: "20rem",
@@ -78,6 +79,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
   return (
     <>
       <div className={s.container}>
+      <NotiItemsPopper />
         <div
           className={s.userControl}
           onClick={handleUserControlClick}
