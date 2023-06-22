@@ -250,6 +250,7 @@ const PopupMessage = () => {
           vertical: "top",
           horizontal: "right",
         }}
+        disableScrollLock={true}
         PaperProps={{
           style: {
             overflow: "hidden",

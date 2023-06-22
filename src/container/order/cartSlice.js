@@ -104,7 +104,7 @@ const cartSlice = createSlice({
             updatedPayload.quantity >= +updatedPayload.cartQuantity &&
             +updatedPayload.cartQuantity > 0
          ) {
-            state.items = state.items.map((item) => {
+            state.items = state.items?.map((item) => {
                if (item.id === updatedPayload.id) {
                   count++;
                   console.log(item);
