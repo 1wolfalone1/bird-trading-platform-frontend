@@ -99,9 +99,6 @@ button {
   outline: none;
 }
 
-* {
-  caret-color: transparent;
-}
 
 input {
   caret-color: c.$Complementary1;
@@ -150,4 +147,7 @@ a {
   span {
     font-size: 1.6rem;
   }
+}
+.ql-editor {
+  font-size: 2rem;
 }

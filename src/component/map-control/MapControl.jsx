@@ -23,7 +23,7 @@ import { useRef, useState } from "react";
 const lib = ["places"];
 const center = { lat: 48.8584, lng: 2.2945 };
 
-function MapControl({ address, setAddress, w, h, triggerSave }) {
+function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
    const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: "AIzaSyApYxFyr-42__SnJKnFCSDBM34rpkopYnU",
       libraries: lib,
@@ -84,6 +84,7 @@ function MapControl({ address, setAddress, w, h, triggerSave }) {
                // set it to the correct, formatted address if it's valid
                setAddress(results[0].formatted_address);
                setInvalid("");
+               setOpenModel(false);
             } else {
                addrStatus.current = {
                   addr: "",
@@ -100,7 +101,12 @@ function MapControl({ address, setAddress, w, h, triggerSave }) {
    };
    async function calculateRoute() {
       if (originRef?.current?.value === "") {
-         return;
+         const results = await directionsService.route({
+            origin: originRef.current.value,
+            destination: destiantionRef.current.value,
+            // eslint-disable-next-line no-undef
+            travelMode: google.maps.TravelMode.DRIVING,
+         });
       }
 
       // eslint-disable-next-line no-undef
@@ -129,9 +135,71 @@ function MapControl({ address, setAddress, w, h, triggerSave }) {
       originRef.current.value = "";
       destiantionRef.current.value = "";
    }
-   const handleChage = (e) => {
-      console.log(e.target.value);
-      console.log(originRef?.current?.value, "origin ref");
+   const getLatLng = async (address) => {
+      if (
+         originRef.current !== undefined &&
+         originRef.current.value !== undefined
+      ) {
+         // eslint-disable-next-line no-undef
+         const geocoder = new google.maps.Geocoder();
+         const geocodeRes = await geocoder.geocode({
+            address:  originRef.current.value,
+         });
+         const geocodeResult = geocodeRes.results;
+         console.log(geocodeResult)
+         if (geocodeResult && geocodeResult.length > 0) {
+            console.log(geocodeResult[0].geometry.location)
+            const location = geocodeResult[0].geometry.location;
+            const lat = location.lat();
+            const lng = location.lng();
+            const latLng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+            console.log(latLng);
+            return latLng;
+            // Use latLng as needed (e.g., for setting the marker position)
+            // new google.maps.Marker({
+            //   position: latLng,
+            //   map,
+            //   title: "Hello World!",
+            // });
+            
+         } else {
+            console.log(geocodeResult?.length)
+
+            return "";
+         }
+      }
+   };
+   const handleAutocompletChange = async (e) => {
+      if (originRef.current.value === "") {
+         return;
+      }
+
+      // eslint-disable-next-line no-undef
+
+      // const directionsService = new google.maps.DirectionsService();
+      // console.log(originRef.current);
+      // const results = await directionsService.route({
+      //    origin: originRef.current.value,
+      //    // eslint-disable-next-line no-undef
+      //    travelMode: google.maps.TravelMode.DRIVING,
+      // });
+      // console.log(results);
+      console.log(originRef.current.value, "origin");
+      const latLng = await getLatLng(originRef.current.value);
+      console.log(latLng)
+      // eslint-disable-next-line no-undef
+      new google.maps.Marker({
+         position: latLng,
+         map: map,
+         title: "Hello World!",
+      });
+      console.log(map)
+      if (map) {
+         map.setCenter(latLng);
+      }
+      // setDirectionsResponse(results);
+      // setDistance(results.routes[0].legs[0].distance.text);
+      // setDuration(results.routes[0].legs[0].duration.text);
    };
    if (!isLoaded) {
       return <Skeleton />;
@@ -151,12 +219,14 @@ function MapControl({ address, setAddress, w, h, triggerSave }) {
       >
          <Box sx={{ display: "flex", gap: 1 }}>
             <Box sx={{ flex: 1 }}>
-               <Autocomplete onChange={handleChage} className={"autocomplete"}>
+               <Autocomplete
+                  onPlaceChanged={handleAutocompletChange}
+                  className={"autocomplete"}
+               >
                   <TextField
                      inputRef={originRef}
                      defaultValue={address}
                      type="text"
-                     onComplete={handleChage}
                      placeholder="Origin"
                      id="outlined-basic"
                      label="Enter Place"
