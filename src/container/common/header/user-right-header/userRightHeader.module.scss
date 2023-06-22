@@ -3,6 +3,8 @@
 $container-height: calc(c.$h-header - 3rem);
 .container {
   display: flex;
+  justify-content: space-between;
+  
   .userControl {
     padding: 0;
     display: flex;
