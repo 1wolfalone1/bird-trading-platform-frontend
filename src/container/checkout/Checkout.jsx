@@ -12,7 +12,7 @@ import cartSlice, { getCartSelector } from "../order/cartSlice";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import OrderBill from "../../component/checkout/orderBill/OrderBill";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, Button, CircularProgress, Modal } from "@mui/material";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import COD from "../../asset/image/COD.avif";
 import PayPal from "../../asset/image/Paypal.avif";
@@ -84,7 +84,6 @@ export default function Checkout() {
          !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
       );
       setPromotion(voucherSelected.discount?.discount ?? 0);
-    
    }, []);
    useEffect(() => {
       const listTemp = items.reduce((acc, item) => {
@@ -237,9 +236,12 @@ export default function Checkout() {
                      <Popup
                         className="addButton"
                         modal
-                        trigger= <Button disabled={handleCheckout()}>
-                        Check out</Button>
-                  >
+                        trigger={
+                           <Button disabled={handleCheckout()}>
+                              Check out
+                           </Button>
+                        }
+                     >
                         {(close) => (
                            <OrderBill close={close} paymentType={paymentType} />
                         )}
