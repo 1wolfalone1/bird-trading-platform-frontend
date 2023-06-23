@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import globalConfigSlice from "../../../redux/global/globalConfigSlice";
 import { useNavigate } from "react-router-dom";
+import { formatNumber } from "../../../utils/myUtils";
 const ratingCustomizer = {
   fontSize: "3.2rem",
   color: Style.color.$Dominant7,
@@ -35,13 +36,6 @@ export default function ProductCard({ product }) {
     if (statusQuantity.isValid) {
     } else {
     }
-  };
-
-  const formatNumber = (q) => {
-    return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
   };
 
   return (

@@ -6,13 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ShopTitle from "./shop-title/ShopTitle";
 import { Box, Typography } from "@mui/material";
 import Style from "../../../style/inline-style/style";
-
-const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
+import { formatNumber } from "../../../utils/myUtils";
 
 export default function Products({ products }) {
   console.log(products);

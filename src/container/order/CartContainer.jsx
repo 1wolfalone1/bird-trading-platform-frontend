@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import { formatNumber } from "../../utils/myUtils";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -68,13 +69,6 @@ export default function Cart() {
   useEffect(() => {
     handleTotalPrice();
   }, [total]);
-
-  const formatNumber = (q) => {
-    return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
 
   return (
     <>

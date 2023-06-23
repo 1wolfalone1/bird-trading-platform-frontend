@@ -16,6 +16,7 @@ import cartSlice, {
   totalPriceSelector,
 } from "../../container/order/cartSlice";
 import { getAllPromotions } from "../../api/server/promotions/PromotionAPI";
+import { formatNumber } from "../../utils/myUtils";
 
 export default function Voucher({ close }) {
   const total = useSelector(totalPriceSelector);
@@ -42,13 +43,6 @@ export default function Voucher({ close }) {
     return (event) => {
       dispatch(cartSlice.actions.updateVoucherSelectedDiscount(item));
     };
-  };
-
-  const formatNumber = (q) => {
-    return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
   };
 
   return (
