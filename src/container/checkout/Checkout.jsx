@@ -55,7 +55,11 @@ export default function Checkout() {
   const [shipTotal, setShipTotal] = useState();
   const [promotion, setPromotion] = useState();
   const [listShopOwersItems, setListShopOweersItems] = useState([]);
-
+  const [deliveryInfo, setDeliveryInfo] = useState({
+    fullName: "",
+    phoneNumber: "",
+    address: "",
+  });
   const handleSelectPayment = (paymentName) => {
     setPaymentType(paymentName);
   };
@@ -63,15 +67,18 @@ export default function Checkout() {
   const dispatch = useDispatch();
   useEffect(() => {
     setSubTotal(
-      items.reduce(
-        (total, item) => total + item.discountedPrice * item.cartQuantity,
-        0
+      Number(
+        items
+          .reduce(
+            (total, item) => total + item.discountedPrice * item.cartQuantity,
+            0
+          )
+          .toFixed(2)
       )
     );
-
-    // handle count ship fee
-    setShipTotal(!voucherSelected.shipping ? Number(0.05 * subTotal) : 0);
-
+    setShipTotal(
+      !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
+    );
     setPromotion(voucherSelected.discount?.discount ?? 0);
     const listTemp = items.reduce((acc, item) => {
       let count = 0;
@@ -90,8 +97,12 @@ export default function Checkout() {
     }, []);
     console.log(listTemp, "listTemp ne ");
     setListShopOweersItems(listTemp);
+    setDeliveryInfo({
+      fullName: userInfo.fullName,
+      phoneNumber: userInfo.phoneNumber,
+      address: userInfo.address,
+    });
   }, []);
-
   const handleCheckout = () => {
     const info = userInfo.info;
     return (
@@ -178,7 +189,6 @@ export default function Checkout() {
     };
   }, []);
   console.log(items);
-
   return (
     <>
       <Backdrop
@@ -197,7 +207,10 @@ export default function Checkout() {
               : ""}
           </Grid>
           <Grid sm={11} md={4} xl={4} className={clsx(s.right)}>
-            <Delivery userInfo={userInfo?.info} />
+            <Delivery
+              deliveryInfo={deliveryInfo}
+              setDeliveryInfo={setDeliveryInfo}
+            />
             <Voucher vouchers={voucherSelected} />
             <Payment
               handleSelectPayment={handleSelectPayment}

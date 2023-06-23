@@ -215,7 +215,7 @@ export const getListMessage = createAsyncThunk(
     "message/message-list",
     async (shopId, {getState}) => {
         const state = getState();
-        const userInfo = state.userInfoSlice.info
+        const userInfo = state.userInfoSlice.info;
         try {
           const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopId: shopId}});
           const data = res.data;

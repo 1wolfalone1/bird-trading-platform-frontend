@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ProductHomeCard({ product }) {
-  console.log("producttttt", product);
   const [value, setValue] = useState(2);
   const navigate = useNavigate();
   const formatNumber = (q) => {
