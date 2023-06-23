@@ -28,9 +28,9 @@ const MessageUserList = () => {
 
   const dispatch = useDispatch()
 
-  const {userList, messageList} = useSelector(messageSelector)
+  const {userList, messageList, currentShopIDSelect} = useSelector(messageSelector)
 
-  const [activeBgColor, setActiveBgColor] = useState('');
+  const [activeBgColor, setActiveBgColor] = useState(currentShopIDSelect);
 
   const getMessage =  async (id) => {
       dispatch(getListMessage(id))
