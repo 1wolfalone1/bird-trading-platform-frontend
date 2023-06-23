@@ -69,7 +69,7 @@ export default function Products({ products }) {
                     color: Style.color.$Money,
                   }}
                 >
-                  10$
+                  20
                 </Typography>
               </Box>
             </Box>

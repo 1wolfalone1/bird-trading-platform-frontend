@@ -63,18 +63,15 @@ export default function Checkout() {
   const dispatch = useDispatch();
   useEffect(() => {
     setSubTotal(
-      Number(
-        items
-          .reduce(
-            (total, item) => total + item.discountedPrice * item.cartQuantity,
-            0
-          )
-          .toFixed(2)
+      items.reduce(
+        (total, item) => total + item.discountedPrice * item.cartQuantity,
+        0
       )
     );
-    setShipTotal(
-      !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
-    );
+
+    // handle count ship fee
+    setShipTotal(!voucherSelected.shipping ? Number(0.05 * subTotal) : 0);
+
     setPromotion(voucherSelected.discount?.discount ?? 0);
     const listTemp = items.reduce((acc, item) => {
       let count = 0;

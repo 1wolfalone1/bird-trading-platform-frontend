@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import s from "./cartContainer.module.scss";
 import { Button, Chip, IconButton, TextField } from "@mui/material";
@@ -23,10 +23,10 @@ export default function Cart() {
   const voucherSelected = useSelector(getVoucherSelectedSelector);
   console.log(voucherSelected);
   const total = useSelector(totalPriceSelector);
+  const [price, setPrice] = useState();
   const carts = useSelector(getListItemSelector);
   const navigate = useNavigate();
   const { status } = useSelector(userInfoSelector);
-  console.log("info", status);
   const handleChangeQuantity = (item) => {
     return (e) => {
       dispatch(
@@ -57,6 +57,17 @@ export default function Cart() {
       navigate("/checkout");
     }
   };
+
+  const handleTotalPrice = () => {
+    if (total < voucherSelected?.discount?.minimumOrderValue)
+      dispatch(cartSlice.actions.removeVoucher(voucherSelected.discount));
+    if (total < voucherSelected?.shipping?.minimumOrderValue)
+      dispatch(cartSlice.actions.removeVoucher(voucherSelected.shipping));
+  };
+
+  useEffect(() => {
+    handleTotalPrice();
+  }, [total]);
 
   const formatNumber = (q) => {
     return q.toLocaleString("en-US", {
@@ -232,31 +243,6 @@ export default function Cart() {
               {(close) => <Voucher close={close} />}
             </Popup>
             <div className={s.listVoucher}>
-              {voucherSelected.shipping && (
-                <>
-                  <Chip
-                    icon={
-                      <DiscountIcon
-                        sx={{
-                          fontSize: "3rem",
-                          color: "#ffffff",
-                        }}
-                      />
-                    }
-                    sx={{
-                      fontSize: "2.4rem",
-                      padding: "2rem 1rem",
-                    }}
-                    label={`${voucherSelected.shipping?.name}`}
-                    variant="outlined"
-                    onDelete={handleVoucherItemDeleteShipping(
-                      voucherSelected.shipping
-                    )}
-                    color="error"
-                  />
-                </>
-              )}
-
               {voucherSelected.discount && (
                 <>
                   <Chip
@@ -276,6 +262,31 @@ export default function Cart() {
                     variant="outlined"
                     onDelete={handleVoucherItemDeleteDiscount(
                       voucherSelected.discount
+                    )}
+                    color="error"
+                  />
+                </>
+              )}
+
+              {voucherSelected.shipping && (
+                <>
+                  <Chip
+                    icon={
+                      <DiscountIcon
+                        sx={{
+                          fontSize: "3rem",
+                          color: "#ffffff",
+                        }}
+                      />
+                    }
+                    sx={{
+                      fontSize: "2.4rem",
+                      padding: "2rem 1rem",
+                    }}
+                    label={`${voucherSelected.shipping?.name}`}
+                    variant="outlined"
+                    onDelete={handleVoucherItemDeleteShipping(
+                      voucherSelected.shipping
                     )}
                     color="error"
                   />

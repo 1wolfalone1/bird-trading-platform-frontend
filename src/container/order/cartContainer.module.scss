@@ -5,7 +5,11 @@ $overlay: rgba(0, 0, 0, 0.7);
 $border: 10rem;
 $fz: 3rem;
 
-@mixin button($padding: 1rem 2rem, $color: c.$Dominant4, $backgroundColor: c.$Complementary0) {
+@mixin button(
+  $padding: 1rem 2rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary0
+) {
   border: 1px solid c.$Complementary0;
   font-size: 2.4rem;
   font-family: c.$Secondary;
@@ -140,8 +144,6 @@ $fz: 3rem;
       background-color: c.$Dominant5;
     }
   }
-
-
 }
 .modal {
   background: c.$Dominant2;
@@ -180,6 +182,7 @@ $fz: 3rem;
         color: c.$Dominant5;
         background-color: c.$Complementary4;
         margin-bottom: 2.4rem;
+
         .voucher {
           padding: 1rem;
           .voucherItem {
@@ -191,6 +194,15 @@ $fz: 3rem;
               font-weight: 700;
               color: c.$Dominant5;
             }
+            .voucherDescription {
+              padding: 0.8rem 0 0.3rem;
+            }
+            .voucherDiscount {
+              padding-bottom: 0.3rem;
+            }
+            .text {
+              padding-bottom: 0.3rem;
+            }
           }
         }
         .checkboxButton {
@@ -200,6 +212,9 @@ $fz: 3rem;
             font-size: 4rem;
           }
         }
+      }
+      .disabled {
+        opacity: 0.5 !important;
       }
     }
   }
