@@ -213,7 +213,7 @@ export default function ProductDetails() {
     if (status === userStatus.USER) {
       const updateShop = {
         ...shop,
-        unread: 1,
+        unread: 0,
       };
       console.log("shop ne", updateShop);
       dispatch(messageSlice.actions.addShopIntoUserList({ shop: updateShop }));
