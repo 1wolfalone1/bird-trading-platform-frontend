@@ -15,7 +15,7 @@ const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
     <Fragment>
       <Grid container columns={10} key={id} className={clsx(s.container)}>
         <Grid sm={2} md={2} xl={2} className={clsx(s.productImage)}>
-          <img src={image} alt={name} />
+          <img src={`${image}`} alt={name} />
         </Grid>
         <Grid sm={5} md={5} xl={5} className={clsx(s.productInfo)}>
           <Grid className={clsx(s.productName)}>

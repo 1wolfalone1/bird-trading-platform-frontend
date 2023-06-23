@@ -3,7 +3,7 @@ import clsx from "clsx";
 import s from "./TotalOrder.module.scss";
 
 const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
+  return q?.toLocaleString("en-US", {
     style: "currency",
     currency: "USD",
   });

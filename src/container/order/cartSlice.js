@@ -202,7 +202,6 @@ export const invokeCart = createAsyncThunk("cart/invoke", async (carts) => {
             },
          });
          const data = response.data;
-         console.log(data);
          const newCarts = data.map((cart) => {
             const newCart = carts.items.find((item) => item.id === cart.id);
             if (newCart) {

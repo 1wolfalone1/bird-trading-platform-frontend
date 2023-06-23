@@ -7,7 +7,6 @@ import Popup from "reactjs-popup";
 import DeliveryPopup from "./DeliveryPopup";
 
 export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
-   console.log(deliveryInfo, 'delidfdfdfdfdfdfdfdf');
    return (
       <Fragment>
          <div className={clsx(s.container)}>
@@ -18,10 +17,17 @@ export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
                   <Popup
                      className="addButton"
                      modal
+                     
                      trigger={<Button>Change information</Button>}
                      closeOnDocumentClick={false}
                   >
-                     {(close) => <DeliveryPopup close={close} />}
+                     {(close) => (
+                        <DeliveryPopup
+                           close={close}
+                           deliveryInfo={deliveryInfo}
+                           setDeliveryInfo={setDeliveryInfo}
+                        />
+                     )}
                   </Popup>
                </div>
 

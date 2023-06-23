@@ -23,6 +23,7 @@ import globalConfigSlice, {
    globalConfigSliceSelector,
 } from "../../redux/global/globalConfigSlice";
 import { useRef } from "react";
+import { useJsApiLoader } from "@react-google-maps/api";
 
 const payment = [
    {
@@ -40,8 +41,12 @@ const payment = [
       name: "Delivery",
    },
 ];
-
+const lib = ["places"];
 export default function Checkout() {
+   const { isLoaded } = useJsApiLoader({
+      googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
+      libraries: lib,
+   });
    const { items, voucherSelected } = useSelector(getCartSelector);
    const [paymentType, setPaymentType] = useState();
    const userInfo = useSelector(userInfoSelector);
@@ -79,6 +84,9 @@ export default function Checkout() {
          !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
       );
       setPromotion(voucherSelected.discount?.discount ?? 0);
+    
+   }, []);
+   useEffect(() => {
       const listTemp = items.reduce((acc, item) => {
          let count = 0;
          acc.map((lists) => {
@@ -96,12 +104,7 @@ export default function Checkout() {
       }, []);
       console.log(listTemp, "listTemp ne ");
       setListShopOweersItems(listTemp);
-      setDeliveryInfo({
-         fullName: userInfo.fullName,
-         phoneNumber: userInfo.phoneNumber,
-         address: userInfo.address,
-      });
-   }, []);
+   }, [items]);
    const handleCheckout = () => {
       const info = userInfo.info;
       return (
@@ -114,7 +117,14 @@ export default function Checkout() {
          paymentType === undefined
       );
    };
-
+   useEffect(() => {
+      setDeliveryInfo({
+         fullName: userInfo.info.fullName,
+         phoneNumber: userInfo.info.phoneNumber,
+         address: userInfo.info.address,
+      });
+      getOrderData(userInfo?.info);
+   }, [userInfo]);
    const getOrderData = (info) => {
       const productOrder = items.reduce((acc, order) => {
          return { ...acc, [order.id]: order.cartQuantity };
@@ -154,10 +164,6 @@ export default function Checkout() {
          })
       );
    };
-   useEffect(() => {
-      getOrderData(userInfo?.info);
-   }, [userInfo]);
-
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
       let status = params.get("status");
@@ -190,7 +196,6 @@ export default function Checkout() {
          flag.current = true;
       };
    }, []);
-   console.log(items);
    return (
       <>
          <Backdrop
@@ -204,7 +209,12 @@ export default function Checkout() {
                <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
                   {listShopOwersItems
                      ? listShopOwersItems.map((lists) => (
-                          <Products products={lists.data} key={lists.id} />
+                          <Products
+                             products={lists.data}
+                             key={lists.id}
+                             deliveryInfo={deliveryInfo}
+                             isLoaded={isLoaded}
+                          />
                        ))
                      : ""}
                </Grid>
@@ -227,10 +237,9 @@ export default function Checkout() {
                      <Popup
                         className="addButton"
                         modal
-                        trigger=<Button disabled={handleCheckout()}>
-                           Check out
-                        </Button>
-                     >
+                        trigger= <Button disabled={handleCheckout()}>
+                        Check out</Button>
+                  >
                         {(close) => (
                            <OrderBill close={close} paymentType={paymentType} />
                         )}
