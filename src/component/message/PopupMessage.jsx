@@ -60,7 +60,7 @@ const PopupMessage = () => {
 
   const [unread, setUnread] = useState(numberUnread);
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState();
 
   useEffect(() => {
     connect(status);
@@ -84,7 +84,6 @@ const PopupMessage = () => {
   //socket js
   const connect = (status) => {
     const url = process.env.REACT_APP_URL_WEBSOCKET;
-    console.log(url, "usrl");
     if (status === 1) {
       let Sock = new SockJS(`${url}`);
 

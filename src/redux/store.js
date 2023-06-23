@@ -7,6 +7,7 @@ import globalConfigSlice from "./global/globalConfigSlice";
 import messageSlice from "../component/message/messageSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
+import notificationSlice from "../component/popper/noti-poper/notificationSlice";
 
 const persistConfig = {
    key: "root",
@@ -28,6 +29,7 @@ const reducer = combineReducers({
    cartSlice: cartSlice.reducer,
    globalConfigSlice: globalConfigSlice.reducer,
    messageSlice: messageSlice.reducer,
+   notificationSlice: notificationSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({
