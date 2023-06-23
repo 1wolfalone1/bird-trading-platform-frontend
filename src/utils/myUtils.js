@@ -44,3 +44,10 @@ export const calculateDistance = async (origin, destination) => {
 
    return results.routes[0].legs[0].distance.value;
 };
+
+export const formatNumber = (q) => {
+  return q.toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+};

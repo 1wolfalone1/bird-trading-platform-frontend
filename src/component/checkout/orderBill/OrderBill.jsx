@@ -10,13 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { api } from "../../../api/server/API";
 import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
-
-const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
+import { formatNumber } from "../../../utils/myUtils";
 
 export default function OrderBill({ close, paymentType }) {
   const { items, voucherSelected } = useSelector(getCartSelector);

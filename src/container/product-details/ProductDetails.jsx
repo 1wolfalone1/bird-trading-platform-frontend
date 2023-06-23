@@ -35,6 +35,7 @@ import messageSlice, {
 import globalConfigSlice from "../../redux/global/globalConfigSlice";
 
 import { userInfoSelector, userStatus } from "../../redux/global/userInfoSlice";
+import { formatNumber } from "../../utils/myUtils";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -201,13 +202,6 @@ export default function ProductDetails() {
   }, []);
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
-
-  const formatNumber = (q) => {
-    return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
   //this function use to add shop into a uselist and chat
   const handleChatNow = (shop) => {
     if (status === userStatus.USER) {

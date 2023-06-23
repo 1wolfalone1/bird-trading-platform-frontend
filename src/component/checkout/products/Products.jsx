@@ -7,9 +7,6 @@ import ShopTitle from "./shop-title/ShopTitle";
 import { Box, Typography } from "@mui/material";
 import Style from "../../../style/inline-style/style";
 import { calculateDistance } from "../../../utils/myUtils";
-import { useJsApiLoader } from "@react-google-maps/api";
-import { api } from "../../../api/server/API";
-import axios from "axios";
 import { useSelector } from "react-redux";
 import orderSlice, {
    orderSliceSelector,
