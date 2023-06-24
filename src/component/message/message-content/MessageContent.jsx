@@ -25,7 +25,7 @@ const MessageContent = () => {
 
   const divRef = useRef(null);
 
-  const {messageList, currentShopIDSelect, userList} = useSelector(messageSelector)
+  const {messageList, currentShopIDSelect, userList, unread} = useSelector(messageSelector)
 
   const {info} = useSelector(userInfoSelector)
 

@@ -141,6 +141,7 @@ const PopupMessage = () => {
   const handleClick = (event) => {
     // setAnchorEl(event.currentTarget);
     setOpen(true);
+    dispatch(getListUser());
   };
 
   const handleClose = () => {

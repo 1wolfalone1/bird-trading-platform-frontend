@@ -47,15 +47,16 @@ const messageSlice = createSlice({
               });
               console.log(updatedUserList);
             // state.message.userList = updatedUserList;
-            const id =  action.payload.id;
-            console.log(id)
+            const newNumberUnread =  state.message.numberUnread - numberRead;
+            const id = action.payload.id;
             return {
               ...state,
               message: {
                 ...state.message,
                 userList: updatedUserList,
                 numRead: numberRead,
-                currentShopIDSelect: id
+                currentShopIDSelect: id,
+                numberUnread: newNumberUnread,
               },
               
             };
