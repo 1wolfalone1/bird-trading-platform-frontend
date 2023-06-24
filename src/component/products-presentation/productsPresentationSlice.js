@@ -83,18 +83,18 @@ const productsPresentationSlices = createSlice({
       state.filter.category = action.payload.category;
     },
     setPageNumber: (state, action) => {
-      state.filter.pageNumber = action.payload.pageNumber;
+      state.filter.pageNumber = action.payload?.pageNumber;
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(callFirstPage.fulfilled, (state, action) => {
-        state.products.data = action.payload.lists;
-        state.products.page = action.payload.pageNumber;
+        state.products.data = action.payload?.lists;
+        state.products.page = action.payload?.pageNumber;
       })
       .addCase(slidePage.fulfilled, (state, action) => {
-        state.products.data = action.payload.lists;
-        state.products.page = action.payload.pageNumber;
+        state.products.data = action.payload?.lists;
+        state.products.page = action.payload?.pageNumber;
       })
       .addCase(slidePage.rejected, (state, action) => {
         console.log(action);
@@ -103,8 +103,8 @@ const productsPresentationSlices = createSlice({
         state.status = STATUS_PENDING;
       })
       .addCase(changeTypeProduct.fulfilled, (state, action) => {
-        state.products.data = action.payload.lists;
-        state.products.page = action.payload.pageNumber;
+        state.products.data = action.payload?.lists;
+        state.products.page = action.payload?.pageNumber;
       })
       .addCase(getTypeOfProduct.fulfilled, (state, action) => {
         state.listTypeOfProduct = action.payload;
@@ -115,8 +115,8 @@ const productsPresentationSlices = createSlice({
       })
       .addCase(filterByAll.fulfilled, (state, action) => {
         console.log(state);
-        state.products.data = action.payload.lists;
-        state.products.page = action.payload.pageNumber;
+        state.products.data = action.payload?.lists;
+        state.products.page = action.payload?.pageNumber;
         console.log(action.payload);
       })
       .addCase(filterByAll.rejected, (state, action) => {
