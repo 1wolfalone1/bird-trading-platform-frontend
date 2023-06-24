@@ -1,17 +1,6 @@
 @use "../style/" as c;
 
 $imgWidth: 65rem;
-@mixin button(
-  $padding: 0.5rem,
-  $color: c.$Complementary0,
-  $backgroundColor: c.$Dominant5
-) {
-  font-size: 2rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-}
 
 .container {
   padding: 5rem 16rem;
@@ -136,7 +125,10 @@ $imgWidth: 65rem;
               }
               .right {
                 Button {
-                  @include button();
+                  @include c.f-button(0.5rem, c.$Complementary0, c.$Dominant3);
+                  border: none;
+                  &:hover {
+                  }
                 }
                 .name {
                   font-size: 2rem;

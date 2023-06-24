@@ -106,12 +106,12 @@ export default function Checkout() {
   const handleCheckout = () => {
     const info = userInfo.info;
     return (
-      !info.address?.street ||
-      !info.address?.ward ||
-      !info.address?.district ||
-      !info.address?.city ||
-      !info?.fullName ||
-      !info?.phoneNumber ||
+      // !info.address?.street ||
+      // !info.address?.ward ||
+      // !info.address?.district ||
+      // !info.address?.city ||
+      // !info?.fullName ||
+      // !info?.phoneNumber ||
       paymentType === undefined
     );
   };
