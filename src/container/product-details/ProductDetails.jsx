@@ -398,8 +398,6 @@ export default function ProductDetails() {
               />
             </div>
           </div>
-
-          <div className={s.review}></div>
         </div>
       ) : (
         <></>

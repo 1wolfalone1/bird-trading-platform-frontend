@@ -24,7 +24,6 @@ export default function Cart() {
   const voucherSelected = useSelector(getVoucherSelectedSelector);
   console.log(voucherSelected);
   const total = useSelector(totalPriceSelector);
-  const [price, setPrice] = useState();
   const carts = useSelector(getListItemSelector);
   const navigate = useNavigate();
   const { status } = useSelector(userInfoSelector);

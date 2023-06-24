@@ -22,10 +22,8 @@ import { formatNumber } from "../../utils/myUtils";
 export default function Voucher({ close }) {
   const total = useSelector(totalPriceSelector);
   const voucherSelected = useSelector(getVoucherSelectedSelector);
-  console.log("hhhhhh", voucherSelected);
   const [vouchers, setVouchers] = useState([]);
   const dispatch = useDispatch();
-  const ship = 50;
   useEffect(() => {
     const loadVouchers = async () => {
       const vouchers = await getAllPromotions();
@@ -39,7 +37,6 @@ export default function Voucher({ close }) {
     };
   };
 
-  console.log(vouchers);
   const handleChangeDiscountVoucher = (item) => {
     return (event) => {
       dispatch(cartSlice.actions.updateVoucherSelectedDiscount(item));
@@ -67,7 +64,7 @@ export default function Voucher({ close }) {
                 .map((item) => (
                   <div
                     className={clsx(s.containerItem, {
-                      [s.disabled]: total < ship,
+                      [s.disabled]: total < item.minimumOrderValue,
                     })}
                     key={item.id}
                   >
@@ -93,7 +90,7 @@ export default function Voucher({ close }) {
                       </Grid>
                     </Grid>
                     <FormControlLabel
-                      disabled={total < ship}
+                      disabled={total < item.minimumOrderValue}
                       control={
                         <Radio
                           value={JSON.stringify(item)}
@@ -121,7 +118,7 @@ export default function Voucher({ close }) {
                 .map((item) => (
                   <div
                     className={clsx(s.containerItem, {
-                      [s.disabled]: total < item.discount * 10,
+                      [s.disabled]: total < item.minimumOrderValue,
                     })}
                     key={item.id}
                   >
@@ -150,7 +147,7 @@ export default function Voucher({ close }) {
                       </Grid>
                     </Grid>
                     <FormControlLabel
-                      disabled={total < item.discount * 10}
+                      disabled={total < item.minimumOrderValue}
                       control={
                         <Radio
                           value={JSON.stringify(item)}

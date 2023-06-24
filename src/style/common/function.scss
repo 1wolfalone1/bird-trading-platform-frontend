@@ -1,3 +1,6 @@
+@use "./color.scss" as c;
+@use "./font.scss" as f;
+
 $XS: 480px;
 $SM: 768px;
 $MD: 1024px;
@@ -5,25 +8,48 @@ $XL: 1170px;
 $XXL: 1750px;
 
 @mixin m-Responsive($canvas) {
-   @if $canvas == XS {
-      @media only screen and (max-width: $XS) {
-         @content;
-      }
-   } @else if $canvas == SM {
-      @media only screen and (max-width: $SM) {
-         @content;
-      }
-   } @else if $canvas == MD {
-      @media only screen and (max-width: $MD) {
-         @content;
-      }
-   } @else if $canvas == XL {
-      @media only screen and (max-width: $XL) {
-         @content;
-      }
-   } @else if $canvas == XXL {
-      @media only screen and (max-width: $XXL) {
-         @content;
-      }
-   }
+  @if $canvas == XS {
+    @media only screen and (max-width: $XS) {
+      @content;
+    }
+  } @else if $canvas == SM {
+    @media only screen and (max-width: $SM) {
+      @content;
+    }
+  } @else if $canvas == MD {
+    @media only screen and (max-width: $MD) {
+      @content;
+    }
+  } @else if $canvas == XL {
+    @media only screen and (max-width: $XL) {
+      @content;
+    }
+  } @else if $canvas == XXL {
+    @media only screen and (max-width: $XXL) {
+      @content;
+    }
+  }
+}
+
+@mixin f-button(
+  $padding: 1rem 2rem,
+  $color: c.$Dominant4,
+  $backgroundColor: c.$Complementary5
+) {
+  border: 1px solid c.$Complementary0;
+  font-size: 2.4rem;
+  font-family: f.$Secondary;
+  padding: $padding;
+  text-transform: none;
+  color: $color;
+  background-color: $backgroundColor;
+  &:hover {
+    color: c.$Accent7;
+    background-color: c.$Dominant2;
+  }
+}
+
+@mixin f-backdrop() {
+  -webkit-backdrop-filter: contrast(80%);
+  backdrop-filter: contrast(80%) brightness(50%);
 }
