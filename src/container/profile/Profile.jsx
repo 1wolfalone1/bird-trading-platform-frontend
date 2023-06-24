@@ -86,6 +86,7 @@ const Profile = () => {
          ...data,
          address: address,
       };
+      console.log(dataTransfer)
       console.log(dataTransfer, "dataTransfer");
       try {
          const formData = new FormData();
@@ -142,12 +143,10 @@ const Profile = () => {
       }
    };
    if (formInfo === undefined) {
-      console.log(formInfo);
       dispatch(globalConfigSlice.actions.changeBackDrops(true));
       return <Skeleton></Skeleton>;
    }
    dispatch(globalConfigSlice.actions.changeBackDrops(false));
-   console.log(formInfo);
    return (
       <Fragment>
          <h1>Your Profile</h1>

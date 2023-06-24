@@ -94,7 +94,14 @@ function MapControl({
                const vietnamComponent = results[0].address_components.find(
                   (component) =>
                      component.types.includes("country") &&
-                     component.long_name === "Vietnam"
+                     (component.long_name === "Vietnam" ||
+                        component.short_name === "Việt Nam" ||
+                        component.short_name === "VN")
+               );
+               console.log(
+                  vietnamComponent,
+                  results[0].address_components,
+                  "address_components"
                );
                if (vietnamComponent) {
                   if (setOpenModel) {
@@ -190,10 +197,12 @@ function MapControl({
       }
    };
    const firstRender = async () => {
+      if(!address){
+         return;
+      }
       if (originRef.current) {
          originRef.current.value = address;
       }
-      console.log(address, originRef?.current?.value);
       const latLng = await getLatLng(originRef?.current?.value);
       // eslint-disable-next-line no-undef
       new google.maps.Marker({
@@ -201,7 +210,6 @@ function MapControl({
          map: map,
          title: "Hello World!",
       });
-      console.log(map);
       if (map) {
          map.setCenter(latLng);
       }

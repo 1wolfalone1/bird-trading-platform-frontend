@@ -66,17 +66,11 @@ export default function Checkout() {
       useSelector(orderSliceSelector);
 
    const handleSelectPayment = (paymentName) => {
-      console.log(paymentName);
       dispatch(orderSlice.actions.updatePaymentMethod(paymentName));
    };
 
    const navigate = useNavigate();
    const dispatch = useDispatch();
-   console.log(
-      paymentMethod,
-      infoDelivery,
-      "payment ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
-   );
    useEffect(() => {
       const listTemp = items.reduce((acc, item) => {
          let count = 0;
@@ -106,7 +100,7 @@ export default function Checkout() {
 
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
-      console.log(tempOrder, 'temporrrrrasdfa sdasdf asdf asdf asd fasdf asdf rrrrrrder');
+
       let status = params.get("status");
       if (status === "success") {
          const paymentId = params.get("paymentId");
