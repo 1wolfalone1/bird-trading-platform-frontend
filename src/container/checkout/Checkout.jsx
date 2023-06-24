@@ -26,6 +26,8 @@ import { useRef } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
 import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
+import { fix2 } from "../../utils/myUtils";
+import { persistSliceSelector } from "../../redux/global/persistSlice";
 
 const payment = [
    {
@@ -50,30 +52,31 @@ export default function Checkout() {
       libraries: lib,
    });
    const { items, voucherSelected } = useSelector(getCartSelector);
-   const [paymentType, setPaymentType] = useState();
    const userInfo = useSelector(userInfoSelector);
-   const [data, setData] = useState();
    const [openBackDrop, setBackDrop] = useState(false);
-   const { tempDataOrder } = useSelector(globalConfigSliceSelector);
    const flag = useRef(false);
-   const [subTotal, setSubTotal] = useState();
-   const [shipTotal, setShipTotal] = useState();
-   const [promotion, setPromotion] = useState();
+   const { tempOrder } = useSelector(persistSliceSelector);
    const [listShopOwnersItems, setListShopOweersItems] = useState([]);
    const [deliveryInfo, setDeliveryInfo] = useState({
       fullName: "",
       phoneNumber: "",
       address: "",
    });
-   const { itemsByShop, total } = useSelector(orderSliceSelector);
+   const { itemsByShop, total, paymentMethod, infoDelivery } =
+      useSelector(orderSliceSelector);
 
    const handleSelectPayment = (paymentName) => {
-      setPaymentType(paymentName);
+      console.log(paymentName);
+      dispatch(orderSlice.actions.updatePaymentMethod(paymentName));
    };
 
    const navigate = useNavigate();
    const dispatch = useDispatch();
-
+   console.log(
+      paymentMethod,
+      infoDelivery,
+      "payment ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+   );
    useEffect(() => {
       const listTemp = items.reduce((acc, item) => {
          let count = 0;
@@ -99,56 +102,18 @@ export default function Checkout() {
          phoneNumber: userInfo.info.phoneNumber,
          address: userInfo.info.address,
       });
-      getOrderData(userInfo?.info);
    }, [userInfo]);
-   const getOrderData = (info) => {
-      const productOrder = items.reduce((acc, order) => {
-         return { ...acc, [order.id]: order.cartQuantity };
-      }, {});
 
-      const promotionId = [];
-      if (voucherSelected.shipping?.id) {
-         promotionId.push(voucherSelected.shipping.id);
-      }
-
-      if (voucherSelected.discount?.id) {
-         promotionId.push(voucherSelected.discount.id);
-      }
-
-      const totalPrice = () => {
-         return subTotal + shipTotal - promotion > 0
-            ? Number(subTotal + shipTotal - promotion).toFixed(2)
-            : 0;
-      };
-      dispatch(
-         globalConfigSlice.actions.saveTempDataOrder({
-            userOrderDto: {
-               email: info.email,
-               name: info.fullName,
-               phoneNumber: info.phoneNumber,
-               street: info.address?.street,
-               ward: info.address?.ward,
-               district: info.address?.district,
-               city: info.address?.city,
-            },
-            transactionDto: {
-               totalPrice: totalPrice(),
-               promotionId: promotionId,
-               paymentMethod: "PAYPAL",
-            },
-            productOrder: productOrder,
-         })
-      );
-   };
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
+      console.log(tempOrder, 'temporrrrrasdfa sdasdf asdf asdf asd fasdf asdf rrrrrrder');
       let status = params.get("status");
       if (status === "success") {
          const paymentId = params.get("paymentId");
          const PayerID = params.get("PayerID");
          if (flag.current === false) {
             setBackDrop(true);
-            api.post("/package-order", tempDataOrder, {
+            api.post("/package-order", tempOrder, {
                params: { paymentId: paymentId, PayerID: PayerID },
             })
                .then((response) => {
@@ -174,26 +139,29 @@ export default function Checkout() {
       dispatch(orderSlice.actions.updatePromotion(voucherSelected));
    }, [voucherSelected]);
    useEffect(() => {
-      console.log(itemsByShop, "itemmmmmmmmmmmmmmmmmshop");
-      const subTotal = itemsByShop.reduce((acc, item) => {
-         return acc + item.totalShopPrice;
-      }, 0);
+      if (itemsByShop && Array.isArray(itemsByShop)) {
+         const subTotal = itemsByShop.reduce((acc, item) => {
+            return fix2(acc + +item.totalShopPrice);
+         }, 0);
 
-      const shipTotal = itemsByShop.reduce((acc, item) => {
-         return acc + item.shippingFee;
-      }, 0);
-      let promotionFee = voucherSelected?.discount?.discount;
-      if (!promotionFee) {
-         promotionFee = 0;
+         const shipTotal = itemsByShop.reduce((acc, item) => {
+            return fix2(acc + +item.shippingFee);
+         }, 0);
+
+         let promotionFee = fix2(voucherSelected?.discount?.discount);
+         if (!promotionFee) {
+            promotionFee = 0;
+         }
+
+         dispatch(
+            orderSlice.actions.updateTotal({
+               subTotal: subTotal,
+               shippingTotal: shipTotal,
+               promotionFee: promotionFee,
+               paymentTotal: fix2(subTotal + +shipTotal - promotionFee),
+            })
+         );
       }
-      dispatch(
-         orderSlice.actions.updateTotal({
-            subTotal: subTotal,
-            shippingTotal: shipTotal,
-            promotionFee: promotionFee,
-            paymentTotal: subTotal + +shipTotal - promotionFee,
-         })
-      );
    }, [itemsByShop]);
    return (
       <>
@@ -242,7 +210,7 @@ export default function Checkout() {
                                  !deliveryInfo?.fullName ||
                                  !deliveryInfo?.phoneNumber ||
                                  !deliveryInfo?.address ||
-                                 !paymentType
+                                 !paymentMethod
                               }
                            >
                               Check out
@@ -252,8 +220,8 @@ export default function Checkout() {
                         {(close) => (
                            <OrderBill
                               close={close}
-                              paymentType={paymentType}
                               listShopOwnersItems={listShopOwnersItems}
+                              deliveryInfo={deliveryInfo}
                            />
                         )}
                      </Popup>

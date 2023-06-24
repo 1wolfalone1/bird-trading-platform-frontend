@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import clsx from "clsx";
 import s from "./orderBill.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -12,10 +12,11 @@ import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import { formatNumber } from "../../../utils/myUtils";
 import { orderSliceSelector } from "../../../redux/global/orderSlice";
-
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import orderSlice from "./../../../redux/global/orderSlice";
+import persistSlice from "../../../redux/global/persistSlice";
 export default function OrderBill({
    close,
-   paymentType,
    voucher,
    orderShop,
    deliveryInfo,
@@ -27,27 +28,40 @@ export default function OrderBill({
    const navigate = useNavigate();
    const { itemsByShop, paymentMethod, promotionIds, total } =
       useSelector(orderSliceSelector);
-   console.log(listShopOwnersItems, "list shop owners");
    const handleSubmitBtn = () => {
+      dispatch(
+         orderSlice.actions.updateInfoDelivery({
+            fullName: deliveryInfo?.fullName,
+            phoneNumber: deliveryInfo?.phoneNumber,
+            address: deliveryInfo?.address,
+         })
+      );
+
       const data = {
-         userOrderDto: {
+         userInfo: {
             fullName: deliveryInfo.fullName,
             phoneNumber: deliveryInfo.phoneNumber,
             address: deliveryInfo.address,
          },
-         orders: orderShop,
+         cartInfo: {
+            itemsByShop,
+            paymentMethod,
+            promotionIds,
+            total,
+         },
       };
-
+      dispatch(persistSlice.actions.saveTempOrder(data));
       api.post("/package-order", data)
          .then((response) => {
             // Handle the response from the backend, if needed
-            if (paymentType === "PayPal") {
+            console.log(response);
+            if (paymentMethod === "PAYPAL") {
                if (response.data.successCode == 200) {
                   window.location.href =
                      response.data.successMessage.substring(10);
                }
             }
-            if (paymentType === "Delivery") {
+            if (paymentMethod === "DELIVERY") {
                if (response.data.successCode == 200) {
                   dispatch(cartSlice.actions.removeCart());
                   localStorage.removeItem("cart");
@@ -76,7 +90,6 @@ export default function OrderBill({
          });
    };
 
-   console.log(items);
    return (
       <div className={clsx(s.container)}>
          <div className={clsx(s.header)}>
@@ -100,11 +113,14 @@ export default function OrderBill({
          </div>
          <div className={clsx(s.billContainer)}>
             {listShopOwnersItems.map((shop) => (
-               <>
+               <Fragment key={shop?.id}>
                   {shop?.data?.map((product, i) => (
-                     <>
+                     <Fragment key={product?.id}>
                         {i === 0 ? (
                            <>
+                              <Typography sx={{ fontSize: "2.4rem" }}>
+                                 {product.shopOwner.shopName}
+                              </Typography>
                               <Grid
                                  className={clsx(s.billInfo)}
                                  key={product.id}
@@ -120,12 +136,27 @@ export default function OrderBill({
                                        xl={7}
                                        className={clsx(s.name)}
                                     >
-                                       <Box>
-                                          <Typography>
-                                             {product.shopOwner.shopName}
-                                          </Typography>
-                                          <Typography>
-                                             {" "}
+                                       <Box
+                                          sx={{
+                                             display: "flex",
+                                             alignItems: "baseline",
+                                          }}
+                                       >
+                                          <Box>
+                                             <FiberManualRecordIcon
+                                                sx={{
+                                                   marginRight: "0.8rem",
+                                                   fontSize: "1.2rem",
+                                                }}
+                                             />{" "}
+                                          </Box>
+
+                                          <Typography
+                                             sx={{
+                                                fontSize: "2rem",
+                                                textAlign: "justify",
+                                             }}
+                                          >
                                              {product.name}
                                           </Typography>
                                        </Box>
@@ -169,7 +200,28 @@ export default function OrderBill({
                                        xl={7}
                                        className={clsx(s.name)}
                                     >
-                                       {product.name}
+                                       <Box
+                                          sx={{
+                                             display: "flex",
+                                             alignItems: "baseline",
+                                          }}
+                                       >
+                                          <Box>
+                                             <FiberManualRecordIcon  sx={{
+                                                   marginRight: "0.8rem",
+                                                   fontSize: "1.2rem",
+                                                }}/>
+                                          </Box>{" "}
+                                          <Typography
+                                             sx={{
+                                                fontSize: "2rem",
+                                                textAlign: "justify",
+                                             }}
+                                          >
+                                             {"   "}
+                                             {product.name}
+                                          </Typography>
+                                       </Box>
                                     </Grid>
                                     <Grid
                                        sm={2}
@@ -194,22 +246,23 @@ export default function OrderBill({
                               </Grid>
                            </>
                         )}
-                     </>
+                     </Fragment>
                   ))}
-               </>
+               </Fragment>
             ))}
          </div>
          <div className={clsx(s.subTotal)}>
             Merchandise Subtotal: {formatNumber(total?.subTotal)}
          </div>
          <div className={clsx(s.shipping)}>
-            Shipping Total: {formatNumber(total?.shippingTotal)}
+            Shipping Total: {formatNumber(total?.shippingTotal)}{" "}
+            {voucherSelected?.shipping ? "- Free ship" : ""}
          </div>
          <div className={clsx(s.discount)}>
             Promotion: {formatNumber(total?.promotionFee)}
          </div>
          <div className={clsx(s.payment)}>
-            Payment Method: {paymentType === "Delivery" ? "COD" : "PayPal"}
+            Payment Method: {paymentMethod === "DELIVERY" ? "COD" : "PayPal"}
          </div>
          <div className={clsx(s.total)}>
             Total bill:

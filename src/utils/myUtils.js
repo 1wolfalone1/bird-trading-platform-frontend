@@ -54,3 +54,13 @@ export const formatNumber = (q) => {
       currency: "USD",
    });
 };
+
+
+export const fix2 = (number) => {
+   try {
+      return Math.round(number * 1e2) / 1e2;
+   } catch (e) {
+      console.error('not a number in fix2')
+      return 0;
+   }
+}
