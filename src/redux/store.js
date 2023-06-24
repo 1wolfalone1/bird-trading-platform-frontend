@@ -9,6 +9,7 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import notificationSlice from "../component/popper/noti-poper/notificationSlice";
 import orderSlice from "./global/orderSlice";
+import persistSlice from "./global/persistSlice";
 
 const persistConfig = {
    key: "root",
@@ -20,8 +21,8 @@ const persistConfig = {
       "productsPresentationData",
       "fileControlSlice",
       "messageSlice",
-      "userInfoSlice",
-      "orderSlice"
+      "orderSlice",
+      "userInfoSlice"
    ],
 };
 const reducer = combineReducers({
@@ -32,7 +33,8 @@ const reducer = combineReducers({
    globalConfigSlice: globalConfigSlice.reducer,
    messageSlice: messageSlice.reducer,
    notificationSlice: notificationSlice.reducer,
-   orderSlice: orderSlice.reducer
+   orderSlice: orderSlice.reducer,
+   persistSlice: persistSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({

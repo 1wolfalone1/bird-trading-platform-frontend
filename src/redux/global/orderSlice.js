@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 const orderSlice = createSlice({
    name: "orderSlice",
    initialState: {
+      infoDelivery: {},
       itemsByShop: [],
       paymentMethod: "",
       promotionIds: [],
@@ -32,13 +33,22 @@ const orderSlice = createSlice({
          state.total = action.payload;
       },
       updatePromotion: (state, action) => {
+         const listVoucher = [];
+    
          if (action.payload.shipping) {
-            state.promotionIds.push(action.payload.shipping.id);
+            listVoucher.push(action.payload.shipping.id);
          }
          if (action.payload.discount) {
-            state.promotionIds.push(action.payload.discount.id);
+            listVoucher.push(action.payload.discount.id);
          }
+         state.promotionIds = listVoucher;
       },
+      updatePaymentMethod: (state, action) => {
+         state.paymentMethod = (action.payload).toUpperCase();
+      },
+      updateInfoDelivery: (state, action) => {
+         state.infoDelivery = action.payload;
+      }
    },
 });
 

@@ -28,7 +28,7 @@
   height: 70rem;
   background-color: c.$Dominant3;
   padding: 5rem;
-  width: 100%;
+  width: 70rem;
   @include fsf(2.4rem);
   .header {
     padding-bottom: 3rem;
@@ -78,14 +78,14 @@
   }
   .billContainer {
     position: relative;
-    padding: 0 2rem 2rem 2rem;
+    padding: 0 2rem 2rem 0rem;
     border-bottom: 0.1rem solid c.$Complementary0;
     height: 36%;
     overflow-y: scroll;
     .billInfo {
       .bill {
         height: 70%;
-        margin-top: 2rem;
+        margin: 2rem;
         max-width: 100%;
         .name {
         }

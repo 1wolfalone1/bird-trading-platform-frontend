@@ -6,7 +6,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ShopTitle from "./shop-title/ShopTitle";
 import { Box, Typography } from "@mui/material";
 import Style from "../../../style/inline-style/style";
-import { calculateDistance } from "../../../utils/myUtils";
+import { calculateDistance, fix2 } from "../../../utils/myUtils";
 import { useDispatch, useSelector } from "react-redux";
 import orderSlice, {
    orderSliceSelector,
@@ -52,7 +52,7 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
    useEffect(() => {
       if (products) {
          const total = products?.reduce((acc, item) => {
-            const newPice = acc + item.price * item.cartQuantity;
+            const newPice = acc + item.discountedPrice * item.cartQuantity;
             return newPice;
          }, 0);
          setTotalShop(total);
@@ -61,16 +61,16 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
 
    useEffect(() => {
       dispatch(globalConfigSlice.actions.changeBackDrops(true));
-      const listShopItems = products.map((product) => {
-         return {
-           [product.id]: product.cartQuantity,
+      const listShopItems = products.reduce((acc, product) => {
+         return {...acc,
+            [product.id]: product.cartQuantity,
          };
-      });
+      }, {});
       dispatch(
          orderSlice.actions.updateItemsByShop({
-            totalShopPrice: totalShop,
-            shippingFee: shipPrice,
-            distance: distance,
+            totalShopPrice: fix2(totalShop),
+            shippingFee: fix2(shipPrice),
+            distance: distance ? distance / 1000 : 0,
             shopId: products[0].shopOwner.id,
             listItems: listShopItems,
          })
