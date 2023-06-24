@@ -50,6 +50,7 @@ export default function OrderBill({
             total,
          },
       };
+      console.log(data, 'data ne')
       dispatch(persistSlice.actions.saveTempOrder(data));
       api.post("/package-order", data)
          .then((response) => {
