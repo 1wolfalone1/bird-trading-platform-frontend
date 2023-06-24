@@ -99,7 +99,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
             />
           </div>
           <div className={s.userName}>
-            <span>{user.info.fullName}</span>
+            <span>{user?.info?.fullName}</span>
           </div>
           <IconDropDown variants={iconRotateAnimation} animate="animate" />
         </div>
