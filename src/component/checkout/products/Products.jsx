@@ -23,6 +23,7 @@ const boxPrice = {
    justifyContent: "space-between",
    width: "100%",
 };
+
 export default function Products({ products, deliveryInfo, isLoaded }) {
    const { voucherSelected } = useSelector(getCartSelector);
    const [distance, setDistance] = useState();
