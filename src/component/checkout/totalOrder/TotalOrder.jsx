@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import clsx from "clsx";
 import s from "./TotalOrder.module.scss";
+import { formatNumber } from "../../../utils/myUtils";
 
 export default function TotalOrder({ subTotal, shipTotal, promotion }) {
   return (
@@ -10,15 +11,15 @@ export default function TotalOrder({ subTotal, shipTotal, promotion }) {
         <div className={clsx(s.content)}>
           <div className={clsx(s.subtotal)}>
             <div>Merchandise Subtotal: </div>
-            <div>{subTotal}</div>
+            <div>{formatNumber(subTotal)}</div>
           </div>
           <div className={clsx(s.delivery)}>
             <div>Shipping Total: </div>
-            <div>{shipTotal}</div>
+            <div>{formatNumber(shipTotal)}</div>
           </div>
           <div className={clsx(s.promotion)}>
             <div>Promotion: </div>
-            <div>{promotion}</div>
+            <div>{formatNumber(promotion)}</div>
           </div>
         </div>
         <div className={clsx(s.total)}>
@@ -26,7 +27,7 @@ export default function TotalOrder({ subTotal, shipTotal, promotion }) {
           <div>
             {subTotal + shipTotal - promotion < 0
               ? "$0.00"
-              : subTotal + shipTotal - promotion}
+              : formatNumber(subTotal + shipTotal - promotion)}
           </div>
         </div>
       </div>

@@ -91,15 +91,15 @@ export default function UserRightHeader({ user, totalCartItems }) {
           <div className={s.avatar}>
             <img
               src={
-                user.info.imgUrl
-                  ? user.info.imgUrl
+                user?.info && user.info?.imgUrl
+                  ? user?.info?.imgUrl
                   : "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg"
               }
               alt=""
             />
           </div>
           <div className={s.userName}>
-            <span>{user.info.fullName}</span>
+            <span>{user?.info?.fullName}</span>
           </div>
           <IconDropDown variants={iconRotateAnimation} animate="animate" />
         </div>
