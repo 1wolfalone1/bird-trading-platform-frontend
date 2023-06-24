@@ -17,14 +17,17 @@ import cartSlice, {
   userStatus,
 } from "./container/order/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
-import userInfoSlice, { invokeUserInfo, userInfoSelector } from "./redux/global/userInfoSlice";
+import userInfoSlice, {
+  invokeUserInfo,
+  userInfoSelector,
+} from "./redux/global/userInfoSlice";
 import ProductDetails from "./container/product-details/ProductDetails";
 import GetToken from "./container/get-token/GetToken";
 import PopupMessage from "./component/message/PopupMessage";
 import OrderStatus from "./container/purchase/order-status/OrderStatus";
 import OrderHistory from "./container/purchase/order-history/OrderHistory";
 import CreateShop from "./container/create-shop/CreateShop";
-import Shop from "./container/shop/Shop";
+import ProductDetailsPage from "./container/product-details-page/ProductDetailsPage";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -38,7 +41,6 @@ function App() {
       dispatch(invokeCart(cart));
     }
     if (userInfoObject) {
-
       dispatch(invokeUserInfo(userInfoObject));
     }
   }, []);
@@ -57,14 +59,13 @@ function App() {
         <Route path="products/*" element={<ProductPageRoute />} />
         <Route path="profile" element={<Profile />} />
         <Route path="cart" element={<CartContainer />} />
-        <Route path="product/:id" element={<ProductDetails />} />
+        <Route path="product/:id" element={<ProductDetailsPage />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="get-token" element={<GetToken />} />
         <Route path="popup-message" element={<PopupMessage />} />
         <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="create-shop" element={<CreateShop />} />
-        <Route path="shop" element={<Shop />} />
       </Route>
     </Routes>
   );

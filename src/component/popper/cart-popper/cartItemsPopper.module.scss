@@ -1,19 +1,5 @@
 @use "../../style/" as c;
 
-@mixin button(
-  $padding: 1rem 2rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 0.1rem solid c.$Complementary0;
-  font-size: 2.4rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
-
 .cartIcon {
   width: 4.8rem;
   height: 4.8rem;
@@ -58,17 +44,7 @@
 }
 .button {
   Button {
-    //   border-top: 1px solid c.$Accent1;
-    //   display: flex;
-    //   flex: 1;
-    //   width: 100%;
-    //   justify-content: center;
-    //   bottom: 0;
-    @include button();
-    &:hover {
-      background-color: c.$Dominant5;
-      color: c.$Complementary0;
-    }
+    @include c.f-button();
   }
 }
 
