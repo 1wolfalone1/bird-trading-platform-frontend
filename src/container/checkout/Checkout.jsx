@@ -12,7 +12,7 @@ import cartSlice, { getCartSelector } from "../order/cartSlice";
 import { useState } from "react";
 import Popup from "reactjs-popup";
 import OrderBill from "../../component/checkout/orderBill/OrderBill";
-import { Backdrop, Button, CircularProgress, Modal } from "@mui/material";
+import { Backdrop, Button, CircularProgress } from "@mui/material";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import COD from "../../asset/image/COD.avif";
 import PayPal from "../../asset/image/Paypal.avif";
@@ -20,31 +20,35 @@ import { useEffect } from "react";
 import { api } from "../../api/server/API";
 import { useNavigate } from "react-router-dom";
 import globalConfigSlice, {
-  globalConfigSliceSelector,
+   globalConfigSliceSelector,
 } from "../../redux/global/globalConfigSlice";
 import { useRef } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
+import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
+import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
 
 const payment = [
-  {
-    id: 1,
-    image:
-      "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/paypal.jpg",
-    method: "PayPal Wallet",
-    discount: 5,
-    name: "PayPal",
-  },
-  {
-    id: 2,
-    image:
-      "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/cash-delivery.jpg",
-    method: "Cash on delivery (COD)",
-    discount: 0,
-    name: "Delivery",
-  },
+   {
+      id: 1,
+      image: "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/paypal.jpg",
+      method: "PayPal Wallet",
+      discount: 5,
+      name: "PayPal",
+   },
+   {
+      id: 2,
+      image: "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/cash-delivery.jpg",
+      method: "Cash on delivery (COD)",
+      discount: 0,
+      name: "Delivery",
+   },
 ];
 const lib = ["places"];
 export default function Checkout() {
+   const { isLoaded } = useJsApiLoader({
+      googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
+      libraries: lib,
+   });
    const { items, voucherSelected } = useSelector(getCartSelector);
    const [paymentType, setPaymentType] = useState();
    const userInfo = useSelector(userInfoSelector);
@@ -55,33 +59,22 @@ export default function Checkout() {
    const [subTotal, setSubTotal] = useState();
    const [shipTotal, setShipTotal] = useState();
    const [promotion, setPromotion] = useState();
-   const [listShopOwersItems, setListShopOweersItems] = useState([]);
+   const [listShopOwnersItems, setListShopOweersItems] = useState([]);
    const [deliveryInfo, setDeliveryInfo] = useState({
       fullName: "",
       phoneNumber: "",
       address: "",
    });
+   const { itemsByShop, total } = useSelector(orderSliceSelector);
+
    const handleSelectPayment = (paymentName) => {
       setPaymentType(paymentName);
    };
+
    const navigate = useNavigate();
    const dispatch = useDispatch();
+
    useEffect(() => {
-      setSubTotal(
-         Number(
-            items
-               .reduce(
-                  (total, item) =>
-                     total + item.discountedPrice * item.cartQuantity,
-                  0
-               )
-               .toFixed(2)
-         )
-      );
-      setShipTotal(
-         !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
-      );
-      setPromotion(voucherSelected.discount?.discount ?? 0);
       const listTemp = items.reduce((acc, item) => {
          let count = 0;
          acc.map((lists) => {
@@ -97,40 +90,30 @@ export default function Checkout() {
          }
          return acc;
       }, []);
-      console.log(listTemp, "listTemp ne ");
       setListShopOweersItems(listTemp);
-      setDeliveryInfo({
-         fullName: userInfo.fullName,
-         phoneNumber: userInfo.phoneNumber,
-         address: userInfo.address,
-      });
    }, []);
-   const handleCheckout = () => {
-      const info = userInfo.info;
-      return (
-         !info.address?.street ||
-         !info.address?.ward ||
-         !info.address?.district ||
-         !info.address?.city ||
-         !info?.fullName ||
-         !info?.phoneNumber ||
-         paymentType === undefined
-      );
-   };
 
+   useEffect(() => {
+      setDeliveryInfo({
+         fullName: userInfo.info.fullName,
+         phoneNumber: userInfo.info.phoneNumber,
+         address: userInfo.info.address,
+      });
+      getOrderData(userInfo?.info);
+   }, [userInfo]);
    const getOrderData = (info) => {
       const productOrder = items.reduce((acc, order) => {
          return { ...acc, [order.id]: order.cartQuantity };
       }, {});
 
-    const promotionId = [];
-    if (voucherSelected.shipping?.id) {
-      promotionId.push(voucherSelected.shipping.id);
-    }
+      const promotionId = [];
+      if (voucherSelected.shipping?.id) {
+         promotionId.push(voucherSelected.shipping.id);
+      }
 
-    if (voucherSelected.discount?.id) {
-      promotionId.push(voucherSelected.discount.id);
-    }
+      if (voucherSelected.discount?.id) {
+         promotionId.push(voucherSelected.discount.id);
+      }
 
       const totalPrice = () => {
          return subTotal + shipTotal - promotion > 0
@@ -157,16 +140,10 @@ export default function Checkout() {
          })
       );
    };
-   useEffect(() => {
-      getOrderData(userInfo?.info);
-   }, [userInfo]);
-
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
       let status = params.get("status");
-      console.log(status, "here is status");
       if (status === "success") {
-         console.log(tempDataOrder, flag);
          const paymentId = params.get("paymentId");
          const PayerID = params.get("PayerID");
          if (flag.current === false) {
@@ -193,7 +170,31 @@ export default function Checkout() {
          flag.current = true;
       };
    }, []);
-   console.log(items);
+   useEffect(() => {
+      dispatch(orderSlice.actions.updatePromotion(voucherSelected));
+   }, [voucherSelected]);
+   useEffect(() => {
+      console.log(itemsByShop, "itemmmmmmmmmmmmmmmmmshop");
+      const subTotal = itemsByShop.reduce((acc, item) => {
+         return acc + item.totalShopPrice;
+      }, 0);
+
+      const shipTotal = itemsByShop.reduce((acc, item) => {
+         return acc + item.shippingFee;
+      }, 0);
+      let promotionFee = voucherSelected?.discount?.discount;
+      if (!promotionFee) {
+         promotionFee = 0;
+      }
+      dispatch(
+         orderSlice.actions.updateTotal({
+            subTotal: subTotal,
+            shippingTotal: shipTotal,
+            promotionFee: promotionFee,
+            paymentTotal: subTotal + +shipTotal - promotionFee,
+         })
+      );
+   }, [itemsByShop]);
    return (
       <>
          <Backdrop
@@ -205,9 +206,14 @@ export default function Checkout() {
          <div>
             <Grid container columns={11} className={clsx(s.container)}>
                <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
-                  {listShopOwersItems
-                     ? listShopOwersItems.map((lists) => (
-                          <Products products={lists.data} key={lists.id} />
+                  {listShopOwnersItems
+                     ? listShopOwnersItems.map((lists) => (
+                          <Products
+                             products={lists.data}
+                             key={lists.id}
+                             deliveryInfo={deliveryInfo}
+                             isLoaded={isLoaded}
+                          />
                        ))
                      : ""}
                </Grid>
@@ -222,20 +228,33 @@ export default function Checkout() {
                      payment={payment}
                   />
                   <TotalOrder
-                     subTotal={subTotal}
-                     shipTotal={shipTotal}
-                     promotion={promotion}
+                     subTotal={total?.subTotal}
+                     shipTotal={total?.shippingTotal}
+                     promotion={total?.promotionFee}
                   />
                   <div className={clsx(s.orderButton)}>
                      <Popup
                         className="addButton"
                         modal
-                        trigger=<Button disabled={handleCheckout()}>
-                           Check out
-                        </Button>
+                        trigger={
+                           <Button
+                              disabled={
+                                 !deliveryInfo?.fullName ||
+                                 !deliveryInfo?.phoneNumber ||
+                                 !deliveryInfo?.address ||
+                                 !paymentType
+                              }
+                           >
+                              Check out
+                           </Button>
+                        }
                      >
                         {(close) => (
-                           <OrderBill close={close} paymentType={paymentType} />
+                           <OrderBill
+                              close={close}
+                              paymentType={paymentType}
+                              listShopOwnersItems={listShopOwnersItems}
+                           />
                         )}
                      </Popup>
                   </div>

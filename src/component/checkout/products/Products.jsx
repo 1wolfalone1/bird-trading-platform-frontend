@@ -7,23 +7,28 @@ import ShopTitle from "./shop-title/ShopTitle";
 import { Box, Typography } from "@mui/material";
 import Style from "../../../style/inline-style/style";
 import { calculateDistance } from "../../../utils/myUtils";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import orderSlice, {
    orderSliceSelector,
 } from "../../../redux/global/orderSlice";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { formatNumber } from "./../../../utils/myUtils";
+import globalConfigSlice from "../../../redux/global/globalConfigSlice";
+import { getCartSelector } from "../../../container/order/cartSlice";
 
-const formatNumber = (q) => {
-   return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-   });
+const boxPrice = {
+   display: "flex",
+   alignItems: "center",
+   flexDirection: "column",
+   justifyContent: "space-between",
+   width: "100%",
 };
-
 export default function Products({ products, deliveryInfo, isLoaded }) {
+   const { voucherSelected } = useSelector(getCartSelector);
    const [distance, setDistance] = useState();
-   const [shipPrice, setShipPrice] = useState();
-   const { itemsByShop } = useSelector(orderSliceSelector);
+   const [shipPrice, setShipPrice] = useState(0);
+   const [totalShop, setTotalShop] = useState();
+   const dispatch = useDispatch();
    useEffect(() => {
       if (deliveryInfo && isLoaded) {
          if (deliveryInfo.address) {
@@ -36,12 +41,41 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
                });
          }
       }
-   }, [deliveryInfo]);
+   }, [deliveryInfo, isLoaded]);
    useEffect(() => {
-      if (typeof distance === "number") {
+      if (typeof distance === "number" && voucherSelected.shipping === null) {
          getShipping();
       }
-   }, [distance]);
+   }, [distance, deliveryInfo]);
+
+   useEffect(() => {
+      if (products) {
+         const total = products?.reduce((acc, item) => {
+            const newPice = acc + item.price * item.cartQuantity;
+            return newPice;
+         }, 0);
+         setTotalShop(total);
+      }
+   }, [products]);
+
+   useEffect(() => {
+      dispatch(globalConfigSlice.actions.changeBackDrops(true));
+      const listShopItems = products.map((product) => {
+         return {
+           [product.id]: product.cartQuantity,
+         };
+      });
+      dispatch(
+         orderSlice.actions.updateItemsByShop({
+            totalShopPrice: totalShop,
+            shippingFee: shipPrice,
+            distance: distance,
+            shopId: products[0].shopOwner.id,
+            listItems: listShopItems,
+         })
+      );
+      dispatch(globalConfigSlice.actions.changeBackDrops(false));
+   }, [shipPrice, totalShop]);
    const getShipping = async () => {
       try {
          const distanceInKm = distance / 1000;
@@ -49,7 +83,6 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
             `https://gofship.shop/api/v1/shipping-fee?distance=${distanceInKm}`
          );
          const data = await res.json();
-
          setShipPrice(data.shippingFee);
       } catch (err) {
          console.log(err);
@@ -96,36 +129,68 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
                   ></Product>
                ))}
             <Grid container spacing={2}>
-               {shipPrice ? (
+               {deliveryInfo.address ? (
                   <>
-                     <Grid xs={9}>
-                        <Typography>{distance ? distance : ""}</Typography>
-                     </Grid>
-                     <Grid xs={3}>
+                     <Grid xs={12}>
                         <Box sx={{ display: "flex" }}>
                            <Box
                               sx={{
                                  gap: "1rem",
                                  borderTop: "0.1rem solid #000000",
-                                 flexShrink: "0",
                                  display: "flex",
-                                 alignItems: "center",
+                                 width: "100%",
                               }}
                            >
-                              <Typography
-                                 variant="h4"
-                                 sx={{ fontSize: "2.4rem" }}
-                              >
-                                 Ship price:
-                              </Typography>
-                              <Typography
-                                 sx={{
-                                    fontSize: "2.4rem",
-                                    color: Style.color.$Money,
-                                 }}
-                              >
-                                 {shipPrice?.shippingFee}
-                              </Typography>
+                              <Box sx={boxPrice}>
+                                 <Typography
+                                    variant="h4"
+                                    sx={{ fontSize: "2.4rem" }}
+                                 >
+                                    Total order:
+                                 </Typography>
+                                 <Typography
+                                    sx={{
+                                       fontSize: "2.4rem",
+                                       color: Style.color.$Money,
+                                    }}
+                                 >
+                                    {formatNumber(totalShop)}
+                                 </Typography>
+                              </Box>
+                              <Box sx={boxPrice}>
+                                 <Typography
+                                    variant="h4"
+                                    sx={{ fontSize: "2.4rem" }}
+                                 >
+                                    Ship price:
+                                 </Typography>
+                                 <Typography
+                                    sx={{
+                                       fontSize: "2.4rem",
+                                       color: Style.color.$Money,
+                                    }}
+                                 >
+                                    {formatNumber(shipPrice)}
+                                 </Typography>
+                              </Box>
+                              <Box sx={{ ...boxPrice }}>
+                                 <Typography
+                                    sx={{
+                                       fontSize: "2.4rem",
+                                       color: Style.color.$Money,
+                                    }}
+                                 >
+                                    Total shop:
+                                 </Typography>{" "}
+                                 <Typography
+                                    sx={{
+                                       fontSize: "2.4rem",
+                                       color: Style.color.$Money,
+                                    }}
+                                 >
+                                    {formatNumber(totalShop + shipPrice)}
+                                 </Typography>
+                              </Box>
                            </Box>
                         </Box>
                      </Grid>

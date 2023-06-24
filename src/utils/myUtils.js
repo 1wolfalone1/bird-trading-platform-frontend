@@ -32,7 +32,7 @@ export const objectToBlob = (object) => {
 };
 
 export const calculateDistance = async (origin, destination) => {
-   console.log(origin, destination, 'adsfasdf conalulatetetetetet');
+   console.log(origin, destination, "adsfasdf conalulatetetetetet");
    // eslint-disable-next-line no-undef
    const directionsService = new google.maps.DirectionsService();
    const results = await directionsService.route({
@@ -46,8 +46,11 @@ export const calculateDistance = async (origin, destination) => {
 };
 
 export const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+   if (q === undefined || q ===null || q === "") {
+      q = 0;
+   }
+   return q.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+   });
 };

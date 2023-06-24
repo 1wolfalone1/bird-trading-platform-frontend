@@ -18,6 +18,7 @@ import cartSlice, {
 import { getAllPromotions } from "../../api/server/promotions/PromotionAPI";
 import { formatNumber } from "../../utils/myUtils";
 
+
 export default function Voucher({ close }) {
   const total = useSelector(totalPriceSelector);
   const voucherSelected = useSelector(getVoucherSelectedSelector);
