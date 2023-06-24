@@ -5,7 +5,6 @@ import { Box, Typography } from "@mui/material";
 import Style from "../../../../style/inline-style/style";
 
 export default function ShopTitle({ shop }) {
-   console.log(shop);
    return (
       <Grid2 container p={"0.4rem 3rem"}>
          <Grid2 xs={5} sx={{ display: "flex", gap: "1rem", alignItems: 'flex-end' }}>
