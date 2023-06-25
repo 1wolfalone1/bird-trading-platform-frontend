@@ -14,6 +14,7 @@ api.defaults.paramsSerializer = (params) =>
 api.interceptors.request.use(
   (config) => {
     if (!config.headers.Authorization) {
+
       const token = JSON.parse(localStorage.getItem("token"));
       if (token) {
         config.headers.Authorization = `Bearer ${token.accessToken}`;

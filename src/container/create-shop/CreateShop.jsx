@@ -170,6 +170,7 @@ export default function CreateShop() {
          });
          const data = await response.data
          console.log(data);
+         handleNavigateToShop();
          setLoading(false);
       } catch (e) {
          console.log(e);
@@ -179,7 +180,19 @@ export default function CreateShop() {
          }
       }
    };
+   const handleNavigateToShop = async () => {
+      try {
+         const res = await api.get('/shop-owner/redirect');
+         const data = await res.data;
+         console.log(data);
+         if (data.successMessage) {
+            window.location.href = data.successMessage; // Redirect to the desired page
+         }
+      } catch (e) {
 
+         console.log(e, 'error create shop');
+      }
+   };
    const handleUpdateAvatar = (e) => {
       e.preventDefault();
       let files;

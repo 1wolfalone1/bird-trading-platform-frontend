@@ -30,12 +30,24 @@ const userInfoSlice = createSlice({
             return { status: userStatus.GUEST, info: {} };
          })
          .addCase(invokeUserInfo.fulfilled, (state, action) => {
-            return {
-               status: 1,
-               info: action.payload?.userInfo,
-            };
+            if(action.payload.userInfo){
+               return {
+                  status: userStatus.USER,
+                  info: action.payload.userInfo,
+               };
+            } else {
+               return {
+                  status: userStatus.GUEST,
+                  info: {},
+               };
+            }
          })
-         .addCase(invokeUserInfo.rejected, (state, action) => {}),
+         .addCase(invokeUserInfo.rejected, (state, action) => {
+            return {
+               status: userStatus.GUEST,
+               info: {},
+            };
+         }),
 });
 
 export default userInfoSlice;

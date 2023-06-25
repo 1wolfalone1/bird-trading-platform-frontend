@@ -95,7 +95,7 @@ function MapControl({
                   (component) =>
                      component.types.includes("country") &&
                      (component.long_name === "Vietnam" ||
-                        component.short_name === "Việt Nam" ||
+                        component.long_name === "Việt Nam" ||
                         component.short_name === "VN")
                );
                console.log(
