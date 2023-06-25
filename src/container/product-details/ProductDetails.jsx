@@ -391,7 +391,7 @@ export default function ProductDetails() {
             </div>
             <Divider />
             <div className={s.description}>
-              <h1>Description</h1>
+              <h3>Description</h3>
               <div
                 dangerouslySetInnerHTML={{ __html: element }}
                 className={s.content}
