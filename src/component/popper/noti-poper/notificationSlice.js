@@ -59,7 +59,7 @@ export const getListNotification = createAsyncThunk(
     "notification/noti-list",
     async (pageNumber, {getState}) => {
         const state = getState();
-        const userInfo = state.userInfoSlice.info;
+        const userInfo = state.userInfoSlice?.info;
         // const pageNumber = state.notificationSlice.notification.currentPageNumber;
         try {
             const res = await api.get(`/users/${userInfo?.id}/notifications`, {params: {pagenumber: pageNumber}});
@@ -76,7 +76,7 @@ export const getUnreadNotification = createAsyncThunk(
     "notification/noti-unread",
     async (_,{getState}) => {
         const state = getState();
-        const userInfo = state.userInfoSlice.info;
+        const userInfo = state.userInfoSlice?.info;
         try {
             const res = await api.get(`/users/${userInfo?.id}/notifications/unread`);
             const data = res.data;
