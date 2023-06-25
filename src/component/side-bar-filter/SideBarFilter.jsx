@@ -39,7 +39,7 @@ const ratingCustomizer = {
   color: Style.color.$Dominant6,
 };
 
-const typeOfSort = ["Increase", "Decrease"];
+const typeOfSort = ["INCREASE", "DECREASE"];
 
 const MenuProps = {
   disableScrollLock: true,
