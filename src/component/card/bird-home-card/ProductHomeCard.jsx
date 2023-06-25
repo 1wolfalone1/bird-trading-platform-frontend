@@ -2,16 +2,11 @@ import { Rating } from "@mui/material";
 import s from "./productHomeCard.module.scss";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { formatNumber } from "../../../utils/myUtils";
 
 export default function ProductHomeCard({ product }) {
   const [value, setValue] = useState(2);
   const navigate = useNavigate();
-  const formatNumber = (q) => {
-    return q.toLocaleString("en-US", {
-      style: "currency",
-      currency: "USD",
-    });
-  };
 
   return (
     <div

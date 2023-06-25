@@ -4,7 +4,7 @@ import Products from "./products/Products";
 import s from "./productsPresentation.module.scss";
 
 import React, { useEffect, useState } from "react";
-import { callFirstPage } from "./productsPresentationSlice";
+import { callFirstPage, filterByAll } from "./productsPresentationSlice";
 import { getProducts } from "./productsSelector";
 
 export default function ProductsPresentation() {
@@ -14,7 +14,8 @@ export default function ProductsPresentation() {
    const { data, page } = products;
    useEffect(() => {
       const k = async () => {
-         await dispatch(callFirstPage());
+         // await dispatch(callFirstPage());
+         await dispatch(filterByAll());
       };
       k();
    }, []);

@@ -23,6 +23,11 @@ import globalConfigSlice, {
    globalConfigSliceSelector,
 } from "../../redux/global/globalConfigSlice";
 import { useRef } from "react";
+import { useJsApiLoader } from "@react-google-maps/api";
+import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
+import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
+import { fix2 } from "../../utils/myUtils";
+import { persistSliceSelector } from "../../redux/global/persistSlice";
 
 const payment = [
    {
@@ -40,45 +45,33 @@ const payment = [
       name: "Delivery",
    },
 ];
-
+const lib = ["places"];
 export default function Checkout() {
+   const { isLoaded } = useJsApiLoader({
+      googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
+      libraries: lib,
+   });
    const { items, voucherSelected } = useSelector(getCartSelector);
-   const [paymentType, setPaymentType] = useState();
    const userInfo = useSelector(userInfoSelector);
-   const [data, setData] = useState();
    const [openBackDrop, setBackDrop] = useState(false);
-   const { tempDataOrder } = useSelector(globalConfigSliceSelector);
    const flag = useRef(false);
-   const [subTotal, setSubTotal] = useState();
-   const [shipTotal, setShipTotal] = useState();
-   const [promotion, setPromotion] = useState();
-   const [listShopOwersItems, setListShopOweersItems] = useState([]);
+   const { tempOrder } = useSelector(persistSliceSelector);
+   const [listShopOwnersItems, setListShopOweersItems] = useState([]);
    const [deliveryInfo, setDeliveryInfo] = useState({
       fullName: "",
       phoneNumber: "",
       address: "",
    });
+   const { itemsByShop, total, paymentMethod, infoDelivery } =
+      useSelector(orderSliceSelector);
+
    const handleSelectPayment = (paymentName) => {
-      setPaymentType(paymentName);
+      dispatch(orderSlice.actions.updatePaymentMethod(paymentName));
    };
+
    const navigate = useNavigate();
    const dispatch = useDispatch();
    useEffect(() => {
-      setSubTotal(
-         Number(
-            items
-               .reduce(
-                  (total, item) =>
-                     total + item.discountedPrice * item.cartQuantity,
-                  0
-               )
-               .toFixed(2)
-         )
-      );
-      setShipTotal(
-         !voucherSelected.shipping ? Number((0.05 * subTotal).toFixed(2)) : 0
-      );
-      setPromotion(voucherSelected.discount?.discount ?? 0);
       const listTemp = items.reduce((acc, item) => {
          let count = 0;
          acc.map((lists) => {
@@ -94,81 +87,27 @@ export default function Checkout() {
          }
          return acc;
       }, []);
-      console.log(listTemp, "listTemp ne ");
       setListShopOweersItems(listTemp);
-      setDeliveryInfo({
-         fullName: userInfo.fullName,
-         phoneNumber: userInfo.phoneNumber,
-         address: userInfo.address,
-      });
    }, []);
-   const handleCheckout = () => {
-      const info = userInfo.info;
-      return (
-         !info.address?.street ||
-         !info.address?.ward ||
-         !info.address?.district ||
-         !info.address?.city ||
-         !info?.fullName ||
-         !info?.phoneNumber ||
-         paymentType === undefined
-      );
-   };
 
-   const getOrderData = (info) => {
-      const productOrder = items.reduce((acc, order) => {
-         return { ...acc, [order.id]: order.cartQuantity };
-      }, {});
-
-      const promotionId = [];
-      if (voucherSelected.shipping?.id) {
-         promotionId.push(voucherSelected.shipping.id);
-      }
-
-      if (voucherSelected.discount?.id) {
-         promotionId.push(voucherSelected.discount.id);
-      }
-
-      const totalPrice = () => {
-         return subTotal + shipTotal - promotion > 0
-            ? Number(subTotal + shipTotal - promotion).toFixed(2)
-            : 0;
-      };
-      dispatch(
-         globalConfigSlice.actions.saveTempDataOrder({
-            userOrderDto: {
-               email: info.email,
-               name: info.fullName,
-               phoneNumber: info.phoneNumber,
-               street: info.address?.street,
-               ward: info.address?.ward,
-               district: info.address?.district,
-               city: info.address?.city,
-            },
-            transactionDto: {
-               totalPrice: totalPrice(),
-               promotionId: promotionId,
-               paymentMethod: "PAYPAL",
-            },
-            productOrder: productOrder,
-         })
-      );
-   };
    useEffect(() => {
-      getOrderData(userInfo?.info);
+      setDeliveryInfo({
+         fullName: userInfo.info.fullName,
+         phoneNumber: userInfo.info.phoneNumber,
+         address: userInfo.info.address,
+      });
    }, [userInfo]);
 
    const params = new URLSearchParams(window.location.search);
    useEffect(() => {
+
       let status = params.get("status");
-      console.log(status, "here is status");
       if (status === "success") {
-         console.log(tempDataOrder, flag);
          const paymentId = params.get("paymentId");
          const PayerID = params.get("PayerID");
          if (flag.current === false) {
             setBackDrop(true);
-            api.post("/package-order", tempDataOrder, {
+            api.post("/package-order", tempOrder, {
                params: { paymentId: paymentId, PayerID: PayerID },
             })
                .then((response) => {
@@ -190,7 +129,34 @@ export default function Checkout() {
          flag.current = true;
       };
    }, []);
-   console.log(items);
+   useEffect(() => {
+      dispatch(orderSlice.actions.updatePromotion(voucherSelected));
+   }, [voucherSelected]);
+   useEffect(() => {
+      if (itemsByShop && Array.isArray(itemsByShop)) {
+         const subTotal = itemsByShop.reduce((acc, item) => {
+            return fix2(acc + +item.totalShopPrice);
+         }, 0);
+
+         const shipTotal = itemsByShop.reduce((acc, item) => {
+            return fix2(acc + +item.shippingFee);
+         }, 0);
+
+         let promotionFee = fix2(voucherSelected?.discount?.discount);
+         if (!promotionFee) {
+            promotionFee = 0;
+         }
+
+         dispatch(
+            orderSlice.actions.updateTotal({
+               subTotal: subTotal,
+               shippingTotal: shipTotal,
+               promotionFee: promotionFee,
+               paymentTotal: fix2(subTotal + +shipTotal - promotionFee),
+            })
+         );
+      }
+   }, [itemsByShop]);
    return (
       <>
          <Backdrop
@@ -202,9 +168,14 @@ export default function Checkout() {
          <div>
             <Grid container columns={11} className={clsx(s.container)}>
                <Grid sm={11} md={7} xl={7} className={clsx(s.left)}>
-                  {listShopOwersItems
-                     ? listShopOwersItems.map((lists) => (
-                          <Products products={lists.data} key={lists.id} />
+                  {listShopOwnersItems
+                     ? listShopOwnersItems.map((lists) => (
+                          <Products
+                             products={lists.data}
+                             key={lists.id}
+                             deliveryInfo={deliveryInfo}
+                             isLoaded={isLoaded}
+                          />
                        ))
                      : ""}
                </Grid>
@@ -219,20 +190,33 @@ export default function Checkout() {
                      payment={payment}
                   />
                   <TotalOrder
-                     subTotal={subTotal}
-                     shipTotal={shipTotal}
-                     promotion={promotion}
+                     subTotal={total?.subTotal}
+                     shipTotal={total?.shippingTotal}
+                     promotion={total?.promotionFee}
                   />
                   <div className={clsx(s.orderButton)}>
                      <Popup
                         className="addButton"
                         modal
-                        trigger=<Button disabled={handleCheckout()}>
-                           Check out
-                        </Button>
+                        trigger={
+                           <Button
+                              disabled={
+                                 !deliveryInfo?.fullName ||
+                                 !deliveryInfo?.phoneNumber ||
+                                 !deliveryInfo?.address ||
+                                 !paymentMethod
+                              }
+                           >
+                              Check out
+                           </Button>
+                        }
                      >
                         {(close) => (
-                           <OrderBill close={close} paymentType={paymentType} />
+                           <OrderBill
+                              close={close}
+                              listShopOwnersItems={listShopOwnersItems}
+                              deliveryInfo={deliveryInfo}
+                           />
                         )}
                      </Popup>
                   </div>

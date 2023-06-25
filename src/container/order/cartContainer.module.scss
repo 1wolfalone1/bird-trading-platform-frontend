@@ -5,15 +5,6 @@ $overlay: rgba(0, 0, 0, 0.7);
 $border: 10rem;
 $fz: 3rem;
 
-@mixin button($padding: 1rem 2rem, $color: c.$Dominant4, $backgroundColor: c.$Complementary0) {
-  border: 1px solid c.$Complementary0;
-  font-size: 2.4rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
 .container {
   p {
     font-family: c.$Secondary;
@@ -100,15 +91,7 @@ $fz: 3rem;
     margin-left: $border;
 
     Button {
-      @include button();
-      a {
-        text-decoration: none;
-      }
-      flex-shrink: 0;
-    }
-    Button:hover {
-      color: c.$Accent7;
-      background-color: c.$Dominant5;
+      @include c.f-button();
     }
     .listVoucher {
       /* Firefox */
@@ -125,23 +108,16 @@ $fz: 3rem;
     flex-direction: column;
     align-items: flex-end;
     margin-right: $border;
+    margin-bottom: 5rem;
     .bill {
       border-top: 3px solid rgb(25, 25, 25);
       padding-top: 1rem;
       font-size: $fz;
     }
     Button {
-      @include button(1rem 2rem);
-      margin-bottom: 5rem;
-    }
-
-    Button:hover {
-      color: c.$Accent7;
-      background-color: c.$Dominant5;
+      @include c.f-button();
     }
   }
-
-
 }
 .modal {
   background: c.$Dominant2;
@@ -180,6 +156,7 @@ $fz: 3rem;
         color: c.$Dominant5;
         background-color: c.$Complementary4;
         margin-bottom: 2.4rem;
+
         .voucher {
           padding: 1rem;
           .voucherItem {
@@ -191,6 +168,15 @@ $fz: 3rem;
               font-weight: 700;
               color: c.$Dominant5;
             }
+            .voucherDescription {
+              padding: 0.8rem 0 0.3rem;
+            }
+            .voucherDiscount {
+              padding-bottom: 0.3rem;
+            }
+            .text {
+              padding-bottom: 0.3rem;
+            }
           }
         }
         .checkboxButton {
@@ -201,21 +187,18 @@ $fz: 3rem;
           }
         }
       }
+      .disabled {
+        opacity: 0.5 !important;
+      }
     }
   }
   .submitBtn {
     display: flex;
     justify-content: flex-end;
     Button {
-      // padding: 1rem 3.6rem;
-      margin: 2rem 0;
-      margin-right: 4rem;
-      @include button(0.5rem 2rem);
-      &:hover {
-        color: c.$Accent7;
-        background-color: c.$Dominant5;
-      }
+      @include c.f-button();
     }
+    margin-top: 3rem;
   }
 }
 

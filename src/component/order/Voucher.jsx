@@ -10,11 +10,18 @@ import {
   Stack,
 } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import cartSlice from "../../container/order/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import cartSlice, {
+  getVoucherSelectedSelector,
+  totalPriceSelector,
+} from "../../container/order/cartSlice";
 import { getAllPromotions } from "../../api/server/promotions/PromotionAPI";
+import { formatNumber } from "../../utils/myUtils";
+
 
 export default function Voucher({ close }) {
+  const total = useSelector(totalPriceSelector);
+  const voucherSelected = useSelector(getVoucherSelectedSelector);
   const [vouchers, setVouchers] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -24,7 +31,6 @@ export default function Voucher({ close }) {
     };
     loadVouchers();
   }, []);
-
   const handleChangeShippingVoucher = (item) => {
     return (event) => {
       dispatch(cartSlice.actions.updateVoucherSelectedShipping(item));
@@ -56,7 +62,12 @@ export default function Voucher({ close }) {
               vouchers
                 .filter((voucher) => voucher?.type === "SHIPPING")
                 .map((item) => (
-                  <div className={clsx(s.containerItem)} key={item.id}>
+                  <div
+                    className={clsx(s.containerItem, {
+                      [s.disabled]: total < item.minimumOrderValue,
+                    })}
+                    key={item.id}
+                  >
                     <Grid container key={item.id} className={clsx(s.voucher)}>
                       <Grid className={clsx(s.voucherItem)}>
                         <Grid className={clsx(s.voucherCode)}>
@@ -66,17 +77,25 @@ export default function Voucher({ close }) {
                           Description: {item.description}
                         </Grid>
                         <Grid className={clsx(s.voucherExpiration)}>
-                          Valid Till:
+                          Valid Till:{" "}
                           {new Date(item.endDate).toLocaleDateString("en-GB")}
+                        </Grid>
+                        <Grid className={clsx(s.usage)}>
+                          Used: {item.used}/{item.usageLimit}
+                        </Grid>
+                        <Grid className={clsx(s.text)}>
+                          Minimum total order:{" "}
+                          {formatNumber(item.minimumOrderValue)}
                         </Grid>
                       </Grid>
                     </Grid>
                     <FormControlLabel
+                      disabled={total < item.minimumOrderValue}
                       control={
                         <Radio
                           value={JSON.stringify(item)}
                           className={clsx(s.checkboxButton)}
-                          checked={item.checked}
+                          checked={item.id === voucherSelected?.shipping?.id}
                           onChange={handleChangeShippingVoucher(item)}
                         />
                       }
@@ -97,7 +116,12 @@ export default function Voucher({ close }) {
               vouchers
                 .filter((voucher) => voucher?.type === "DISCOUNT")
                 .map((item) => (
-                  <div className={clsx(s.containerItem)} key={item.id}>
+                  <div
+                    className={clsx(s.containerItem, {
+                      [s.disabled]: total < item.minimumOrderValue,
+                    })}
+                    key={item.id}
+                  >
                     <Grid container key={item.id} className={clsx(s.voucher)}>
                       <Grid className={clsx(s.voucherItem)}>
                         <Grid className={clsx(s.voucherCode)}>
@@ -107,20 +131,28 @@ export default function Voucher({ close }) {
                           Description: {item.description}
                         </Grid>
                         <Grid className={clsx(s.voucherDiscount)}>
-                          Discount: {item.discount}$
+                          Discount: {formatNumber(item.discount)}
                         </Grid>
                         <Grid className={clsx(s.voucherExpiration)}>
-                          Valid Till:
+                          Valid Till:{" "}
                           {new Date(item.endDate).toLocaleDateString("en-GB")}
+                        </Grid>
+                        <Grid className={clsx(s.usage)}>
+                          Used: {item.used}/{item.usageLimit}
+                        </Grid>
+                        <Grid className={clsx(s.text)}>
+                          Minimum total order:{" "}
+                          {formatNumber(item.minimumOrderValue)}
                         </Grid>
                       </Grid>
                     </Grid>
                     <FormControlLabel
+                      disabled={total < item.minimumOrderValue}
                       control={
                         <Radio
                           value={JSON.stringify(item)}
                           className={clsx(s.checkboxButton)}
-                          checked={item.checked}
+                          checked={item.id === voucherSelected?.discount?.id}
                           onChange={handleChangeDiscountVoucher(item)}
                         />
                       }

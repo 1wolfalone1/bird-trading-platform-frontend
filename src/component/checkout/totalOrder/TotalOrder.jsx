@@ -1,13 +1,7 @@
 import React, { Fragment } from "react";
 import clsx from "clsx";
 import s from "./TotalOrder.module.scss";
-
-const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
+import { formatNumber } from "../../../utils/myUtils";
 
 export default function TotalOrder({ subTotal, shipTotal, promotion }) {
   return (

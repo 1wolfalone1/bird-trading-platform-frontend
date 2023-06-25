@@ -5,13 +5,7 @@ import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import { IconButton } from "@mui/material";
 import { useDispatch } from "react-redux";
 import cartSlice from "../../../../container/order/cartSlice";
-
-const formatNumber = (q) => {
-  return q.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-};
+import { formatNumber } from "../../../../utils/myUtils";
 
 export default function CartItemInPopper({ item, className }) {
   const dispatch = useDispatch();

@@ -18,12 +18,20 @@ import {
    useGoogleMap,
 } from "@react-google-maps/api";
 import clsx from "clsx";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useRef, useState } from "react";
 const lib = ["places"];
 const center = { lat: 48.8584, lng: 2.2945 };
 
-function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
+function MapControl({
+   address,
+   setAddress,
+   w,
+   h,
+   triggerSave,
+   setOpenModel,
+   defaultAddress,
+}) {
    const { isLoaded } = useJsApiLoader({
       googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
       libraries: lib,
@@ -35,6 +43,7 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
    const [origin, setOrigin] = useState("");
    const [destination, setDestination] = useState("");
    const [invalid, setInvalid] = useState("");
+
    const addrStatus = useRef({
       isValid: false,
       addr: "",
@@ -44,13 +53,9 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
    const originRef = useRef();
    /** @type React.MutableRefObject<HTMLInputElement> */
    const destiantionRef = useRef();
-   useEffect(() => {
-      console.log(originRef);
-      if (originRef !== undefined && originRef.current !== undefined) {
-      }
-   }, []);
 
    useEffect(() => {
+      console.log(triggerSave, "tringerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
       if (triggerSave !== 0) {
          changeInfoAddress(originRef);
       }
@@ -75,6 +80,7 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
             address: addrStatus.current.addr,
          },
          function (results, status) {
+            console.log(results, "resultssdasdasdasdasddasdasdadasdasdasd");
             // eslint-disable-next-line no-undef
             if (
                // eslint-disable-next-line no-undef
@@ -83,10 +89,30 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
             ) {
                console.log(status, " successfully", results);
                // set it to the correct, formatted address if it's valid
-               setAddress(results[0].formatted_address);
-               setInvalid("");
-               if(setOpenModel){
-                  setOpenModel(false);
+
+               // Check if the address is in Vietnam
+               const vietnamComponent = results[0].address_components.find(
+                  (component) =>
+                     component.types.includes("country") &&
+                     (component.long_name === "Vietnam" ||
+                        component.short_name === "Việt Nam" ||
+                        component.short_name === "VN")
+               );
+               console.log(
+                  vietnamComponent,
+                  results[0].address_components,
+                  "address_components"
+               );
+               if (vietnamComponent) {
+                  if (setOpenModel) {
+                     setOpenModel(false);
+                  }
+                  setAddress(results[0].formatted_address);
+                  setInvalid("");
+               } else {
+                  setInvalid(
+                     "Address is not valid! We do not provide shipping services outside of Vietnam."
+                  );
                }
             } else {
                addrStatus.current = {
@@ -102,6 +128,7 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
          }
       );
    };
+
    async function calculateRoute() {
       if (originRef?.current?.value === "") {
          const results = await directionsService.route({
@@ -146,17 +173,15 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
          // eslint-disable-next-line no-undef
          const geocoder = new google.maps.Geocoder();
          const geocodeRes = await geocoder.geocode({
-            address:  originRef.current.value,
+            address: originRef.current.value,
          });
          const geocodeResult = geocodeRes.results;
-         console.log(geocodeResult)
+         console.log(geocodeResult);
          if (geocodeResult && geocodeResult.length > 0) {
-            console.log(geocodeResult[0].geometry.location)
             const location = geocodeResult[0].geometry.location;
             const lat = location.lat();
             const lng = location.lng();
             const latLng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-            console.log(latLng);
             return latLng;
             // Use latLng as needed (e.g., for setting the marker position)
             // new google.maps.Marker({
@@ -164,19 +189,60 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
             //   map,
             //   title: "Hello World!",
             // });
-            
          } else {
-            console.log(geocodeResult?.length)
+            console.log(geocodeResult?.length);
 
             return "";
          }
       }
    };
+   const firstRender = async () => {
+      if(!address){
+         return;
+      }
+      if (originRef.current) {
+         originRef.current.value = address;
+      }
+      const latLng = await getLatLng(originRef?.current?.value);
+      // eslint-disable-next-line no-undef
+      new google.maps.Marker({
+         position: latLng,
+         map: map,
+         title: "Hello World!",
+      });
+      if (map) {
+         map.setCenter(latLng);
+      }
+   };
+   const handleCancel = async () => {
+      if (originRef.current) {
+         originRef.current.value = address;
+      }
+      const latLng = await getLatLng(originRef?.current?.value);
+      // eslint-disable-next-line no-undef
+      new google.maps.Marker({
+         position: latLng,
+         map: map,
+         title: "Hello World!",
+      });
+      console.log(map);
+      if (map) {
+         map.setCenter(latLng);
+      }
+   };
+   useLayoutEffect(() => {
+      if (isLoaded) {
+         firstRender(address);
+      }
+   }, [address]);
    const handleAutocompletChange = async (e) => {
+      if (!originRef.current) {
+         return;
+      }
       if (originRef.current.value === "") {
          return;
       }
-
+      setInvalid("");
       // eslint-disable-next-line no-undef
 
       // const directionsService = new google.maps.DirectionsService();
@@ -187,16 +253,14 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
       //    travelMode: google.maps.TravelMode.DRIVING,
       // });
       // console.log(results);
-      console.log(originRef.current.value, "origin");
       const latLng = await getLatLng(originRef.current.value);
-      console.log(latLng)
       // eslint-disable-next-line no-undef
       new google.maps.Marker({
          position: latLng,
          map: map,
          title: "Hello World!",
       });
-      console.log(map)
+      console.log(map);
       if (map) {
          map.setCenter(latLng);
       }
@@ -204,12 +268,13 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
       // setDistance(results.routes[0].legs[0].distance.text);
       // setDuration(results.routes[0].legs[0].duration.text);
    };
+   const handleChange = (e) => {
+      console.log(e.target.value, "asdfasdfasdfasdf value");
+   };
    if (!isLoaded) {
       return <Skeleton />;
    }
-   const handleCancel = () => {
-      originRef.current.value = address;
-   };
+
    return (
       <Box
          sx={{
@@ -228,10 +293,11 @@ function MapControl({ address, setAddress, w, h, triggerSave, setOpenModel }) {
                >
                   <TextField
                      inputRef={originRef}
-                     defaultValue={address}
                      type="text"
+                     defaultValue={defaultAddress}
                      placeholder="Origin"
                      id="outlined-basic"
+                     onChange={handleChange}
                      label="Enter Place"
                      variant="outlined"
                      sx={{
