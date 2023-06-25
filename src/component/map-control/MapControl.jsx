@@ -329,15 +329,15 @@ function MapControl({
         </Box>
 
         {/* <Typogr
-            aphy>Distance: {distance} </Typogr>
-            <Typography>Duration: {duration} </Typography>
-            <IconButton
-               aria-label="center back"
-               isRound
-               onClick={() => {
-                  map.panTo(center);
-                  map.setZoom(15);
-               }} */}
+           aphy>Distance: {distance} </Typogr>
+           <Typography>Duration: {duration} </Typography>
+           <IconButton
+              aria-label="center back"
+              isRound
+              onClick={() => {
+                 map.panTo(center);
+                 map.setZoom(15);
+              }} */}
       </Box>
       <FormHelperText
         error={invalid !== ""}

@@ -38,15 +38,15 @@ const notificationSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(getListNotification.fulfilled, (state, action) => {
-        state.notification.notiList = action.payload?.lists;
+        state.notification.notiList = action.payload.lists;
         state.notification.totalPageNumber = action.payload.pageNumber;
       })
       .addCase(getListNotification.rejected, (state, action) => {
         console.log(action);
       })
       .addCase(getUnreadNotification.fulfilled, (state, action) => {
-        console.log(action.payload?.unread, "in notification slice");
-        state.notification.unread = action.payload?.unread;
+        console.log(action.payload.unread, "in notification slice");
+        state.notification.unread = action.payload.unread;
       })
       .addCase(getUnreadNotification.rejected, (state, action) => {
         console.log(action);

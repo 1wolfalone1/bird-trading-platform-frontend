@@ -69,7 +69,7 @@ const NotiItemsPopper = () => {
   const onConnected = () => {
     try {
       stompClient.subscribe(
-        `/notification/${info.id}/user`,
+        `/notification/${info?.id}/user`,
         onPrivateNotification,
         onError
       );
