@@ -1,4 +1,11 @@
+@use "../../style/" as c;
+
 .container {
+  margin: 0 16rem 5rem;
+  font-size: 2rem;
+  background-color: c.$Dominant3;
+  box-shadow: 0px 0px 15px #6262628f;
+
   .content {
     display: flex;
     flex-direction: column;
