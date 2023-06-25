@@ -1,37 +1,37 @@
 @use "../../../style/" as c;
 
 .containerAllShop {
-   display: flex;
-   flex-direction: row;
-   justify-content: center;
-   align-items: center;
-   padding: 10px 273px;
-   gap: 10px;
-   height: 12rem;
-   
-   background: c.$Complementary2;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 273px;
+  gap: 10px;
+  height: 12rem;
 
-   .slogan {
-      font-family: c.$Primary;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 3rem;
-      line-height: 51px;
+  background: c.$Complementary2;
 
-      /* Dominant/5 */
+  .slogan {
+    font-family: c.$Primary;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3rem;
+    line-height: 51px;
 
-      color: #cdffa6;
-      p {
-         margin: 0;
-      }
-   }
-   
-   .shopName {
-      font-family: "SeoulHangang";
-      font-style: normal;
-      font-weight: 400;
-      font-size: 3rem;
+    /* Dominant/5 */
 
-      color: #b3dfff;
-   }
+    color: #cdffa6;
+    p {
+      margin: 0;
+    }
+  }
+
+  .shopName {
+    font-family: "SeoulHangang";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 3rem;
+
+    color: #b3dfff;
+  }
 }

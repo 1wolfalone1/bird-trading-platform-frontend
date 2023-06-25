@@ -34,117 +34,123 @@
 
 $heightAvatar: 24rem;
 
-h1 {
-  font-family: c.$Secondary;
-  @include text(900, 4rem);
-  text-align: center;
-}
-
-.profile {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 100%;
-  font-family: c.$Secondary;
-  border: 0 solid c.$Complementary0;
+  align-items: center;
+  padding: 10rem;
+  h1 {
+    font-family: c.$Secondary;
+    @include text(900, 4rem);
+    text-align: center;
+  }
 
-  .uploadImg {
+  .profile {
     display: flex;
-    flex-direction: column;
-    margin-left: 20rem;
+    justify-content: center;
+    width: 100%;
+    font-family: c.$Secondary;
+    border: 0 solid c.$Complementary0;
 
-    .disabled {
-      display: none;
-    }
+    .uploadImg {
+      display: flex;
+      flex-direction: column;
 
-    .imgProfile {
-      margin-top: 6rem;
-      img {
-        height: $heightAvatar;
-        width: $heightAvatar;
-        border-radius: 100%;
+      .disabled {
+        display: none;
+      }
+
+      .imgProfile {
+        margin-top: 6rem;
+        img {
+          height: $heightAvatar;
+          width: $heightAvatar;
+          border-radius: 100%;
+        }
+      }
+
+      .editProfile {
+        @include text(400, 2rem);
+        text-decoration: none;
+        border: 1px solid c.$Complementary0;
+        padding: 1.5rem;
+        margin-top: 1rem;
+        text-align: center;
+        cursor: pointer;
+      }
+
+      .editProfile:hover {
+        color: c.$Accent7;
+        background-color: c.$Dominant5;
       }
     }
 
-    .editProfile {
-      @include text(400, 2rem);
-      text-decoration: none;
-      border: 1px solid c.$Complementary0;
-      padding: 1.5rem;
-      margin-top: 1rem;
-      text-align: center;
-      cursor: pointer;
+    .showInfo {
+      display: flex;
+      flex-direction: column;
+      height: 30rem;
+      justify-content: space-between;
+      padding: 7rem 0 0 10rem;
+      .info {
+        .title {
+          column-gap: 2rem;
+          row-gap: 2rem;
+        }
+      }
+      // .addressInfo {
+      //   .addressContainer {
+      //     .address {
+      //       display: flex;
+      //       justify-content: space-between;
+      //       .province {
+      //         width: 100%;
+      //         border-radius: 0.5rem;
+      //       }
+      //       .district {
+      //         width: 100%;
+      //         border-radius: 0.5rem;
+      //       }
+      //       .ward {
+      //         width: 100%;
+      //         border-radius: 0.5rem;
+      //       }
+      //     }
+      //   }
+      // }
     }
-
-    .editProfile:hover {
+  }
+  :global(.Mui-disabled) {
+    opacity: 1;
+    -webkit-text-fill-color: rgba(33, 33, 33, 0.867);
+  }
+  .containerButton {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    Button {
+      @include button();
+      margin-top: 3rem;
+    }
+    Button:hover {
       color: c.$Accent7;
       background-color: c.$Dominant5;
     }
   }
-
-  .showInfo {
-    display: flex;
-    flex-direction: column;
-    height: 30rem;
-    justify-content: space-between;
-    padding: 7rem 0 0 10rem;
-    .info {
-      .title {
-        column-gap: 2rem;
-        row-gap: 2rem;
-      }
+  .model {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: c.$Dominant3;
+    padding: 1rem 2rem;
+    height: fit-content;
+    border-radius: 5px;
+    .buttonControl {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.8rem;
     }
-    // .addressInfo {
-    //   .addressContainer {
-    //     .address {
-    //       display: flex;
-    //       justify-content: space-between;
-    //       .province {
-    //         width: 100%;
-    //         border-radius: 0.5rem;
-    //       }
-    //       .district {
-    //         width: 100%;
-    //         border-radius: 0.5rem;
-    //       }
-    //       .ward {
-    //         width: 100%;
-    //         border-radius: 0.5rem;
-    //       }
-    //     }
-    //   }
-    // }
-  }
-}
-:global(.Mui-disabled) {
-  opacity: 1;
-  -webkit-text-fill-color: rgba(33, 33, 33, 0.867);
-}
-.containerButton {
-  display: flex;
-  justify-content: end;
-  gap: 1rem;
-  Button {
-    @include button();
-    margin-top: 3rem;
-  }
-  Button:hover {
-    color: c.$Accent7;
-    background-color: c.$Dominant5;
-  }
-}
-.model {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: c.$Dominant3;
-  padding: 1rem 2rem;
-  height: fit-content;
-  border-radius: 5px;
-  .buttonControl {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: flex-end;
-    gap: 0.8rem;
   }
 }
