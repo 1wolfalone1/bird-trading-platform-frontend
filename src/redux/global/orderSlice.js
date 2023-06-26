@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
+const initialState = {
+   infoDelivery: {},
+   itemsByShop: [],
+   paymentMethod: "",
+   promotionIds: [],
+   total: {
+      subTotal: 0,
+      shippingTotal: 0,
+      promotionFee: 0,
+      paymentTotal: 0,
+   },
+}
 const orderSlice = createSlice({
    name: "orderSlice",
-   initialState: {
-      infoDelivery: {},
-      itemsByShop: [],
-      paymentMethod: "",
-      promotionIds: [],
-      total: {
-         subTotal: 0,
-         shippingTotal: 0,
-         promotionFee: 0,
-         paymentTotal: 0,
-      },
-   },
+   initialState: initialState,
    reducers: {
       updateItemsByShop: (state, action) => {
          let count = 0;
@@ -48,6 +49,9 @@ const orderSlice = createSlice({
       },
       updateInfoDelivery: (state, action) => {
          state.infoDelivery = action.payload;
+      },
+      clearState: (state, action) => {
+         return initialState
       }
    },
 });

@@ -27,7 +27,7 @@ import { useJsApiLoader } from "@react-google-maps/api";
 import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
 import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
 import { fix2 } from "../../utils/myUtils";
-import { persistSliceSelector } from "../../redux/global/persistSlice";
+import persistSlice, { persistSliceSelector } from "../../redux/global/persistSlice";
 
 const payment = [
    {
@@ -111,6 +111,7 @@ export default function Checkout() {
                params: { paymentId: paymentId, PayerID: PayerID },
             })
                .then((response) => {
+                  dispatch(persistSlice.actions.clearTempOrder());
                   console.log(
                      response.data,
                      response.paymentId,
@@ -121,7 +122,7 @@ export default function Checkout() {
                   navigate("/order-status");
                })
                .catch((error) => {
-                  console.error(error);
+                  console.error(error,'error paypal');
                });
          }
       }
@@ -198,6 +199,7 @@ export default function Checkout() {
                      <Popup
                         className="addButton"
                         modal
+                        closeOnDocumentClick={false}
                         trigger={
                            <Button
                               disabled={
