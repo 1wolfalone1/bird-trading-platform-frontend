@@ -10,6 +10,9 @@ const persistSlice = createSlice({
    reducers: {
       saveTempOrder: (state, action) => {
          state.tempOrder = action.payload;
+      },
+      clearTempOrder: (state, action) => {
+         state.tempOrder = {};
       }
    },
 });

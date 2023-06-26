@@ -15,6 +15,7 @@ import { orderSliceSelector } from "../../../redux/global/orderSlice";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import orderSlice from "./../../../redux/global/orderSlice";
 import persistSlice from "../../../redux/global/persistSlice";
+import { LoadingButton } from "@mui/lab";
 export default function OrderBill({
    close,
    voucher,
@@ -28,7 +29,10 @@ export default function OrderBill({
    const navigate = useNavigate();
    const { itemsByShop, paymentMethod, promotionIds, total } =
       useSelector(orderSliceSelector);
+   const [isLoading, setIsLoading] = useState(false);
    const handleSubmitBtn = () => {
+      setIsLoading(true);
+      console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
       dispatch(
          orderSlice.actions.updateInfoDelivery({
             fullName: deliveryInfo?.fullName,
@@ -50,7 +54,7 @@ export default function OrderBill({
             total,
          },
       };
-      console.log(data, 'data ne')
+      console.log(data, "data ne");
       dispatch(persistSlice.actions.saveTempOrder(data));
       api.post("/package-order", data)
          .then((response) => {
@@ -64,6 +68,7 @@ export default function OrderBill({
             }
             if (paymentMethod === "DELIVERY") {
                if (response.data.successCode == 200) {
+                  dispatch(orderSlice.actions.clearState());
                   dispatch(cartSlice.actions.removeCart());
                   localStorage.removeItem("cart");
                   navigate("/order-status");
@@ -71,6 +76,7 @@ export default function OrderBill({
                if (response.data.errorCode == 406) {
                }
             }
+
          })
          .catch((error) => {
             // Handle any errors that occurred during the request
@@ -208,10 +214,12 @@ export default function OrderBill({
                                           }}
                                        >
                                           <Box>
-                                             <FiberManualRecordIcon  sx={{
+                                             <FiberManualRecordIcon
+                                                sx={{
                                                    marginRight: "0.8rem",
                                                    fontSize: "1.2rem",
-                                                }}/>
+                                                }}
+                                             />
                                           </Box>{" "}
                                           <Typography
                                              sx={{
@@ -270,8 +278,16 @@ export default function OrderBill({
             {formatNumber(total?.paymentTotal)}
          </div>
          <div className={clsx(s.submitBtn)}>
-            <Button onClick={handleSubmitBtn}>Place order</Button>
+         <LoadingButton
+               loadingIndicator="Sending..."
+               loading={isLoading}
+               onClick={handleSubmitBtn}
+               variant="outlined"
+            >
+               Place order
+            </LoadingButton>
          </div>
+         
       </div>
    );
 }
