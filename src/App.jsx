@@ -28,6 +28,9 @@ import OrderStatus from "./container/purchase/order-status/OrderStatus";
 import OrderHistory from "./container/purchase/order-history/OrderHistory";
 import CreateShop from "./container/create-shop/CreateShop";
 import ProductDetailsPage from "./container/product-details-page/ProductDetailsPage";
+import ResetPassword from "./container/login/resetPassword/ResetPassword";
+import VerifyCode from "./container/login/verifyCode/VerifyCode";
+import ForgotPassword from "./container/login/forgotPassword/ForgotPassword";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -35,7 +38,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(userInfo, "appppppppppppppppppppppppppppppppppppppppppp");
     const userInfoObject = JSON.parse(localStorage.getItem("userInfo"));
     if (cart && Array.isArray(cart.items)) {
       dispatch(invokeCart(cart));
@@ -66,6 +68,9 @@ function App() {
         <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="create-shop" element={<CreateShop />} />
+        <Route path="forgot-password" element={<ForgotPassword />} />
+        <Route path="verify-code" element={<VerifyCode />} />
+        <Route path="reset-password" element={<ResetPassword />} />
       </Route>
     </Routes>
   );

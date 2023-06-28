@@ -4,7 +4,6 @@ import s from "../voucher/Voucher.module.scss";
 import VoucherItem from "./item/VoucherItem";
 
 export default function Voucher({ vouchers }) {
-  console.log(vouchers, 'asdfasdfa voucherrrrrrrrrr');
   return (
     <div>
       <div className={clsx(s.vouchers)}>

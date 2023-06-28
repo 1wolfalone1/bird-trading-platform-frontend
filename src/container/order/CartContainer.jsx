@@ -251,7 +251,9 @@ export default function Cart() {
                       fontSize: "2.4rem",
                       padding: "2rem 1rem",
                     }}
-                    label={`${voucherSelected.discount?.name}: -${voucherSelected.discount?.discount}$`}
+                    label={`${voucherSelected.discount?.name}: -${formatNumber(
+                      voucherSelected.discount?.discount
+                    )}`}
                     variant="outlined"
                     onDelete={handleVoucherItemDeleteDiscount(
                       voucherSelected.discount

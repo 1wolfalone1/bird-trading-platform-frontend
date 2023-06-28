@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import clsx from "clsx";
 import s from "./VoucherItem.module.scss";
 import Grid from "@mui/material/Unstable_Grid2";
+import { formatNumber } from "../../../../utils/myUtils";
 
 const VoucherItem = ({ id, name, reduce }) => {
   const imageShipping =
@@ -17,7 +18,7 @@ const VoucherItem = ({ id, name, reduce }) => {
     <Fragment>
       {console.log("Rendering vouchers")}
       <Grid container columns={10} key={id} className={clsx(s.container)}>
-        <Grid sm={6} md={6} xl={6} className={clsx(s.voucher)}>
+        <Grid sm={5} md={5} xl={5} className={clsx(s.voucher)}>
           <Grid className={clsx(s.voucherImage)}>
             {name.includes("Discount") ? (
               <img src={imageDiscount} alt={name} />
@@ -27,8 +28,10 @@ const VoucherItem = ({ id, name, reduce }) => {
           </Grid>
           <Grid className={clsx(s.voucherName)}>{name}</Grid>
         </Grid>
-        <Grid sm={3} md={3} xl={3} className={clsx(s.reduce)}>
-          {name.includes("Discount") ? `Discount ${reduce}$` : "Freeship"}
+        <Grid sm={4} md={4} xl={4} className={clsx(s.reduce)}>
+          {name.includes("Discount")
+            ? `Discount -${formatNumber(reduce)}`
+            : "Freeship"}
         </Grid>
       </Grid>
     </Fragment>

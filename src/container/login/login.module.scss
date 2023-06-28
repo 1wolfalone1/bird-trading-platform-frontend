@@ -60,7 +60,7 @@
   }
   .separate {
     font-size: 3.2rem;
-    padding: 0.8rem;
+    padding-bottom: 1rem;
   }
 
   .helpGooleText {
@@ -69,11 +69,22 @@
     align-items: center;
     color: red;
     font-size: 2rem;
-    padding: 10px;
+    padding-top: 1rem;
   }
   .linkBottom {
     color: c.$Complementary2;
     font-size: 2.4rem;
     padding: 1rem;
+  }
+  .forgotPassword {
+    // color: c.$Complementary2;
+    // font-size: 2.4rem;
+    // padding: 1rem;
+    Button {
+      @include c.f-button(1rem, c.$Accent7, c.$Dominant2);
+      border: none;
+      font-size: 2rem;
+      color: rgb(85, 26, 139);
+    }
   }
 }

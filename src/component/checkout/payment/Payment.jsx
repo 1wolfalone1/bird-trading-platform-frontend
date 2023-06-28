@@ -5,6 +5,7 @@ import PaymentMethod from "./paymentMethod/PaymentMethod";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
 
 export default function Payment({ payment, handleSelectPayment }) {
+  console.log(payment);
   return (
     <div>
       <div className={clsx(s.payment)}>

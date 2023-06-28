@@ -1,8 +1,7 @@
 import clsx from "clsx";
 import s from "./login.module.scss";
 import React, { useState } from "react";
-import img from "../../asset/leftImagLogin.jpg";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import Style from "../../style/inline-style/style";
 import ButtonGoogle from "./../../component/buttonGoogle/ButtonGoogle";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +14,11 @@ import userInfoSlice from "../../redux/global/userInfoSlice";
 import { userStatus } from "../order/cartSlice";
 import { api } from "./../../api/server/API";
 import { errorAuthentication } from "../../config/constant";
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import Popup from "reactjs-popup";
+import ForgotPassword from "./forgotPassword/ForgotPassword";
+import VerifyCode from "./verifyCode/VerifyCode";
+import ResetPassword from "./resetPassword/ResetPassword";
 
 const textFieldStyle = {
   input: {
@@ -33,7 +36,7 @@ const textFieldStyle = {
 
 const buttonLoginStyle = {
   textTransform: "none",
-  fontSize: "3.2rem",
+  fontSize: "3rem",
   width: "80%",
 };
 const formHelperText = {
@@ -120,10 +123,9 @@ export default function Login() {
   };
 
   const handleLoginResponseData = (data, status) => {
-    console.log(data, "111");
     if (status == 200) {
       localStorage.setItem("token", JSON.stringify(data.token));
-      console.log(data, 'data ne')
+      console.log(data, "data ne");
       dispatch(
         userInfoSlice.actions.changeAuthentication({
           status: userStatus.USER,
@@ -133,7 +135,7 @@ export default function Login() {
       callCookies();
       navigate("/products");
     } else if (status === 404) {
-      console.log(status)
+      console.log(status);
     }
   };
   const callCookies = async () => {
@@ -146,24 +148,38 @@ export default function Login() {
     }
   };
 
+  // const [open, setOpen] = useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+  // const style = {
+  //   position: "absolute",
+  //   top: "50%",
+  //   left: "50%",
+  //   transform: "translate(-50%, -50%)",
+  // };
+
+  const handleSubmit = () => {
+    navigate("/forgot-password");
+  };
+
   return (
     <div className={clsx(s.container)}>
       <motion.div
         initial={{
-          x: '-100%'
+          x: "-100%",
         }}
         animate={{
           x: 0,
           transition: {
             duration: 0.5,
-          }
+          },
         }}
-      className={clsx(s.imgLeft)}>
+        className={clsx(s.imgLeft)}
+      >
         <img
           src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/login.png"
           alt="Login"
         />
-        
       </motion.div>
       <div className={clsx(s.contentRight)}>
         <div className={clsx(s.title)}>
@@ -216,7 +232,7 @@ export default function Login() {
               {loginEmailPasswordStatus ? (
                 <span>{loginEmailPasswordStatus}</span>
               ) : (
-                ""
+                <></>
               )}
             </div>
           </div>
@@ -240,6 +256,27 @@ export default function Login() {
           <Link to="/sign-up" className={clsx(s.link)}>
             Sign Up
           </Link>
+        </div>
+        <div className={clsx(s.forgotPassword)}>
+          {/* <Popup
+            className="addButton"
+            modal
+            trigger={<Link>Forgot Password</Link>}
+            closeOnDocumentClick={false}
+          >
+            {(close) => <ForgotPassword close={close} />}
+            {(close) => <VerifyCode close={close} />}
+            {(close) => <ResetPassword close={close} />}
+          </Popup> */}
+          <Button onClick={handleSubmit}>Forgot Password?</Button>
+          {/* <Button onClick={handleOpen} close>
+            Forgot Password?
+          </Button>
+          <Modal open={open} onClose={handleClose}>
+            <Box sx={style}>
+              <ForgotPassword open={open} onClose={handleClose} />
+            </Box>
+          </Modal> */}
         </div>
       </div>
     </div>
