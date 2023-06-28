@@ -79,17 +79,17 @@ export default function UserRightHeader({ user, totalCartItems }) {
    };
    const handleNavigateToShop = async () => {
       try {
-         const res = await api.get('/shop-owner/redirect');
+         const res = await api.get("/shop-owner/redirect");
          const data = await res.data;
          console.log(data);
          if (data.successMessage) {
-            window.location.href = data.successMessage; // Redirect to the desired page
+            console.log(data.successMessage);
+            window.location.href = `${process.env.REACT_APP_REDIRECT_ADMIN}${data.successMessage}`; // Redirect to the desired page
          }
       } catch (e) {
-
-         const error = e.response.data
-         if(error.errorCode === "400") {
-            navigate("/create-shop")
+         const error = e.response.data;
+         if (error.errorCode === "400") {
+            navigate("/create-shop");
          }
          console.log(e);
       }

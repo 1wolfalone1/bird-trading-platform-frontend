@@ -15,6 +15,7 @@ import { orderSliceSelector } from "../../../redux/global/orderSlice";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import orderSlice from "./../../../redux/global/orderSlice";
 import persistSlice from "../../../redux/global/persistSlice";
+import { LoadingButton } from "@mui/lab";
 export default function OrderBill({
   close,
   voucher,
@@ -28,7 +29,10 @@ export default function OrderBill({
   const navigate = useNavigate();
   const { itemsByShop, paymentMethod, promotionIds, total } =
     useSelector(orderSliceSelector);
+  const [isLoading, setIsLoading] = useState(false);
   const handleSubmitBtn = () => {
+    setIsLoading(true);
+    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     dispatch(
       orderSlice.actions.updateInfoDelivery({
         fullName: deliveryInfo?.fullName,
@@ -64,6 +68,7 @@ export default function OrderBill({
         }
         if (paymentMethod === "DELIVERY") {
           if (response.data.successCode == 200) {
+            dispatch(orderSlice.actions.clearState());
             dispatch(cartSlice.actions.removeCart());
             localStorage.removeItem("cart");
             navigate("/order-status");
@@ -213,16 +218,24 @@ export default function OrderBill({
         {voucherSelected?.shipping ? "- Free ship" : ""}
       </div>
       <div className={clsx(s.discount)}>
-        Promotion: -{formatNumber(total?.promotionFee)}
+        Promotion: {formatNumber(total?.promotionFee)}
       </div>
       <div className={clsx(s.payment)}>
         Payment Method: {paymentMethod === "DELIVERY" ? "COD" : "PayPal"}
       </div>
       <div className={clsx(s.total)}>
-        Total bill: {formatNumber(total?.paymentTotal)}
+        Total bill:
+        {formatNumber(total?.paymentTotal)}
       </div>
       <div className={clsx(s.submitBtn)}>
-        <Button onClick={handleSubmitBtn}>Place order</Button>
+        <LoadingButton
+          loadingIndicator="Sending..."
+          loading={isLoading}
+          onClick={handleSubmitBtn}
+          variant="outlined"
+        >
+          Place order
+        </LoadingButton>
       </div>
     </div>
   );
