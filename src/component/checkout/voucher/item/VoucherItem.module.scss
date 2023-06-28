@@ -31,6 +31,8 @@
     }
   }
   .reduce {
+    display: flex;
+    justify-content: start;
     font-size: 2rem;
   }
 }

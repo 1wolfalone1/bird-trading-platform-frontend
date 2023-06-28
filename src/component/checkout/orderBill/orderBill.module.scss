@@ -30,18 +30,20 @@
   padding: 5rem;
   width: 70rem;
   @include fsf(2.4rem);
+
   .header {
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
     .closeButton {
       display: flex;
       justify-content: flex-end;
       button {
+        padding: 0 2rem;
         color: c.$Complementary0;
         cursor: pointer;
         font-size: 7rem;
-        line-height: 0.9;
         position: absolute;
-        top: 4rem;
+        top: 0;
+        right: 0;
       }
 
       button:hover {
@@ -50,9 +52,14 @@
     }
 
     .title {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 0;
+      color: c.$Accent5;
       font-size: 3.6rem;
-      font-weight: 900;
+      font-weight: bolder;
+      font-family: c.$Secondary;
+      text-align: center;
     }
   }
 

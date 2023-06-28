@@ -18,7 +18,6 @@ import cartSlice, {
 import { getAllPromotions } from "../../api/server/promotions/PromotionAPI";
 import { formatNumber } from "../../utils/myUtils";
 
-
 export default function Voucher({ close }) {
   const total = useSelector(totalPriceSelector);
   const voucherSelected = useSelector(getVoucherSelectedSelector);
@@ -45,8 +44,11 @@ export default function Voucher({ close }) {
 
   return (
     <div className={clsx(s.modal)}>
-      <div className={clsx(s.headerVoucher)}>
+      <div className={clsx(s.header)}>
         <div className={clsx(s.title)}>Select Vouchers</div>
+        <div className={clsx(s.closeButton)}>
+          <button onClick={close}>&times;</button>
+        </div>
       </div>
       <div className={clsx(s.voucherListContainer)}>
         <Stack className={clsx(s.voucherList)}>
@@ -131,7 +133,7 @@ export default function Voucher({ close }) {
                           Description: {item.description}
                         </Grid>
                         <Grid className={clsx(s.voucherDiscount)}>
-                          Discount: {formatNumber(item.discount)}
+                          Discount: -{formatNumber(item.discount)}
                         </Grid>
                         <Grid className={clsx(s.voucherExpiration)}>
                           Valid Till:{" "}

@@ -1,0 +1,62 @@
+@use "../../style/" as c;
+
+.container {
+  background: c.$Dominant2;
+  border-radius: 0.5rem;
+  margin: 15rem auto;
+  padding: 5rem 10rem 10rem;
+  width: 50rem;
+  border: 0.1rem solid c.$Dominant4;
+  box-shadow: 0 0 1rem 0.1rem;
+
+  .header {
+    .closeButton {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        padding: 0 2rem;
+        color: c.$Complementary0;
+        cursor: pointer;
+        font-size: 7rem;
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+
+      button:hover {
+        color: red;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-size: 3.5rem;
+      padding: 3rem 0 5rem;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 3rem;
+    .code {
+      display: flex;
+      .codeInput {
+        font-size: 3.5rem;
+        text-align: center;
+        width: 100%;
+        border-bottom: 0.1rem solid c.$Complementary5;
+        margin: 0 1rem;
+      }
+    }
+
+    .submitBtn {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 5rem;
+      Button {
+        @include c.f-button(1rem 5rem);
+      }
+    }
+  }
+}
