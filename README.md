@@ -4,6 +4,25 @@ The bird trading platform is a web application that allows users to search, buy,
 
 Overall, the bird trading platform provides a seamless user experience for buying, selling, and trading birds, making it an ideal solution for anyone interested in bird-related transactions.
 
+## Technologies
+
+The project incorporates the following technologies:
+
+- JavaScript: It is a high-level programming language that allows to create dynamic and interactive web pages.
+- ReactJS: It is a popular JavaScript library for building user interfaces. ReactJS allows to create reusable UI components and efficiently update the DOM based on changes in application state.
+
+- Redux Toolkit: It is a set of tools that helps simplify the process of managing state in a React application. It provides a predictable and consistent way to manage and update application state, making it easier to build and maintain complex applications.
+
+- Socket.IO: It is a JavaScript library that enables real-time, bidirectional communication between clients and servers. Socket.IO allows to build real-time chat systems.
+
+- SCSS: It is a CSS preprocessor that allows to write CSS in a more organized and efficient way.
+
+- Figma: It is a collaborative design tool that allows to work together to create and iterate on design mockups. Figma provides real-time collaboration, design libraries, and prototyping capabilities.
+
+- Material UI: It is a popular React component library that provides pre-built UI components based on Google’s Material Design guidelines. Material UI allows to quickly and easily build responsive and attractive user interfaces, while also providing customization options to match a project's unique design needs.
+
+- Google Maps API: It is a powerful and widely-used technology that provides us with access to various mapping and location-based services offered by Google.
+
 ## Link Demo
 
 https://www.birdland2nd.store/
@@ -20,30 +39,32 @@ https://www.birdland2nd.store/
 
 ## Screenshots
 
+# Figma UI Demo 
+
 ![Figma](./screen_shorts/Figma.jpg)
+
+# Sign In Feature
+
 ![Sign In](./screen_shorts/Sign%20In.png)
+
+# Sign Up Feature
+
 ![Sign Up](./screen_shorts/Sign%20Up.png)
+
+# Home Page Feature
+
 ![Home Page](./screen_shorts/Home%20Page.png)
+
+# Product Page Feature
+
 ![Product Page](./screen_shorts/Product%20Page.png)
+
+# Cart Feature
+
 ![Cart](./screen_shorts/Cart.png)
+# Checkout Feature
+
 ![Checkout](./screen_shorts/Checkout.png)
-
-## Technologies
-
-The project incorporates the following technologies:
-
-- JavaScript: It is a high-level programming language that allows to create dynamic and interactive web pages.
-- ReactJS: It is a popular JavaScript library for building user interfaces. ReactJS allows to create reusable UI components and efficiently update the DOM based on changes in application state.
-
-- Redux Toolkit: It is a set of tools that helps simplify the process of managing state in a React application. It provides a predictable and consistent way to manage and update application state, making it easier to build and maintain complex applications.
-
-- SCSS: It is a CSS preprocessor that allows to write CSS in a more organized and efficient way.
-
-- Figma: It is a collaborative design tool that allows to work together to create and iterate on design mockups. Figma provides real-time collaboration, design libraries, and prototyping capabilities.
-
-- Socket.IO: It is a JavaScript library that enables real-time, bidirectional communication between clients and servers. Socket.IO allows to build real-time chat systems.
-
-- Material UI: It is a popular React component library that provides pre-built UI components based on Google’s Material Design guidelines. Material UI allows to quickly and easily build responsive and attractive user interfaces, while also providing customization options to match a project's unique design needs.
 
 ## Contribution
 
