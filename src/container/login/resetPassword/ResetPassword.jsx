@@ -6,9 +6,10 @@ import Style from "../../../style/inline-style/style";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api/server/API";
 import { useNavigate } from "react-router-dom";
+import { persistSliceSelector } from "../../../redux/global/persistSlice";
 
 const textFieldStyle = {
   input: {
@@ -44,11 +45,13 @@ const validationSchema = yup.object({
   confirmPassword: yup.string("").required("Confirm password is required!"),
 });
 export default function ResetPassword({ close }) {
-  const [loginGoogleStatus, setLoginGoogleStatus] = useState();
-  const [loginEmailPasswordStatus, setLoginEmailPasswordStatus] = useState();
   const params = new URLSearchParams(window.location.search); // id=123
   const dispatch = useDispatch();
+  const { emailTemp } = useSelector(persistSliceSelector);
+  const { verifyId } = useSelector(persistSliceSelector);
+  const { code } = useSelector(persistSliceSelector);
   const navigate = useNavigate();
+  const [changePasswordStatus, setChangePasswordStatus] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const onFormSubmit = async (e) => {
@@ -76,16 +79,23 @@ export default function ResetPassword({ close }) {
 
   const changePassword = async (values) => {
     const payload = {
-      password: values.password,
-      matchingPassword: values.confirmPassword,
+      email: emailTemp,
+      verifyId: parseInt(verifyId),
+      code: parseInt(code.join("")),
+      newPassword: values.password,
     };
+    console.log(payload);
     try {
       setLoading(true);
-      const response = await api.post("", payload);
+      const response = await api.put("/users/reset-password", payload);
       setLoading(false);
-      navigate("/login");
+      const data = await response.data;
+      if (data.successCode == 200) {
+        navigate("/login");
+      }
     } catch (e) {
       console.log(e);
+      setChangePasswordStatus(true);
     }
   };
 
@@ -112,10 +122,9 @@ export default function ResetPassword({ close }) {
       if (form.isValid) {
         console.log(form.values);
         changePassword(form.values);
-        navigate("/login");
       }
     } catch (err) {
-      console.log(err);
+      setChangePasswordStatus(true);
     }
   };
 
@@ -167,14 +176,11 @@ export default function ResetPassword({ close }) {
             fullWidth
           />
         </div>
-
+        <div className={clsx(s.errorText)}>
+          {changePasswordStatus && <span>Something went wrong!</span>}
+        </div>
         <div className={clsx(s.submitBtn)}>
-          <Button
-            onClick={handleChangePassword}
-            type="submit"
-            variant="outlined"
-            fullWidth
-          >
+          <Button type="submit" variant="outlined" fullWidth>
             Submit
           </Button>
         </div>

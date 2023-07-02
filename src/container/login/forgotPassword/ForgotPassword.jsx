@@ -7,10 +7,13 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { api } from "../../../api/server/API";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import persistSlice from "../../../redux/global/persistSlice";
 
 export default function ForgotPassword({ close, open, onClose }) {
-  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -71,24 +74,21 @@ export default function ForgotPassword({ close, open, onClose }) {
         },
         true
       );
-      console.log("formmm", form);
       if (form.isValid) {
+        setLoading(true);
         const response = await api.put("/users/reset-password", {
           email: form.values.email,
         });
+        setLoading(false);
         console.log("response", response);
         const data = await response.data;
-        console.log(data.successCode);
         if (data.successCode == 200) {
+          dispatch(persistSlice.actions.saveEmailTemp(form.values.email));
           navigate("/verify-code");
         }
       }
     } catch (err) {
-      const data = await err.response;
-      console.log(err);
-      if (data?.status === 404) {
-        setForgotStatus(true);
-      }
+      setForgotStatus(true);
     }
   };
 
@@ -122,7 +122,6 @@ export default function ForgotPassword({ close, open, onClose }) {
         </div>
         <div className={clsx(s.submitBtn)}>
           <Button
-            onClick={handleSubmitBtn}
             type="submit"
             variant="outlined"
             fullWidth

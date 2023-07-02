@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import clsx from "clsx";
 import s from "./verifyCode.module.scss";
-import { Button, TextField } from "@mui/material";
-import { api } from "../../../api/server/API";
+import { Button } from "@mui/material";
+import { api } from "../../api/server/API";
 import { useNavigate } from "react-router-dom";
-import { error } from "jquery";
 import { useDispatch, useSelector } from "react-redux";
-import persistSlice, { persistSliceSelector } from "../../../redux/global/persistSlice";
+import persistSlice, {
+  persistSliceSelector,
+} from "../../redux/global/persistSlice";
 
 export default function VerifyCode({ close }) {
   const { emailTemp } = useSelector(persistSliceSelector);
@@ -31,7 +32,6 @@ export default function VerifyCode({ close }) {
     setVerificationCode((prevCode) => {
       const newCode = [...prevCode];
       newCode[index] = value;
-
       return newCode;
     });
 
@@ -63,24 +63,23 @@ export default function VerifyCode({ close }) {
   };
 
   const handleSubmitBtn = async () => {
-    
     try {
       setLoading(true);
       const response = await api.get("/users/verify/reset-password", {
         params: {
           code: verificationCode.join(""),
           email: emailTemp,
-        }
+        },
       });
       setLoading(false);
       const data = await response.data;
       console.log(data);
       const verifyId = data.successMessage.match(/Id: (\d+)/)[1];
       console.log(verifyId);
-      if(data.successCode == 200) {
+      if (data.successCode == 200) {
         dispatch(persistSlice.actions.saveCode(verificationCode));
         dispatch(persistSlice.actions.saveVerifyId(verifyId));
-        navigate("/reset-password");
+        navigate("/login");
       }
     } catch (err) {
       setVerificationCodeStatus(true);
@@ -111,14 +110,10 @@ export default function VerifyCode({ close }) {
           ))}
         </div>
         <div className={clsx(s.errorText)}>
-        {verificationCodeStatus && <span>Invalid code!</span>}
+          {verificationCodeStatus && <span>Invalid code!</span>}
         </div>
         <div className={clsx(s.submitBtn)}>
-          <Button
-            type="submit"
-            variant="outlined"
-            fullWidth
-          >
+          <Button type="submit" variant="outlined" fullWidth>
             Next
           </Button>
         </div>

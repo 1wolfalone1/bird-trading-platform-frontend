@@ -15,10 +15,10 @@ export default function OrderStatus() {
 
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.headerContainer)}>
+      {/* <div className={clsx(s.headerContainer)}>
         <div className={clsx(s.statusNavbar)}>
           <StatusNavbar />
-          <Action></Action>
+          <Action />
         </div>
         <div className={clsx(s.action)}></div>
       </div>
@@ -26,7 +26,7 @@ export default function OrderStatus() {
         <div className={clsx(s.deliveryAddress)}></div>
         <div className={clsx(s.productInfo)}></div>
         <div className={clsx(s.totalPrice)}></div>
-      </div>
+      </div> */}
     </div>
   );
 }

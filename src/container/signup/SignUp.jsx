@@ -3,13 +3,16 @@ import s from "./signUp.module.scss";
 import React, { useState } from "react";
 import { Button, IconButton, TextField } from "@mui/material";
 import Style from "../../style/inline-style/style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { registerAPI } from "../../api/server/RegisterAPI";
 import { LoadingButton } from "@mui/lab";
 import { motion } from "framer-motion";
+import { api } from "../../api/server/API";
+import { useDispatch } from "react-redux";
+import persistSlice from "../../redux/global/persistSlice";
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
@@ -51,6 +54,8 @@ const validationSchema = yup.object({
   confirmPassword: yup.string("").required("Confirm password is required!"),
 });
 export default function SignUp() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [signUpWithGoogle, setSignUpWithGoogle] = useState();
   const [isVerifyProcess, setIsVerifyProcess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -128,10 +133,15 @@ export default function SignUp() {
     };
     try {
       setLoading(true);
-      const response = await registerAPI.post("", payload);
+      const response = await api.post("/users/register", payload);
       setLoading(false);
-      setEmailConfirm(response.data);
-      setIsVerifyProcess(true);
+      // setEmailConfirm(response.data);
+      // setIsVerifyProcess(true);
+      console.log(response);
+      if (response.status == 200) {
+        dispatch(persistSlice.actions.saveEmailTemp(form.values.email));
+        navigate("/verify-code");
+      }
     } catch (e) {
       console.log(e);
       if (e.response.status === 406) {

@@ -215,7 +215,7 @@ export default function OrderBill({
       </div>
       <div className={clsx(s.shipping)}>
         Shipping Total: {formatNumber(total?.shippingTotal)}{" "}
-        {voucherSelected?.shipping ? "- Free ship" : ""}
+        {voucherSelected?.shipping ? "(Free ship)" : ""}
       </div>
       <div className={clsx(s.discount)}>
         Promotion: {formatNumber(total?.promotionFee)}
@@ -224,7 +224,7 @@ export default function OrderBill({
         Payment Method: {paymentMethod === "DELIVERY" ? "COD" : "PayPal"}
       </div>
       <div className={clsx(s.total)}>
-        Total bill:
+        Total bill:{" "}
         {formatNumber(total?.paymentTotal)}
       </div>
       <div className={clsx(s.submitBtn)}>
