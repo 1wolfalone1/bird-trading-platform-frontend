@@ -1,24 +1,19 @@
+import { Button, TextField } from "@mui/material";
 import clsx from "clsx";
-import s from "./login.module.scss";
-import React, { useState } from "react";
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
-import Style from "../../style/inline-style/style";
-import ButtonGoogle from "./../../component/buttonGoogle/ButtonGoogle";
-import { Link, useNavigate } from "react-router-dom";
-import { authenticateAPI } from "../../api/server/AuthenticatonAPI";
-import * as yup from "yup";
 import { useFormik } from "formik";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { authenticateAPI } from "../../api/server/AuthenticatonAPI";
+import { errorAuthentication } from "../../config/constant";
 import userInfoSlice from "../../redux/global/userInfoSlice";
+import Style from "../../style/inline-style/style";
 import { userStatus } from "../order/cartSlice";
 import { api } from "./../../api/server/API";
-import { errorAuthentication } from "../../config/constant";
-import { motion } from "framer-motion";
-import Popup from "reactjs-popup";
-import ForgotPassword from "./forgotPassword/ForgotPassword";
-import VerifyCode from "./verifyCode/VerifyCode";
-import ResetPassword from "./resetPassword/ResetPassword";
+import ButtonGoogle from "./../../component/buttonGoogle/ButtonGoogle";
+import s from "./login.module.scss";
 
 const textFieldStyle = {
   input: {
@@ -117,7 +112,7 @@ export default function Login() {
       const data = await err.response;
       console.log(err);
       if (data.status === 401) {
-        setLoginEmailPasswordStatus("Invalid email or password!");
+        setLoginEmailPasswordStatus("Incorrect email or password!");
       }
     }
   };

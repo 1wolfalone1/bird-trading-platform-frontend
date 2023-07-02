@@ -60,7 +60,7 @@ export default function Checkout() {
   const [openBackDrop, setBackDrop] = useState(false);
   const flag = useRef(false);
   const { tempOrder } = useSelector(persistSliceSelector);
-  const [listShopOwnersItems, setListShopOweersItems] = useState([]);
+  const [listShopOwnersItems, setListShopOwnersItems] = useState([]);
   const [deliveryInfo, setDeliveryInfo] = useState({
     fullName: "",
     phoneNumber: "",
@@ -91,7 +91,7 @@ export default function Checkout() {
       }
       return acc;
     }, []);
-    setListShopOweersItems(listTemp);
+    setListShopOwnersItems(listTemp);
   }, []);
 
   useEffect(() => {

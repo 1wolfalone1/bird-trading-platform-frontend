@@ -1,36 +1,33 @@
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import Layout from "./container/common/layout/Layout";
-import Home from "./container/home/Home";
-import SignUp from "./container/signup/SignUp";
-import "./style/fontLoader.scss";
-import Login from "./container/login/Login";
-import Profile from "./container/profile/Profile";
-import CartContainer from "./container/order/CartContainer";
-import Checkout from "./container/checkout/Checkout";
-import ProductPageRoute from "./routes/ProductPageRoute";
-import "react-toastify/dist/ReactToastify.css";
 import { useEffect } from "react";
-import cartSlice, {
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import PopupMessage from "./component/message/PopupMessage";
+import Checkout from "./container/checkout/Checkout";
+import Layout from "./container/common/layout/Layout";
+import CreateShop from "./container/create-shop/CreateShop";
+import GetToken from "./container/get-token/GetToken";
+import Home from "./container/home/Home";
+import Login from "./container/login/Login";
+import ForgotPassword from "./container/login/forgotPassword/ForgotPassword";
+import ResetPassword from "./container/login/resetPassword/ResetPassword";
+import VerifyCode from "./container/login/verifyCode/VerifyCode";
+import CartContainer from "./container/order/CartContainer";
+import {
   getCartSelector,
   invokeCart,
   userStatus,
 } from "./container/order/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
-import userInfoSlice, {
-  invokeUserInfo,
-  userInfoSelector,
-} from "./redux/global/userInfoSlice";
-import ProductDetails from "./container/product-details/ProductDetails";
-import GetToken from "./container/get-token/GetToken";
-import PopupMessage from "./component/message/PopupMessage";
-import OrderStatus from "./container/purchase/order-status/OrderStatus";
-import OrderHistory from "./container/purchase/order-history/OrderHistory";
-import CreateShop from "./container/create-shop/CreateShop";
 import ProductDetailsPage from "./container/product-details-page/ProductDetailsPage";
-import ResetPassword from "./container/login/resetPassword/ResetPassword";
-import VerifyCode from "./container/login/verifyCode/VerifyCode";
-import ForgotPassword from "./container/login/forgotPassword/ForgotPassword";
+import Profile from "./container/profile/Profile";
+import OrderHistory from "./container/purchase/order-history/OrderHistory";
+import OrderStatus from "./container/purchase/order-status/OrderStatus";
+import SignUp from "./container/signup/SignUp";
+import VerifyCodeSignUp from "./container/signup/VerifyCode";
+import { invokeUserInfo, userInfoSelector } from "./redux/global/userInfoSlice";
+import ProductPageRoute from "./routes/ProductPageRoute";
+import "./style/fontLoader.scss";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -71,6 +68,7 @@ function App() {
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-code" element={<VerifyCode />} />
         <Route path="reset-password" element={<ResetPassword />} />
+        <Route path="verify-code-sign-up" element={<VerifyCodeSignUp />} />
       </Route>
     </Routes>
   );

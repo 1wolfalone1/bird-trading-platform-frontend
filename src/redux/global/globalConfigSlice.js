@@ -37,9 +37,10 @@ const globalConfigSlice = createSlice({
       },
       changeBackDrops: (state, action) => {
          state.isBackdrop = action.payload;
-      }
+      },
    },
 });
+
 export default globalConfigSlice;
 
 export const toastStyleSelector = state => state.globalConfigSlice.toastStyle;
