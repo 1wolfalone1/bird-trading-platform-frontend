@@ -81,7 +81,7 @@ export default function ResetPassword({ close }) {
     const payload = {
       email: emailTemp,
       verifyId: parseInt(verifyId),
-      code: parseInt(code.join('')),
+      code: parseInt(code.join("")),
       newPassword: values.password,
     };
     console.log(payload);
@@ -90,9 +90,9 @@ export default function ResetPassword({ close }) {
       const response = await api.put("/users/reset-password", payload);
       setLoading(false);
       const data = await response.data;
-        if (data.successCode == 200) {
-          navigate("/login");
-        }
+      if (data.successCode == 200) {
+        navigate("/login");
+      }
     } catch (e) {
       console.log(e);
       setChangePasswordStatus(true);
@@ -180,11 +180,7 @@ export default function ResetPassword({ close }) {
           {changePasswordStatus && <span>Something went wrong!</span>}
         </div>
         <div className={clsx(s.submitBtn)}>
-          <Button
-            type="submit"
-            variant="outlined"
-            fullWidth
-          >
+          <Button type="submit" variant="outlined" fullWidth>
             Submit
           </Button>
         </div>
