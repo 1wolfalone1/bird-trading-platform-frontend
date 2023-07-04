@@ -12,9 +12,12 @@ const messageSlice = createSlice({
             numRead: 0,
             numberUnread: 0,
             userList:[],
+            totalPage: 0,
+            currentPage: 0,
             messageList: {
                 messageListData: [],
-                pageNumber: 1,
+                pageNumber: 0,
+                currentPageNumber: 0,
             }
         }
     },
@@ -169,16 +172,57 @@ const messageSlice = createSlice({
             console.log('co vao day');
             const updatedUserList = [shop, ...state.message.userList];
             return { ...state, message: { ...state.message, userList: updatedUserList } };
+          }else {
+            state.message.userList?.sort((a, b) => (a.id === shop.id ? -1 : 1));
           }
           
           return state;
+        },
+        changeCurrentShopListPaging: (state, action) => {
+          const currentPageNumber = state.message.currentPage + action.payload.number;
+          return {
+            ...state,
+            message: {
+              ...state.message,
+              currentPage: currentPageNumber,
+            }
+          }
+        },
+        updateListMessage: (state, action) => {
+          const olderMessageList = action.payload.lists;
+          const updateList = [...olderMessageList, ...state.message.messageList.messageListData];
+          // const updateList = [];
+          return {
+            ...state,
+            message: {
+              ...state.message,
+              messageList: {
+                ...state.message.messageList,
+                messageListData: updateList,
+              }
+            }
+          }
+      },
+      changeCurretNumberMessagePaing: (state, action) => {
+        const currentPageNumber = state.message.messageList.currentPageNumber + action.payload.number;
+        return {
+          ...state,
+          message: {
+            ...state.message,
+            messageList: {
+              ...state.message.messageList,
+              currentPageNumber: currentPageNumber,
+            }
+          }
         }
+      }
             
     },
     extraReducers: (builder) =>
         builder
         .addCase(getListUser.fulfilled, (state, action) => {
-            state.message.userList = action.payload
+            state.message.userList = action.payload.lists;
+            state.message.totalPage = action.payload.pageNumber;
         })
         .addCase(getListUser.rejected, (state, action) => {
             console.log(action)
@@ -190,6 +234,12 @@ const messageSlice = createSlice({
         .addCase(sendMessage.rejected, (state, action) => {
             console.log(action)
         }) 
+        .addCase(getTotalUnread.fulfilled, (state, action) => {
+            state.message.numberUnread = action.payload.totalUnread;
+        })
+        .addCase(getTotalUnread.rejected, (state,action) => {
+          console.log(action)
+        })
 })
 
 export const { setMessage, addMessage } = messageSlice.actions;
@@ -201,13 +251,15 @@ export const getListUser = createAsyncThunk(
     async (_, {getState}) => {
         const state = getState();
         const userInfo = state.userInfoSlice.info
+        const pageNumber = state.messageSlice.message.currentPage;
         try {
-        const res = await api.get(`/users/${userInfo?.id}/channels`);
+        const res = await api.get(`/users/${userInfo?.id}/channels`, {params: {pagenumber: pageNumber}});
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));
         } catch (error) {
           console.log(error);
+          throw error;
         }
       }
 ) ;
@@ -217,16 +269,55 @@ export const getListMessage = createAsyncThunk(
     async (shopId, {getState}) => {
         const state = getState();
         const userInfo = state.userInfoSlice.info;
+        const pageNumber = state.messageSlice.message.messageList
         try {
-          const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopId: shopId}});
+          const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopid: shopId, pagenumber: pageNumber.currentPageNumber}});
           const data = res.data;
           return data;
         //   dispatch(getListUserSuccess(res.data));
         } catch (error) {
           console.log(error);
+          throw error;
         }
       }
 ) ;
+
+export const getListMessageOlder = createAsyncThunk(
+  "message/message-list-older",
+  async (shopid, {getState}) => {
+      const state = getState();
+      const userInfo = state.userInfoSlice.info;
+      const messageList = state.messageSlice.message.messageList
+      try {
+        const pageNumber = messageList?.currentPageNumber;
+        const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopid: shopid, pagenumber: pageNumber}});
+        const data = res.data;
+        console.log('here is data unread', data);
+        return data;
+      //   dispatch(getListUserSuccess(res.data));
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+) ;
+
+export const getTotalUnread = createAsyncThunk(
+  "message/message-total-unread",
+  async(_, {getState}) => {
+    const state = getState();
+    const userInfo = state.userInfoSlice.info
+    try{
+      console.log('here is info', userInfo)
+      const res = await api.get(`/users/${userInfo?.id}/messages/unread`);
+      const data = res.data;
+      return data;
+    }catch(error){
+      console.log(error);
+      throw error;
+    }
+  }
+)
 
 export const sendMessage = createAsyncThunk(
   "message/message-send",
@@ -236,7 +327,8 @@ export const sendMessage = createAsyncThunk(
           const data = res.data;
           return data;
         }catch (error) {
-          console.log(error)
+          console.log(error);
+          throw error;
         }
     }
 )

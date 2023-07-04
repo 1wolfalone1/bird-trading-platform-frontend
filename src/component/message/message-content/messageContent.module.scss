@@ -52,12 +52,14 @@ $sendIconWidth: 40px;
                     display: flex;
                     @include flex-direct();
                     width: 100%;
-                    min-width: 100px;
-    
+                   
                     .messageData {
                         padding: 10px 10px 16px 10px;
                         position: relative;
+                        overflow: hidden;
+                        word-break: break-all;
                         max-width: 60%;
+                        min-width: 60px;
                         background-color: rgba(0, 0, 0, 0.1);
                     }
     
@@ -80,7 +82,10 @@ $sendIconWidth: 40px;
 
                     .messageData {
                         min-width: 30px;
+                        overflow: hidden;
+                        word-break: break-all;
                         max-width: 60%;
+                        min-width: 60px;
                         padding: 10px 10px 16px 10px;
                         background-color: c.$Accent1;
                     }
