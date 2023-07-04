@@ -36,6 +36,7 @@ import globalConfigSlice from "../../redux/global/globalConfigSlice";
 
 import { userInfoSelector, userStatus } from "../../redux/global/userInfoSlice";
 import { formatNumber } from "../../utils/myUtils";
+import ButtonChatNow from "../../component/message/button-chatnow/ButtonChatNow";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -231,6 +232,10 @@ export default function ProductDetails() {
     }
   };
 
+  const cssButton = {
+    fontSize: "5rem"
+  }
+
   return (
     <>
       {product ? (
@@ -285,7 +290,7 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        <IconButton>
+                        {/* <IconButton>
                           <SmsIcon
                             sx={{ fontSize: "5rem" }}
                             color={"Accent7"}
@@ -293,7 +298,8 @@ export default function ProductDetails() {
                               handleChatNow(product.product.shopOwner)
                             }
                           />
-                        </IconButton>
+                        </IconButton> */}
+                        <ButtonChatNow ButtonOrIcon= {SmsIcon} shop={product.product.shopOwner} css={cssButton} />
                         <div className={s.name}>
                           {product.product.shopOwner.shopName}
                         </div>
