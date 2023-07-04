@@ -1,4 +1,4 @@
-import { Badge, DialogContent, DialogContentText } from '@mui/material'
+import { Badge, Button, DialogContent, DialogContentText } from '@mui/material'
 import clsx from 'clsx'
 import React from 'react'
 import { useState } from 'react'
@@ -28,7 +28,7 @@ const MessageUserList = () => {
 
   const dispatch = useDispatch()
 
-  const {userList, messageList, currentShopIDSelect} = useSelector(messageSelector)
+  const {userList, messageList, currentShopIDSelect, currentPage, totalPage} = useSelector(messageSelector)
 
   const [activeBgColor, setActiveBgColor] = useState(currentShopIDSelect);
 
@@ -38,7 +38,13 @@ const MessageUserList = () => {
       console.log(id)
       setActiveBgColor(id)
   }
-  console.log('here is an userList', userList)
+
+  const handleViewMore = (number) => {
+    dispatch(messageSlice.actions.changeCurrentShopListPaging({number: number}));
+    dispatch(getListUser())
+  }
+  console.log('here is an totalpage', totalPage)
+
   return (
     <div  className={clsx(s.container)}>
       <DialogContent sx={{padding:  "0px", overflow: "hidden"}}>
@@ -53,12 +59,51 @@ const MessageUserList = () => {
                   <span className={clsx(s.shopName)}>{item.shopName}</span>
                 </div>
                 {
-                  <StyledBadge color="primary" badgeContent={item.unread} className={clsx(s.unread)} sx={item.unread === 0 ? {visibility: 'hidden'} : null}>
-                    <Message className={clsx(s.unreadIcon)}/>
-                  </StyledBadge>
+                <StyledBadge color="primary" badgeContent={item.unread} className={clsx(s.unread)} max={10}>
+                  <Message className={clsx(s.unreadIcon)}/>
+                </StyledBadge>
                 }
               </li>
             ))}
+            {totalPage > 1 && (
+              (totalPage - 1) !== currentPage ? (
+                <Button
+                  variant="outlined"
+                  sx={{
+                    width: '100%',
+                    fontFamily: 'Segoe UI, Roboto, Oxygen',
+                    color: 'Complementary0',
+                    backgroundColor: 'Dominant1',
+                    '&:hover': {
+                      color: 'Dominant1',
+                      backgroundColor: 'Complementary0'
+                    },
+                    marginBottom: '10px'
+                  }}
+                  onClick={() => handleViewMore(1)}
+                >
+                  Older
+                </Button>
+              ) : (
+                <Button
+                  variant="outlined"
+                  sx={{
+                    width: '100%',
+                    fontFamily: 'Segoe UI, Roboto, Oxygen',
+                    color: 'Complementary0',
+                    backgroundColor: 'Dominant1',
+                    '&:hover': {
+                      color: 'Dominant1',
+                      backgroundColor: 'Complementary0'
+                    },
+                    marginBottom: '10px'
+                  }}
+                  onClick={() => handleViewMore(-1)}
+                >
+                  Newest
+                </Button>
+              )
+            )}
           </ul>
       </DialogContent>
     </div>

@@ -59,7 +59,6 @@ export const invokeUserInfo = createAsyncThunk(
       const token = JSON.parse(localStorage.getItem("token"));
       const res = await api.get(`/info?token=${token.accessToken}`);
       const data = await res.data;
-      console.log(data, "dataaaaaaaaaaaa");
       return data;
     } catch (err) {
       console.log(err);

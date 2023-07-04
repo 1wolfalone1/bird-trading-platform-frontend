@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import React, { useEffect, useRef } from 'react'
 import s from './messageContent.module.scss'
 import { useDispatch, useSelector } from 'react-redux'
-import messageSlice, { messageSelector, sendMessage } from '../messageSlice'
+import messageSlice, { getListMessageOlder, messageSelector, sendMessage } from '../messageSlice'
 import { userInfoSelector } from '../../../redux/global/userInfoSlice'
 import moment from 'moment';
 import { Form, Formik, useFormik } from 'formik'
@@ -41,23 +41,6 @@ const MessageContent = () => {
     scrollToBottom();
   },[messageList.messageListData])
 
-  //handle scroll
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     // Handle the scroll event on the specific div
-  //     console.log('User scrolled on the div');
-  //   };
-
-  //   const divElement = containerRef.current;
-
-  //   // Add the scroll event listener to the div element
-  //   divElement.addEventListener('scroll', handleScroll);
-
-  //   // Clean up the event listener on component unmount
-  //   return () => {
-  //     divElement.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
 
   const scrollToBottom = () => {
     containerRef.current.scrollTop = containerRef.current.scrollHeight;
@@ -76,6 +59,10 @@ const MessageContent = () => {
     dispatch(messageSlice.actions.addMessage({  message: updatedValues }));
     dispatch(sendMessage(updatedValues));
     dispatch(messageSlice.actions.setReadMessage({userList: userList, id: currentShopIDSelect})); 
+    const shop = {
+      id: currentShopIDSelect
+    }
+    dispatch(messageSlice.actions.addShopIntoUserList({shop: shop}));
     console.log("here is curren shop id select: ", currentShopIDSelect);
   };
 
@@ -86,7 +73,13 @@ const MessageContent = () => {
         .required("Need to be write some thing")
   });
 
-  console.log(currentShopIDSelect, "day la shop is")
+  const showMoreOlderMessage = async () => {
+    dispatch(messageSlice.actions.changeCurretNumberMessagePaing({number: 1}));
+    const data = await dispatch(getListMessageOlder(currentShopIDSelect));
+    console.log(data, "data ne")
+    dispatch(messageSlice.actions.updateListMessage({lists: data?.payload?.lists}))
+  }
+
   return (
     <div className={clsx(s.container)}>
         <span className={clsx(s.shopName)}>
@@ -95,6 +88,23 @@ const MessageContent = () => {
       
         <div className={clsx(s.messageContent)}>
             <ul className={clsx(s.messageList)} ref={containerRef}>
+                {messageList?.pageNumber > 1 &&
+                  (messageList?.pageNumber - 1 !== messageList.currentPageNumber) &&
+                    <Button sx={{textAlign: 'center',
+                    width: '100%',
+                    fontFamily: 'Segoe UI, Roboto, Oxygen',
+                    color: 'Complementary0',
+                    backgroundColor: 'Dominant1',
+                    '&:hover': {
+                      color: 'Dominant1', 
+                      backgroundColor: 'Complementary0'
+                    }
+                    }}
+                    onClick={showMoreOlderMessage}
+                    >
+                    View more
+                    </Button>
+                }
                 <div className={clsx(s.messagecontainer)}>
                   {messageList.messageListData?.map(item => (
                   <li className={item.userID != info.id ? clsx(s.messageItem) : clsx(s.messageItemSelf)} key={item.id}>
