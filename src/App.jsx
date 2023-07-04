@@ -62,8 +62,8 @@ function App() {
         <Route path="checkout" element={<Checkout />} />
         <Route path="get-token" element={<GetToken />} />
         <Route path="popup-message" element={<PopupMessage />} />
-        <Route path="order-status" element={<OrderStatus />} />
         <Route path="order-history" element={<OrderHistory />} />
+        <Route path="order-status/:id" element={<OrderStatus />} />
         <Route path="create-shop" element={<CreateShop />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-code" element={<VerifyCode />} />

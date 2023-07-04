@@ -1,18 +1,17 @@
-import clsx from "clsx";
-import s from "./signUp.module.scss";
-import React, { useState } from "react";
-import { Button, IconButton, TextField } from "@mui/material";
-import Style from "../../style/inline-style/style";
-import { Link, useNavigate } from "react-router-dom";
-import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
-import * as yup from "yup";
-import { useFormik } from "formik";
-import { registerAPI } from "../../api/server/RegisterAPI";
 import { LoadingButton } from "@mui/lab";
+import { TextField } from "@mui/material";
+import clsx from "clsx";
+import { useFormik } from "formik";
 import { motion } from "framer-motion";
-import { api } from "../../api/server/API";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { api } from "../../api/server/API";
+import ButtonGoogle from "../../component/buttonGoogle/ButtonGoogle";
 import persistSlice from "../../redux/global/persistSlice";
+import Style from "../../style/inline-style/style";
+import s from "./signUp.module.scss";
 const textFieldStyle = {
   input: {
     color: Style.color.$Complementary0,
@@ -140,7 +139,7 @@ export default function SignUp() {
       console.log(response);
       if (response.status == 200) {
         dispatch(persistSlice.actions.saveEmailTemp(form.values.email));
-        navigate("/verify-code");
+        navigate("/verify-code-sign-up");
       }
     } catch (e) {
       console.log(e);

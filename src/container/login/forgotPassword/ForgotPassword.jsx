@@ -9,6 +9,7 @@ import { api } from "../../../api/server/API";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import persistSlice from "../../../redux/global/persistSlice";
+import { LoadingButton } from "@mui/lab";
 
 export default function ForgotPassword({ close, open, onClose }) {
   const navigate = useNavigate();
@@ -121,13 +122,14 @@ export default function ForgotPassword({ close, open, onClose }) {
           {forgotStatus && <span>Invalid email!</span>}
         </div>
         <div className={clsx(s.submitBtn)}>
-          <Button
-            type="submit"
+          <LoadingButton
             variant="outlined"
             fullWidth
+            loading={loading}
+            type="submit"
           >
             Next
-          </Button>
+          </LoadingButton>
         </div>
       </form>
     </div>

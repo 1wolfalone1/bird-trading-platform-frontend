@@ -1,31 +1,13 @@
 @use "../../../../style/" as c;
 
-@mixin button(
-  $padding: 1rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 1px solid c.$Complementary0;
-  font-size: 2rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
-
 .container {
   .action {
     display: flex;
     justify-content: end;
-    margin-right: 19rem;
+    margin-right: 11rem;
     Button {
-      @include button(0.5rem 3rem, c.$Complementary0, c.$Complementary6);
+      @include c.f-button(0.5rem 3rem);
       margin: 3rem 1rem;
-      &:hover {
-        color: c.$Accent7;
-        background-color: c.$Dominant5;
-      }
     }
   }
 }

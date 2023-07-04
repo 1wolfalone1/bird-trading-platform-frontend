@@ -1,12 +1,8 @@
 @use "../../style/" as c;
 
 .container {
-  background-color: c.$Dominant3;
-  margin: 3rem 15rem;
+  margin: 3rem 20rem;
+  // gap: 5rem;
   .packageOrder {
-    .order {
-      margin: 5rem 0;
-      border-bottom: 0.1rem solid #000;
-    }
   }
 }

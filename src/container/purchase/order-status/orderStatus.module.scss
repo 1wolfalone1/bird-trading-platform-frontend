@@ -3,4 +3,11 @@
 .container {
   background-color: c.$Dominant3;
   margin: 3rem 15rem;
+  .packageOrder {
+    .order {
+      margin: 5rem 0;
+      border-bottom: 0.1rem solid #000;
+      gap: 10rem;
+    }
+  }
 }

@@ -32,7 +32,6 @@ export default function OrderBill({
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmitBtn = () => {
     setIsLoading(true);
-    console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     dispatch(
       orderSlice.actions.updateInfoDelivery({
         fullName: deliveryInfo?.fullName,
@@ -54,7 +53,6 @@ export default function OrderBill({
         total,
       },
     };
-    console.log(data, "data ne");
     dispatch(persistSlice.actions.saveTempOrder(data));
     api
       .post("/package-order", data)
@@ -71,7 +69,7 @@ export default function OrderBill({
             dispatch(orderSlice.actions.clearState());
             dispatch(cartSlice.actions.removeCart());
             localStorage.removeItem("cart");
-            navigate("/order-status");
+            navigate("/order-history");
           }
           if (response.data.errorCode == 406) {
           }
@@ -218,14 +216,13 @@ export default function OrderBill({
         {voucherSelected?.shipping ? "(Free ship)" : ""}
       </div>
       <div className={clsx(s.discount)}>
-        Promotion: {formatNumber(total?.promotionFee)}
+        Promotion: -{formatNumber(total?.promotionFee)}
       </div>
       <div className={clsx(s.payment)}>
         Payment Method: {paymentMethod === "DELIVERY" ? "COD" : "PayPal"}
       </div>
       <div className={clsx(s.total)}>
-        Total bill:{" "}
-        {formatNumber(total?.paymentTotal)}
+        Total bill: {formatNumber(total?.paymentTotal)}
       </div>
       <div className={clsx(s.submitBtn)}>
         <LoadingButton

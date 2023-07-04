@@ -5,14 +5,19 @@ import { Button } from "@mui/material";
 
 export default function Action({ action }) {
   const handleRate = () => {
-    return false;
+    // status of all products in the shop done, then can rate
+    return true;
   };
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.action)}>
-        <Button disabled={handleRate()}>Rate</Button>
-        <Button>Contact</Button>
-        <Button>Buy Again</Button>
+        <Button
+          disabled={handleRate()}
+          style={{ opacity: handleRate() ? 0.5 : 1 }}
+        >
+          Rate
+        </Button>
+        <Button>Chat with Shop</Button>
       </div>
     </div>
   );

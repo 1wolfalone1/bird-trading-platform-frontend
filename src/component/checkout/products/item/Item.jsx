@@ -5,7 +5,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import { Fragment } from "react";
 import { formatNumber } from "../../../../utils/myUtils";
 
-const ProductItem = ({ id, name, shopName, quantity, image, price }) => {
+const ProductItem = ({ id, name, quantity, image, price }) => {
   return (
     <Fragment>
       <Grid container columns={10} key={id} className={clsx(s.container)}>
