@@ -10,6 +10,7 @@ import messageSlice from '../../message/messageSlice'
 import { userInfoSelector } from '../../../redux/global/userInfoSlice'
 import SockJS from 'sockjs-client'
 import { over } from 'stompjs'
+import { useRef } from 'react'
 
 
 var stompClient = null;
@@ -21,6 +22,7 @@ const NotiItemsPopper = () => {
   const {notiList, totalPageNumber, currentPageNumber, unread} = useSelector(notificationSelector);
   const { status, info } = useSelector(userInfoSelector);
   const  [notification, setNotification] = useState()
+  const useEffectRun = useRef(false);
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -30,7 +32,10 @@ const NotiItemsPopper = () => {
 
   useEffect(() => {
     console.log(notification, 'here is new notification');
-    handleNotificationArrive(notification);
+    if(useEffectRun.current === true){
+      handleNotificationArrive(notification);
+    }
+    return () => useEffectRun.current = true;
   },[notification])
   
   const handleClose = () => {
@@ -76,7 +81,6 @@ const NotiItemsPopper = () => {
     } catch (error) {
       console.log(error);
     }
-    console.log("Connect to channel message");
   };
 
   const onPrivateNotification = (payload) => {

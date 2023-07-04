@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import SockJS from "sockjs-client";
 import { over } from "stompjs";
-import messageSlice, { getListUser, messageSelector } from "./messageSlice";
+import messageSlice, { getListMessageOlder, getListUser, getTotalUnread, messageSelector } from "./messageSlice";
 import moment from "moment";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -43,9 +43,8 @@ const PopupMessage = () => {
   const dispatch = useDispatch();
 
   const { status, info } = useSelector(userInfoSelector);
-  const [anchorEl, setAnchorEl] = useState(null);
 
-  const audioRef = useRef(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const { userList, numberUnread, numRead, currentShopIDSelect, isOpen } =
     useSelector(messageSelector);
@@ -54,7 +53,7 @@ const PopupMessage = () => {
 
   // const open = Boolean(anchorEl);
 
-  const [open, setOpen] = useState(isOpen);
+  const [open, setOpen] = useState(Boolean(anchorEl));
 
   const id = open ? "popup-message" : undefined;
 
@@ -62,19 +61,26 @@ const PopupMessage = () => {
 
   const [message, setMessage] = useState();
 
-  useEffect(() => {
-    connect(status);
+  const useEffectRun = useRef(false);
+
+  useEffect( () => {
+    connect(status); 
+  }, [status]); 
+
+  // useEffect(() => {
+  //   // handleReadMessage();
+  //   dispatch(getTotalUnread());
+  // }, [numRead]);
+
+  useEffect( () => {
     refreshUnread();
-  }, [status]);
+  },[info])
 
   useEffect(() => {
-    handleReadMessage();
-  }, [numRead]);
-
-  useEffect(() => {
-    handleMessageArrive(message, open, currentShopIDSelect);
-    handleNewMessage(" ");
-    console.log("Get an mesasge");
+    console.log('co nhay')
+      handleMessageArrive(message, open, currentShopIDSelect);
+      dispatch(messageSlice.actions.increaseNumberUnread());
+      handleNewMessage(" ");
   }, [message]);
 
   useEffect(() => {
@@ -86,12 +92,10 @@ const PopupMessage = () => {
     const url = process.env.REACT_APP_URL_WEBSOCKET;
     if (status === 1) {
       let Sock = new SockJS(`${url}`);
-
       stompClient = over(Sock);
       stompClient.connect({}, onConnected, onError);
     }
   };
-  console.log("status", status);
 
   const onConnected = () => {
     try {
@@ -103,7 +107,6 @@ const PopupMessage = () => {
     } catch (error) {
       console.log(error);
     }
-    console.log("Connect to channel message");
   };
 
   const onError = (err) => {
@@ -112,40 +115,26 @@ const PopupMessage = () => {
 
   const onPrivateMessage = (payload) => {
     const message = JSON.parse(payload.body);
-    dispatch(messageSlice.actions.increaseNumberUnread());
     setMessage(message);
-  };
+  }
   // end socket
 
   const refreshUnread = async () => {
-    if (status === 1) {
-      const data = await dispatch(getListUser());
-      console.log("hereh in status");
-      if (data?.payload) {
-        const numUnread =
-          data?.payload?.reduce(
-            (accumulator, user) => accumulator + user.unread,
-            0
-          ) || 0;
-        dispatch(
-          messageSlice.actions.setNumberUnread({
-            key: "",
-            numberUnread: numUnread,
-          })
-        );
-        setUnread(numUnread);
+      if(info?.id != null) {
+        const res = await dispatch(getTotalUnread());
+        setUnread(res.payload?.totalUnread);
+        console.log(res ,'nhin data ne')
       }
-    }
   };
 
   const handleClick = (event) => {
-    // setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget);
     setOpen(true);
     dispatch(getListUser());
   };
 
   const handleClose = () => {
-    // setAnchorEl(null);
+    setAnchorEl(null);
     setOpen(false);
     dispatch(messageSlice.actions.setOpenPopup({ isOpen: false }));
   };
@@ -154,7 +143,7 @@ const PopupMessage = () => {
   const handleMessageArrive = (message, open, currentShopIDSelect) => {
     const updateMessage = {
       ...message,
-      date: moment(message?.date, "YYYY-MM-DD[T]HH:mm:ss.SSS"),
+      date: moment(message?.date).format("YYYY-MM-DD[T]HH:mm:ss.SSS"),
     };
     if (open) {
       // also need update the out side
@@ -167,25 +156,16 @@ const PopupMessage = () => {
           currentShopIDSelect: currentShopIDSelect,
         })
       );
-      console.log("here is an curent shop id select", currentShopIDSelect);
+      const shop = {
+        id: message.shopID
+      };
+      dispatch(messageSlice.actions.addShopIntoUserList({shop: shop}));
     } else {
-      console.log("open ne", open);
-      console.log("have run funtion handle MessageArrive");
       setUnread(numberUnread);
     }
   };
 
-  //this function use to reset number unread message of button CHAT NOW
-  const handleReadMessage = () => {
-    const newNumUnread = unread - numRead;
-    dispatch(
-      messageSlice.actions.setNumberUnread({
-        key: "",
-        numberUnread: unread - numRead,
-      })
-    );
-    setUnread(newNumUnread);
-  };
+
   //audio when have new message
   const handleNewMessage = (message) => {
     try {
@@ -219,9 +199,9 @@ const PopupMessage = () => {
     } catch (error) {
       // Handle the error
       console.log(error);
+      throw error;
     }
   };
-  console.log("here is num open  ", open);
 
   return (
     <>
@@ -234,14 +214,14 @@ const PopupMessage = () => {
             className={clsx(s.btnchat)}
           >
             Your Chat
-            {unread !== 0 && (
-              <div className={clsx(s.numUnread)}>({unread})</div>
+            {numberUnread !== 0 && (
+              <div className={clsx(s.numUnread)}>({numberUnread})</div>
             )}
           </Button>
           <Popover
             id={id}
             open={open}
-            // anchorEl={anchorEl}
+            anchorEl={anchorEl}
             onClose={handleClose}
             anchorOrigin={{
               vertical: "bottom",
