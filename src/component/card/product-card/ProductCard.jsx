@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import s from "./productCard.module.scss";
 import React, { useEffect, useId } from "react";
-import { Grid } from "swiper";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IconButton, Rating, Tooltip } from "@mui/material";
 import CartDown from "../../../asset/icons/CartDown";

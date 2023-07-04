@@ -9,45 +9,45 @@ export const userStatus = {
   ADMIN: 4,
 };
 const userInfoSlice = createSlice({
-   name: "productState",
-   initialState: {
-      status: userStatus.GUEST,
-      info: {},
-   },
-   reducers: {
-      changeAuthentication: (state, action) => {
-         state.status = action.payload.status;
-         state.info = action.payload.info;
-      },
-      invokeUserInfo: (state, action) => action.payload,
-      updateUserInfo: (state, action) => {
-         state.info = action.payload;
-      },
-   },
-   extraReducers: (builder) =>
-      builder
-         .addCase(logout.fulfilled, (state, action) => {
-            return { status: userStatus.GUEST, info: {} };
-         })
-         .addCase(invokeUserInfo.fulfilled, (state, action) => {
-            if(action.payload.userInfo){
-               return {
-                  status: userStatus.USER,
-                  info: action.payload.userInfo,
-               };
-            } else {
-               return {
-                  status: userStatus.GUEST,
-                  info: {},
-               };
-            }
-         })
-         .addCase(invokeUserInfo.rejected, (state, action) => {
-            return {
-               status: userStatus.GUEST,
-               info: {},
-            };
-         }),
+  name: "productState",
+  initialState: {
+    status: userStatus.GUEST,
+    info: {},
+  },
+  reducers: {
+    changeAuthentication: (state, action) => {
+      state.status = action.payload.status;
+      state.info = action.payload.info;
+    },
+    invokeUserInfo: (state, action) => action.payload,
+    updateUserInfo: (state, action) => {
+      state.info = action.payload;
+    },
+  },
+  extraReducers: (builder) =>
+    builder
+      .addCase(logout.fulfilled, (state, action) => {
+        return { status: userStatus.GUEST, info: {} };
+      })
+      .addCase(invokeUserInfo.fulfilled, (state, action) => {
+        if (action.payload?.userInfo) {
+          return {
+            status: userStatus.USER,
+            info: action.payload.userInfo,
+          };
+        } else {
+          return {
+            status: userStatus.GUEST,
+            info: {},
+          };
+        }
+      })
+      .addCase(invokeUserInfo.rejected, (state, action) => {
+        return {
+          status: userStatus.GUEST,
+          info: {},
+        };
+      }),
 });
 
 export default userInfoSlice;

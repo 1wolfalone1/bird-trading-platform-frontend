@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# Bird Trading Platform - Front End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The bird trading platform is a web application that allows users to search, buy, sell birds and food or accessories related to birds. It is designed for bird enthusiasts, breeders, and sellers who want a convenient platform to conduct transactions. The user interface design is created using Figma. The front-end of the platform is built using modern web development technologies such as ReactJS and SCSS. To handle user interactions, JavaScript is used along with Redux Toolkit, which provides efficient state management. Socket IO is used to create a real-time chatbox feature, enabling users to communicate with one another within the platform. The Material UI React component library is utilized to make the UI components consistent, easy to use, and accessible.
 
-## Available Scripts
+Overall, the bird trading platform provides a seamless user experience for buying, selling, and trading birds, making it an ideal solution for anyone interested in bird-related transactions.
 
-In the project directory, you can run:
+## Technologies
 
-### `npm start`
+The project incorporates the following technologies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- JavaScript: It is a high-level programming language that allows to create dynamic and interactive web pages.
+- ReactJS: It is a popular JavaScript library for building user interfaces. ReactJS allows to create reusable UI components and efficiently update the DOM based on changes in application state.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Redux Toolkit: It is a set of tools that helps simplify the process of managing state in a React application. It provides a predictable and consistent way to manage and update application state, making it easier to build and maintain complex applications.
 
-### `npm test`
+- Socket.IO: It is a JavaScript library that enables real-time, bidirectional communication between clients and servers. Socket.IO allows to build real-time chat systems.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- SCSS: It is a CSS preprocessor that allows to write CSS in a more organized and efficient way.
 
-### `npm run build`
+- Figma: It is a collaborative design tool that allows to work together to create and iterate on design mockups. Figma provides real-time collaboration, design libraries, and prototyping capabilities.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Material UI: It is a popular React component library that provides pre-built UI components based on Google’s Material Design guidelines. Material UI allows to quickly and easily build responsive and attractive user interfaces, while also providing customization options to match a project's unique design needs.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Google Maps API: It is a powerful and widely-used technology that provides us with access to various mapping and location-based services offered by Google.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Link Demo
 
-### `npm run eject`
+https://www.birdland2nd.store/
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Features
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- The platform allows users to sign up and sign in using their Google accounts, as well as manage their accounts.
+- It provides search and filtering options to help users easily find specific bird listings based on various criteria.
+- Users can view product details and reviews, and directly chat with the shop owner for additional information about products.
+- Adding products to the cart and updating it is made easy for the user.
+- Apart from Cash on Delivery (COD), users can also pay via PayPal.
+- The platform allows users to review their orders.
+- Shop owners can easily view their shop's sales through statistical calculations presented in chart form.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Screenshots
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+# Figma UI Demo 
 
-## Learn More
+![Figma](./screen_shorts/Figma.jpg)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Sign In Feature
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+![Sign In](./screen_shorts/Sign%20In.png)
 
-### Code Splitting
+# Sign Up Feature
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Sign Up](./screen_shorts/Sign%20Up.png)
 
-### Analyzing the Bundle Size
+# Home Page Feature
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+![Home Page](./screen_shorts/Home%20Page.png)
 
-### Making a Progressive Web App
+# Product Page Feature
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+![Product Page](./screen_shorts/Product%20Page.png)
 
-### Advanced Configuration
+# Cart Feature
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+![Cart](./screen_shorts/Cart.png)
+# Checkout Feature
 
-### Deployment
+![Checkout](./screen_shorts/Checkout.png)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Contribution
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was created by [harrycricket](https://github.com/harrycricket) (Huỳnh Văn Phướt) and [1wolfalone1](https://github.com/1wolfalone1) (Cao Nhật Thiên) . Contributions to the project are welcome. Feel free to submit bug reports, feature requests, or pull requests to enhance the functionality of the Bird Trading Platform - Front End.

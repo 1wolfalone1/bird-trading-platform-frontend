@@ -83,6 +83,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
          const data = await res.data;
          console.log(data);
          if (data.successMessage) {
+            console.log(data.successMessage);
             window.location.href = `${process.env.REACT_APP_REDIRECT_ADMIN}${data.successMessage}`; // Redirect to the desired page
          }
       } catch (e) {

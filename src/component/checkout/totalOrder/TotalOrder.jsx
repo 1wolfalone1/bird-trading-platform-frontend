@@ -19,7 +19,7 @@ export default function TotalOrder({ subTotal, shipTotal, promotion }) {
           </div>
           <div className={clsx(s.promotion)}>
             <div>Promotion: </div>
-            <div>{formatNumber(promotion)}</div>
+            <div>-{formatNumber(promotion)}</div>
           </div>
         </div>
         <div className={clsx(s.total)}>
