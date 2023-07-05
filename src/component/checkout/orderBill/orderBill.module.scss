@@ -25,7 +25,7 @@
 }
 
 .container {
-  height: 70rem;
+  height: 72rem;
   background-color: c.$Dominant3;
   padding: 5rem;
   width: 70rem;
@@ -133,11 +133,7 @@
     display: flex;
     justify-content: end;
     Button {
-      @include button(1rem 2rem);
-    }
-    Button:hover {
-      color: c.$Accent7;
-      background-color: c.$Dominant5;
+      @include c.f-button();
     }
   }
 }

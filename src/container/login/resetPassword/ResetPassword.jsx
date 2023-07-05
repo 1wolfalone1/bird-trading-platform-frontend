@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { api } from "../../../api/server/API";
 import { useNavigate } from "react-router-dom";
 import { persistSliceSelector } from "../../../redux/global/persistSlice";
+import { LoadingButton } from "@mui/lab";
 
 const textFieldStyle = {
   input: {
@@ -180,9 +181,14 @@ export default function ResetPassword({ close }) {
           {changePasswordStatus && <span>Something went wrong!</span>}
         </div>
         <div className={clsx(s.submitBtn)}>
-          <Button type="submit" variant="outlined" fullWidth>
+          <LoadingButton
+            variant="outlined"
+            fullWidth
+            loading={loading}
+            type="submit"
+          >
             Submit
-          </Button>
+          </LoadingButton>
         </div>
       </form>
     </div>

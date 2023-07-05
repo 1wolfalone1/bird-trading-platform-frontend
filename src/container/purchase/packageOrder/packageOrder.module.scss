@@ -1,0 +1,73 @@
+@use "../../style/" as c;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  font-size: 2.4rem;
+  margin: 5rem 0;
+  .packageOrder {
+    background-color: c.$Dominant3;
+    box-shadow: 1px 1px 5px #626262;
+    cursor: pointer;
+    .image {
+      img {
+        width: 80%;
+        height: 80%;
+      }
+    }
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
+      .address {
+        span {
+          font-size: 2rem;
+        }
+      }
+      .paymentMethod {
+        span {
+          font-size: 2rem;
+        }
+      }
+      .dateOrder {
+        span {
+          font-size: 2rem;
+        }
+      }
+    }
+    .price {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.3rem;
+      padding-right: 5rem;
+      span {
+        font-size: 2rem;
+      }
+      .subTotal {
+        display: flex;
+        justify-content: space-between;
+      }
+      .shipping {
+        display: flex;
+        justify-content: space-between;
+      }
+      .discount {
+        display: flex;
+        justify-content: space-between;
+      }
+      .total {
+        display: flex;
+        font-weight: 600;
+        justify-content: space-between;
+      }
+    }
+  }
+  .emptyPackageOrders {
+    font-size: 3rem;
+    color: red;
+    text-align: center;
+  }
+}

@@ -199,6 +199,7 @@ const PopupMessage = () => {
     } catch (error) {
       // Handle the error
       console.log(error);
+      throw error;
     }
   };
 

@@ -7,9 +7,10 @@
 
 .products {
   box-shadow: 3px 3px 10px #626262;
-  background-color: c.$Dominant3;
+  background-color: #e4dfd1;
   margin: 4rem 12rem;
   padding: 2rem 4rem;
+
   .title {
     @include fsw;
     font-family: c.$Secondary;
