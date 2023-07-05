@@ -41,7 +41,6 @@ const textFieldStyle = {
   },
 };
 
-const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 const Profile = () => {
   const [avatar, setAvatar] = useState();
