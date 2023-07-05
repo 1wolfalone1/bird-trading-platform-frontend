@@ -7,9 +7,16 @@ import { api } from "../../../api/server/API";
 import Action from "../../../component/purchase/order-status/header/action/Action";
 import StatusNavbar from "../../../component/purchase/order-status/header/status/StatusNavbar";
 import { userInfoSelector } from "../../../redux/global/userInfoSlice";
-import { getCartSelector } from "../../order/cartSlice";
 import Order from "../order/Order";
 import s from "./orderStatus.module.scss";
+
+export const orderStatus = {
+  PENDING: 1,
+  PROCESSING: 1,
+  SHIPPED: 2,
+  SHIPPING: 2,
+  DELIVERED: 3,
+};
 
 export default function OrderStatus() {
   const param = useParams();
@@ -55,14 +62,18 @@ export default function OrderStatus() {
       <div className={clsx(s.packageOrder)}>
         {orders ? (
           orders.map((order) => (
-            <div className={clsx(s.order)}>
-              <StatusNavbar />
+            <div className={clsx(s.order)} key={order.id}>
+              <StatusNavbar status={order.orderStatus} />
               <Order order={order} />
-              <Action />
+              <Action
+                shopOwner={order.shopOwner}
+                status={order.orderStatus}
+                order={order.orderDetails}
+              />
             </div>
           ))
         ) : (
-          <div>hi</div>
+          <></>
         )}
       </div>
     </div>

@@ -44,7 +44,7 @@ export default function Order({ order }) {
               key={item?.productId}
               id={item?.productId}
               name={item?.productName}
-              //   image={item?.shopOwner?.imgUrl}
+              image={item?.imgUrl}
               quantity={item?.quantity}
               price={formatNumber(item.quantity * item.price)}
             />

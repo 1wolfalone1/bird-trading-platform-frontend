@@ -1,13 +1,20 @@
 @use "../../../../style/" as c;
 
 .container {
-  .action {
+  display: flex;
+  justify-content: end;
+
+  .rate {
     display: flex;
     justify-content: end;
-    margin-right: 11rem;
     Button {
-      @include c.f-button(0.5rem 3rem);
-      margin: 3rem 1rem;
+      @include c.f-button(0.8rem 3rem);
+      margin: 2rem 1rem;
     }
+  }
+  .chat {
+    display: flex;
+    align-items: center;
+    margin-right: 11rem;
   }
 }

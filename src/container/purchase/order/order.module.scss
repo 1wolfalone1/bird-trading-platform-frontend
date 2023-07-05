@@ -9,7 +9,7 @@
   box-shadow: 3px 3px 10px #626262;
   background-color: #e4dfd1;
   margin: 4rem 12rem;
-  padding: 1.6rem;
+  padding: 2rem 4rem;
 
   .title {
     @include fsw;
@@ -22,7 +22,6 @@
   .productList {
     @include fsw;
     font-family: c.$Secondary;
-    margin: 0 3rem;
     border-bottom: 0.2rem solid c.$Complementary0;
     border-top: 0.2rem solid c.$Complementary0;
     text-align: center;
