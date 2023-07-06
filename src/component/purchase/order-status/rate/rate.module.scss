@@ -14,9 +14,8 @@
   max-height: 70rem;
   overflow-y: scroll;
   background-color: c.$Dominant3;
-  padding: 5rem;
+  padding: 5rem 8rem;
   margin: 5rem 45rem;
-  //   width: 70rem;
   @include fsf(2.4rem);
 
   .header {
@@ -35,11 +34,10 @@
   }
 
   .products {
-    margin-bottom: 0.1rem solid black;
     .productInfo {
+      margin-bottom: 8rem;
       .ratingStar {
         margin-top: 3rem;
-        margin-left: 2rem;
       }
       .commentContent {
         margin: 3rem 0;
