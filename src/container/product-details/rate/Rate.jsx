@@ -1,10 +1,7 @@
-import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import s from "./rate.module.scss";
-import { useEffect } from "react";
-import { api } from "../../../api/server/API";
-import clsx from "clsx";
 import { Rating } from "@mui/material";
+import clsx from "clsx";
+import React from "react";
+import s from "./rate.module.scss";
 
 const ratings = [
   {

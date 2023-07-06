@@ -1,19 +1,16 @@
 import { LoadingButton, Rating } from "@mui/lab";
-import Grid from "@mui/material/Unstable_Grid2";
-import clsx from "clsx";
-import React, { useEffect, useRef } from "react";
-import * as yup from "yup";
-import s from "./rate.module.scss";
-import Product from "../../../../component/checkout/products/item/Item";
-import { formatNumber } from "../../../../utils/myUtils";
-import { useState } from "react";
 import { Button, FormHelperText } from "@mui/material";
-import ReactQuill from "react-quill";
+import clsx from "clsx";
 import { useFormik } from "formik";
-import FieldCustom from "./uploadImage/FieldCustom";
-import { api } from "../../../../api/server/API";
+import React, { useState } from "react";
+import ReactQuill from "react-quill";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { api } from "../../../../api/server/API";
+import Product from "../../../../component/checkout/products/item/Item";
+import { formatNumber } from "../../../../utils/myUtils";
+import s from "./rate.module.scss";
 
 export default function Rate({ order, close }) {
   const navigate = useNavigate();
