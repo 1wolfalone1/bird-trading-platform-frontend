@@ -39,7 +39,6 @@ const QuillWrapper = ({ field, form, ...props }) => {
   const handleChange = (content) => {
     setFieldValue(name, content);
   };
-  //   console.log(setFieldValue);
   return (
     <ReactQuill
       {...props}

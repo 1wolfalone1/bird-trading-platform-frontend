@@ -12,6 +12,26 @@ import Product from "../../../../component/checkout/products/item/Item";
 import { formatNumber } from "../../../../utils/myUtils";
 import s from "./rate.module.scss";
 
+const QuillWrapper = ({ field, form, ...props }) => {
+  const { name } = field;
+  const { setFieldValue } = form;
+  const { value } = field;
+
+  const handleChange = (content) => {
+    setFieldValue(name, content);
+    console.log(content);
+    console.log(name);
+  };
+  return (
+    <ReactQuill
+      {...props}
+      value={value}
+      onChange={handleChange}
+      onBlur={() => form.setFieldTouched(name, true)}
+    />
+  );
+};
+
 export default function Rate({ order, close }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -67,26 +87,6 @@ export default function Rate({ order, close }) {
 
   const handleSubmitReview = async () => {
     postReview(form.values);
-  };
-
-  const QuillWrapper = ({ field, form, ...props }) => {
-    const { name } = field;
-    const { setFieldValue } = form;
-    const { value } = field;
-
-    const handleChange = (content) => {
-      setFieldValue(name, content);
-      console.log(content);
-      console.log(name);
-    };
-    return (
-      <ReactQuill
-        {...props}
-        value={value}
-        onChange={handleChange}
-        onBlur={() => form.setFieldTouched(name, true)}
-      />
-    );
   };
 
   return (
