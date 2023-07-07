@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import s from "../products/Products.module.scss";
-import Product from "./item/Item";
-import Grid from "@mui/material/Unstable_Grid2";
-import ShopTitle from "./shop-title/ShopTitle";
 import { Box, Typography } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCartSelector } from "../../../container/order/cartSlice";
+import globalConfigSlice from "../../../redux/global/globalConfigSlice";
+import orderSlice from "../../../redux/global/orderSlice";
 import Style from "../../../style/inline-style/style";
 import { calculateDistance, fix2 } from "../../../utils/myUtils";
-import { useDispatch, useSelector } from "react-redux";
-import orderSlice, {
-  orderSliceSelector,
-} from "../../../redux/global/orderSlice";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import s from "../products/Products.module.scss";
 import { formatNumber } from "./../../../utils/myUtils";
-import globalConfigSlice from "../../../redux/global/globalConfigSlice";
-import { getCartSelector } from "../../../container/order/cartSlice";
+import Product from "./item/Item";
+import ShopTitle from "./shop-title/ShopTitle";
 
 const boxPrice = {
   display: "flex",

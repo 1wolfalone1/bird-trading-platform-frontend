@@ -1,31 +1,20 @@
 @use "../../../../style/" as c;
 
-@mixin button(
-  $padding: 1rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 1px solid c.$Complementary0;
-  font-size: 2rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
-
 .container {
-  .action {
+  display: flex;
+  justify-content: end;
+
+  .rate {
     display: flex;
     justify-content: end;
-    margin-right: 19rem;
     Button {
-      @include button(0.5rem 3rem, c.$Complementary0, c.$Complementary6);
-      margin: 3rem 1rem;
-      &:hover {
-        color: c.$Accent7;
-        background-color: c.$Dominant5;
-      }
+      @include c.f-button(0.8rem 3rem);
+      margin: 2rem 1rem;
     }
+  }
+  .chat {
+    display: flex;
+    align-items: center;
+    margin-right: 11rem;
   }
 }

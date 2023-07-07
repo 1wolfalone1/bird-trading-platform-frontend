@@ -1,32 +1,59 @@
-import React, { useState } from "react";
 import clsx from "clsx";
-import s from "./orderStatus.module.scss";
-import Grid from "@mui/material/Unstable_Grid2";
-import { useSelector } from "react-redux";
-import { getCartSelector } from "../../order/cartSlice";
-import { userInfoSelector } from "../../../redux/global/userInfoSlice";
-import StatusNavbar from "../../../component/purchase/order-status/header/status/StatusNavbar";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../../../api/server/API";
 import Action from "../../../component/purchase/order-status/header/action/Action";
+import StatusNavbar from "../../../component/purchase/order-status/header/status/StatusNavbar";
+import Order from "../order/Order";
+import s from "./orderStatus.module.scss";
+
+export const orderStatus = {
+  PENDING: 1,
+  PROCESSING: 1,
+  SHIPPED: 2,
+  SHIPPING: 2,
+  DELIVERED: 3,
+};
 
 export default function OrderStatus() {
-  const { items, voucherSelected } = useSelector(getCartSelector);
-  const [paymentType, setPaymentType] = useState();
-  const { info } = useSelector(userInfoSelector);
+  const param = useParams();
+  console.log(param);
+  const [orders, setOrders] = useState();
+
+  const getOrders = async () => {
+    try {
+      const response = await api.get(`orders?packageOrderId=${param.id}`);
+      console.log(response);
+      const orders = await response.data;
+      setOrders(orders);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getOrders();
+  }, []);
 
   return (
     <div className={clsx(s.container)}>
-      {/* <div className={clsx(s.headerContainer)}>
-        <div className={clsx(s.statusNavbar)}>
-          <StatusNavbar />
-          <Action />
-        </div>
-        <div className={clsx(s.action)}></div>
+      <div className={clsx(s.packageOrder)}>
+        {orders ? (
+          orders.map((order) => (
+            <div className={clsx(s.order)} key={order.id}>
+              <StatusNavbar status={order.orderStatus} />
+              <Order order={order} />
+              <Action
+                shopOwner={order.shopOwner}
+                status={order.orderStatus}
+                order={order.orderDetails}
+              />
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
       </div>
-      <div className={clsx(s.productContainer)}>
-        <div className={clsx(s.deliveryAddress)}></div>
-        <div className={clsx(s.productInfo)}></div>
-        <div className={clsx(s.totalPrice)}></div>
-      </div> */}
     </div>
   );
 }

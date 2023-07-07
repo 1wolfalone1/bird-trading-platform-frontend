@@ -14,10 +14,9 @@
   @include fsf(2.4rem);
   background-color: c.$Complementary4;
   color: c.$Dominant2;
-  margin: 2rem !important;
+  margin: 2rem 0 !important;
   max-height: 12rem;
   .productImage {
-
     img {
       width: 12rem;
       height: 12rem;
@@ -25,12 +24,10 @@
   }
   .productInfo {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: start;
+    align-items: center;
     .productName {
     }
- 
   }
 
   .productQuantity {

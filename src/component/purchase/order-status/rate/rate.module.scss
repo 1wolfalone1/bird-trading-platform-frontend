@@ -1,0 +1,64 @@
+@use "../../../style/" as c;
+
+@mixin fsw($fz: 2.7rem, $fw: 400) {
+  font-size: $fz;
+  font-family: $fw;
+}
+
+@mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
+  font-size: $fz;
+  font-family: $ff;
+}
+
+.container {
+  max-height: 70rem;
+  overflow-y: scroll;
+  background-color: c.$Dominant3;
+  padding: 5rem 8rem;
+  margin: 5rem 45rem;
+  @include fsf(2.4rem);
+
+  .header {
+    padding-bottom: 2rem;
+
+    .title {
+      display: flex;
+      justify-content: center;
+      padding: 2rem 0;
+      color: c.$Accent5;
+      font-size: 3.6rem;
+      font-weight: bolder;
+      font-family: c.$Secondary;
+      text-align: center;
+    }
+  }
+
+  .products {
+    .productInfo {
+      margin-bottom: 8rem;
+      .ratingStar {
+        margin-top: 3rem;
+      }
+      .commentContent {
+        margin: 3rem 0;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin-right: 2rem;
+    .cancelButton {
+      Button {
+        @include c.f-button(0.5rem 1.5rem);
+      }
+    }
+    .submitBtn {
+      Button {
+        @include c.f-button(0.5rem 1.5rem);
+      }
+    }
+  }
+}

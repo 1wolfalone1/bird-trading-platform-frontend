@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import persistSlice, {
   persistSliceSelector,
 } from "../../redux/global/persistSlice";
+import { LoadingButton } from "@mui/lab";
 
 export default function VerifyCode({ close }) {
   const { emailTemp } = useSelector(persistSliceSelector);
@@ -113,9 +114,15 @@ export default function VerifyCode({ close }) {
           {verificationCodeStatus && <span>Invalid code!</span>}
         </div>
         <div className={clsx(s.submitBtn)}>
-          <Button type="submit" variant="outlined" fullWidth>
+          <LoadingButton
+            variant="outlined"
+            color="Accent7"
+            fullWidth
+            loading={loading}
+            type="submit"
+          >
             Next
-          </Button>
+          </LoadingButton>
         </div>
       </form>
     </div>

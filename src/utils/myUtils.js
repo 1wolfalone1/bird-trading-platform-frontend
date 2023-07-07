@@ -69,4 +69,4 @@ export const fix2 = (number) => {
       console.error("not a number in fix2");
       return 0;
    }
-};
+}

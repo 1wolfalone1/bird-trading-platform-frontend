@@ -208,6 +208,15 @@ export default function Checkout() {
                       !deliveryInfo?.address ||
                       !paymentMethod
                     }
+                    style={{
+                      opacity:
+                        !deliveryInfo?.fullName ||
+                        !deliveryInfo?.phoneNumber ||
+                        !deliveryInfo?.address ||
+                        !paymentMethod
+                          ? 0.5
+                          : 1,
+                    }}
                   >
                     Check out
                   </Button>
