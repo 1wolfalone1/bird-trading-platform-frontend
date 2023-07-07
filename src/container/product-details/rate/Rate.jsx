@@ -81,9 +81,15 @@ export default function Rate() {
           <div className={clsx(s.title)}>
             <h3>Review:</h3>
           </div>
-          {rateData.map((rating) => (
-            <ReviewInRate rating={rating}/>
-          ))}
+          {rateData && rateData.length > 0 ? (
+            rateData.map((rating) => (
+              <ReviewInRate rating={rating} />
+            ))
+          ) : (
+            <Box sx={{marginL: 'auto', textAlign: 'center'}}>
+              <img src='https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/i_want_your_feedback.png' width='300px' />
+            </Box>
+          )}   
         <Pagination count={totalPageNumber} shape="rounded" onClick={handlePagingReivew}/>
         </div>
       </div>
