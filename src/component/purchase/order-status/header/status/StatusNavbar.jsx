@@ -9,6 +9,7 @@ import { styled } from "@mui/material/styles";
 import clsx from "clsx";
 import * as React from "react";
 import s from "./statusNavbar.module.scss";
+import { getStatusOfOrder } from "../../../../../utils/myUtils";
 
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -72,11 +73,11 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
 const steps = ["Order Placed", "Order Shipped Out", "Order Received"];
 
 export default function StatusNavbar({ status }) {
-  console.log(status);
+  console.log(status, 'statys ne')
   return (
     <Box sx={{ width: "100%" }} className={clsx(s.container)}>
       <Stepper
-        activeStep={1}
+        activeStep={getStatusOfOrder(status)}
         alternativeLabel
         connector={<QontoConnector />}
         className={clsx(s.stepper)}

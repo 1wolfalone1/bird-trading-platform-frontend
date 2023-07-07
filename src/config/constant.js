@@ -7,3 +7,11 @@ export const errorAuthentication = {
   ACCOUNT_BANNED: 2,
   LOGIN_BEFORE_ORDER: 3,
 };
+
+export const orderStatus = {
+  PENDING: 1,
+  PROCESSING: 1,
+  SHIPPED: 2,
+  SHIPPING: 2,
+  DELIVERED: 3,
+};

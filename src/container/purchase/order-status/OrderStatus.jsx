@@ -7,14 +7,6 @@ import StatusNavbar from "../../../component/purchase/order-status/header/status
 import Order from "../order/Order";
 import s from "./orderStatus.module.scss";
 
-export const orderStatus = {
-  PENDING: 1,
-  PROCESSING: 1,
-  SHIPPED: 2,
-  SHIPPING: 2,
-  DELIVERED: 3,
-};
-
 export default function OrderStatus() {
   const param = useParams();
   console.log(param);
@@ -34,7 +26,7 @@ export default function OrderStatus() {
   useEffect(() => {
     getOrders();
   }, []);
-
+  console.log('day la order', orders)
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.packageOrder)}>
@@ -42,11 +34,12 @@ export default function OrderStatus() {
           orders.map((order) => (
             <div className={clsx(s.order)} key={order.id}>
               <StatusNavbar status={order.orderStatus} />
-              <Order order={order} />
+              <Order order={order} key={orders.orderId}  />
               <Action
                 shopOwner={order.shopOwner}
                 status={order.orderStatus}
                 order={order.orderDetails}
+                orderId = {order.orderId}
               />
             </div>
           ))

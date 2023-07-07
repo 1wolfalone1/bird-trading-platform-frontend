@@ -1,3 +1,5 @@
+import { orderStatus } from "../config/constant";
+
 export const dataUrlToFile = (url, fileName) => {
    const [mediaType, data] = url.split(",");
 
@@ -62,5 +64,22 @@ export const fix2 = (number) => {
    } catch (e) {
       console.error('not a number in fix2')
       return 0;
+   }
+}
+
+export const getStatusOfOrder = (status) => {
+   if(status === 'PENDING'){
+      return orderStatus.PENDING;
+   }
+   if(status === 'PROCESSING'){
+      return orderStatus.PROCESSING;
+   }
+   if(status === 'SHIPPED'){
+      return orderStatus.SHIPPED;
+   }
+   if(status === 'SHIPPING'){
+      return orderStatus.PENDING;
+   }if(status === 'DELIVERED'){
+      return orderStatus.DELIVERED;
    }
 }

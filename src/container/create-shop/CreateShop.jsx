@@ -101,6 +101,7 @@ export default function CreateShop() {
   });
 
   useEffect(() => {}, [address]);
+
   const handleSubmit = async () => {
     const e = await form.validateForm(form.values);
     form.setTouched(
