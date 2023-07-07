@@ -40,7 +40,6 @@ const ButtonChatNow = ({ ButtonOrIcon, shop, css, text }) => {
       );
     }
   };
-  console.log("here is css", css);
   return (
     <IconButton onClick={() => handleChatNow(shop)}>
       <ButtonOrIcon sx={css}>{text}</ButtonOrIcon>

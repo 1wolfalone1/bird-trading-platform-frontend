@@ -17,7 +17,6 @@ const boxPrice = {
 };
 
 export default function Order({ order }) {
-  console.log(order);
   return (
     <div>
       <div className={clsx(s.products)}>

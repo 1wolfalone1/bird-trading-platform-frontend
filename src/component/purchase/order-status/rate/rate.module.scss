@@ -11,6 +11,7 @@
 }
 
 .container {
+  position: relative;
   max-height: 70rem;
   overflow-y: scroll;
   background-color: c.$Dominant3;
@@ -51,11 +52,6 @@
     gap: 1rem;
     margin-right: 2rem;
     .cancelButton {
-      Button {
-        @include c.f-button(0.5rem 1.5rem);
-      }
-    }
-    .submitBtn {
       Button {
         @include c.f-button(0.5rem 1.5rem);
       }
