@@ -203,35 +203,6 @@ export default function ProductDetails() {
   }, []);
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
-  //this function use to add shop into a uselist and chat
-  const handleChatNow = (shop) => {
-    if (status === userStatus.USER) {
-      const updateShop = {
-        ...shop,
-        unread: 0,
-      };
-      console.log("shop ne", updateShop);
-      dispatch(messageSlice.actions.addShopIntoUserList({ shop: updateShop }));
-      dispatch(messageSlice.actions.setOpenPopup({ isOpen: true }));
-      dispatch(
-        messageSlice.actions.setCurrentShopIDSelect({ shopID: shop.id })
-      );
-      dispatch(getListMessage(shop.id));
-      console.log(shop);
-    } else {
-      toast(
-        <AddToCartToast
-          type={toastType.WARNING_INPUT}
-          msg={"You must Sign in to perform this function!"}
-        />,
-        {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1500,
-        }
-      );
-    }
-  };
-
   const cssButton = {
     fontSize: "5rem"
   }
@@ -290,15 +261,6 @@ export default function ProductDetails() {
                         <img src={product.product.shopOwner.imgUrl} alt="" />
                       </div>
                       <div className={s.right}>
-                        {/* <IconButton>
-                          <SmsIcon
-                            sx={{ fontSize: "5rem" }}
-                            color={"Accent7"}
-                            onClick={() =>
-                              handleChatNow(product.product.shopOwner)
-                            }
-                          />
-                        </IconButton> */}
                         <ButtonChatNow ButtonOrIcon= {SmsIcon} shop={product.product.shopOwner} css={cssButton} />
                         <div className={s.name}>
                           {product.product.shopOwner.shopName}

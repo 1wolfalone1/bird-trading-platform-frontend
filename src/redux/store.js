@@ -11,6 +11,7 @@ import notificationSlice from "../component/popper/noti-poper/notificationSlice"
 import orderSlice from "./global/orderSlice";
 import persistSlice from "./global/persistSlice";
 import rateSlice from "../component/purchase/order-status/rate/rateSlice";
+import rateProductDetailSlice from "../container/product-details/rate/rateProductDetailSlice";
 
 const persistConfig = {
    key: "root",
@@ -24,7 +25,8 @@ const persistConfig = {
       "messageSlice",
       "orderSlice",
       "userInfoSlice",
-      "rateSlice"
+      "rateSlice",
+      "rateProductDetailSlice"
    ],
 };
 const reducer = combineReducers({
@@ -38,6 +40,7 @@ const reducer = combineReducers({
    orderSlice: orderSlice.reducer,
    persistSlice: persistSlice.reducer,
    rateSlice: rateSlice.reducer,
+   rateProductDetailSlice: rateProductDetailSlice.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducer);
 const store = configureStore({
