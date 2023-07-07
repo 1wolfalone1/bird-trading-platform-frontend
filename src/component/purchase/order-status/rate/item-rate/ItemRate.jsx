@@ -105,6 +105,7 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
         }
       } catch (e) {
         console.log(e);
+        setLoading(false);
         toast(
           <AddToCartToast
           type={toastType.WARNING_INPUT}

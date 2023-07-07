@@ -1,7 +1,14 @@
-import { Rating } from "@mui/material";
+import { Box, Pagination, Rating } from "@mui/material";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import s from "./rate.module.scss";
+import { useDispatch, useSelector } from "react-redux";
+import rateProductDetailSlice, { getListReivewBaseOnProductId, rateProductDetailSliceSelector } from "./rateProductDetailSlice";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import moment from "moment/moment";
+import { RemoveCircle, RemoveCircleOutlineOutlined } from "@mui/icons-material";
+import ReviewInRate from "./review-in-rate/ReviewInRate";
 
 const ratings = [
   {
@@ -53,34 +60,31 @@ const ratings = [
 ];
 
 export default function Rate() {
+  const dispatch = useDispatch();
+  const param = useParams();
+  const {totalPageNumber, rateData, currentPageNumber} = useSelector(rateProductDetailSliceSelector);
+  const [selectPic, setSelectPic] = useState('');
+
+  useEffect(() => {
+    const productId = param.id;
+    dispatch(getListReivewBaseOnProductId(productId));
+  },[currentPageNumber])
+
+  const handlePagingReivew = (e, value) => {
+    dispatch(rateProductDetailSlice.actions.changeCurrentPagereivew(value));
+  }
+
   return (
     <>
       <div className={clsx(s.container)}>
         <div className={clsx(s.cover)}>
           <div className={clsx(s.title)}>
-            <h3>Product Rating</h3>
+            <h3>Review:</h3>
           </div>
-          {ratings.map((rating) => (
-            <div className={clsx(s.detail)}>
-              <div className={clsx(s.customer)}>
-                <div className={clsx(s.image)}>
-                  <img src={rating?.avatar} alt="" />
-                </div>
-                <div className={clsx(s.right)}>
-                  <div className={clsx(s.userName)}>
-                    <span>{rating?.userName}</span>
-                  </div>
-                  <div className={clsx(s.star)}>
-                    <Rating value={rating.star} readOnly precision={0.5} />
-                  </div>
-                </div>
-              </div>
-              <div className={clsx(s.timeOfRating)}>
-                {new Date(rating?.timeOfRating).toLocaleString("en-GB")}
-              </div>
-              <div className={clsx(s.content)}>{rating?.review}</div>
-            </div>
+          {rateData.map((rating) => (
+            <ReviewInRate rating={rating}/>
           ))}
+        <Pagination count={totalPageNumber} shape="rounded" onClick={handlePagingReivew}/>
         </div>
       </div>
     </>
