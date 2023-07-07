@@ -79,6 +79,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
    };
    const handleNavigateToShop = async () => {
       try {
+         
          const res = await api.get("/shop-owner/redirect");
          const data = await res.data;
          console.log(data);
