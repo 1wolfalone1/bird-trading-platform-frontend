@@ -41,6 +41,31 @@ const textFieldStyle = {
   },
 };
 
+const cssButton = {
+  border: "1px solid #000000",
+  padding: "1rem 2rem",
+  fontSize: "2.4rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  fontWeight: "normal",
+  fontFamily: "SeoulHangang",
+  "&:hover": { color: " rgb(30, 0, 7)", backgroundColor: "rgb(228, 223, 209)" },
+};
+
+const cancelButton = {
+  border: "1px solid black",
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  padding: "1rem 2rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  "&:hover": {
+    backgroundColor: "#ef2933",
+  },
+};
+
 const LOCATION_API_URL = "https://provinces.open-api.vn/api";
 
 const Profile = () => {
@@ -80,8 +105,6 @@ const Profile = () => {
   };
 
   async function updateProfile(data) {
-    console.log(data);
-    console.log(address, "-------herere ne");
     const dataTransfer = {
       ...data,
       address: address,
@@ -150,7 +173,9 @@ const Profile = () => {
   return (
     <Fragment>
       <div className={clsx(s.container)}>
-        <h1>Your Profile</h1>
+        <div className={clsx(s.title)}>
+          <span>Your Profile</span>
+        </div>
         <div className={clsx(s.profile)}>
           <div className={clsx(s.uploadImg)}>
             <div className={clsx(s.imgProfile)}>
@@ -265,13 +290,12 @@ const Profile = () => {
             >
               <Grid2 container sx={{ width: "80rem" }}>
                 <Grid2
-                  xs={8}
+                  xs={9}
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     border: "1px solid #6a6a6a",
-                    borderTopLeftRadius: "5px",
-                    borderBottomLeftRadius: "5px",
+                    borderRadius: "5px",
                   }}
                 >
                   <Typography
@@ -286,16 +310,11 @@ const Profile = () => {
                     {address ? address : "You don't have address"}
                   </Typography>
                 </Grid2>
-                <Grid2 xs={4} sx={{ display: "flex" }}>
+                <Grid2 xs={3} sx={{ display: "flex", paddingLeft: "1rem" }}>
                   <Button
                     disabled={!isEditable}
                     color="Accent8"
-                    sx={{
-                      fontSize: "2.4rem",
-                      borderRadius: "0",
-                      borderTopRightRadius: "5px",
-                      borderBottomRightRadius: "5px",
-                    }}
+                    sx={cssButton}
                     fullWidth
                     variant="contained"
                     onClick={() => {
@@ -311,8 +330,8 @@ const Profile = () => {
             <div className={clsx(s.containerButton)}>
               {isEditable ? (
                 <Button
+                  sx={cancelButton}
                   type="button"
-                  className={clsx(s.saveChange)}
                   onClick={() => setIsEditable(false)}
                 >
                   Cancel
@@ -320,13 +339,11 @@ const Profile = () => {
               ) : (
                 ""
               )}
-              <Button
-                type="button"
-                className={clsx(s.saveChange)}
-                onClick={handleSaveChange}
-              >
-                {isEditable ? "Save Change" : "Edit"}
-              </Button>
+              <div className={clsx(s.saveChange)}>
+                <Button type="button" onClick={handleSaveChange}>
+                  {isEditable ? "Save Change" : "Edit"}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -345,22 +362,26 @@ const Profile = () => {
               setOpenModel={setOpenModel}
             />
             <div className={s.buttonControl}>
-              <Button
-                onClick={() => setOpenModel(false)}
-                variant="contained"
-                color="Accent8"
-                sx={{ fontSize: "1.6rem" }}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="Accent8"
-                sx={{ fontSize: "1.6rem" }}
-                onClick={() => setTriggers((state) => state + 1)}
-              >
-                Save
-              </Button>
+              <div className={clsx(s.cancelButton)}>
+                <Button
+                  onClick={() => setOpenModel(false)}
+                  variant="contained"
+                  color="Accent8"
+                  sx={cancelButton}
+                >
+                  Cancel
+                </Button>
+              </div>
+              <div className={clsx(s.saveChange)}>
+                <Button
+                  variant="contained"
+                  color="Accent8"
+                  sx={{ fontSize: "1.6rem" }}
+                  onClick={() => setTriggers((state) => state + 1)}
+                >
+                  Save Change
+                </Button>
+              </div>
             </div>
           </div>
         </Modal>

@@ -1,24 +1,23 @@
-import { useEffect } from "react";
-import s from "./userRightHeader.module.scss";
-import React from "react";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import Style from "../../../../style/inline-style/style";
-import CartItemsPopper from "../../../../component/popper/cart-popper/CartItemsPopper";
-import { motion } from "framer-motion";
-import { Box, Divider, Menu, MenuItem, Typography } from "@mui/material";
-import { useState } from "react";
-import clsx from "clsx";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAddressCard,
   faArrowRightFromBracket,
+  faBoxOpen,
   faShop,
 } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { Box, Divider, Menu, MenuItem, Typography } from "@mui/material";
+import clsx from "clsx";
+import { motion } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import userInfoSlice, { logout } from "../../../../redux/global/userInfoSlice";
-import NotiItemsPopper from "../../../../component/popper/noti-poper/NotiItemsPopper";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../../../api/server/API";
+import CartItemsPopper from "../../../../component/popper/cart-popper/CartItemsPopper";
+import NotiItemsPopper from "../../../../component/popper/noti-poper/NotiItemsPopper";
+import { logout } from "../../../../redux/global/userInfoSlice";
+import Style from "../../../../style/inline-style/style";
+import s from "./userRightHeader.module.scss";
 
 const menuItemStyle = {
   width: "20rem",
@@ -29,7 +28,7 @@ const menuItemStyle = {
 const typoItemMenu = {
   fontSize: "2.4rem",
   fontWeight: "1",
-  color: Style.color.$Accent1,
+  // color: Style.color.$Accent1,
 };
 export default function UserRightHeader({ user, totalCartItems }) {
   const [isActive, setIsActive] = React.useState(false);
@@ -51,11 +50,23 @@ export default function UserRightHeader({ user, totalCartItems }) {
       }
     };
   };
+
+  const handleNavigateToOrderHistory = (link) => {
+    return () => {
+      setIsActive(!isActive);
+      setAnchorEl(null);
+      if (link) {
+        navigate(link);
+      }
+    };
+  };
+
   useEffect(() => {
     if (user.imgUrl) {
     } else {
     }
   }, []);
+
   const handleUserControlClick = (event) => {
     setIsActive(!isActive);
 
@@ -150,12 +161,12 @@ export default function UserRightHeader({ user, totalCartItems }) {
             </Box>
           </MenuItem>
           <Divider className={clsx(s.divider)} />
-          {/* <MenuItem onClick={handleNavigateToOrderHistory}>
+          <MenuItem onClick={handleNavigateToOrderHistory("/order-history")}>
             <Box sx={menuItemStyle}>
               <Typography sx={typoItemMenu}>Order history</Typography>
-              <FontAwesomeIcon icon={} className={s.iconMenu} />
+              <FontAwesomeIcon icon={faBoxOpen} className={s.iconMenu} />
             </Box>
-          </MenuItem> */}
+          </MenuItem>
           <Divider className={clsx(s.divider)} />
           <MenuItem onClick={handleLogout}>
             <Box sx={menuItemStyle}>

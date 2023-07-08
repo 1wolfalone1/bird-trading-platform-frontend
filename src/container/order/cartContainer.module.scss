@@ -182,22 +182,25 @@ $fz: 3rem;
         .voucher {
           padding: 1rem;
           .voucherItem {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
             padding: 1rem;
             font-size: 2rem;
-            margin-bottom: 1rem;
+            // margin-bottom: 1rem;
             .voucherCode {
-              font-size: 2.4rem;
+              font-size: 3rem;
               font-weight: 700;
               color: c.$Dominant5;
             }
             .voucherDescription {
-              padding: 0.8rem 0 0.3rem;
             }
             .voucherDiscount {
-              padding-bottom: 0.3rem;
             }
             .text {
-              padding-bottom: 0.3rem;
+              font-size: 2rem;
+              font-weight: bold;
+              color: c.$Accent8;
             }
           }
         }

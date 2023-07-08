@@ -1,7 +1,8 @@
-@use "../style/" as c;
+@use "../../style/" as c;
 
 .container {
   background: c.$Complementary7;
+  margin-left: 10rem;
   .cover {
     font-size: 3rem;
     font-family: c.$Secondary;
@@ -32,16 +33,10 @@
           justify-content: end;
           align-items: start;
           color: c.$Dominant4;
-          Button {
-            @include c.f-button(0.5rem, c.$Dominant2, "transparent");
-            border: none;
-            &:hover {
-              color: c.$Dominant4;
-              background-color: transparent;
-            }
-          }
           .shopName {
-            margin-top: 1rem;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-left: 1rem;
           }
         }
       }
@@ -50,9 +45,9 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 0.5rem;
+        gap: 1rem;
         Button {
-          @include c.f-button(0.2rem 3rem, c.$Dominant4, c.$Complementary8);
+          @include c.f-button(0.5rem 3rem, c.$Dominant4, c.$Complementary8);
         }
       }
     }

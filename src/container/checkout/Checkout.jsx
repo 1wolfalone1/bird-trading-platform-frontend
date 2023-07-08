@@ -1,35 +1,26 @@
-import React from "react";
-import clsx from "clsx";
-import s from "./checkout.module.scss";
-import Grid from "@mui/material/Unstable_Grid2";
-import Products from "../../component/checkout/products/Products";
-import Payment from "../../component/checkout/payment/Payment";
-import Delivery from "../../component/checkout/delivery/Delivery";
-import Voucher from "../../component/checkout/voucher/Voucher";
-import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
-import { useDispatch, useSelector } from "react-redux";
-import cartSlice, { getCartSelector } from "../order/cartSlice";
-import { useState } from "react";
-import Popup from "reactjs-popup";
-import OrderBill from "../../component/checkout/orderBill/OrderBill";
 import { Backdrop, Button, CircularProgress } from "@mui/material";
-import { userInfoSelector } from "../../redux/global/userInfoSlice";
-import COD from "../../asset/image/COD.avif";
-import PayPal from "../../asset/image/Paypal.avif";
-import { useEffect } from "react";
-import { api } from "../../api/server/API";
-import { useNavigate } from "react-router-dom";
-import globalConfigSlice, {
-  globalConfigSliceSelector,
-} from "../../redux/global/globalConfigSlice";
-import { useRef } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
 import { useJsApiLoader } from "@react-google-maps/api";
+import clsx from "clsx";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
+import { api } from "../../api/server/API";
+import Delivery from "../../component/checkout/delivery/Delivery";
+import OrderBill from "../../component/checkout/orderBill/OrderBill";
+import Payment from "../../component/checkout/payment/Payment";
+import Products from "../../component/checkout/products/Products";
+import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
+import Voucher from "../../component/checkout/voucher/Voucher";
 import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
-import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
-import { fix2 } from "../../utils/myUtils";
 import persistSlice, {
   persistSliceSelector,
 } from "../../redux/global/persistSlice";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import { fix2 } from "../../utils/myUtils";
+import cartSlice, { getCartSelector } from "../order/cartSlice";
+import s from "./checkout.module.scss";
 
 const payment = [
   {
@@ -158,6 +149,17 @@ export default function Checkout() {
       );
     }
   }, [itemsByShop]);
+
+  const handleCheckout = () => {
+    if (
+      !deliveryInfo?.fullName ||
+      !deliveryInfo?.phoneNumber ||
+      !deliveryInfo?.address ||
+      !paymentMethod
+    )
+      return true;
+    return false;
+  };
   return (
     <>
       <Backdrop
@@ -202,20 +204,9 @@ export default function Checkout() {
                 closeOnDocumentClick={false}
                 trigger={
                   <Button
-                    disabled={
-                      !deliveryInfo?.fullName ||
-                      !deliveryInfo?.phoneNumber ||
-                      !deliveryInfo?.address ||
-                      !paymentMethod
-                    }
+                    disabled={handleCheckout()}
                     style={{
-                      opacity:
-                        !deliveryInfo?.fullName ||
-                        !deliveryInfo?.phoneNumber ||
-                        !deliveryInfo?.address ||
-                        !paymentMethod
-                          ? 0.5
-                          : 1,
+                      opacity: handleCheckout() ? 0.5 : 1,
                     }}
                   >
                     Check out

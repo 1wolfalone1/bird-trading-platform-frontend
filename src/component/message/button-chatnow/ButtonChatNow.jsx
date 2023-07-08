@@ -26,7 +26,6 @@ const ButtonChatNow = ({ ButtonOrIcon, shop, css, text }) => {
         messageSlice.actions.setCurrentShopIDSelect({ shopID: shop.id })
       );
       dispatch(getListMessage(shop.id));
-      console.log(shop);
     } else {
       toast(
         <AddToCartToast
@@ -40,7 +39,6 @@ const ButtonChatNow = ({ ButtonOrIcon, shop, css, text }) => {
       );
     }
   };
-  console.log("here is css", css);
   return (
     <IconButton onClick={() => handleChatNow(shop)}>
       <ButtonOrIcon sx={css}>{text}</ButtonOrIcon>

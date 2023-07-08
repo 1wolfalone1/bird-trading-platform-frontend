@@ -1,38 +1,29 @@
-import clsx from "clsx";
-import s from "./sideBarFIlter.module.scss";
-import React, { useEffect, useRef, useState } from "react";
-import Filter from "../../asset/icons/Filter";
 import {
-  Box,
-  Button,
   Checkbox,
   Fade,
   FormControl,
   InputLabel,
-  ListItemText,
   MenuItem,
   OutlinedInput,
-  Popover,
-  Popper,
   Rating,
   Select,
-  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
-import Style from "./../../style/inline-style/style";
-import Popup from "reactjs-popup";
-import OutlineInputCustom from "../input/outlinedInput/OutlineInputCustom";
-import ButtonControl from "./ButtonControl";
-import UpStar from "../../asset/icons/UpStar";
-import { api } from "../../api/server/API";
+import clsx from "clsx";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import UpStar from "../../asset/icons/UpStar";
+import OutlineInputCustom from "../input/outlinedInput/OutlineInputCustom";
 import productsPresentationSlices, {
   categorySelector,
   filterObjectSelector,
   getTypeOfProduct,
   productTypeSelector,
 } from "../products-presentation/productsPresentationSlice";
+import Style from "./../../style/inline-style/style";
+import ButtonControl from "./ButtonControl";
+import s from "./sideBarFIlter.module.scss";
 
 const ratingCustomizer = {
   fontSize: "3.2rem",
@@ -45,10 +36,11 @@ const MenuProps = {
   disableScrollLock: true,
   PaperProps: {
     style: {
-      maxHeight: "20rem",
-      width: 250,
+      maxHeight: "25rem",
+      width: "10%",
       color: Style.color.$Dominant1,
       fontSize: "2rem",
+      border: "0.1rem solid rgb(144, 69, 106)",
     },
   },
 };
@@ -124,7 +116,6 @@ export default function SideBarFilter() {
     );
   };
 
-
   const handleSortDirectChange = (event) => {
     const {
       target: { value },
@@ -137,7 +128,6 @@ export default function SideBarFilter() {
       })
     );
   };
-
 
   console.log(filterObj);
 

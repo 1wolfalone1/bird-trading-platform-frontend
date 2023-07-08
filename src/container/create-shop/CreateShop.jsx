@@ -32,6 +32,33 @@ const textFieldStyle = {
     fontSize: "1.5rem",
   },
 };
+
+const cssButton = {
+  border: "1px solid #000000",
+  padding: "1rem 2rem",
+  fontSize: "2.4rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  marginLeft: "1rem",
+  backgroundColor: "rgb(94, 94, 94)",
+  fontWeight: "normal",
+  fontFamily: "SeoulHangang",
+  "&:hover": { color: " rgb(30, 0, 7)", backgroundColor: "rgb(228, 223, 209)" },
+};
+
+const cancelButton = {
+  border: "1px solid black",
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  padding: "1rem 2rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  "&:hover": {
+    backgroundColor: "#ef2933",
+  },
+};
+
 const QuillWrapper = ({ field, form, ...props }) => {
   const { name } = field;
   const { setFieldValue } = form;
@@ -287,37 +314,31 @@ export default function CreateShop() {
               >
                 <Grid container sx={{ width: "100%" }}>
                   <Grid
-                    xs={8}
+                    xs={9}
                     sx={{
                       display: "flex",
                       alignItems: "center",
                       border: "1px solid #6a6a6a",
-                      borderTopLeftRadius: "5px",
-                      borderBottomLeftRadius: "5px",
+                      borderRadius: "5px",
                       padding: "0",
                     }}
                   >
                     <Typography
                       noWrap
                       sx={{
-                        fontSize: "2.4rem",
+                        fontSize: "1.8rem",
                         paddingLeft: "1rem",
                         color: "#7d7d7d",
                         width: "100%",
                       }}
                     >
-                      {address ? address : "You don't have address"}
+                      {address ? address : "Provide your shop address"}
                     </Typography>
                   </Grid>
-                  <Grid xs={4} sx={{ display: "flex" }}>
+                  <Grid xs={3} sx={{ display: "flex" }}>
                     <Button
                       color="Accent8"
-                      sx={{
-                        fontSize: "2.4rem",
-                        borderRadius: "0",
-                        borderTopRightRadius: "5px",
-                        borderBottomRightRadius: "5px",
-                      }}
+                      sx={cssButton}
                       fullWidth
                       variant="contained"
                       onClick={() => {
@@ -382,25 +403,29 @@ export default function CreateShop() {
               setOpenModel={setOpenModel}
             />
             <div className={s.buttonControl}>
-              <Button
-                onClick={() => {
-                  setOpenModel(false);
-                  setTriggers(0);
-                }}
-                variant="contained"
-                color="Accent8"
-                sx={{ fontSize: "1.6rem" }}
-              >
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="Accent8"
-                sx={{ fontSize: "1.6rem" }}
-                onClick={() => setTriggers((state) => state + 1)}
-              >
-                Save
-              </Button>
+              <div className={clsx(s.cancelButton)}>
+                <Button
+                  onClick={() => {
+                    setOpenModel(false);
+                    setTriggers(0);
+                  }}
+                  variant="contained"
+                  color="Accent8"
+                  sx={cancelButton}
+                >
+                  Cancel
+                </Button>
+              </div>
+              <div className={clsx(s.saveChange)}>
+                <Button
+                  variant="contained"
+                  color="Accent8"
+                  sx={{ fontSize: "1.6rem" }}
+                  onClick={() => setTriggers((state) => state + 1)}
+                >
+                  Save Change
+                </Button>
+              </div>
             </div>
           </div>
         </Modal>

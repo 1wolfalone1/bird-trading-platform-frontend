@@ -1,25 +1,20 @@
 import {
   Box,
   Button,
-  ButtonGroup,
   FormHelperText,
-  IconButton,
   Skeleton,
   TextField,
-  Typography,
 } from "@mui/material";
-import s from "./mapControl.module.scss";
 import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
   Autocomplete,
   DirectionsRenderer,
-  useGoogleMap,
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
 } from "@react-google-maps/api";
 import clsx from "clsx";
-import { useEffect, useLayoutEffect } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import s from "./mapControl.module.scss";
 const lib = ["places"];
 const center = { lat: 48.8584, lng: 2.2945 };
 
@@ -44,6 +39,18 @@ function MapControl({
   const [destination, setDestination] = useState("");
   const [invalid, setInvalid] = useState("");
 
+  const cssCancel = {
+    border: "1px solid black",
+    fontSize: "2.4rem",
+    fontFamily: "SeoulHangang",
+    padding: "1rem 2rem",
+    textTransform: "none",
+    color: "rgb(255, 255, 255)",
+    backgroundColor: "rgb(94, 94, 94)",
+    "&:hover": {
+      backgroundColor: "#ef2933",
+    },
+  };
   const addrStatus = useRef({
     isValid: false,
     addr: "",
@@ -55,7 +62,6 @@ function MapControl({
   const destiantionRef = useRef();
 
   useEffect(() => {
-    console.log(triggerSave, "tringerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
     if (triggerSave !== 0) {
       changeInfoAddress(originRef);
     }
@@ -80,7 +86,6 @@ function MapControl({
         address: addrStatus.current.addr,
       },
       function (results, status) {
-        console.log(results, "resultssdasdasdasdasddasdasdadasdasdasd");
         // eslint-disable-next-line no-undef
         if (
           // eslint-disable-next-line no-undef
@@ -215,6 +220,7 @@ function MapControl({
     }
   };
   const handleCancel = async () => {
+    if (!originRef.current.value) return;
     if (originRef.current) {
       originRef.current.value = address;
     }
@@ -295,7 +301,7 @@ function MapControl({
               inputRef={originRef}
               type="text"
               defaultValue={defaultAddress}
-              placeholder="Origin"
+              placeholder="Type an address..."
               id="outlined-basic"
               onChange={handleChange}
               label="Enter Place"
@@ -322,22 +328,11 @@ function MapControl({
             color="Accent8"
             type="reset"
             onClick={handleCancel}
-            sx={{ fontSize: "1.5rem" }}
+            sx={cssCancel}
           >
-            Cancel
+            Reset
           </Button>
         </Box>
-
-        {/* <Typogr
-           aphy>Distance: {distance} </Typogr>
-           <Typography>Duration: {duration} </Typography>
-           <IconButton
-              aria-label="center back"
-              isRound
-              onClick={() => {
-                 map.panTo(center);
-                 map.setZoom(15);
-              }} */}
       </Box>
       <FormHelperText
         error={invalid !== ""}

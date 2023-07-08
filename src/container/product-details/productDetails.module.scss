@@ -120,18 +120,25 @@ $imgWidth: 65rem;
                 margin-right: 1rem;
                 img {
                   width: 100%;
+                  cursor: pointer;
                 }
               }
               .right {
-                Button {
-                  @include c.f-button(0.5rem, c.$Complementary0, c.$Dominant3);
-                  border: none;
-                  &:hover {
-                  }
-                }
+                font-family: c.$Secondary;
                 .name {
                   font-size: 2rem;
                   color: c.$Accent6;
+                  margin-left: 1rem;
+                }
+                .action {
+                  display: flex;
+                  justify-content: start;
+                  align-items: center;
+                  .chat {
+                    font-size: 1rem;
+                  }
+                  .view {
+                  }
                 }
               }
             }
