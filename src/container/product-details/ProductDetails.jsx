@@ -200,7 +200,7 @@ export default function ProductDetails() {
       //    const root = ReactDOM.createRoot(document.getElementById("content"));
       //    root.render();
     }
-  }, []);
+  }, [param]);
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
   const cssButton = {
