@@ -39,7 +39,6 @@ const QuillWrapper = ({ field, form, ...props }) => {
   const handleChange = (content) => {
     setFieldValue(name, content);
   };
-  //   console.log(setFieldValue);
   return (
     <ReactQuill
       {...props}
@@ -102,6 +101,7 @@ export default function CreateShop() {
   });
 
   useEffect(() => {}, [address]);
+
   const handleSubmit = async () => {
     const e = await form.validateForm(form.values);
     form.setTouched(

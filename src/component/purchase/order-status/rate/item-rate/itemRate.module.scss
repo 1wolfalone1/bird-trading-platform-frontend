@@ -1,0 +1,32 @@
+@use "../../../../style/" as c;
+
+.container {
+  .productInfo {
+      margin-bottom: 8rem;
+      .ratingStar {
+        margin-top: 3rem;
+      }
+      .commentContent {
+        margin: 3rem 0;
+      }
+    }
+
+    .previewImage {
+      // border: 1px solid c.$Complementary0;
+      margin-right: 10px;
+      box-shadow: 0px 0px 10px c.$Dominant2;
+      height: 150px;
+      width: 150px;
+    }
+    
+    .btnUploadFile {
+      margin: 20px;
+    }
+
+    .submitBtn {
+      float: right;
+      Button {
+        @include c.f-button(0.5rem 1.5rem);
+      }
+    }
+}

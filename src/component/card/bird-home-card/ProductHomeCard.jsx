@@ -1,10 +1,10 @@
-import { Rating } from "@mui/material";
+import { Rating, Tooltip } from "@mui/material";
 import s from "./productHomeCard.module.scss";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatNumber } from "../../../utils/myUtils";
 
-export default function ProductHomeCard({ product }) {
+export default function ProductHomeCard({ product, isSuggest }) {
   const [value, setValue] = useState(2);
   const navigate = useNavigate();
 
@@ -50,16 +50,58 @@ export default function ProductHomeCard({ product }) {
 
         <div className={s.shop}>
           <div className={s.shopAvatar}>
-            <img src={product.imgUrl} alt="" />
+            <img src={product.shopOwner.imgUrl} alt="" />
           </div>
           <dir className={s.shopName}>
             <span>{product.shopOwner.shopName}</span>
           </dir>
         </div>
+        {isSuggest && 
+            <>
+              <div className={s.type}>
+               <span>
+                 <span style={{ color: "#005250" }}>Type:</span>{" "}
+                 {product.type.name}
+               </span>
+              </div>
+              <Tooltip
+                title={
+                  <>
+                    {product.tags
+                      ? product.tags.map((tag, i) => (
+                          <span
+                            style={{ fontSize: "1.3rem" }}
+                            key={tag.id}
+                          >
+                            {" "}
+                            #{tag.name}
+                          </span>
+                        ))
+                      : ""}
+                  </>
+                }
+                sx={{ fontSize: "8rem" }}
+              >
+                <div className={s.listTag}>
+                  {product.tags
+                    ? product.tags.map((tag, i) => (
+                        <span
+                          className={s.tag}
+                          key={tag.id}
+                        >
+                          {" "}
+                          #{tag.name}
+                        </span>
+                      ))
+                    : ""}
+                </div>
+              </Tooltip>
+            </>
+        }
         <div className={s.star}>
           <Rating
             name="simple-controlled"
-            value={4.5}
+            value={product.star}
             precision={0.5}
             onChange={(event, newValue) => {
               setValue(newValue);
