@@ -137,6 +137,39 @@ $card-width: 28rem;
         }
       }
     }
+    .type {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      font-family: c.$Primary;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 1.8rem;
+      line-height: 2.4rem;
+      color: #000000;
+    }
+    .listTag {
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-word;
+      .tag {
+        font-family: c.$Primary;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 13px;
+
+        /* Accent/7,5 */
+
+        color: #0070c1;
+      }
+    }
   }
   .star {
     :global(.MuiRating-root) {
