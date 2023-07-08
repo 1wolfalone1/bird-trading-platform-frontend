@@ -1,3 +1,5 @@
+import { orderStatus } from "../config/constant";
+
 export const dataUrlToFile = (url, fileName) => {
    const [mediaType, data] = url.split(",");
 
@@ -41,12 +43,19 @@ export const calculateDistance = async (origin, destination) => {
       // eslint-disable-next-line no-undef
       travelMode: google.maps.TravelMode.DRIVING,
    });
+   console.log(
+      origin,
+      destination,
+      "adsfasdf conalulatetetetetet",
+      results,
+      results.routes[0].legs[0].distance.value
+   );
 
    return results.routes[0].legs[0].distance.value;
 };
 
 export const formatNumber = (q) => {
-   if (q === undefined || q ===null || q === "") {
+   if (q === undefined || q === null || q === "") {
       q = 0;
    }
    return q.toLocaleString("en-US", {
@@ -55,12 +64,28 @@ export const formatNumber = (q) => {
    });
 };
 
-
 export const fix2 = (number) => {
    try {
       return Math.round(number * 1e2) / 1e2;
    } catch (e) {
-      console.error('not a number in fix2')
+      console.error("not a number in fix2");
       return 0;
+   }
+}
+
+export const getStatusOfOrder = (status) => {
+   if(status === 'PENDING'){
+      return orderStatus.PENDING;
+   }
+   if(status === 'PROCESSING'){
+      return orderStatus.PROCESSING;
+   }
+   if(status === 'SHIPPED'){
+      return orderStatus.SHIPPED;
+   }
+   if(status === 'SHIPPING'){
+      return orderStatus.PENDING;
+   }if(status === 'DELIVERED'){
+      return orderStatus.DELIVERED;
    }
 }

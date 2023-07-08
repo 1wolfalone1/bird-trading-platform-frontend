@@ -226,6 +226,11 @@ export default function ProductDetails() {
   const handleViewShop = () => {
     navigate(`/shop/${product.product.shopOwner.id}`);
   };
+  // const root = ReactDOM.createRoot(document.getElementById("content"));
+  // root.render(element);
+  const cssButton = {
+    fontSize: "5rem",
+  };
 
   return (
     <>

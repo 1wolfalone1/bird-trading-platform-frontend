@@ -99,13 +99,12 @@ export default function UserRightHeader({ user, totalCartItems }) {
       }
     } catch (e) {
       const error = e.response.data;
-      if (error.errorCode === "400" || error.status === 403) {
+      if (error.errorCode === "400") {
         navigate("/create-shop");
       }
       console.log(e);
     }
   };
-
   return (
     <>
       <div className={s.container}>
@@ -158,13 +157,6 @@ export default function UserRightHeader({ user, totalCartItems }) {
             <Box sx={menuItemStyle}>
               <Typography sx={typoItemMenu}>Your shop</Typography>
               <FontAwesomeIcon icon={faShop} className={s.iconMenu} />
-            </Box>
-          </MenuItem>
-          <Divider className={clsx(s.divider)} />
-          <MenuItem onClick={handleNavigateToOrderHistory("/order-history")}>
-            <Box sx={menuItemStyle}>
-              <Typography sx={typoItemMenu}>Order history</Typography>
-              <FontAwesomeIcon icon={faBoxOpen} className={s.iconMenu} />
             </Box>
           </MenuItem>
           <Divider className={clsx(s.divider)} />
