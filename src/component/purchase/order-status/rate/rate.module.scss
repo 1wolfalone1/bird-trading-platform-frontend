@@ -19,6 +19,23 @@
   margin: 5rem 45rem;
   @include fsf(2.4rem);
 
+  .closeButton {
+    display: flex;
+    justify-content: flex-end;
+    button {
+      padding: 0 2rem;
+      color: c.$Complementary0;
+      cursor: pointer;
+      font-size: 7rem;
+      position: absolute;
+      top: 5rem;
+      right: 2rem;
+    }
+
+    button:hover {
+      color: red;
+    }
+  }
   .header {
     padding-bottom: 2rem;
 

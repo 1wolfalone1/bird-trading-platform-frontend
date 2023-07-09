@@ -205,9 +205,7 @@ export default function Checkout() {
                 trigger={
                   <Button
                     disabled={handleCheckout()}
-                    style={{
-                      opacity: handleCheckout() ? 0.5 : 1,
-                    }}
+                    style={{ opacity: handleCheckout() ? 0.8 : 1 }}
                   >
                     Check out
                   </Button>

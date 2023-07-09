@@ -39,6 +39,11 @@ export default function ShopOverview() {
   const handleAllProducts = () => {};
   const handleCollection = () => {};
   const handlePortfolio = () => {};
+  const shopInfo = {
+    id: data?.shopInfoDto?.id,
+    shopName: data?.shopInfoDto?.shopName,
+    imgUrl: data?.shopInfoDto?.avatarImgUrl,
+  };
 
   return (
     <>
@@ -76,7 +81,7 @@ export default function ShopOverview() {
                 <Grid className={clsx(s.chat)}>
                   <ButtonChatNow
                     ButtonOrIcon={Button}
-                    shop={data?.shopInfoDto}
+                    shop={shopInfo}
                     css={cssButton}
                     text={"Chat now"}
                   />

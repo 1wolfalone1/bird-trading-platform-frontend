@@ -34,7 +34,7 @@ export default function HomeProductSlider({ products, title }) {
           >
             {products.data.map((product) => (
               <SwiperSlide key={product.id}>
-                <ProductHomeCard product={product} />
+                <ProductHomeCard product={product}  />
               </SwiperSlide>
             ))}
           </Swiper>

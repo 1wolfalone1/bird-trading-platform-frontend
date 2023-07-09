@@ -229,7 +229,13 @@ export default function ProductDetails() {
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
   const cssButton = {
-    fontSize: "5rem",
+    border: "1px solid #000000",
+    padding: "1rem 2rem",
+    fontSize: "2.2rem",
+    textTransform: "none",
+    color: "rgb(255, 255, 255)",
+    backgroundColor: "rgb(94, 94, 94)",
+    "&:hover": { color: "rgb(4, 0, 30)" },
   };
 
   return (
