@@ -3,7 +3,7 @@ import s from "./productPageHeader.module.scss";
 
 import React from "react";
 import { useParams } from "react-router-dom";
-import ShopOverview from "../../../../component/shop/ShopOverview";
+import ShopOverview from "../../../../component/shop/shopOverview/ShopOverview";
 
 export default function ProductPageHeader() {
   const { shopId } = useParams();
@@ -15,7 +15,7 @@ export default function ProductPageHeader() {
           <ShopOverview />
         </div>
       ) : (
-        <></>
+        <div className={clsx(s.container)}>{/* <ShopOverview /> */}</div>
       )}
     </>
   );

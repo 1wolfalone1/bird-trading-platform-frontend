@@ -1,42 +1,35 @@
 import { useNavigate, useParams } from "react-router-dom";
 import s from "./productDetails.module.scss";
 
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
-import { api } from "../../api/server/API";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import { Button, Chip, Divider, IconButton, Rating } from "@mui/material";
 import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-import ThumpImage from "./thump-image/ThumpImage";
-import { Button, Chip, Divider, IconButton, Rating } from "@mui/material";
+import { api } from "../../api/server/API";
 import BirdProperties from "./properties/BirdProperties";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import { useDispatch, useSelector } from "react-redux";
-import SmsIcon from "@mui/icons-material/Sms";
+import ThumpImage from "./thump-image/ThumpImage";
 
+import { toast } from "react-toastify";
+import AddToCartToast, {
+  toastType,
+} from "../../component/toast/content/AddToCartToast";
+import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import Style from "../../style/inline-style/style";
 import cartSlice, {
   getCartStatusSelector,
   getItemQuantity,
 } from "../order/cartSlice";
-import AddToCartToast, {
-  toastType,
-} from "../../component/toast/content/AddToCartToast";
-import { toast } from "react-toastify";
-import Style from "../../style/inline-style/style";
-import messageSlice, {
-  getListMessage,
-  messageSelector,
-} from "../../component/message/messageSlice";
-import globalConfigSlice from "../../redux/global/globalConfigSlice";
 
-import { userInfoSelector, userStatus } from "../../redux/global/userInfoSlice";
-import { formatNumber } from "../../utils/myUtils";
 import ButtonChatNow from "../../component/message/button-chatnow/ButtonChatNow";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import { formatNumber } from "../../utils/myUtils";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -51,6 +44,18 @@ function mapObjects(source, target) {
   }
   return target;
 }
+
+const cssButton = {
+  border: "1px solid #000000",
+  padding: "0.5rem 1.5rem",
+  fontSize: "2rem",
+  textTransform: "none",
+  fontFamily: "SeoulHangang",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  "&:hover": { color: "rgb(4, 0, 30)" },
+};
+
 export default function ProductDetails() {
   const navigate = useNavigate();
   const param = useParams();
@@ -63,12 +68,28 @@ export default function ProductDetails() {
   const [firstCall, setFirstCall] = useState(true);
   const { status } = useSelector(userInfoSelector);
 
-  const handleButton = {
+  const buttonOrder = {
     fontSize: "2.4rem",
-    fontFamily: Style.font.$Primary,
+    fontFamily: Style.font.$Secondary,
     textTransform: "none",
     padding: "1rem 2rem",
     marginLeft: "2rem",
+    backgroundColor: "rgb(238,77,45)",
+    fontWeight: "800",
+    color: "#ffeee8",
+    "&:hover": { opacity: 0.8 },
+  };
+
+  const buttonAdd = {
+    fontSize: "2.4rem",
+    fontFamily: Style.font.$Secondary,
+    textTransform: "none",
+    padding: "1rem 2rem",
+    marginLeft: "2rem",
+    backgroundColor: "#ffeee8",
+    color: "rgb(238,77,45)",
+    fontWeight: "800",
+    "&:hover": { opacity: 0.8 },
   };
 
   const notifyWarningAddtoCart = (message) =>
@@ -200,12 +221,22 @@ export default function ProductDetails() {
       //    const root = ReactDOM.createRoot(document.getElementById("content"));
       //    root.render();
     }
-  }, [param]);
+  }, []);
+
+  const handleViewShop = () => {
+    navigate(`/shop/${product.product.shopOwner.id}`);
+  };
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
   const cssButton = {
-    fontSize: "5rem"
-  }
+    border: "1px solid #000000",
+    padding: "1rem 2rem",
+    fontSize: "2.2rem",
+    textTransform: "none",
+    color: "rgb(255, 255, 255)",
+    backgroundColor: "rgb(94, 94, 94)",
+    "&:hover": { color: "rgb(4, 0, 30)" },
+  };
 
   return (
     <>
@@ -258,12 +289,34 @@ export default function ProductDetails() {
                     </div>
                     <div className={s.shop}>
                       <div className={s.image}>
-                        <img src={product.product.shopOwner.imgUrl} alt="" />
+                        <img
+                          src={product.product.shopOwner.imgUrl}
+                          alt="shop img"
+                          onClick={handleViewShop}
+                        />
                       </div>
                       <div className={s.right}>
-                        <ButtonChatNow ButtonOrIcon= {SmsIcon} shop={product.product.shopOwner} css={cssButton} />
                         <div className={s.name}>
                           {product.product.shopOwner.shopName}
+                        </div>
+                        <div className={clsx(s.action)}>
+                          <div className={clsx(s.chat)}>
+                            <ButtonChatNow
+                              ButtonOrIcon={Button}
+                              shop={product.product.shopOwner}
+                              css={cssButton}
+                              text={"Chat now"}
+                            />
+                          </div>
+                          <div className={clsx(s.viewShop)}>
+                            <Button
+                              sx={cssButton}
+                              onClick={handleViewShop}
+                              shop={product.product.shopOwner}
+                            >
+                              View shop
+                            </Button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -331,7 +384,7 @@ export default function ProductDetails() {
                 <div className={s.footer}>
                   <div className={s.buttonControl}>
                     <Button
-                      sx={handleButton}
+                      sx={buttonAdd}
                       color="Accent7"
                       variant="outlined"
                       onClick={handleAddToCart}
@@ -345,7 +398,7 @@ export default function ProductDetails() {
                       />
                     </Button>
                     <Button
-                      sx={handleButton}
+                      sx={buttonOrder}
                       variant="contained"
                       color="error"
                       onClick={handleOrderNow}

@@ -10,25 +10,11 @@
   font-family: $ff;
 }
 
-@mixin button(
-  $padding: 1rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 1px solid c.$Complementary0;
-  font-size: 2.4rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
-
 .container {
   height: 100%;
   width: 700px;
   background-color: c.$Dominant3;
-  padding: 5rem;
+  padding: 5rem 5rem 2rem 5rem;
   @include fsf(2.4rem);
   .header {
     margin-bottom: 3rem;
@@ -49,7 +35,6 @@
         position: absolute;
         top: 4rem;
       }
-
       button:hover {
         color: red;
       }
@@ -59,7 +44,6 @@
   .information {
     .nameAndPhone {
       display: flex;
-      // justify-content: space-between;
       .name {
         padding-right: 0.8rem;
       }
@@ -69,18 +53,13 @@
     }
   }
   .addressContainer {
-    
   }
   .submitBtn {
     display: flex;
     justify-content: end;
-    margin-top: 1rem;
+    margin-top: 3rem;
     Button {
-      @include button(1rem 2rem);
-    }
-    Button:hover {
-      color: c.$Accent7;
-      background-color: c.$Dominant5;
+      @include c.f-button();
     }
   }
 }

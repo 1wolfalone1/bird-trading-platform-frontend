@@ -10,20 +10,6 @@
   font-family: $ff;
 }
 
-@mixin button(
-  $padding: 1rem 2rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 1px solid c.$Complementary0;
-  font-size: 1.8rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
-}
-
 @mixin format() {
   text-align: center;
   width: 50%;
@@ -49,7 +35,7 @@
     }
     .changeButton {
       Button {
-        @include button(0.5rem 1rem, c.$Complementary0, c.$Dominant3);
+        @include c.f-button(0.5rem 2rem);
         margin-bottom: 1rem;
       }
     }

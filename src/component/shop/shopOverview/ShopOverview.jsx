@@ -1,20 +1,32 @@
-import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import s from "./shopOverview.module.scss";
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Button, IconButton } from "@mui/material";
-import SmsIcon from "@mui/icons-material/Sms";
-import { api } from "../../api/server/API";
-import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { api } from "../../../api/server/API";
+import s from "./shopOverview.module.scss";
+import ButtonChatNow from "../../message/button-chatnow/ButtonChatNow";
+
+const cssButton = {
+  border: "1px solid #000000",
+  padding: "0.5rem 3rem",
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgba(188, 188, 188, 0.645)",
+  "&:hover": { color: "rgb(4, 0, 30)", backgroundColor: "#e4dfd1" },
+};
 
 export default function ShopOverview() {
   const [data, setData] = useState();
-  const navigate = useNavigate();
+  const param = useParams();
 
   const getShopInfo = async () => {
     try {
-      const response = await api.get(`shop-info?id=${1}`);
+      const response = await api.get(`shop-info?id=${param.id}`);
       const data = await response.data;
+      console.log(data);
       setData(data);
     } catch (error) {
       console.log(error);
@@ -23,6 +35,15 @@ export default function ShopOverview() {
   useEffect(() => {
     getShopInfo();
   }, []);
+
+  const handleAllProducts = () => {};
+  const handleCollection = () => {};
+  const handlePortfolio = () => {};
+  const shopInfo = {
+    id: data?.shopInfoDto?.id,
+    shopName: data?.shopInfoDto?.shopName,
+    imgUrl: data?.shopInfoDto?.avatarImgUrl,
+  };
 
   return (
     <>
@@ -54,22 +75,23 @@ export default function ShopOverview() {
                 />
               </Grid>
               <Grid className={clsx(s.shop)}>
-                <IconButton>
-                  <SmsIcon
-                    sx={{ fontSize: "6rem", backgroundColor: "transparent" }}
-                    color={"Complementary8"}
-                    // onClick={() => handleChatNow(product.product.shopOwner)}
-                  />
-                </IconButton>
                 <Grid className={s.shopName}>
                   {data?.shopInfoDto?.shopName}
+                </Grid>
+                <Grid className={clsx(s.chat)}>
+                  <ButtonChatNow
+                    ButtonOrIcon={Button}
+                    shop={shopInfo}
+                    css={cssButton}
+                    text={"Chat now"}
+                  />
                 </Grid>
               </Grid>
             </Grid>
             <Grid className={clsx(s.action)}>
-              <Button>All Product</Button>
-              <Button>Collection</Button>
-              <Button>Portfolio</Button>
+              <Button onClick={handleAllProducts}>All products</Button>
+              <Button onClick={handleCollection}>Collection</Button>
+              <Button onClick={handlePortfolio}>Portfolio</Button>
             </Grid>
           </Grid>
         </Grid>

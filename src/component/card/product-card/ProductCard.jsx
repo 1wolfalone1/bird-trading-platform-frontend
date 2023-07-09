@@ -1,20 +1,16 @@
-import clsx from "clsx";
-import s from "./productCard.module.scss";
-import React, { useEffect, useId } from "react";
-import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { IconButton, Rating, Tooltip } from "@mui/material";
+import React, { useEffect, useId } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import CartDown from "../../../asset/icons/CartDown";
 import Details from "../../../asset/icons/Details";
-import Style from "../../../style/inline-style/style";
-import { useDispatch, useSelector } from "react-redux";
 import cartSlice, {
   getCartStatusSelector,
 } from "../../../container/order/cartSlice";
-import { toast } from "react-toastify";
-import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import globalConfigSlice from "../../../redux/global/globalConfigSlice";
-import { useNavigate } from "react-router-dom";
+import Style from "../../../style/inline-style/style";
 import { formatNumber } from "../../../utils/myUtils";
+import s from "./productCard.module.scss";
 const ratingCustomizer = {
   fontSize: "3.2rem",
   color: Style.color.$Dominant7,
