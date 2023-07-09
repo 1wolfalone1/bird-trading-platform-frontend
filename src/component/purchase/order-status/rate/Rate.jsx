@@ -16,9 +16,11 @@ import { getListReivewBaseOnOrderDetail, rateSliceSelector } from "./rateSlice";
 export default function Rate({ order, close, orderId }) {
   const dipatch = useDispatch();
   const { listReivew } = useSelector(rateSliceSelector);
+
   useEffect(() => {
     dipatch(getListReivewBaseOnOrderDetail(orderId));
   }, []);
+  console.log('here is list review', listReivew);
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.header)}>
@@ -30,10 +32,11 @@ export default function Rate({ order, close, orderId }) {
       <div className={clsx(s.products)}>
         {order &&
           order.map((item) => {
-            const exists = listReivew.find(
-              (review) => review.productId === item.productId
-            );
-
+            
+              const  exists = listReivew.find(
+                (review) => review.productId === item.productId
+              );
+              
             var initialValues = {
               description: "",
               ratings: 5,

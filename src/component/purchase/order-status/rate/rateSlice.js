@@ -51,6 +51,7 @@ const rateSlice = createSlice({
             state.rate.listReivew = action.payload;
         })
         .addCase(getListReivewBaseOnOrderDetail.rejected, (state, action) => {
+            state.rate.listReivew = [];
             console.log(action);
         })
     

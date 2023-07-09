@@ -7,6 +7,7 @@ import { api } from "../../../api/server/API";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatNumber } from "../../../utils/myUtils";
+import { Box, Pagination } from "@mui/material";
 
 const packages = [
   {
@@ -68,17 +69,18 @@ const packages = [
 
 export default function PackageOrder() {
   const [packageOrders, setPackageOrders] = useState();
+  const [totalPage, setToltalPage] = useState();
   const navigate = useNavigate();
+  const [pageNumber, setPageNumber] = useState(1)
 
   const getPackageOrders = async () => {
     try {
       const response = await api.get(
-        "/package-order/view-all-package-order?pageNumber=1"
+        "/package-order/view-all-package-order", {params: {pageNumber: pageNumber}}
       );
-      console.log(response);
       const packages = await response.data;
-      console.log(packages);
       setPackageOrders(packages);
+      setToltalPage(packages.pageNumber);
     } catch (error) {
       console.log(error);
     }
@@ -86,7 +88,11 @@ export default function PackageOrder() {
 
   useEffect(() => {
     getPackageOrders();
-  }, []);
+  }, [pageNumber]);
+
+  const handleChangePage = (e, value) => {
+    setPageNumber(value);
+  }
 
   return (
     <div className={clsx(s.container)}>
@@ -140,12 +146,31 @@ export default function PackageOrder() {
               </Grid2>
             </Grid2>
           </Grid2>
+
         ))
       ) : (
         <div className={clsx(s.emptyPackageOrders)}>
           You haven't any package orders
         </div>
       )}
+      <Box 
+        sx={{textAlign: 'center',
+         width: '100%',
+          margin: 'auto',
+          display: 'flex',
+          justifyContent: 'center',
+          fontSize: '6rem'        
+        }}
+        className={clsx(s.pagingStyle)}
+      >
+        <Pagination count={totalPage}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          color="Dominant0"
+           onChange={handleChangePage}
+           />
+      </Box>
     </div>
   );
 }
