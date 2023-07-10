@@ -26,11 +26,13 @@ const textFieldStyle = {
   },
 };
 
-const buttonLoginStyle = {
+const cssButton = {
   textTransform: "none",
-  fontSize: "3.2rem",
-  width: "80%",
+  fontSize: "3rem",
+  width: "100%",
+  padding: "0.5rem",
 };
+
 const formHelperText = {
   style: {
     fontSize: "1.6rem",
@@ -131,12 +133,7 @@ export default function ResetPassword({ close }) {
 
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.header)}>
-        <div className={clsx(s.title)}>Reset Password</div>
-        <div className={clsx(s.closeButton)}>
-          <button onClick={close}>&times;</button>
-        </div>
-      </div>
+      <div className={clsx(s.title)}>Reset Password</div>
       <form onSubmit={onFormSubmit} className={clsx(s.inputContainer)}>
         <div className={clsx(s.inputText)}>
           <TextField
@@ -186,6 +183,8 @@ export default function ResetPassword({ close }) {
             fullWidth
             loading={loading}
             type="submit"
+            color="Accent7"
+            sx={cssButton}
           >
             Submit
           </LoadingButton>

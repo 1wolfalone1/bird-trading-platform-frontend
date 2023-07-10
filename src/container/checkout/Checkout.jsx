@@ -110,7 +110,7 @@ export default function Checkout() {
             console.log(response.data, response.paymentId, response.PayerID);
             dispatch(cartSlice.actions.removeCart());
             localStorage.removeItem("cart");
-            navigate("/order-status");
+            navigate("/order-history");
           })
           .catch((error) => {
             console.error(error, "error paypal");

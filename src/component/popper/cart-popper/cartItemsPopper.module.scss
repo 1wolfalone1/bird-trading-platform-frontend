@@ -40,11 +40,13 @@
   }
 }
 .container {
+  min-width: 45rem;
   max-height: 54rem;
   position: relative;
   overflow-y: scroll;
 }
 .button {
+  margin-top: 1rem;
   Button {
     @include c.f-button();
   }

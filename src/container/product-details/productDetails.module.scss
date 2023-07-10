@@ -27,9 +27,11 @@ $imgWidth: 65rem;
         flex-direction: column;
         width: 100%;
         padding-left: 2.4rem;
+        padding-top: 1rem;
         .productName {
           display: flex;
-          justify-content: center;
+          padding-left: 2rem;
+          font-weight: bolder;
           margin-top: 2.4rem;
           span {
             font-family: "SeoulHangang";
@@ -44,7 +46,7 @@ $imgWidth: 65rem;
           display: flex;
           flex-direction: row;
           align-items: flex-start;
-          padding: 1rem 3rem;
+          padding: 2rem;
           gap: 1rem;
           border-bottom: 0.1rem solid c.$Accent7;
           span {
@@ -57,7 +59,7 @@ $imgWidth: 65rem;
         .mainContent {
           display: flex;
           flex-direction: column;
-          margin: 2rem;
+          margin: 0 2rem;
           gap: 1rem;
           .price {
             display: flex;
@@ -144,19 +146,19 @@ $imgWidth: 65rem;
             }
           }
           .type {
-            font-size: 3.2rem;
+            font-size: 2.7rem;
             & > span > span {
               color: c.$Complementary2;
             }
           }
           .tag {
-            font-size: 3.2rem;
+            font-size: 2.7rem;
           }
           .commonProperties {
             font-family: "Segoe UI";
             font-style: normal;
-            font-size: 3.2rem;
-            line-height: 32px;
+            font-size: 2.7rem;
+            line-height: 4rem;
             /* identical to box height */
 
             display: flex;
@@ -166,7 +168,7 @@ $imgWidth: 65rem;
           }
         }
         .quantity {
-          font-size: 3rem;
+          font-size: 2.7rem;
           display: flex;
           align-items: center;
           margin-left: 2rem;

@@ -7,67 +7,10 @@ import { api } from "../../../api/server/API";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formatNumber } from "../../../utils/myUtils";
-
-const packages = [
-  {
-    id: 1,
-    img: "https://images.unsplash.com/photo-1688053793446-197dbc86e237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    deliveryAddress: "Hoàng Hữu Nam, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
-    paymentMethod: "Cash on delivery (COD)",
-    dateOrder: "3/7/2023",
-    merchandiseSubtotal: "$10.00",
-    shippingTotal: "$2.00",
-    promotion: "$.00",
-    total: "$12.00",
-  },
-  {
-    id: 2,
-    img: "https://images.unsplash.com/photo-1688053793446-197dbc86e237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    deliveryAddress: "Hoàng Hữu Nam, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
-    paymentMethod: "Cash on delivery (COD)",
-    dateOrder: "3/7/2023",
-    merchandiseSubtotal: "$10.00",
-    shippingTotal: "$2.00",
-    promotion: "$.00",
-    total: "$12.00",
-  },
-  {
-    id: 3,
-    img: "https://images.unsplash.com/photo-1688053793446-197dbc86e237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    deliveryAddress: "Hoàng Hữu Nam, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
-    paymentMethod: "Cash on delivery (COD)",
-    dateOrder: "3/7/2023",
-    merchandiseSubtotal: "$10.00",
-    shippingTotal: "$2.00",
-    promotion: "$.00",
-    total: "$12.00",
-  },
-  {
-    id: 4,
-    img: "https://images.unsplash.com/photo-1688053793446-197dbc86e237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    deliveryAddress: "Hoàng Hữu Nam, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
-    paymentMethod: "Cash on delivery (COD)",
-    dateOrder: "3/7/2023",
-    merchandiseSubtotal: "$10.00",
-    shippingTotal: "$2.00",
-    promotion: "$.00",
-    total: "$12.00",
-  },
-  {
-    id: 5,
-    img: "https://images.unsplash.com/photo-1688053793446-197dbc86e237?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    deliveryAddress: "Hoàng Hữu Nam, Quận 9, Thành phố Hồ Chí Minh, Việt Nam",
-    paymentMethod: "Cash on delivery (COD)",
-    dateOrder: "3/7/2023",
-    merchandiseSubtotal: "$10.00",
-    shippingTotal: "$2.00",
-    promotion: "$.00",
-    total: "$12.00",
-  },
-];
+import { Skeleton } from "@mui/material";
 
 export default function PackageOrder() {
-  const [packageOrders, setPackageOrders] = useState();
+  const [packageOrders, setPackageOrders] = useState(null);
   const navigate = useNavigate();
 
   const getPackageOrders = async () => {
@@ -142,9 +85,11 @@ export default function PackageOrder() {
           </Grid2>
         ))
       ) : (
-        <div className={clsx(s.emptyPackageOrders)}>
-          You haven't any package orders
-        </div>
+        <>
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Skeleton variant="rectangular" height={143} animation="wave" />
+          ))}
+        </>
       )}
     </div>
   );

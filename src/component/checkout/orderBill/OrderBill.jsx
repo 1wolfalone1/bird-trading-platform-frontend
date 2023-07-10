@@ -72,6 +72,7 @@ export default function OrderBill({
             navigate("/order-history");
           }
           if (response.data.errorCode == 406) {
+            console.log(response.data.errorCode);
           }
         }
       })

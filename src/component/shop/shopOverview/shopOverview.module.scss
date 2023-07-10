@@ -85,3 +85,50 @@
     }
   }
 }
+
+.skeletonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3rem 10rem;
+  border-bottom: 0.1rem solid gray;
+  .left {
+    display: flex;
+    justify-content: center;
+    gap: 20rem;
+    padding-right: 9rem;
+    border-right: 0.1rem solid gray;
+    .info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      .shopAvatar {
+      }
+      .shopName {
+      }
+    }
+    .action {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      gap: 1rem;
+    }
+  }
+  .right {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    .l {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .r {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}

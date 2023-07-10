@@ -81,7 +81,7 @@
     // font-size: 2.4rem;
     // padding: 1rem;
     Button {
-      @include c.f-button(1rem, c.$Accent7, c.$Dominant2);
+      @include c.f-button(0 1rem, c.$Accent7, c.$Dominant2);
       border: none;
       font-size: 2rem;
       color: rgb(85, 26, 139);
