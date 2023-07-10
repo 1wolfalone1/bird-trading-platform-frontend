@@ -72,6 +72,7 @@ export default function OrderBill({
             navigate("/order-history");
           }
           if (response.data.errorCode == 406) {
+            console.log(response.data.errorCode);
           }
         }
       })
@@ -119,7 +120,13 @@ export default function OrderBill({
               <Fragment key={product?.id}>
                 {i === 0 ? (
                   <>
-                    <Typography sx={{ fontSize: "2.4rem" }}>
+                    <Typography
+                      sx={{
+                        fontSize: "2.4rem",
+                        fontWeight: "600",
+                        color: "#601983",
+                      }}
+                    >
                       {product.shopOwner.shopName}
                     </Typography>
                     <Grid className={clsx(s.billInfo)} key={product.id}>

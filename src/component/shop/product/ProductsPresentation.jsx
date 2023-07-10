@@ -6,10 +6,16 @@ import Products from "../../products-presentation/products/Products";
 import { filterByAll } from "../../products-presentation/productsPresentationSlice";
 import { getProducts } from "../../products-presentation/productsSelector";
 import s from "./productsPresentation.module.scss";
+import { useState } from "react";
+import { backDropSelector } from "../../../redux/global/globalConfigSlice";
+import { Skeleton, Stack } from "@mui/material";
+import clsx from "clsx";
 
 export default function ProductsPresentation() {
   const dispatch = useDispatch();
   const products = useSelector(getProducts);
+  const [loading, setLoading] = useState(false);
+  const backDrop = useSelector(backDropSelector);
   const { data, page } = products;
 
   const getShopProducts = async () => {
@@ -26,17 +32,42 @@ export default function ProductsPresentation() {
     getShopProducts();
   }, []);
 
+  // useEffect(() => {
+  //   const k = async () => {
+  //     await dispatch(filterByAll());
+  //   };
+  //   k();
+  // }, []);
+
   useEffect(() => {
-    const k = async () => {
-      await dispatch(filterByAll());
-    };
-    k();
-  }, []);
+    setTimeout(() => {
+      setLoading(!backDrop);
+    }, 1000);
+  }, [backDrop]);
 
   return (
     <div className={s.container}>
       {data ? (
-        <Products products={data} />
+        <>
+          {!loading ? (
+            <Stack
+              spacing={5}
+              sx={{ alignItems: "center" }}
+              className={s.skeletonContainer}
+            >
+              <div className={clsx(s.skeleton)}>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <Skeleton variant="rounded" width={260} height={420} />
+                ))}
+              </div>
+            </Stack>
+          ) : (
+            <>
+              <Products products={data} />
+              <ProductsSlider pageNumber={page} />
+            </>
+          )}
+        </>
       ) : (
         <>
           <div className={s.itemNotFound}>
@@ -47,7 +78,6 @@ export default function ProductsPresentation() {
           </div>
         </>
       )}
-      <ProductsSlider pageNumber={page} />
     </div>
   );
 }

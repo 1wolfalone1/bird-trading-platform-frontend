@@ -32,6 +32,7 @@ const buttonRegisterStyle = {
   width: "100%",
   padding: "1rem",
 };
+
 const formHelperText = {
   style: {
     fontSize: "1.6rem",
@@ -142,8 +143,9 @@ export default function SignUp() {
         navigate("/verify-code-sign-up");
       }
     } catch (e) {
+      setLoading(false);
       console.log(e);
-      if (e.response.status === 406) {
+      if (e.response.status === 409) {
         form.setErrors({ ...form.errors, email: "Email already exists!" });
       }
     }
@@ -260,7 +262,7 @@ export default function SignUp() {
                 color="Accent7"
                 fullWidth
                 loading={loading}
-                type="button"
+                type="submit"
                 onClick={handleSubmit}
               >
                 Sign up

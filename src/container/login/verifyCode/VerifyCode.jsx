@@ -25,6 +25,13 @@ export default function VerifyCode({ close }) {
     "",
   ]);
 
+  const cssButton = {
+    textTransform: "none",
+    fontSize: "3rem",
+    width: "100%",
+    padding: "0.5rem",
+  };
+
   const [verificationCodeStatus, setVerificationCodeStatus] = useState(false);
 
   const inputRefs = useRef([]);
@@ -47,13 +54,6 @@ export default function VerifyCode({ close }) {
     if (e.key === "Backspace" && index > 0 && verificationCode[index] === "") {
       inputRefs.current[index - 1].focus();
     }
-  };
-  const formHelperText = {
-    style: {
-      fontSize: "1.6rem",
-      color: "red",
-      marginLeft: "0px",
-    },
   };
 
   const onFormSubmit = async (e) => {
@@ -85,18 +85,14 @@ export default function VerifyCode({ close }) {
         navigate("/reset-password");
       }
     } catch (err) {
+      setLoading(false);
       setVerificationCodeStatus(true);
     }
   };
 
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.header)}>
-        <div className={clsx(s.title)}>Enter Verification Code</div>
-        <div className={clsx(s.closeButton)}>
-          <button onClick={close}>&times;</button>
-        </div>
-      </div>
+      <div className={clsx(s.title)}>Enter Verification Code</div>
       <form onSubmit={onFormSubmit} className={clsx(s.content)}>
         <div className={clsx(s.code)}>
           {verificationCode.map((digit, index) => (
@@ -121,6 +117,8 @@ export default function VerifyCode({ close }) {
             fullWidth
             loading={loading}
             type="submit"
+            color="Accent7"
+            sx={cssButton}
           >
             Next
           </LoadingButton>

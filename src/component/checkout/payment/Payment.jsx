@@ -12,7 +12,6 @@ export default function Payment({ payment, handleSelectPayment }) {
         <div className={clsx(s.title)}>Payment Method</div>
         <RadioGroup
           aria-labelledby="demo-radio-buttons-group-label"
-          // defaultValue="PayPal"
           name="radio-buttons-group"
           onChange={(e) => handleSelectPayment(e.target.value)}
         >

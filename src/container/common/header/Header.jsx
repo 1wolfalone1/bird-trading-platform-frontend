@@ -68,7 +68,7 @@ export default function Header() {
     }
   }, [location]);
   const user = useSelector(userInfoSelector);
-  console.log(user)
+  console.log(user);
   const handleNavChange = (event, newValue) => {};
 
   const handleChange = (e) => {
@@ -85,7 +85,7 @@ export default function Header() {
 
   const handleSearch = () => {
     dispatch(filterByAll());
-  }
+  };
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -93,7 +93,6 @@ export default function Header() {
     } catch (error) {
       console.error(error);
     }
-
   };
 
   return (
@@ -129,7 +128,7 @@ export default function Header() {
         <input
           value={filterObj.name}
           type="text"
-          placeholder="Search product here"
+          placeholder="Type to search..."
           className={clsx(s.searchInput)}
           onChange={handleChangeName}
         />

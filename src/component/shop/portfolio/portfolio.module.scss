@@ -1,0 +1,25 @@
+@use "../../style/" as c;
+
+.container {
+  font-size: 3rem;
+  padding: 5rem 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  .introduction {
+    font-size: 5rem;
+    font-weight: 800;
+    text-align: center;
+  }
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    .description {
+    }
+    .moreInfo {
+    }
+    .bonusInfo {
+    }
+  }
+}

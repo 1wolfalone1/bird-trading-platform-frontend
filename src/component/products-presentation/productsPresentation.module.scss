@@ -1,12 +1,31 @@
 .container {
-   display: flex;
-   flex-direction: column;
-   flex: 1;
-   .itemNotFound {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  .itemNotFound {
+    display: flex;
+    justify-content: center;
+    img {
+      width: 35%;
+    }
+  }
+  .skeletonContainer {
+    .skeleton {
       display: flex;
-      justify-content: center;
-      img {
-         width: 35%;
+      flex-direction: column;
+      gap: 5rem;
+      margin: 5rem 5rem 0rem;
+      .row1 {
+        display: flex;
+        justify-content: space-between;
+        gap: 4rem;
       }
-   }
+      .row2 {
+        display: flex;
+        justify-content: space-between;
+        gap: 4rem;
+      }
+    }
+  }
 }

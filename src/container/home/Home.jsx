@@ -2,6 +2,11 @@ import clsx from "clsx";
 import s from "./home.module.scss";
 
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import HomeProductSlider from "../../component/slider/product/HomeProductSlider";
+import globalConfigSlice, {
+  backDropSelector,
+} from "../../redux/global/globalConfigSlice";
 import HomeCarousel from "./../../component/slider/carousel/HomeCarousel";
 import {
   getAccessories,
@@ -12,19 +17,17 @@ import {
   getFoodSelector,
   getTopProducts,
   getTopProductsSelector,
-  homeDataStatus,
 } from "./HomeSlice";
-import { useDispatch, useSelector } from "react-redux";
-import HomeProductSlider from "../../component/slider/product/HomeProductSlider";
-import Accessories from "./../../asset/icons/Accessories";
-import globalConfigSlice from "../../redux/global/globalConfigSlice";
-import PopupMessage from "../../component/message/PopupMessage";
+import { useState } from "react";
+import { Box, Skeleton, Stack } from "@mui/material";
 export default function Home() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const birds = useSelector(getBirdsSelector);
   const food = useSelector(getFoodSelector);
   const topProduct = useSelector(getTopProductsSelector);
   const accessories = useSelector(getAccessoriesSelector);
+  const backDrop = useSelector(backDropSelector);
 
   useEffect(() => {
     dispatch(getBirds());
@@ -34,17 +37,57 @@ export default function Home() {
     dispatch(globalConfigSlice.actions.changeNavigateValue(1));
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(!backDrop);
+    }, 1000);
+  }, [backDrop]);
+
   return (
-    <div className={clsx(s.container)}>
-      <div className={clsx(s.carosel)}>
-        <HomeCarousel />
-      </div>
-      <div className={clsx(s.content)}>
-        <HomeProductSlider products={topProduct} title={"Highest Sales"} />
-        <HomeProductSlider products={birds} title={"Top Birds"} />
-        <HomeProductSlider products={food} title={"Top Food"} />
-        <HomeProductSlider products={accessories} title={"Top Accessories"} />
-      </div>
+    <div>
+      {!loading ? (
+        <Stack
+          spacing={5}
+          sx={{ alignItems: "center" }}
+          className={s.skeletonContainer}
+        >
+          <Skeleton variant="rectangular" width={"100%"} height={450} margin />
+          <Box
+            width={1235}
+            height={200}
+            sx={{ backgroundColor: "rgba(0, 0, 0, 0.11)" }}
+          >
+            <div className={clsx(s.title)}>
+              <Skeleton variant="text" width={300} height={90} />
+            </div>
+            <div className={clsx(s.skeleton)}>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <Skeleton variant="rectangular" width={224} height={100} />
+              ))}
+            </div>
+          </Box>
+        </Stack>
+      ) : (
+        <>
+          <div className={clsx(s.container)}>
+            <div className={clsx(s.carosel)}>
+              <HomeCarousel />
+            </div>
+            <div className={clsx(s.content)}>
+              <HomeProductSlider
+                products={topProduct}
+                title={"Highest Sales"}
+              />
+              <HomeProductSlider products={birds} title={"Top Birds"} />
+              <HomeProductSlider products={food} title={"Top Food"} />
+              <HomeProductSlider
+                products={accessories}
+                title={"Top Accessories"}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
