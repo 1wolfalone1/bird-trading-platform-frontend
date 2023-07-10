@@ -74,7 +74,7 @@ $imgWidth: 65rem;
                 font-family: "Segoe UI";
                 font-style: normal;
                 font-weight: 400;
-                font-size: 4rem;
+                font-size: 3rem;
                 line-height: 43px;
                 display: flex;
                 align-items: center;
@@ -86,8 +86,8 @@ $imgWidth: 65rem;
                 font-family: "Segoe UI";
                 font-style: normal;
                 font-weight: 400;
-                font-size: 4.8rem;
-                line-height: 53px;
+                font-size: 3rem;
+                line-height: 43px;
                 display: flex;
                 align-items: center;
                 text-align: center;
@@ -115,8 +115,8 @@ $imgWidth: 65rem;
               display: flex;
               align-items: center;
               .image {
-                width: 8rem;
-                height: 8rem;
+                width: 10rem;
+                height: 10rem;
                 border-radius: 50%;
                 overflow: hidden;
                 margin-right: 1rem;
@@ -128,7 +128,7 @@ $imgWidth: 65rem;
               .right {
                 font-family: c.$Secondary;
                 .name {
-                  font-size: 2rem;
+                  font-size: 3rem;
                   color: c.$Accent6;
                   margin-left: 1rem;
                 }

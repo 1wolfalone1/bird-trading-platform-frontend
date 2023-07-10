@@ -1,4 +1,4 @@
-import { Backdrop, Button, CircularProgress } from "@mui/material";
+import { Backdrop, Button, CircularProgress, Modal } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useJsApiLoader } from "@react-google-maps/api";
 import clsx from "clsx";
@@ -46,6 +46,9 @@ export default function Checkout() {
     googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
     libraries: lib,
   });
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const { items, voucherSelected } = useSelector(getCartSelector);
   const userInfo = useSelector(userInfoSelector);
   const [openBackDrop, setBackDrop] = useState(false);
@@ -198,7 +201,7 @@ export default function Checkout() {
               promotion={total?.promotionFee}
             />
             <div className={clsx(s.orderButton)}>
-              <Popup
+              {/* <Popup
                 className="addButton"
                 modal
                 closeOnDocumentClick={false}
@@ -218,7 +221,30 @@ export default function Checkout() {
                     deliveryInfo={deliveryInfo}
                   />
                 )}
-              </Popup>
+              </Popup> */}
+
+              <Button
+                disabled={handleCheckout()}
+                style={{ opacity: handleCheckout() ? 0.5 : 1 }}
+                onClick={handleOpen}
+              >
+                Check out
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                BackdropProps={{
+                  style: { pointerEvents: "none" },
+                }}
+              >
+                <OrderBill
+                  close={handleClose}
+                  listShopOwnersItems={listShopOwnersItems}
+                  deliveryInfo={deliveryInfo}
+                />
+              </Modal>
             </div>
           </Grid>
         </Grid>

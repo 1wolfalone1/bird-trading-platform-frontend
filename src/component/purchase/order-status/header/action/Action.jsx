@@ -1,6 +1,6 @@
 import { Button, Modal } from "@mui/material";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import ButtonChatNow from "../../../../message/button-chatnow/ButtonChatNow";
 import Rate from "../../rate/Rate";
 import s from "./action.module.scss";
@@ -18,7 +18,7 @@ const cssButton = {
 };
 
 export default function Action({ shopOwner, status, order, orderId }) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleRate = () => {

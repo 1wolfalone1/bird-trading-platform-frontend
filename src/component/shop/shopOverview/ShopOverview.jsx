@@ -117,21 +117,30 @@ export default function ShopOverview() {
           <Grid sm={5} md={5} xl={5} className={clsx(s.information)}>
             <Grid className={clsx(s.left)}>
               <Grid className={clsx(s.products)}>
-                Products: {data?.totalProduct}
+                <Grid className={clsx(s.title)}>Products:</Grid>
+                <Grid className={clsx(s.content)}>{data?.totalProduct}</Grid>
               </Grid>
               <Grid className={clsx(s.sold)}>
-                Sold: {data?.totalProductOrder}
+                <Grid className={clsx(s.title)}>Sold:</Grid>
+                <Grid className={clsx(s.content)}>
+                  {data?.totalProductOrder}
+                </Grid>
               </Grid>
             </Grid>
             <Grid className={clsx(s.right)}>
               <Grid className={clsx(s.rating)}>
-                Rating: star{data?.rating}({data?.rating} Rating)
+                <Grid className={clsx(s.title)}>Rating:</Grid>
+                <Grid className={clsx(s.content)}>
+                  star{data?.rating}({data?.rating} Rating)
+                </Grid>
               </Grid>
               <Grid className={clsx(s.joined)}>
-                Joined:{" "}
-                {new Date(data?.shopInfoDto?.createdDate).toLocaleDateString(
-                  "en-GB"
-                )}
+                <Grid className={clsx(s.title)}>Joined:</Grid>
+                <Grid className={clsx(s.content)}>
+                  {new Date(data?.shopInfoDto?.createdDate).toLocaleDateString(
+                    "en-GB"
+                  )}
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
