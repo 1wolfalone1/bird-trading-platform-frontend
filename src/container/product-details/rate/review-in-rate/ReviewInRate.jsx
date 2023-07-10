@@ -54,11 +54,21 @@ const ReviewInRate = ({rating}) => {
                  top:'0',
                  right: '0',
                  fontSize: '4rem',
+                 backgroundColor: "#3333339e",
+                 padding: '0',
+                 '&:hover': {
+                    backgroundColor: '#fff'
+                 }
                 }
              }
             >
                 <Cancel 
-                    sx={{fontSize: '4rem', color: '#ffff'}}
+                    sx={{fontSize: '4rem',
+                     color: '#ffff',
+                     '&:hover': {
+                        color:  "#3333339e",
+                     }
+                    }}
                 onClick={() => setSelectPic('')}
                 />
             </IconButton>

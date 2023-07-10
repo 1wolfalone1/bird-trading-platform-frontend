@@ -34,6 +34,13 @@ const QuillWrapper = ({ field, form, ...props }) => {
     );
   };
   
+  const buttonRegisterStyle = {
+    textTransform: "none",
+    fontSize: "3rem",
+    width: "100%",
+    padding: "1rem",
+  };
+
 const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
     const dispatch = useDispatch();
     const {listImagesPreview, numberRated} = useSelector(rateSliceSelector);
@@ -43,11 +50,13 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
     const [descriptions, setDescriptions] = useState({});
     const [loading, setLoading] = useState(false);
     const hiddenFileRef = useRef(null);
+
+    console.log('here is an bird infor', initialValues);
+
     const validationSchema = yup.object({
         description: yup
         .string()
-        .min(10, "Your review must be at least 10 characters!")
-        .required("Review is required to rate!"),
+        .min(10, "Your review must be at least 10 characters!"),
         ratings: yup
         .number()
         .min(1, "Please choose star!")
@@ -55,7 +64,10 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
     });
   
     const form = useFormik({
-      initialValues: initialValues,
+      initialValues: {
+        description: "",
+        ratings: 5,
+      },
       validationSchema: validationSchema,
       validateOnChange: true,
       validateOnBlur: true,
@@ -282,8 +294,11 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
 
                     <div className={clsx(s.submitBtn)}>
                     <LoadingButton
-                        loadingIndicator="Sending..."
-                        variant="contained"
+                        sx={buttonRegisterStyle}
+                        variant="outlined"
+                        color="Accent7"
+                        fullWidth
+                        type="button"
                         onClick={handleSubmitReview}
                         loading={loading}
                     >
