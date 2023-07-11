@@ -19,7 +19,7 @@ export default function ProductPageLayout() {
     <>
       <ProductPageSideBar />
       <div className={clsx(s.content)}>
-        <ProductPageHeader />
+        {/* <ProductPageHeader /> */}
         <Outlet />
       </div>
     </>

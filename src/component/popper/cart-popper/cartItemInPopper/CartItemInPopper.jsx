@@ -35,7 +35,9 @@ export default function CartItemInPopper({ item, className }) {
                 return dispatch(cartSlice.actions.removeItem(item));
               }}
             >
-              <DisabledByDefaultIcon sx={{ fontSize: "3rem" }} />
+              <DisabledByDefaultIcon
+                sx={{ fontSize: "3rem", color: "rgb(238, 77, 45)" }}
+              />
             </IconButton>
           </div>
         </div>

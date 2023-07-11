@@ -1,102 +1,101 @@
 @use "../../style/" as c;
 
 .container {
-   background-color: c.$Complementary1-header;
-   font-family: c.$Secondary;
-   height: c.$h-header;
-   display: flex;
-   flex-direction: row;
-   justify-content: space-between;
-   align-items: center;
-   padding: 0px 2.3rem;
-   right: 0;
-   left: 0;
-   position: fixed;
-   z-index: 500;
-   :global(.MuiBadge-badge ){
-      font-size: 1.2rem !important;
-      font-weight: 900;
-   }
-   .logo {
-      width: c.$h-header;
-      img {
-         width: 95%;
+  background-color: c.$Complementary5;
+  font-family: c.$Secondary;
+  box-shadow: 0 0 0.1rem 0 black;
+  height: c.$h-header;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 2.3rem;
+  right: 0;
+  left: 0;
+  position: fixed;
+  z-index: 500;
+  :global(.MuiBadge-badge) {
+    font-size: 1.2rem !important;
+    font-weight: 900;
+  }
+  .logo {
+    width: c.$h-header;
+    img {
+      width: 95%;
+    }
+  }
+
+  .navLeft {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    .tabs {
+      button {
+        color: c.$Dominant2;
+        font-size: 2rem;
+        padding: 2rem;
+        font-family: c.$Secondary;
       }
-   }
-   
-   .navLeft {
+      :global(.Mui-selected) {
+        color: c.$Dominant1;
+      }
+    }
+  }
+
+  .searchBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 35%;
+    height: 4rem;
+    & > input {
+      width: 100%;
+      background-color: c.$Dominant2;
+      border: 0;
+      border-radius: 118px;
+      padding: 1.6rem;
+      font-family: c.$Secondary;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 2.4rem;
+      transition: 0.1s ease-in;
+      &:focus {
+        box-shadow: 0 5px 20px rgba(21, 21, 21, 0.712);
+      }
+    }
+    position: relative;
+
+    .filter {
+      position: absolute;
       display: flex;
-      flex-direction: row;
-      justify-content: center;
+      height: 4.4rem;
+      width: fit-content;
+      z-index: 100;
+      right: 1rem;
       align-items: center;
-      .tabs {
-         button {
-            color: c.$Dominant2;
-            font-size: 2rem;
-            padding: 2rem;
-            font-family: c.$Secondary;
-         }
-         :global(.Mui-selected) {
-            color: c.$Dominant1;
-         }
+      flex-grow: 0;
+      .icon {
+        font-size: 3.2rem;
+        margin: 0 0.8rem;
+        &:hover {
+          scale: 1.1;
+          cursor: pointer;
+        }
+        &:active {
+          scale: 1;
+          cursor: pointer;
+        }
       }
-   }
-
-   .searchBar {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.5rem;
-
-      width: 35%;
-      height: 4rem;
-      & > input {
-         width: 100%;
-         background-color: c.$Dominant2;
-         border: 0;
-         border-radius: 118px;
-         padding: 1.6rem;
-         font-family: c.$Secondary;
-         font-style: normal;
-         font-weight: 400;
-         font-size: 2.4rem;
-         transition: 0.1s ease-in;
-         &:focus {
-            box-shadow: 0 5px 20px rgba(21, 21, 21, 0.712);
-         }
-      }
-      position: relative;
-
-      .filter {
-         position: absolute;
-         display: flex;
-         height: 4.4rem;
-         width: fit-content;
-         z-index: 100;
-         right: 1rem;
-         align-items: center;
-         flex-grow: 0;
-         .icon {
-            font-size: 3.2rem;
-            margin: 0 0.8rem;
-            &:hover {
-               scale: 1.1;
-               cursor: pointer;
-            }
-            &:active {
-               scale: 1;
-               cursor: pointer;
-            }
-         }
-      }
-   }
-  
+    }
+  }
 }
 
-
 .tabnone {
-   min-width: 0px !important;
-   padding: 0 !important;
-   overflow: hidden;
+  min-width: 0px !important;
+  padding: 0 !important;
+  overflow: hidden;
 }

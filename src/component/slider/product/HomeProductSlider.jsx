@@ -1,19 +1,15 @@
-import { A11y, Navigation, Pagination, Thumbs } from "swiper";
+import { Thumbs } from "swiper";
 import s from "./homeProductSlider.module.scss";
 
-import React, { useState } from "react";
 import clsx from "clsx";
-import { SwiperSlide, Swiper } from "swiper/react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import "swiper/css";
 import "swiper/css/thumbs";
-import BirdHomeCard from "../../card/bird-home-card/ProductHomeCard";
-import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { homeDataStatus } from "../../../container/home/HomeSlice";
-import globalConfigSlice, {
-  globalConfigSliceSelector,
-} from "./../../../redux/global/globalConfigSlice";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import ProductHomeCard from "../../card/bird-home-card/ProductHomeCard";
+import globalConfigSlice from "./../../../redux/global/globalConfigSlice";
 export default function HomeProductSlider({ products, title }) {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -38,7 +34,7 @@ export default function HomeProductSlider({ products, title }) {
           >
             {products.data.map((product) => (
               <SwiperSlide key={product.id}>
-                <ProductHomeCard product={product}  />
+                <ProductHomeCard product={product} />
               </SwiperSlide>
             ))}
           </Swiper>

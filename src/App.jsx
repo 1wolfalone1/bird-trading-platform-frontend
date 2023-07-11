@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import PopupMessage from "./component/message/PopupMessage";
+import Shop from "./component/shop/Shop";
 import Checkout from "./container/checkout/Checkout";
 import Layout from "./container/common/layout/Layout";
 import CreateShop from "./container/create-shop/CreateShop";
@@ -28,6 +29,8 @@ import VerifyCodeSignUp from "./container/signup/VerifyCode";
 import { invokeUserInfo, userInfoSelector } from "./redux/global/userInfoSlice";
 import ProductPageRoute from "./routes/ProductPageRoute";
 import "./style/fontLoader.scss";
+import Collection from "./component/shop/collection/Collection";
+import Portfolio from "./component/shop/portfolio/Portfolio";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -65,6 +68,9 @@ function App() {
         <Route path="order-history" element={<OrderHistory />} />
         <Route path="order-status/:id" element={<OrderStatus />} />
         <Route path="create-shop" element={<CreateShop />} />
+        <Route path="shop/:id" element={<Shop />} />
+        <Route path="shop/:id/collection" element={<Collection />} />
+        <Route path="shop/:id/portfolio" element={<Portfolio />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-code" element={<VerifyCode />} />
         <Route path="reset-password" element={<ResetPassword />} />

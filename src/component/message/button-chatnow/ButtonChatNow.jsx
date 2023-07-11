@@ -26,7 +26,6 @@ const ButtonChatNow = ({ ButtonOrIcon, shop, css, text }) => {
         messageSlice.actions.setCurrentShopIDSelect({ shopID: shop.id })
       );
       dispatch(getListMessage(shop.id));
-      console.log(shop);
     } else {
       toast(
         <AddToCartToast

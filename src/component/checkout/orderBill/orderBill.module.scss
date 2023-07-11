@@ -25,7 +25,7 @@
 }
 
 .container {
-  height: 72rem;
+  height: 73rem;
   background-color: c.$Dominant3;
   padding: 5rem;
   width: 70rem;
@@ -42,8 +42,8 @@
         cursor: pointer;
         font-size: 7rem;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 5rem;
+        right: 2rem;
       }
 
       button:hover {
@@ -55,9 +55,9 @@
       display: flex;
       justify-content: center;
       padding: 2rem 0;
-      color: c.$Accent5;
+      color: c.$Accent9;
       font-size: 3.6rem;
-      font-weight: bolder;
+      font-weight: 900;
       font-family: c.$Secondary;
       text-align: center;
     }
@@ -85,7 +85,7 @@
   }
   .billContainer {
     position: relative;
-    padding: 0 2rem 2rem 0rem;
+    padding: 2rem 0 2rem 2rem;
     border-bottom: 0.1rem solid c.$Complementary0;
     height: 36%;
     overflow-y: scroll;

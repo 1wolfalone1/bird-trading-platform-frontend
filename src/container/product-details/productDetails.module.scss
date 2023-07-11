@@ -27,9 +27,11 @@ $imgWidth: 65rem;
         flex-direction: column;
         width: 100%;
         padding-left: 2.4rem;
+        padding-top: 1rem;
         .productName {
           display: flex;
-          justify-content: center;
+          padding-left: 2rem;
+          font-weight: bolder;
           margin-top: 2.4rem;
           span {
             font-family: "SeoulHangang";
@@ -44,7 +46,7 @@ $imgWidth: 65rem;
           display: flex;
           flex-direction: row;
           align-items: flex-start;
-          padding: 1rem 3rem;
+          padding: 2rem;
           gap: 1rem;
           border-bottom: 0.1rem solid c.$Accent7;
           span {
@@ -57,7 +59,7 @@ $imgWidth: 65rem;
         .mainContent {
           display: flex;
           flex-direction: column;
-          margin: 2rem;
+          margin: 0 2rem;
           gap: 1rem;
           .price {
             display: flex;
@@ -72,7 +74,7 @@ $imgWidth: 65rem;
                 font-family: "Segoe UI";
                 font-style: normal;
                 font-weight: 400;
-                font-size: 4rem;
+                font-size: 3rem;
                 line-height: 43px;
                 display: flex;
                 align-items: center;
@@ -84,8 +86,8 @@ $imgWidth: 65rem;
                 font-family: "Segoe UI";
                 font-style: normal;
                 font-weight: 400;
-                font-size: 4.8rem;
-                line-height: 53px;
+                font-size: 3rem;
+                line-height: 43px;
                 display: flex;
                 align-items: center;
                 text-align: center;
@@ -113,43 +115,50 @@ $imgWidth: 65rem;
               display: flex;
               align-items: center;
               .image {
-                width: 8rem;
-                height: 8rem;
+                width: 10rem;
+                height: 10rem;
                 border-radius: 50%;
                 overflow: hidden;
                 margin-right: 1rem;
                 img {
                   width: 100%;
+                  cursor: pointer;
                 }
               }
               .right {
-                Button {
-                  @include c.f-button(0.5rem, c.$Complementary0, c.$Dominant3);
-                  border: none;
-                  &:hover {
-                  }
-                }
+                font-family: c.$Secondary;
                 .name {
-                  font-size: 2rem;
+                  font-size: 3rem;
                   color: c.$Accent6;
+                  margin-left: 1rem;
+                }
+                .action {
+                  display: flex;
+                  justify-content: start;
+                  align-items: center;
+                  .chat {
+                    font-size: 1rem;
+                  }
+                  .view {
+                  }
                 }
               }
             }
           }
           .type {
-            font-size: 3.2rem;
+            font-size: 2.7rem;
             & > span > span {
               color: c.$Complementary2;
             }
           }
           .tag {
-            font-size: 3.2rem;
+            font-size: 2.7rem;
           }
           .commonProperties {
             font-family: "Segoe UI";
             font-style: normal;
-            font-size: 3.2rem;
-            line-height: 32px;
+            font-size: 2.7rem;
+            line-height: 4rem;
             /* identical to box height */
 
             display: flex;
@@ -159,7 +168,7 @@ $imgWidth: 65rem;
           }
         }
         .quantity {
-          font-size: 3rem;
+          font-size: 2.7rem;
           display: flex;
           align-items: center;
           margin-left: 2rem;

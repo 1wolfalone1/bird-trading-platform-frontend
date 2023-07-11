@@ -1,28 +1,43 @@
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ProductsSlider from "./product-paging/ProductsSlider";
-import Products from "./products/Products";
+import { api } from "../../../api/server/API";
+import ProductsSlider from "../../products-presentation/product-paging/ProductsSlider";
+import Products from "../../products-presentation/products/Products";
+import { filterByAll } from "../../products-presentation/productsPresentationSlice";
+import { getProducts } from "../../products-presentation/productsSelector";
 import s from "./productsPresentation.module.scss";
-
-import clsx from "clsx";
-import React, { useEffect, useState } from "react";
-import { filterByAll } from "./productsPresentationSlice";
-import { getProducts } from "./productsSelector";
-import { backDropSelector } from "../../redux/global/globalConfigSlice";
+import { useState } from "react";
+import { backDropSelector } from "../../../redux/global/globalConfigSlice";
 import { Skeleton, Stack } from "@mui/material";
+import clsx from "clsx";
 
 export default function ProductsPresentation() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const products = useSelector(getProducts);
+  const [loading, setLoading] = useState(false);
   const backDrop = useSelector(backDropSelector);
   const { data, page } = products;
 
+  const getShopProducts = async () => {
+    try {
+      const response = await api.get("");
+      const data = await response.data;
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    const k = async () => {
-      await dispatch(filterByAll());
-    };
-    k();
+    getShopProducts();
   }, []);
+
+  // useEffect(() => {
+  //   const k = async () => {
+  //     await dispatch(filterByAll());
+  //   };
+  //   k();
+  // }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,7 +46,7 @@ export default function ProductsPresentation() {
   }, [backDrop]);
 
   return (
-    <div className={clsx(s.container)}>
+    <div className={s.container}>
       {data ? (
         <>
           {!loading ? (
@@ -41,16 +56,9 @@ export default function ProductsPresentation() {
               className={s.skeletonContainer}
             >
               <div className={clsx(s.skeleton)}>
-                <div className={clsx(s.row1)}>
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <Skeleton variant="rounded" width={260} height={420} />
-                  ))}
-                </div>
-                <div className={clsx(s.row2)}>
-                  {Array.from({ length: 4 }).map((_, index) => (
-                    <Skeleton variant="rounded" width={260} height={420} />
-                  ))}
-                </div>
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <Skeleton variant="rounded" width={260} height={420} />
+                ))}
               </div>
             </Stack>
           ) : (

@@ -1,35 +1,26 @@
-import React from "react";
-import clsx from "clsx";
-import s from "./checkout.module.scss";
+import { Backdrop, Button, CircularProgress, Modal } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import Products from "../../component/checkout/products/Products";
-import Payment from "../../component/checkout/payment/Payment";
-import Delivery from "../../component/checkout/delivery/Delivery";
-import Voucher from "../../component/checkout/voucher/Voucher";
-import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
-import { useDispatch, useSelector } from "react-redux";
-import cartSlice, { getCartSelector } from "../order/cartSlice";
-import { useState } from "react";
-import Popup from "reactjs-popup";
-import OrderBill from "../../component/checkout/orderBill/OrderBill";
-import { Backdrop, Button, CircularProgress } from "@mui/material";
-import { userInfoSelector } from "../../redux/global/userInfoSlice";
-import COD from "../../asset/image/COD.avif";
-import PayPal from "../../asset/image/Paypal.avif";
-import { useEffect } from "react";
-import { api } from "../../api/server/API";
-import { useNavigate } from "react-router-dom";
-import globalConfigSlice, {
-  globalConfigSliceSelector,
-} from "../../redux/global/globalConfigSlice";
-import { useRef } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
+import clsx from "clsx";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Popup from "reactjs-popup";
+import { api } from "../../api/server/API";
+import Delivery from "../../component/checkout/delivery/Delivery";
+import OrderBill from "../../component/checkout/orderBill/OrderBill";
+import Payment from "../../component/checkout/payment/Payment";
+import Products from "../../component/checkout/products/Products";
+import TotalOrder from "../../component/checkout/totalOrder/TotalOrder";
+import Voucher from "../../component/checkout/voucher/Voucher";
 import orderSlice, { orderSliceSelector } from "../../redux/global/orderSlice";
-import PaymentMethod from "./../../component/checkout/payment/paymentMethod/PaymentMethod";
-import { fix2 } from "../../utils/myUtils";
 import persistSlice, {
   persistSliceSelector,
 } from "../../redux/global/persistSlice";
+import { userInfoSelector } from "../../redux/global/userInfoSlice";
+import { fix2 } from "../../utils/myUtils";
+import cartSlice, { getCartSelector } from "../order/cartSlice";
+import s from "./checkout.module.scss";
 
 const payment = [
   {
@@ -55,6 +46,9 @@ export default function Checkout() {
     googleMapsApiKey: `${process.env.REACT_APP_GOOGLE_MAP_API}`,
     libraries: lib,
   });
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const { items, voucherSelected } = useSelector(getCartSelector);
   const userInfo = useSelector(userInfoSelector);
   const [openBackDrop, setBackDrop] = useState(false);
@@ -119,7 +113,7 @@ export default function Checkout() {
             console.log(response.data, response.paymentId, response.PayerID);
             dispatch(cartSlice.actions.removeCart());
             localStorage.removeItem("cart");
-            navigate("/order-status");
+            navigate("/order-history");
           })
           .catch((error) => {
             console.error(error, "error paypal");
@@ -158,6 +152,17 @@ export default function Checkout() {
       );
     }
   }, [itemsByShop]);
+
+  const handleCheckout = () => {
+    if (
+      !deliveryInfo?.fullName ||
+      !deliveryInfo?.phoneNumber ||
+      !deliveryInfo?.address ||
+      !paymentMethod
+    )
+      return true;
+    return false;
+  };
   return (
     <>
       <Backdrop
@@ -196,27 +201,14 @@ export default function Checkout() {
               promotion={total?.promotionFee}
             />
             <div className={clsx(s.orderButton)}>
-              <Popup
+              {/* <Popup
                 className="addButton"
                 modal
                 closeOnDocumentClick={false}
                 trigger={
                   <Button
-                    disabled={
-                      !deliveryInfo?.fullName ||
-                      !deliveryInfo?.phoneNumber ||
-                      !deliveryInfo?.address ||
-                      !paymentMethod
-                    }
-                    style={{
-                      opacity:
-                        !deliveryInfo?.fullName ||
-                        !deliveryInfo?.phoneNumber ||
-                        !deliveryInfo?.address ||
-                        !paymentMethod
-                          ? 0.5
-                          : 1,
-                    }}
+                    disabled={handleCheckout()}
+                    style={{ opacity: handleCheckout() ? 0.8 : 1 }}
                   >
                     Check out
                   </Button>
@@ -229,7 +221,30 @@ export default function Checkout() {
                     deliveryInfo={deliveryInfo}
                   />
                 )}
-              </Popup>
+              </Popup> */}
+
+              <Button
+                disabled={handleCheckout()}
+                style={{ opacity: handleCheckout() ? 0.5 : 1 }}
+                onClick={handleOpen}
+              >
+                Check out
+              </Button>
+              <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                BackdropProps={{
+                  style: { pointerEvents: "none" },
+                }}
+              >
+                <OrderBill
+                  close={handleClose}
+                  listShopOwnersItems={listShopOwnersItems}
+                  deliveryInfo={deliveryInfo}
+                />
+              </Modal>
             </div>
           </Grid>
         </Grid>

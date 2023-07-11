@@ -19,7 +19,6 @@ $heightAvatar: 30rem;
 .container {
   display: flex;
   flex-direction: row;
-
   .uploadImg {
     display: flex;
     flex-direction: column;
@@ -37,14 +36,21 @@ $heightAvatar: 30rem;
       text-decoration: none;
       border: 1px solid c.$Complementary0;
       padding: 2rem 0;
+
+      margin-top: 1rem;
+      font-size: 2.4rem;
+      border-radius: 5px;
+      font-family: c.$Secondary;
       text-align: center;
       cursor: pointer;
+      color: c.$Dominant4;
+      background-color: c.$Complementary5;
       width: $heightAvatar;
     }
 
     .editProfile:hover {
       color: c.$Accent7;
-      background-color: c.$Dominant5;
+      background-color: c.$Dominant2;
     }
   }
 
@@ -58,7 +64,6 @@ $heightAvatar: 30rem;
     align-self: stretch;
     flex-grow: 1;
 
-
     .formBordered {
       width: 80%;
       display: flex;
@@ -67,7 +72,6 @@ $heightAvatar: 30rem;
       .inputContainer {
         display: flex;
         align-items: center;
-     
       }
 
       .info {
@@ -83,15 +87,10 @@ $heightAvatar: 30rem;
       }
 
       .description {
-     
       }
       .button {
         display: flex;
         justify-content: end;
-        .iconButton {
-          width: 50%;
-          padding: 0rem 0.5rem;
-        }
       }
     }
   }
@@ -124,13 +123,18 @@ $heightAvatar: 30rem;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: c.$Dominant3;
-  padding: 1rem 2rem;
+  padding: 4rem 8rem;
   height: fit-content;
   border-radius: 5px;
   .buttonControl {
-    margin-top: 1rem;
+    margin-top: 3rem;
     display: flex;
     justify-content: flex-end;
-    gap: 0.8rem;
+    gap: 1rem;
+    .saveChange {
+      Button {
+        @include c.f-button();
+      }
+    }
   }
 }

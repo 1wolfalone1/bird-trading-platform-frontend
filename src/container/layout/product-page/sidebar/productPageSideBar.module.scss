@@ -1,35 +1,30 @@
-@use '../../../style/' as c;
+@use "../../../style/" as c;
 
 $radius-active: 1.6rem;
 .container {
-   width: 10rem;
-   position: fixed !important;
-   top: c.$h-header;
-   bottom: 0;
-   display: flex;
-   flex-direction: column;
-   background-color: c.$Complementary4;
-   /* Complementary/4 */
-   .active {
-      background-color: rgb(29, 29, 29);
-      // border-top-left-radius: $radius-active;
-      // border-top-right-radius: $radius-active;
-      // border-bottom-right-radius: $radius-active;
-      // border-bottom-right-radius: $radius-active;
-     
-   }
-   .buttonContainer {
-      flex-basis: calc(100% / 3 );
-      display: flex;
-      justify-content: center;
-      
-      .icon {
-         width: 8rem;
-         height: 8rem;
-         circle,
-         path{
-            fill: c.$Dominant5;
-         }
+  width: 10rem;
+  position: fixed !important;
+  top: c.$h-header;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: c.$Complementary5;
+  /* Complementary/4 */
+  .active {
+    background-color: rgb(29, 29, 29);
+  }
+  .buttonContainer {
+    flex-basis: calc(100% / 3);
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 0 0.1rem 0 black;
+    .icon {
+      width: 8rem;
+      height: 8rem;
+      circle,
+      path {
+        fill: c.$Dominant5;
       }
-   }
+    }
+  }
 }

@@ -1,16 +1,16 @@
-import { Button, IconButton } from "@mui/material";
+import { Button } from "@mui/material";
 import s from "./productPageSideBar.module.scss";
 
-import React, { useState } from "react";
-import Bird from "../../../../asset/icons/Bird";
-import Accessories from "./../../../../asset/icons/Accessories";
-import Food from "./../../../../asset/icons/Food";
 import clsx from "clsx";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import Bird from "../../../../asset/icons/Bird";
 import productsPresentationSlices, {
   filterByAll,
   typeProduct,
 } from "../../../../component/products-presentation/productsPresentationSlice";
-import { useDispatch } from "react-redux";
+import Accessories from "./../../../../asset/icons/Accessories";
+import Food from "./../../../../asset/icons/Food";
 
 const buttonStyle = {
   height: "100%",
