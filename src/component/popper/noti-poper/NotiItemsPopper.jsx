@@ -38,12 +38,7 @@ const NotiItemsPopper = () => {
   }, []);
 
   useEffect(() => {
-<<<<<<< HEAD
     if(useEffectRun.current === true){
-=======
-    console.log(notification, "here is new notification");
-    if (useEffectRun.current === true) {
->>>>>>> c8b4d7dda7a3b6f2b1be88e1e3db70c034d3f593
       handleNotificationArrive(notification);
     }
     return () => (useEffectRun.current = true);
