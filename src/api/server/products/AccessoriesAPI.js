@@ -3,7 +3,7 @@ import { BASE_URL } from "../ServerConfig.js";
 
 
 export const accessoriesAPI = axios.create({
-   baseURL: `${BASE_URL}/accessories`,
+   baseURL: `${process.env.REACT_APP_BASE_URL}/accessories`,
    withCredentials : true,
    headers: {
       "Access-Control-Allow-Origin": "*",

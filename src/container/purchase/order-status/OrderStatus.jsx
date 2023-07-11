@@ -26,7 +26,9 @@ export default function OrderStatus() {
   useEffect(() => {
     getOrders();
   }, []);
+
   console.log('day la order', orders)
+
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.packageOrder)}>
@@ -40,6 +42,7 @@ export default function OrderStatus() {
                 status={order.orderStatus}
                 order={order.orderDetails}
                 orderId = {order.orderId}
+                createDate = {order.createdDate}
               />
             </div>
           ))

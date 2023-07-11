@@ -77,7 +77,6 @@ const PopupMessage = () => {
   },[info])
 
   useEffect(() => {
-    console.log('co nhay')
       handleMessageArrive(message, open, currentShopIDSelect);
       dispatch(messageSlice.actions.increaseNumberUnread());
       handleNewMessage(" ");
@@ -123,7 +122,6 @@ const PopupMessage = () => {
       if(info?.id != null) {
         const res = await dispatch(getTotalUnread());
         setUnread(res.payload?.totalUnread);
-        console.log(res ,'nhin data ne')
       }
   };
 
@@ -169,7 +167,6 @@ const PopupMessage = () => {
   //audio when have new message
   const handleNewMessage = (message) => {
     try {
-      console.log(message);
       const audio = new Audio(
         "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/sound-effects/message_arrive_sound_effect.mp3"
       );

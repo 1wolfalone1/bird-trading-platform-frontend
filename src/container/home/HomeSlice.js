@@ -61,18 +61,43 @@ export default createSlice({
          })
          .addCase(getAccessories.pending, (state, payload) => {
             state.accessories.status = homeDataStatus.PENDING;
-         });
+         })
+         .addCase(getBirds.rejected, (state, payload) => {
+            console.log(payload);
+         })
+         .addCase(getFood.rejected, (state, payload) => {
+            console.log(payload);
+         })
+         .addCase(getTopProducts.rejected, (state, payload) => {
+            console.log(payload);
+         })
+         .addCase(getAccessories.rejected, (state, payload) => {
+            console.log(payload);
+         })
    },
 });
+
 const suffixTopProduct = "/top-product";
-export const getBirds = createAsyncThunk("home/getBirds", async () => {
-   const response = await birdApi.get(suffixTopProduct);
-   return response.data;
+export const getBirds = createAsyncThunk("home/getBirds", 
+async () => {
+   try{
+      const response = await birdApi.get(suffixTopProduct);
+      return response.data;
+   }catch(error) {
+      throw error;
+   }
 });
+
 export const getFood = createAsyncThunk("home/getFood", async () => {
-   const response = await foodAPI.get(suffixTopProduct);
-   return response.data;
+   try{
+      const response = await foodAPI.get(suffixTopProduct);
+      return response.data;
+   }catch(error) {
+      throw error;
+   }
+   
 });
+
 export const getTopProducts = createAsyncThunk(
    "home/getTopProducts",
    async () => {
@@ -86,11 +111,16 @@ export const getTopProducts = createAsyncThunk(
       }
    }
 );
+
 export const getAccessories = createAsyncThunk(
    "home/getAccessories",
    async () => {
-      const response = await accessoriesAPI.get(suffixTopProduct);
-      return response.data;
+      try{
+         const response = await accessoriesAPI.get(suffixTopProduct);
+         return response.data;
+      }catch(error) {
+         throw error;
+      }
    }
 );
 

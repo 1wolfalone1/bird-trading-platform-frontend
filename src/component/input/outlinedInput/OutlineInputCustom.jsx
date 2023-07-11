@@ -20,46 +20,53 @@ export default function OutlineInputCustom({
   const filterObj = useSelector(filterObjectSelector);
 
   const handleLowestPrice = (event) => {
-    if (lower) {
-      const { name, value } = event.target;
-      if (value > 10000) {
+    const { name, value } = event.target;
+      var number = 0;
+      console.log("test thu ", value !== "")
+      if (value >= 0) {
+        number = value;
+      }
+    if (lower) {     
+      
+      if (number > 10000) {
+        
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be greater than 1000"}
+            msg={"Value cannot be greater than 9.000$"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1500,
           }
         );
-      } else if (value <= 10000) {
+      } else if (number <= 10000) {
+        console.log('here is and number', number)
         dispatch(
           productsPresentationSlices.actions.setLowestPrice({
             key: "",
-            lowestPrice: value,
+            lowestPrice: number,
           })
         );
       }
       console.log(value);
     } else {
-      const { name, value } = event.target;
-      if (value > 1000000000) {
+      if (number > 10000000) {
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be greater than 1000000000"}
+            msg={"Value cannot be greater than 10.000.000$"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1500,
           }
         );
-      } else if (value <= 1000000000) {
+      } else if (number <= 1000000000) {
         dispatch(
           productsPresentationSlices.actions.setHighestPrice({
             key: "",
-            highestPrice: value,
+            highestPrice: number,
           })
         );
       }
@@ -68,6 +75,11 @@ export default function OutlineInputCustom({
   return (
     <div className={className}>
       <TextField
+        InputProps={{
+          inputProps: {
+            min: 0, // Replace 0 with your desired minimum value
+          },
+        }}
         sx={{
           marginTop: "1rem",
           input: {
