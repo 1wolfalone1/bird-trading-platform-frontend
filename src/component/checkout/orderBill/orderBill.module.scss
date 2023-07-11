@@ -1,139 +1,138 @@
 @use "../../style/" as c;
 
 @mixin fsw($fz: 2.7rem, $fw: 400) {
-  font-size: $fz;
-  font-family: $fw;
+   font-size: $fz;
+   font-family: $fw;
 }
 
 @mixin fsf($fz: 2.7rem, $ff: c.$Secondary) {
-  font-size: $fz;
-  font-family: $ff;
+   font-size: $fz;
+   font-family: $ff;
 }
 
-@mixin button(
-  $padding: 1rem,
-  $color: c.$Dominant4,
-  $backgroundColor: c.$Complementary0
-) {
-  border: 1px solid c.$Complementary0;
-  font-size: 2.4rem;
-  font-family: c.$Secondary;
-  padding: $padding;
-  text-transform: none;
-  color: $color;
-  background-color: $backgroundColor;
+@mixin button($padding: 1rem, $color: c.$Dominant4, $backgroundColor: c.$Complementary0) {
+   border: 1px solid c.$Complementary0;
+   font-size: 2.4rem;
+   font-family: c.$Secondary;
+   padding: $padding;
+   text-transform: none;
+   color: $color;
+   background-color: $backgroundColor;
 }
 
 .container {
-  height: 72rem;
-  background-color: c.$Dominant3;
-  padding: 5rem;
-  width: 70rem;
-  @include fsf(2.4rem);
+   height: 73rem;
+   background-color: c.$Dominant3;
+   padding: 5rem;
+   width: 70rem;
+   @include fsf(2.4rem);
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   position: absolute;
+   .header {
+      padding-bottom: 2rem;
+      .closeButton {
+         display: flex;
+         justify-content: flex-end;
+         button {
+            padding: 0 2rem;
+            color: c.$Complementary0;
+            cursor: pointer;
+            font-size: 7rem;
+            position: absolute;
+            top: 5rem;
+            right: 2rem;
+         }
 
-  .header {
-    padding-bottom: 2rem;
-    .closeButton {
-      display: flex;
-      justify-content: flex-end;
-      button {
-        padding: 0 2rem;
-        color: c.$Complementary0;
-        cursor: pointer;
-        font-size: 7rem;
-        position: absolute;
-        top: 0;
-        right: 0;
+         button:hover {
+            color: red;
+         }
       }
 
-      button:hover {
-        color: red;
+      .title {
+         display: flex;
+         justify-content: center;
+         padding: 2rem 0;
+         color: c.$Accent9;
+         font-size: 3.6rem;
+         font-weight: 900;
+         font-family: c.$Secondary;
+         text-align: center;
       }
-    }
+   }
 
-    .title {
+   .headerContainer {
+      padding: 0 2rem;
+      border-bottom: 0.1rem solid c.$Complementary0;
+
+      .headerContent {
+         margin-bottom: 2rem;
+         .headerName {
+         }
+         .headerPrice {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+         .headerQuantity {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+         }
+      }
+   }
+   .billContainer {
+      position: relative;
+      padding: 2rem 0 2rem 2rem;
+      border-bottom: 0.1rem solid c.$Complementary0;
+      height: 36%;
+      overflow-y: scroll;
+      .billInfo {
+         .bill {
+            height: 70%;
+            margin: 2rem;
+            max-width: 100%;
+            .name {
+            }
+            .price {
+               display: flex;
+               justify-content: space-around;
+            }
+            .quantity {
+               display: flex;
+               justify-content: space-around;
+            }
+         }
+      }
+   }
+   .payment {
+      padding: 1rem 0rem 0rem 2rem;
+   }
+   .shipping {
+      padding: 1rem 0rem 0rem 2rem;
+   }
+
+   .discount {
+      padding: 1rem 0rem 0rem 2rem;
+   }
+
+   .subTotal {
+      padding: 3rem 0rem 0rem 2rem;
+   }
+
+   .total {
       display: flex;
-      justify-content: center;
+      justify-content: end;
+      font-size: 3rem;
       padding: 2rem 0;
-      color: c.$Accent5;
-      font-size: 3.6rem;
-      font-weight: bolder;
-      font-family: c.$Secondary;
-      text-align: center;
-    }
-  }
-
-  .headerContainer {
-    padding: 0 2rem;
-    border-bottom: 0.1rem solid c.$Complementary0;
-
-    .headerContent {
-      margin-bottom: 2rem;
-      .headerName {
+      font-weight: 900;
+   }
+   .submitBtn {
+      display: flex;
+      justify-content: end;
+      Button {
+         @include c.f-button();
       }
-      .headerPrice {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      .headerQuantity {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-  }
-  .billContainer {
-    position: relative;
-    padding: 0 2rem 2rem 0rem;
-    border-bottom: 0.1rem solid c.$Complementary0;
-    height: 36%;
-    overflow-y: scroll;
-    .billInfo {
-      .bill {
-        height: 70%;
-        margin: 2rem;
-        max-width: 100%;
-        .name {
-        }
-        .price {
-          display: flex;
-          justify-content: space-around;
-        }
-        .quantity {
-          display: flex;
-          justify-content: space-around;
-        }
-      }
-    }
-  }
-  .payment {
-    padding: 1rem 0rem 0rem 2rem;
-  }
-  .shipping {
-    padding: 1rem 0rem 0rem 2rem;
-  }
-
-  .discount {
-    padding: 1rem 0rem 0rem 2rem;
-  }
-
-  .subTotal {
-    padding: 3rem 0rem 0rem 2rem;
-  }
-
-  .total {
-    display: flex;
-    justify-content: end;
-    font-size: 3rem;
-    padding: 2rem 0;
-    font-weight: 900;
-  }
-  .submitBtn {
-    display: flex;
-    justify-content: end;
-    Button {
-      @include c.f-button();
-    }
-  }
+   }
 }

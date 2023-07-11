@@ -301,7 +301,7 @@ const Profile = () => {
                   <Typography
                     noWrap
                     sx={{
-                      fontSize: "2.4rem",
+                      fontSize: "2rem",
                       paddingLeft: "1rem",
                       color: "#7d7d7d",
                       width: "100%",

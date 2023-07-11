@@ -26,7 +26,8 @@ const persistConfig = {
       "orderSlice",
       "userInfoSlice",
       "rateSlice",
-      "rateProductDetailSlice"
+      "rateProductDetailSlice",
+      "globalConfigSlice"
    ],
 };
 const reducer = combineReducers({

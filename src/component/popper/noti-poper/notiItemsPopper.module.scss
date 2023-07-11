@@ -15,70 +15,67 @@
 }
 
 .container {
-    margin: 0px 10px;
-    position: relative;
-    .notiIcon {
-        padding: 3px 0px 0px 0px;
-        width: 4.6rem;
-        height: 4.6rem;
-        overflow: hidden;
-    }
+  margin: 0px 10px;
+  position: relative;
+  .notiIcon {
+    padding: 3px 0px 0px 0px;
+    width: 4.6rem;
+    height: 4.6rem;
+    overflow: hidden;
+  }
 }
-.popoverNoti{
-    :global(.MuiPaper-root) {
-        margin-top: 20px;
-        /* From https://css.glass */
-        background: rgba(21, 24, 34, 0.59);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(20.4px);
-        -webkit-backdrop-filter: blur(20.4px);
-        border: 1px solid rgba(22, 25, 36, 0.6);
-        max-height: 500px;
-        max-width: 400px;
-        min-width: 400px;
+.popoverNoti {
+  :global(.MuiPaper-root) {
+    margin-top: 20px;
+    /* From https://css.glass */
+    background: rgba(21, 24, 34, 0.59);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(20.4px);
+    -webkit-backdrop-filter: blur(20.4px);
+    border: 1px solid rgba(22, 25, 36, 0.6);
+    max-height: 500px;
+    max-width: 400px;
+    min-width: 400px;
+  }
+
+  .notiContainer {
+    .notiList {
+      text-align: center;
+      padding: 0;
+      margin: auto 20px;
+      overflow: auto;
+      height: 100%;
+      .titleNoti {
+        padding: 1rem 0;
+        text-align: center;
+        span {
+          font-size: 4rem;
+          font-family: c.$Secondary;
+          color: c.$Dominant2;
+        }
       }
-
-    .notiContainer {
-        .notiList {
-            text-align: center;
-            padding: 0;
-            margin: auto 20px;
-            overflow: auto;
-            height: 100%;
-            .titleNoti {
-                font-size: 24px;
-                color: c.$Dominant2;
-            }
-            .hrCustom {
-                margin: 0.2rem auto;
-                height: 0.1rem;
-                background-color: c.$Accent1;
-                width: 80%;
-            }          
-            
-        }
-        .emtyNotiImage {
-            max-height: 500px;
-            max-width: 400px;
-        }
-
+      .hrCustom {
+        margin: 0.2rem auto;
+        height: 0.1rem;
+        background-color: c.$Accent1;
+        width: 80%;
+      }
     }
 
-    .btnViewMore {
-        @include button();
-        width: 100%;
-        // position: absolute;
-        // z-index: 1000;
-        // bottom: 0;
-        // left: 0;
-        &:hover {
-          background-color: c.$Dominant5;
-          color: c.$Complementary0;
-        }
-        
+    .emtyNotiImage {
+      max-height: 500px;
+      max-width: 400px;
     }
+  }
+
+  .btnViewMore {
+    margin-top: 1rem;
+    Button {
+      @include c.f-button();
+    }
+  }
 }
 
 .divider {
-border-top: 1px solid c.$Accent5;
+  border-top: 1px solid c.$Accent5;
 }

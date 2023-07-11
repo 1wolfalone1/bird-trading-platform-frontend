@@ -56,48 +56,42 @@ export default function ProductHomeCard({ product, isSuggest }) {
             <span>{product.shopOwner.shopName}</span>
           </dir>
         </div>
-        {isSuggest && 
-            <>
-              <div className={s.type}>
-               <span>
-                 <span style={{ color: "#005250" }}>Type:</span>{" "}
-                 {product.type.name}
-               </span>
-              </div>
-              <Tooltip
-                title={
-                  <>
-                    {product.tags
-                      ? product.tags.map((tag, i) => (
-                          <span
-                            style={{ fontSize: "1.3rem" }}
-                            key={tag.id}
-                          >
-                            {" "}
-                            #{tag.name}
-                          </span>
-                        ))
-                      : ""}
-                  </>
-                }
-                sx={{ fontSize: "8rem" }}
-              >
-                <div className={s.listTag}>
+        {isSuggest && (
+          <>
+            <div className={s.type}>
+              <span>
+                <span style={{ color: "#005250" }}>Type:</span>{" "}
+                {product.type.name}
+              </span>
+            </div>
+            <Tooltip
+              title={
+                <>
                   {product.tags
                     ? product.tags.map((tag, i) => (
-                        <span
-                          className={s.tag}
-                          key={tag.id}
-                        >
+                        <span style={{ fontSize: "1.3rem" }} key={tag.id}>
                           {" "}
                           #{tag.name}
                         </span>
                       ))
                     : ""}
-                </div>
-              </Tooltip>
-            </>
-        }
+                </>
+              }
+              sx={{ fontSize: "8rem" }}
+            >
+              <div className={s.listTag}>
+                {product.tags
+                  ? product.tags.map((tag, i) => (
+                      <span className={s.tag} key={tag.id}>
+                        {" "}
+                        #{tag.name}
+                      </span>
+                    ))
+                  : ""}
+              </div>
+            </Tooltip>
+          </>
+        )}
         <div className={s.star}>
           <Rating
             name="simple-controlled"

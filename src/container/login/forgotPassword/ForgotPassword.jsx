@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import s from "./forgotPassword.module.scss";
-import { Button, TextField } from "@mui/material";
-import Style from "../../../style/inline-style/style";
-import * as yup from "yup";
-import { useFormik } from "formik";
-import { api } from "../../../api/server/API";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import persistSlice from "../../../redux/global/persistSlice";
 import { LoadingButton } from "@mui/lab";
+import { TextField } from "@mui/material";
+import clsx from "clsx";
+import { useFormik } from "formik";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import * as yup from "yup";
+import { api } from "../../../api/server/API";
+import persistSlice from "../../../redux/global/persistSlice";
+import Style from "../../../style/inline-style/style";
+import s from "./forgotPassword.module.scss";
 
 export default function ForgotPassword({ close, open, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -23,6 +24,7 @@ export default function ForgotPassword({ close, open, onClose }) {
       console.error(error);
     }
   };
+
   const [forgotStatus, setForgotStatus] = useState(false);
 
   const textFieldStyle = {
@@ -37,6 +39,13 @@ export default function ForgotPassword({ close, open, onClose }) {
     ".MuiOutlinedInput-notchedOutline legend": {
       fontSize: "1.5rem",
     },
+  };
+
+  const cssButton = {
+    textTransform: "none",
+    fontSize: "3rem",
+    width: "100%",
+    padding: "0.5rem",
   };
 
   const validationSchema = yup.object({
@@ -89,18 +98,14 @@ export default function ForgotPassword({ close, open, onClose }) {
         }
       }
     } catch (err) {
+      setLoading(false);
       setForgotStatus(true);
     }
   };
 
   return (
     <div className={clsx(s.container)}>
-      <div className={clsx(s.header)}>
-        <div className={clsx(s.title)}>Input Your Email</div>
-        <div className={clsx(s.closeButton)}>
-          <button onClick={close}>&times;</button>
-        </div>
-      </div>
+      <div className={clsx(s.title)}>Input Your Email</div>
       <form onSubmit={onFormSubmit} className={clsx(s.content)}>
         <div className={clsx(s.email)}>
           <TextField
@@ -127,6 +132,8 @@ export default function ForgotPassword({ close, open, onClose }) {
             fullWidth
             loading={loading}
             type="submit"
+            color="Accent7"
+            sx={cssButton}
           >
             Next
           </LoadingButton>

@@ -263,7 +263,8 @@ export default function ProductDetails() {
                     readOnly
                     precision={0.5}
                   />
-                  <span>- {product.numberReview} review</span>
+                  <Divider orientation="vertical" color="error" />
+                  <span> {product.numberReview} review</span>
                 </div>
                 <div className={s.mainContent}>
                   <div className={s.price}>

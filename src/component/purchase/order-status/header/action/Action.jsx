@@ -1,6 +1,6 @@
 import { Button, Modal } from "@mui/material";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
 import ButtonChatNow from "../../../../message/button-chatnow/ButtonChatNow";
 import Rate from "../../rate/Rate";
 import s from "./action.module.scss";
@@ -23,7 +23,6 @@ export default function Action({ shopOwner, status, order, orderId, createDate }
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  console.log('here is order', order)
 
   const handleRate = () => {
     const dateOfOrder = moment(createDate);
@@ -35,7 +34,6 @@ export default function Action({ shopOwner, status, order, orderId, createDate }
       return true;
   };
 
-  console.log("status ne", status);
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.rate)}>

@@ -30,7 +30,7 @@ export default function CartItemsPopper({ totalCartItems, setValue }) {
   };
 
   const open = Boolean(anchorEl);
-  
+
   const id = open ? "simple-popover" : undefined;
   return (
     <>
@@ -65,7 +65,6 @@ export default function CartItemsPopper({ totalCartItems, setValue }) {
               <div className={s.container}>
                 <div className={s.titleCartItem}>
                   <span>Your cart</span>
-                  <div></div>
                 </div>
                 <div className={s.itemContainer}>
                   {cartItems.map((item, id) => {
