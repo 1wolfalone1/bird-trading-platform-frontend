@@ -243,6 +243,7 @@ export default function SideBarFilter() {
               color="Accent7"
               label="From price"
               lower={true}
+              
             />
             <OutlineInputCustom
               fs={"2rem"}

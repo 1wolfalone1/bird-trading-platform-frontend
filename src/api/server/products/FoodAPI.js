@@ -3,7 +3,7 @@ import { BASE_URL } from "../ServerConfig.js";
 
 
 export const foodAPI = axios.create({
-   baseURL: `${BASE_URL}/foods`,
+   baseURL: `${process.env.REACT_APP_BASE_URL}/foods`,
    withCredentials : true,
    headers: {
       "Access-Control-Allow-Origin": "*",

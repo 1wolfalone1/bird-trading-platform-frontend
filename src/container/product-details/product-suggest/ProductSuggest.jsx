@@ -23,17 +23,18 @@ export default function ProductSuggest() {
   },[])
 
   const getProductSuggestData = async() => {
-    const prodcutId = param.id;
+    const productId = param.id;
     
     try {
       setLoading(true);
-      const res = await api.get(`products/${prodcutId}/relevant`);
+      const res = await api.get(`products/${productId}/relevant`);
       const data = res.data;
       console.log(data, 'data ne');
       setProducts(data);
       setLoading(false);
     }catch(error) {
       setLoading(false);
+      console.log()
       throw error;
     }
   }
@@ -62,7 +63,7 @@ export default function ProductSuggest() {
               onSlideChange={() => {}}
               onSwiper={(swiper) => {}}
             >
-              {products.map(product => (
+              {products && products?.map(product => (
                 
                 <SwiperSlide key={product.id}>
                     <ProductHomeCard product={product} isSuggest={true} />
