@@ -79,6 +79,7 @@ export default function OrderBill({
       .catch((error) => {
         // Handle any errors that occurred during the request
         const errorMessage = "Order failed! Please check again!";
+        console.log(error)
         const notifyAddtoCart = () =>
           toast(
             <AddToCartToast type={toastType.WARNING} msg={errorMessage} />,
