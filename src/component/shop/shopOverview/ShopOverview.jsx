@@ -44,7 +44,6 @@ export default function ShopOverview() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(!backDrop);
-      // setLoading(false);
     }, 1000);
   }, [backDrop]);
 
