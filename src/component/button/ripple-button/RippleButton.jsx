@@ -21,6 +21,7 @@ export default function RippleButton ({ children, onClick, className }) {
    return (
      <button
        className={clsx(s.rippleButton, className)}
+       type="button"
        onClick={e => {
          const rect = e.target.getBoundingClientRect();
          setCoords({ x: e.clientX - rect.left, y: e.clientY - rect.top });
