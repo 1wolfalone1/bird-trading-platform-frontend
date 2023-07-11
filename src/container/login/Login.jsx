@@ -360,7 +360,6 @@ export default function Login() {
               <div>
                 <ButtonGoogle
                   content={"Sign in with Google"}
-                  onClick={() => {}}
                 />
 
                 <div className={clsx(s.helpGooleText)}>

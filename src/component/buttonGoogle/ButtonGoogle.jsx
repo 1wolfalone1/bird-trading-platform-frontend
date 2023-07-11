@@ -11,7 +11,7 @@ export default function ButtonGoogle({ content, onClick }) {
       alt="dsfafasdfasdf"
       style={{ display: "flex", justifyContent: "center" }}
     >
-      <RippleButton onClick={onClick} className={clsx(s.buttonContainer)}>
+      <RippleButton type='button' className={clsx(s.buttonContainer)}>
         <span>{content}</span>
         <img src={googleLogo} alt="" />
       </RippleButton>

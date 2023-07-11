@@ -24,7 +24,7 @@ const boxPrice = {
 
 export default function Products({ products, deliveryInfo, isLoaded }) {
    const { voucherSelected } = useSelector(getCartSelector);
-   const [distance, setDistance] = useState();
+   const [distance, setDistance] = useState(0);
    const [shipPrice, setShipPrice] = useState(0);
    const [totalShop, setTotalShop] = useState();
    const dispatch = useDispatch();
@@ -65,8 +65,8 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
       }, {});
       dispatch(
          orderSlice.actions.updateItemsByShop({
-            totalShopPrice: fix2(totalShop),
-            shippingFee: fix2(shipPrice),
+            totalShopPrice: isNaN(fix2(totalShop)) ? +0 : fix2(totalShop),
+            shippingFee: isNaN(fix2(shipPrice)) ? +0 : fix2(shipPrice),
             distance: distance ? distance / 1000 : -1,
             shopId: products[0].shopOwner.id,
             listItems: listShopItems,
@@ -186,7 +186,9 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
                                        color: Style.color.$Money,
                                     }}
                                  >
-                                    {formatNumber(totalShop + shipPrice)}
+                                    {isNaN(totalShop + shipPrice)
+                                       ? 0
+                                       : formatNumber(totalShop + shipPrice)}
                                  </Typography>
                               </Box>
                            </Box>
