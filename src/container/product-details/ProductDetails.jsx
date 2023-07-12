@@ -71,25 +71,35 @@ export default function ProductDetails() {
   const buttonOrder = {
     fontSize: "2.4rem",
     fontFamily: Style.font.$Secondary,
+    border: "1px solid rgba(0, 0, 0, 0.5)",
     textTransform: "none",
     padding: "1rem 2rem",
     marginLeft: "2rem",
-    backgroundColor: "rgb(238,77,45)",
+    backgroundColor: "rgb(178, 223, 255)",
     fontWeight: "800",
-    color: "#ffeee8",
-    "&:hover": { opacity: 0.8 },
+    color: "black",
+    "&:hover": {
+      border: "1px solid rgba(0, 0, 0, 0.5)",
+      color: "rgb(178, 223, 255)",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
   };
 
   const buttonAdd = {
     fontSize: "2.4rem",
     fontFamily: Style.font.$Secondary,
+    border: "1px solid rgba(0, 0, 0, 0.5)",
     textTransform: "none",
     padding: "1rem 2rem",
     marginLeft: "2rem",
-    backgroundColor: "#ffeee8",
-    color: "rgb(238,77,45)",
+    backgroundColor: "rgb(178, 223, 255)",
+    color: "black",
     fontWeight: "800",
-    "&:hover": { opacity: 0.8 },
+    "&:hover": {
+      border: "1px solid rgba(0, 0, 0, 0.5)",
+      color: "rgb(178, 223, 255)",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
   };
 
   const notifyWarningAddtoCart = (message) =>
@@ -229,13 +239,16 @@ export default function ProductDetails() {
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
   const cssButton = {
-    border: "1px solid #000000",
+    border: "1px solid rgba(0, 0, 0, 0.5)",
     padding: "1rem 2rem",
     fontSize: "2.2rem",
     textTransform: "none",
     color: "rgb(255, 255, 255)",
     backgroundColor: "rgb(94, 94, 94)",
-    "&:hover": { color: "rgb(4, 0, 30)" },
+    "&:hover": {
+      color: "rgb(4, 0, 30)",
+      border: "1px solid rgba(0, 0, 0, 0.5)",
+    },
   };
 
   return (

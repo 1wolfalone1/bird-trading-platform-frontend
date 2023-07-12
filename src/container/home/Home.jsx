@@ -28,7 +28,7 @@ export default function Home() {
   const topProduct = useSelector(getTopProductsSelector);
   const accessories = useSelector(getAccessoriesSelector);
   const backDrop = useSelector(backDropSelector);
-
+  // if(birds || )
   useEffect(() => {
     dispatch(getBirds());
     dispatch(getFood());
@@ -36,13 +36,10 @@ export default function Home() {
     dispatch(getTopProducts());
     dispatch(globalConfigSlice.actions.changeNavigateValue(1));
   }, []);
-
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(!backDrop);
-    }, 1000);
+    setLoading(true);
   }, [backDrop]);
-
+  console.log(backDrop);
   return (
     <div>
       {!loading ? (
@@ -54,15 +51,15 @@ export default function Home() {
           <Skeleton variant="rectangular" width={"100%"} height={450} margin />
           <Box
             width={1235}
-            height={200}
+            height={240}
             sx={{ backgroundColor: "rgba(0, 0, 0, 0.11)" }}
           >
             <div className={clsx(s.title)}>
-              <Skeleton variant="text" width={300} height={90} />
+              <Skeleton variant="text" width={300} height={120} />
             </div>
             <div className={clsx(s.skeleton)}>
               {Array.from({ length: 4 }).map((_, index) => (
-                <Skeleton variant="rectangular" width={224} height={100} />
+                <Skeleton variant="rectangular" width={224} height={120} />
               ))}
             </div>
           </Box>
