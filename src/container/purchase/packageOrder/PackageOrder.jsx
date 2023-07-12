@@ -38,9 +38,7 @@ export default function PackageOrder() {
   }, [pageNumber]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(!backDrop);
-    }, 1000);
+    setLoading(!backDrop);
   }, [backDrop]);
 
   const handleChangePage = (e, value) => {
@@ -73,7 +71,7 @@ export default function PackageOrder() {
               >
                 <Grid2 sm={2} md={2} xl={2} className={clsx(s.image)}>
                   <img
-                    src="https://cdn3.iconfinder.com/data/icons/e-commerce-vol-interactions/80/package-order-ready-checkmark-512.png"
+                    src="https://img.freepik.com/premium-photo/3d-parcel-order-delivery-concept-return-parcel-courier-shipment-checklist-3d-rendering-illustration_696265-567.jpg"
                     alt="package"
                   />
                 </Grid2>

@@ -115,7 +115,7 @@ $fz: 3rem;
       font-size: $fz;
     }
     Button {
-      @include c.f-button();
+      @include c.f-button(1rem 3rem);
     }
   }
 }

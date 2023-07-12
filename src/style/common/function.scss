@@ -36,7 +36,7 @@ $XXL: 1750px;
   $color: c.$Dominant4,
   $backgroundColor: c.$Complementary5
 ) {
-  border: 1px solid c.$Complementary0;
+  border: 1px solid rgba(0, 0, 0, 0.5);
   font-size: 2.4rem;
   font-family: f.$Secondary;
   padding: $padding;
@@ -44,6 +44,7 @@ $XXL: 1750px;
   color: $color;
   background-color: $backgroundColor;
   &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.5);
     color: c.$Accent7;
     background-color: c.$Dominant2;
   }
