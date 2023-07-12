@@ -45,7 +45,6 @@ const notificationSlice = createSlice({
         console.log(action);
       })
       .addCase(getUnreadNotification.fulfilled, (state, action) => {
-        console.log(action.payload.unread, "in notification slice");
         state.notification.unread = action.payload.unread;
       })
       .addCase(getUnreadNotification.rejected, (state, action) => {

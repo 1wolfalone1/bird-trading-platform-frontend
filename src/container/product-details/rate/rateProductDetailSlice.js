@@ -35,7 +35,7 @@ export const getListReivewBaseOnProductId = createAsyncThunk(
         const state = getState();
         const pageNumber = state.rateProductDetailSlice.rate.currentPageNumber;
         try {
-            const res = await api.get(`/users/reviews/products/${productId}`, {params: {pageNumber: pageNumber }});
+            const res = await api.get(`/reviews/products/${productId}`, {params: {pageNumber: pageNumber }});
             const data = res.data;
             return data
         }catch(error) {

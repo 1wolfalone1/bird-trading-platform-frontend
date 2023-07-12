@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import ButtonChatNow from "../../../../message/button-chatnow/ButtonChatNow";
 import Rate from "../../rate/Rate";
 import s from "./action.module.scss";
+import moment from "moment";
+import { dayAfterCanReivew } from "../../../../../config/constant";
 
 const cssButton = {
   border: "1px solid #000000",
@@ -17,15 +19,21 @@ const cssButton = {
   "&:hover": { color: "rgb(4, 0, 30)" },
 };
 
-export default function Action({ shopOwner, status, order, orderId }) {
-  const [open, setOpen] = useState(false);
+export default function Action({ shopOwner, status, order, orderId, createDate }) {
+  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
   const handleRate = () => {
-    if (status !== "DELIVERED") return true;
-    // return true;
+    const dateOfOrder = moment(createDate);
+    const dateAfterOrderSeventDay = moment(dateOfOrder).add(dayAfterCanReivew, 'days');
+    const currentDat = moment();
+    if(currentDat.isAfter(dateAfterOrderSeventDay))
+      return true;
+    if (status !== "DELIVERED")
+      return true;
   };
-  console.log("status ne", status);
+
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.rate)}>

@@ -32,7 +32,7 @@ export default function ProductCard({ product }) {
     } else {
     }
   };
-
+  
   return (
     <>
       <div
@@ -128,7 +128,7 @@ export default function ProductCard({ product }) {
           </div>
           <div className={s.controlBottom}>
             <div className={s.rating}>
-              <Rating value={product.star + 1} sx={ratingCustomizer} readOnly />
+              <Rating value={product.star} sx={ratingCustomizer} readOnly />
             </div>
             <div className={s.buttonIcon}>
               <IconButton onClick={handleAddToCart}>

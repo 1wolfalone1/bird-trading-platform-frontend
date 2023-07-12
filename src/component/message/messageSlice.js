@@ -69,7 +69,6 @@ const messageSlice = createSlice({
             state.message.numberUnread = action.payload.numberUnread
         },
         increaseNumberUnread: (state, action) => {
-          console.log('+1')
             return {
               ...state,
               message: {
@@ -163,13 +162,10 @@ const messageSlice = createSlice({
         },
         addShopIntoUserList: (state, action) => {
           const { shop,  } = action.payload;
-          console.log(shop, "shop");
           
           const existShop = state.message.userList.find(item => item.id === shop.id);
-          console.log("here is an so sanh", existShop);
           
           if (!existShop) {
-            console.log('co vao day');
             const updatedUserList = [shop, ...state.message.userList];
             return { ...state, message: { ...state.message, userList: updatedUserList } };
           }else {
@@ -292,7 +288,6 @@ export const getListMessageOlder = createAsyncThunk(
         const pageNumber = messageList?.currentPageNumber;
         const res = await api.get(`/users/${userInfo?.id}/messages`, {params: {shopid: shopid, pagenumber: pageNumber}});
         const data = res.data;
-        console.log('here is data unread', data);
         return data;
       //   dispatch(getListUserSuccess(res.data));
       } catch (error) {
@@ -308,7 +303,6 @@ export const getTotalUnread = createAsyncThunk(
     const state = getState();
     const userInfo = state.userInfoSlice.info
     try{
-      console.log('here is info', userInfo)
       const res = await api.get(`/users/${userInfo?.id}/messages/unread`);
       const data = res.data;
       return data;

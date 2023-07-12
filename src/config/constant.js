@@ -15,3 +15,6 @@ export const orderStatus = {
   SHIPPING: 2,
   DELIVERED: 3,
 };
+
+
+export const dayAfterCanReivew = 7;

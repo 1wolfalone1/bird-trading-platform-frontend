@@ -32,6 +32,7 @@ const productsPresentationSlices = createSlice({
       lowestPrice: 0.0,
       pageNumber: 1,
       category: 1,
+      shopId: -1,
     },
     products: {
       page: 1,
@@ -85,6 +86,16 @@ const productsPresentationSlices = createSlice({
     setPageNumber: (state, action) => {
       state.filter.pageNumber = action.payload?.pageNumber;
     },
+    changeShopId: (state, action) => {
+      state.filter.shopId = action.payload;
+    },
+    resetAllPageNumberShopId: (state, action) => {
+      state.filter.star = 0;
+      state.filter.shopId = -1;
+      state.filter.pageNumber = 1;
+      state.filter.category = 1;
+    }
+    
   },
   extraReducers: (builder) => {
     builder

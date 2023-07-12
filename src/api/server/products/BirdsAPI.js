@@ -13,7 +13,7 @@ axios.interceptors.request.use(request => {
 });
 
 export const birdApi = axios.create({
-   baseURL: `${BASE_URL}/birds`,
+   baseURL: `${process.env.REACT_APP_BASE_URL}/birds`,
    withCredentials : true,
    headers: {
       "Access-Control-Allow-Origin": "*",
