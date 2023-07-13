@@ -28,7 +28,6 @@ export default function Home() {
   const topProduct = useSelector(getTopProductsSelector);
   const accessories = useSelector(getAccessoriesSelector);
   const backDrop = useSelector(backDropSelector);
-  // if(birds || )
   useEffect(() => {
     dispatch(getBirds());
     dispatch(getFood());
@@ -37,7 +36,9 @@ export default function Home() {
     dispatch(globalConfigSlice.actions.changeNavigateValue(1));
   }, []);
   useEffect(() => {
-    setLoading(true);
+    setTimeout(() => {
+      setLoading(true);
+    }, 500);
   }, [backDrop]);
   console.log(backDrop);
   return (
@@ -55,12 +56,13 @@ export default function Home() {
             sx={{ backgroundColor: "rgba(0, 0, 0, 0.11)" }}
           >
             <div className={clsx(s.title)}>
-              <Skeleton variant="text" width={300} height={120} />
+              <Skeleton variant="text" width={300} height={80} />
             </div>
             <div className={clsx(s.skeleton)}>
               {Array.from({ length: 4 }).map((_, index) => (
                 <Skeleton variant="rectangular" width={224} height={120} />
               ))}
+              <Skeleton variant="rectangular" width={112} height={120} />
             </div>
           </Box>
         </Stack>
@@ -76,7 +78,7 @@ export default function Home() {
                 title={"Highest Sales"}
               />
               <HomeProductSlider products={birds} title={"Top Birds"} />
-              <HomeProductSlider products={food} title={"Top Food"} />
+              <HomeProductSlider products={food} title={"Top Foods"} />
               <HomeProductSlider
                 products={accessories}
                 title={"Top Accessories"}

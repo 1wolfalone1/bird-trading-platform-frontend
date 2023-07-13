@@ -113,6 +113,7 @@ export default function Cart() {
                     xl={3}
                     className={clsx(s.item)}
                     margin={0}
+                    onClick={() => navigate(`/product/${item.id}`)}
                   >
                     <div className={clsx(s.productContainer)}>
                       <img src={item.imgUrl} alt={item.name} />

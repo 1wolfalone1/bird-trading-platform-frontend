@@ -162,6 +162,9 @@ export default function Login() {
       if (data.status === 404) {
         console.log(data.status);
         setLoginEmailPasswordStatus("Unverified account!");
+      } else if (data.status === 423) {
+        console.log(data.status);
+        setLoginEmailPasswordStatus("Your account is banned!");
       }
     }
   };
@@ -180,6 +183,9 @@ export default function Login() {
     } else if (status === 404) {
       console.log(status);
       setLoginEmailPasswordStatus("Unverified account!");
+    } else if (status === 423) {
+      console.log(status);
+      setLoginEmailPasswordStatus("Your account is banned!");
     }
   };
   const callCookies = async () => {
@@ -358,9 +364,7 @@ export default function Login() {
                 <span>Or</span>
               </div>
               <div>
-                <ButtonGoogle
-                  content={"Sign in with Google"}
-                />
+                <ButtonGoogle content={"Sign in with Google"} />
 
                 <div className={clsx(s.helpGooleText)}>
                   {loginGoogleStatus ? (

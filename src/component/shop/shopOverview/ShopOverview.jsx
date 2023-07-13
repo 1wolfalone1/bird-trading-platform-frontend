@@ -157,9 +157,9 @@ export default function ShopOverview() {
                 </div>
               </div>
               <div className={clsx(s.action)}>
-                <Skeleton variant="rounded" width={150} height={43} />
-                <Skeleton variant="rounded" width={150} height={43} />
-                <Skeleton variant="rounded" width={150} height={43} />
+                <Skeleton variant="rounded" width={160} height={43} />
+                <Skeleton variant="rounded" width={160} height={43} />
+                <Skeleton variant="rounded" width={160} height={43} />
               </div>
             </div>
             <div className={clsx(s.right)}>

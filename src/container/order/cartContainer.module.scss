@@ -36,6 +36,7 @@ $fz: 3rem;
         display: flex;
         box-sizing: border-box !important;
         .item {
+          cursor: pointer;
           .productContainer {
             display: flex;
             font-size: 2rem;
@@ -148,7 +149,7 @@ $fz: 3rem;
       display: flex;
       justify-content: center;
       padding: 2rem 0;
-      color: c.$Accent5;
+      color: c.$Accent9;
       font-size: 3.6rem;
       font-weight: bolder;
       font-family: c.$Secondary;
@@ -189,9 +190,9 @@ $fz: 3rem;
             font-size: 2rem;
             // margin-bottom: 1rem;
             .voucherCode {
-              font-size: 3rem;
-              font-weight: 700;
-              color: c.$Dominant5;
+              font-size: 3.6rem;
+              font-weight: 500;
+              color: c.$Dominant1;
             }
             .voucherDescription {
             }
@@ -200,7 +201,7 @@ $fz: 3rem;
             .text {
               font-size: 2rem;
               font-weight: bold;
-              color: c.$Accent8;
+              color: c.$Accent3;
             }
           }
         }

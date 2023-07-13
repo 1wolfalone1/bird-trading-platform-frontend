@@ -1,25 +1,55 @@
 @use "../../style/" as c;
 
 .container {
-  font-size: 3rem;
-  padding: 5rem 10rem;
   display: flex;
-  flex-direction: column;
-  gap: 5rem;
-  .introduction {
-    font-size: 5rem;
-    font-weight: 800;
-    text-align: center;
-  }
-  .content {
+  font-size: 2.4rem;
+  padding: 5rem 15rem 5rem 10rem;
+  gap: 8rem;
+  font-family: c.$Secondary;
+  .left {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    .description {
+    gap: 10rem;
+    .info {
+      display: flex;
+      .title {
+        font-weight: 600;
+      }
+      .content {
+        color: c.$Accent9;
+      }
+      .left {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        width: 100%;
+        align-items: start;
+        .products {
+          display: flex;
+          gap: 1rem;
+        }
+        .sold {
+          display: flex;
+          gap: 1rem;
+        }
+      }
+      .right {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+        width: 100%;
+        align-items: end;
+        .rating {
+          display: flex;
+          gap: 1rem;
+        }
+        .joined {
+          display: flex;
+          gap: 1rem;
+        }
+      }
     }
-    .moreInfo {
-    }
-    .bonusInfo {
-    }
+  }
+  .description {
   }
 }

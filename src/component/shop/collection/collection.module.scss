@@ -1,1 +1,10 @@
 @use "../../style/" as c;
+
+.container {
+  display: flex;
+  margin: 2rem 10rem;
+  .tag {
+    display: flex;
+    gap: 3rem;
+  }
+}

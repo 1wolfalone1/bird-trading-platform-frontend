@@ -7,16 +7,19 @@ import s from "./shop.module.scss";
 import ShopOverview from "./shopOverview/ShopOverview";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import productsPresentationSlices, { filterByAll } from "../products-presentation/productsPresentationSlice";
+import productsPresentationSlices, {
+  filterByAll,
+} from "../products-presentation/productsPresentationSlice";
 
 export default function Shop() {
   const param = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     const shopId = param.id;
     dispatch(productsPresentationSlices.actions.changeShopId(shopId));
     dispatch(filterByAll());
-  },[])
+  }, []);
+
   return (
     <>
       <ProductPageSideBar />

@@ -1,18 +1,15 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { api } from "../../../api/server/API";
-import ProductsSlider from "../../products-presentation/product-paging/ProductsSlider";
-import Products from "../../products-presentation/products/Products";
-import { filterByAll } from "../../products-presentation/productsPresentationSlice";
-import { getProducts } from "../../products-presentation/productsSelector";
-import s from "./productsPresentation.module.scss";
-import { useState } from "react";
-import { backDropSelector } from "../../../redux/global/globalConfigSlice";
 import { Skeleton, Stack } from "@mui/material";
 import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { api } from "../../../api/server/API";
+import { backDropSelector } from "../../../redux/global/globalConfigSlice";
+import ProductsSlider from "../../products-presentation/product-paging/ProductsSlider";
+import Products from "../../products-presentation/products/Products";
+import { getProducts } from "../../products-presentation/productsSelector";
+import s from "./productsPresentation.module.scss";
 
 export default function ProductsPresentation() {
-  const dispatch = useDispatch();
   const products = useSelector(getProducts);
   const [loading, setLoading] = useState(false);
   const backDrop = useSelector(backDropSelector);
@@ -31,13 +28,6 @@ export default function ProductsPresentation() {
   useEffect(() => {
     getShopProducts();
   }, []);
-
-  // useEffect(() => {
-  //   const k = async () => {
-  //     await dispatch(filterByAll());
-  //   };
-  //   k();
-  // }, []);
 
   useEffect(() => {
     setLoading(!backDrop);

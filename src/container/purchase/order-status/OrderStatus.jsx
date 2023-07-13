@@ -17,6 +17,7 @@ export default function OrderStatus() {
       const response = await api.get(`orders?packageOrderId=${param.id}`);
       console.log(response);
       const orders = await response.data;
+      console.log(orders);
       setOrders(orders);
     } catch (error) {
       console.log(error);
@@ -27,8 +28,6 @@ export default function OrderStatus() {
     getOrders();
   }, []);
 
-  console.log('day la order', orders)
-
   return (
     <div className={clsx(s.container)}>
       <div className={clsx(s.packageOrder)}>
@@ -36,13 +35,13 @@ export default function OrderStatus() {
           orders.map((order) => (
             <div className={clsx(s.order)} key={order.id}>
               <StatusNavbar status={order.orderStatus} />
-              <Order order={order} key={orders.orderId}  />
+              <Order order={order} key={orders.orderId} />
               <Action
                 shopOwner={order.shopOwner}
                 status={order.orderStatus}
                 order={order.orderDetails}
-                orderId = {order.orderId}
-                createDate = {order.createdDate}
+                orderId={order.orderId}
+                createDate={order.createdDate}
               />
             </div>
           ))

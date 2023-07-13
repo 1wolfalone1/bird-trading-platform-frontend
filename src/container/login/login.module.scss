@@ -85,6 +85,11 @@
       border: none;
       font-size: 2rem;
       color: rgb(85, 26, 139);
+      &:hover {
+        border: none;
+        font-size: 2rem;
+        color: rgb(85, 26, 139);
+      }
     }
   }
 }

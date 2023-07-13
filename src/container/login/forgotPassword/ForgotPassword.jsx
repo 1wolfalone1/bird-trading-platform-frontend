@@ -95,6 +95,8 @@ export default function ForgotPassword({ close, open, onClose }) {
         if (data.successCode == 200) {
           dispatch(persistSlice.actions.saveEmailTemp(form.values.email));
           navigate("/verify-code");
+        } else if (data.successCode == 404) {
+          setForgotStatus(true);
         }
       }
     } catch (err) {

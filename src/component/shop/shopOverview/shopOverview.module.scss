@@ -12,7 +12,8 @@
       display: flex;
       height: 100%;
       width: 100%;
-      justify-content: space-around;
+      justify-content: space-between;
+      padding: 0 5rem;
       @include c.f-backdrop();
       .overView {
         display: flex;
@@ -109,18 +110,14 @@
   .left {
     display: flex;
     justify-content: center;
-    gap: 20rem;
-    padding-right: 9rem;
+    gap: 24rem;
+    padding-right: 5rem;
     border-right: 0.1rem solid gray;
     .info {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 3rem;
-      .shopAvatar {
-      }
-      .shopName {
-      }
     }
     .action {
       display: flex;
@@ -131,17 +128,6 @@
   }
   .right {
     display: flex;
-    justify-content: center;
-    gap: 3rem;
-    .l {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .r {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+    gap: 5rem;
   }
 }

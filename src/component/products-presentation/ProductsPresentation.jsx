@@ -25,7 +25,7 @@ export default function ProductsPresentation() {
   }, []);
 
   useEffect(() => {
-      setLoading(!backDrop);
+    setLoading(!backDrop);
   }, [backDrop]);
 
   return (
@@ -41,12 +41,12 @@ export default function ProductsPresentation() {
               <div className={clsx(s.skeleton)}>
                 <div className={clsx(s.row1)}>
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <Skeleton variant="rounded" width={260} height={420} />
+                    <Skeleton variant="rounded" width={260} height={430} />
                   ))}
                 </div>
                 <div className={clsx(s.row2)}>
                   {Array.from({ length: 4 }).map((_, index) => (
-                    <Skeleton variant="rounded" width={260} height={420} />
+                    <Skeleton variant="rounded" width={260} height={430} />
                   ))}
                 </div>
               </div>
