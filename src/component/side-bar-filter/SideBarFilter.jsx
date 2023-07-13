@@ -17,6 +17,7 @@ import UpStar from "../../asset/icons/UpStar";
 import OutlineInputCustom from "../input/outlinedInput/OutlineInputCustom";
 import productsPresentationSlices, {
   categorySelector,
+  filterByAll,
   filterObjectSelector,
   getTypeOfProduct,
   productTypeSelector,
@@ -110,10 +111,10 @@ export default function SideBarFilter() {
   };
 
   const handleSeletetedStar = (star) => {
-    console.log(star);
     dispatch(
       productsPresentationSlices.actions.setStar({ key: "", star: star })
     );
+    dispatch(filterByAll());
   };
 
   const handleSortDirectChange = (event) => {
@@ -129,7 +130,6 @@ export default function SideBarFilter() {
     );
   };
 
-  console.log(filterObj);
 
   return (
     <div className={clsx(s.container)}>

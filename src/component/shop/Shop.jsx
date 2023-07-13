@@ -11,12 +11,15 @@ import productsPresentationSlices, { filterByAll } from "../products-presentatio
 
 export default function Shop() {
   const param = useParams();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const shopId = param.id;
+    dispatch(productsPresentationSlices.actions.resetAllPageNumberShopId());
     dispatch(productsPresentationSlices.actions.changeShopId(shopId));
     dispatch(filterByAll());
-  },[])
+  },[]);
+
   return (
     <>
       <ProductPageSideBar />

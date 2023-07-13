@@ -18,27 +18,6 @@ export default function ProductsPresentation() {
   const backDrop = useSelector(backDropSelector);
   const { data, page } = products;
 
-  const getShopProducts = async () => {
-    try {
-      const response = await api.get("");
-      const data = await response.data;
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getShopProducts();
-  }, []);
-
-  // useEffect(() => {
-  //   const k = async () => {
-  //     await dispatch(filterByAll());
-  //   };
-  //   k();
-  // }, []);
-
   useEffect(() => {
     setLoading(!backDrop);
   }, [backDrop]);
