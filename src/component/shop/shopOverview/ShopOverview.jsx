@@ -42,15 +42,13 @@ export default function ShopOverview() {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(!backDrop);
-      // setLoading(false);
-    }, 1000);
+    setLoading(!backDrop);
   }, [backDrop]);
 
   const handleAllProducts = () => {
     // navigate(`/shop/${data?.shopInfoDto?.id}`);
   };
+
   const handleCollection = () => {
     navigate(`/shop/${data?.shopInfoDto?.id}/collection`);
   };

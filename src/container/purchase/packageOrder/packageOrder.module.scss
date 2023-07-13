@@ -7,14 +7,17 @@
   gap: 5rem;
   font-size: 2.4rem;
   margin-top: 5rem;
+  font-weight: 600;
   .packageOrder {
     background-color: c.$Dominant3;
     box-shadow: 1px 1px 5px #626262;
     cursor: pointer;
     .image {
+      padding: 0 !important;
+      // bottom: 0 !important;
       img {
-        width: 80%;
-        height: 80%;
+        width: 70%;
+        height: 100%;
       }
     }
     .info {
@@ -24,16 +27,19 @@
       gap: 1rem;
       .address {
         span {
+          font-weight: normal;
           font-size: 2rem;
         }
       }
       .paymentMethod {
         span {
+          font-weight: normal;
           font-size: 2rem;
         }
       }
       .dateOrder {
         span {
+          font-weight: normal;
           font-size: 2rem;
         }
       }
@@ -42,9 +48,10 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 0.3rem;
+      gap: 1rem;
       padding-right: 5rem;
       span {
+        font-weight: normal;
         font-size: 2rem;
       }
       .subTotal {

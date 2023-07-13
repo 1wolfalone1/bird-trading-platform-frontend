@@ -19,9 +19,7 @@ export default function ProductsPresentation() {
   const { data, page } = products;
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(!backDrop);
-    }, 1000);
+    setLoading(!backDrop);
   }, [backDrop]);
 
   return (
