@@ -26,7 +26,7 @@ const ReviewInRate = ({rating}) => {
         </div>
         </div>
         <div className={clsx(s.timeOfRating)}>
-        {moment(rating?.reviewDate).format("DD/MM/YY HH:mm")}
+        {moment(rating?.reviewDate).format("HH:mm DD/MM/YY")}
         </div>
         <div className={clsx(s.content)}  dangerouslySetInnerHTML={{ __html: rating?.description }} ></div>
         <Box 

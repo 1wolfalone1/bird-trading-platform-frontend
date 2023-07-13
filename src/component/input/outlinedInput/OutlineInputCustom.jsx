@@ -1,11 +1,12 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import productsPresentationSlices, {
-  filterObjectSelector,
+  filterObjectSelector, productsPresentationSlicesSelector,
 } from "../../products-presentation/productsPresentationSlice";
+import { useEffect } from "react";
 
 export default function OutlineInputCustom({
   className,
@@ -19,67 +20,68 @@ export default function OutlineInputCustom({
 
   const filterObj = useSelector(filterObjectSelector);
 
+  const {isResetPrice} = useSelector(productsPresentationSlicesSelector)
+
+  const [number, setNumber] = useState(lower ? filterObj.lowestPrice : filterObj.highestPrice);
+
+  useEffect( () => {
+    setNumber(0);
+  },[isResetPrice])
+
   const handleLowestPrice = (event) => {
     const { name, value } = event.target;
-      var number = 0;
-      console.log("test thu ", value !== "")
-      if (value >= 0) {
-        number = value;
-      }
-    if (lower) {     
-      
-      if (number > 10000) {
+    console.log('here is value', value);
+    if (lower) {         
+      if (value > 10000) {
         
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be greater than 9.000$"}
+            msg={"Value cannot be more than 4 digits!"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1500,
           }
         );
-      } else if (number <= 10000) {
-        console.log('here is and number', number)
+      } else if (value <= 10000) {
+        setNumber(value);
         dispatch(
           productsPresentationSlices.actions.setLowestPrice({
             key: "",
-            lowestPrice: number,
+            lowestPrice: value,
           })
         );
       }
-      console.log(value);
     } else {
-      if (number > 10000000) {
+      if (value > 1000000) {
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be greater than 10.000.000$"}
+            msg={"Value cannot be more than 6 digits!"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1500,
           }
         );
-      } else if (number <= 1000000000) {
+      } else if (value <= 1000000000) {
+        setNumber(value);
         dispatch(
           productsPresentationSlices.actions.setHighestPrice({
             key: "",
-            highestPrice: number,
+            highestPrice: value,
           })
         );
       }
     }
+    
   };
+  console.log(filterObj, 'here is filter');
   return (
     <div className={className}>
       <TextField
-        InputProps={{
-          inputProps: {
-            min: 0, // Replace 0 with your desired minimum value
-          },
-        }}
+        defaultValue={0}
         sx={{
           marginTop: "1rem",
           input: {
@@ -96,7 +98,7 @@ export default function OutlineInputCustom({
         label={label}
         variant="outlined"
         color={color}
-        value={lower ? filterObj.lowestPrice : filterObj.highestPrice}
+        value={number}
         onChange={handleLowestPrice}
       />
     </div>

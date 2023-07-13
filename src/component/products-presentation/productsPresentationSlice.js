@@ -23,6 +23,7 @@ const productsPresentationSlices = createSlice({
     status: STATUS_PENDING,
     typeProduct: typeProduct.BIRDS,
     shop: ALL_SHOP,
+    isResetPrice: 0,
     filter: {
       ListTypeId: [],
       star: 0,
@@ -64,10 +65,19 @@ const productsPresentationSlices = createSlice({
       console.log(state.filter.sortPrice);
     },
     setHighestPrice: (state, action) => {
-      state.filter.highestPrice = action.payload.highestPrice;
+      const highestPrice = action.payload.highestPrice;
+      if(highestPrice >= 0 && highestPrice !== "" )
+        state.filter.highestPrice = action.payload.highestPrice;
+      else{
+        state.filter.highestPrice = 0;
+      }
     },
     setLowestPrice: (state, action) => {
-      state.filter.lowestPrice = action.payload.lowestPrice;
+      const lowestPrice = action.payload.lowestPrice;
+      if(lowestPrice >= 0 && lowestPrice !== "")
+        state.filter.lowestPrice = lowestPrice;
+      else
+        state.filter.lowestPrice = 0;
     },
     setPageNumber: (state, action) => {
       state.filter.pageNumber = action.payload.pageNumber;
@@ -76,6 +86,7 @@ const productsPresentationSlices = createSlice({
       state.filter.sortPrice = "";
       state.filter.highestPrice = 0.0;
       state.filter.lowestPrice = 0.0;
+      state.isResetPrice = state.isResetPrice == 1 ? 0 : 1;
     },
     setName: (state, action) => {
       state.filter.name = action.payload.name;
@@ -94,6 +105,11 @@ const productsPresentationSlices = createSlice({
       state.filter.shopId = -1;
       state.filter.pageNumber = 1;
       state.filter.category = 1;
+      state.filter.ListTypeId = [];
+      state.typeProduct = typeProduct.BIRDS;
+    },
+    changeIsResetPrice: (state, action) => {
+      state.isResetPrice = state.isResetPrice == 1 ? 0 : 1;
     }
     
   },
@@ -214,6 +230,7 @@ export const filterByAll = createAsyncThunk(
   async (_, { getState, dispatch }) => {
     const state = getState();
     dispatch(globalConfigSlice.actions.changeBackDrops(true));
+    // console.log('here is filter', state.productsPresentationSlices.filter);
     try {
       const res = await api.get("products/filter", {
         params: state.productsPresentationData.filter,
@@ -243,3 +260,5 @@ export const categorySelector = (state) =>
 
 export const filterObjectSelector = (state) =>
   state.productsPresentationData.filter;
+
+  export const productsPresentationSlicesSelector = state => state.productsPresentationData;
