@@ -34,7 +34,7 @@ export default function Rate() {
           </div>
           {rateData && rateData.length > 0 ? (
             rateData.map((rating) => (
-              <ReviewInRate rating={rating} />
+              <ReviewInRate rating={rating} key={rating.id}/>
             ))
           ) : (
             <Box sx={{marginL: 'auto', textAlign: 'center'}}>
