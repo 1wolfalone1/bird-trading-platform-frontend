@@ -222,6 +222,7 @@ export default function ProductDetails({setIsFound}) {
         console.log(data);
         setProduct(data);
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
+        setBan(false);
       } catch (error) {
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
