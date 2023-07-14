@@ -14,11 +14,17 @@ $imgWidth: 65rem;
     .summaryProduct {
       display: flex;
       .listImage {
+        position: relative;
         width: $imgWidth;
         flex-shrink: 0;
         img {
           height: $imgWidth;
           width: $imgWidth;
+        }
+        .additionalImage {
+          position: absolute;
+          top: 0;
+          z-index: 2;
         }
       }
       .content {

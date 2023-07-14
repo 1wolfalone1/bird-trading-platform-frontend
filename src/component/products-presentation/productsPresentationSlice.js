@@ -59,6 +59,7 @@ const productsPresentationSlices = createSlice({
     setStar: (state, action) => {
       console.log(action.payload.star);
       state.filter.star = action.payload.star;
+      state.filter.pageNumber = 1;
     },
     setSortDirection: (state, action) => {
       state.filter.sortPrice = action.payload.direction;
