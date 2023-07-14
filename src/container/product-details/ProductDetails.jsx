@@ -67,6 +67,7 @@ export default function ProductDetails() {
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
   const { status } = useSelector(userInfoSelector);
+  const [ban, setBan] = useState(false);
 
   const buttonOrder = {
     fontSize: "2.4rem",
@@ -224,6 +225,11 @@ export default function ProductDetails() {
       } catch (error) {
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
+        const res = await error.response;
+        if(res.status === 423){
+          setBan(true);
+          setProduct(res.data);
+        }
       }
     };
     getProducts();
@@ -262,6 +268,13 @@ export default function ProductDetails() {
                   images={product.listImages}
                   video={product.product.videoUrl}
                 />
+                {ban &&
+                   <img
+                   src='https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/banned.png'
+                   alt='This product banned'
+                   className={clsx(s.additionalImage)}
+                 />
+                }
               </div>
               <div className={s.content}>
                 <div className={s.productName}>
@@ -301,39 +314,41 @@ export default function ProductDetails() {
                         </span>
                       )}
                     </div>
-                    <div className={s.shop}>
-                      <div className={s.image}>
-                        <img
-                          src={product.product.shopOwner.imgUrl}
-                          alt="shop img"
-                          onClick={handleViewShop}
-                        />
-                      </div>
-                      <div className={s.right}>
-                        <div className={s.name}>
-                          {product.product.shopOwner.shopName}
+                    {!ban &&
+                      <div className={s.shop}>
+                        <div className={s.image}>
+                          <img
+                            src={product.product.shopOwner.imgUrl}
+                            alt="shop img"
+                            onClick={handleViewShop}
+                          />
                         </div>
-                        <div className={clsx(s.action)}>
-                          <div className={clsx(s.chat)}>
-                            <ButtonChatNow
-                              ButtonOrIcon={Button}
-                              shop={product.product.shopOwner}
-                              css={cssButton}
-                              text={"Chat now"}
-                            />
+                        <div className={s.right}>
+                          <div className={s.name}>
+                            {product.product.shopOwner.shopName}
                           </div>
-                          <div className={clsx(s.viewShop)}>
-                            <Button
-                              sx={cssButton}
-                              onClick={handleViewShop}
-                              shop={product.product.shopOwner}
-                            >
-                              View shop
-                            </Button>
+                          <div className={clsx(s.action)}>
+                            <div className={clsx(s.chat)}>
+                              <ButtonChatNow
+                                ButtonOrIcon={Button}
+                                shop={product.product.shopOwner}
+                                css={cssButton}
+                                text={"Chat now"}
+                              />
+                            </div>
+                            <div className={clsx(s.viewShop)}>
+                              <Button
+                                sx={cssButton}
+                                onClick={handleViewShop}
+                                shop={product.product.shopOwner}
+                              >
+                                View shop
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    }
                   </div>
                   <div className={s.type}>
                     <span>
@@ -363,65 +378,69 @@ export default function ProductDetails() {
                     <BirdProperties product={product.product} />
                   </div>
                 </div>
-                <div className={s.quantity}>
-                  <span className={s.titleQuantity}>Quantity: </span>
-                  <div>
-                    <IconButton
-                      color="Accent7"
-                      onClick={handleQuantityChange(
-                        quantityControlStatus.DECREASE
-                      )}
-                    >
-                      <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
-                    </IconButton>
-                    <input
-                      value={quantity}
-                      min={1}
-                      max={product.product.quantity}
-                      onChange={handleQuantityChange(
-                        quantityControlStatus.CHANGE
-                      )}
-                    />
-                    <IconButton
-                      color="Accent7"
-                      onClick={handleQuantityChange(
-                        quantityControlStatus.INCREASE
-                      )}
-                    >
-                      <AddCircleIcon sx={{ fontSize: "3rem" }} />
-                    </IconButton>
-                  </div>
-                  <span className={s.stock}>
-                    {product.product.quantity} in stocks
-                  </span>
-                </div>
-                <div className={s.footer}>
-                  <div className={s.buttonControl}>
-                    <Button
-                      sx={buttonAdd}
-                      color="Accent7"
-                      variant="outlined"
-                      onClick={handleAddToCart}
-                    >
-                      Add to cart{" "}
-                      <ShoppingCartCheckoutIcon
-                        sx={{
-                          fontSize: "2.4rem",
-                          marginLeft: "1rem",
-                        }}
-                      />
-                    </Button>
-                    <Button
-                      sx={buttonOrder}
-                      variant="contained"
-                      color="error"
-                      onClick={handleOrderNow}
-                    >
-                      {" "}
-                      Order now
-                    </Button>
-                  </div>
-                </div>
+                {!ban &&
+                  <>
+                    <div className={s.quantity}>
+                      <span className={s.titleQuantity}>Quantity: </span>
+                      <div>
+                        <IconButton
+                          color="Accent7"
+                          onClick={handleQuantityChange(
+                            quantityControlStatus.DECREASE
+                          )}
+                        >
+                          <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
+                        </IconButton>
+                        <input
+                          value={quantity}
+                          min={1}
+                          max={product.product.quantity}
+                          onChange={handleQuantityChange(
+                            quantityControlStatus.CHANGE
+                          )}
+                        />
+                        <IconButton
+                          color="Accent7"
+                          onClick={handleQuantityChange(
+                            quantityControlStatus.INCREASE
+                          )}
+                        >
+                          <AddCircleIcon sx={{ fontSize: "3rem" }} />
+                        </IconButton>
+                      </div>
+                      <span className={s.stock}>
+                        {product.product.quantity} in stocks
+                      </span>
+                    </div>
+                    <div className={s.footer}>
+                      <div className={s.buttonControl}>
+                        <Button
+                          sx={buttonAdd}
+                          color="Accent7"
+                          variant="outlined"
+                          onClick={handleAddToCart}
+                        >
+                          Add to cart{" "}
+                          <ShoppingCartCheckoutIcon
+                            sx={{
+                              fontSize: "2.4rem",
+                              marginLeft: "1rem",
+                            }}
+                          />
+                        </Button>
+                        <Button
+                          sx={buttonOrder}
+                          variant="contained"
+                          color="error"
+                          onClick={handleOrderNow}
+                        >
+                          {" "}
+                          Order now
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                }
               </div>
             </div>
             <Divider />
