@@ -56,7 +56,7 @@ const cssButton = {
   "&:hover": { color: "rgb(4, 0, 30)" },
 };
 
-export default function ProductDetails() {
+export default function ProductDetails({setIsFound}) {
   const navigate = useNavigate();
   const param = useParams();
   const cartStatus = useSelector(getCartStatusSelector);
@@ -229,6 +229,8 @@ export default function ProductDetails() {
         if(res.status === 423){
           setBan(true);
           setProduct(res.data);
+        }else{
+          setIsFound(false);
         }
       }
     };
