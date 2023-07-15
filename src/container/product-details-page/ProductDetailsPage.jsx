@@ -6,10 +6,14 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { Box } from "@mui/material";
+import { useSelector } from "react-redux";
+import { backDropSelector } from "../../redux/global/globalConfigSlice";
 
 export default function ProductDetailsPage() {
   const param = useParams();
   const containerRef = useRef(null);
+  const [loading, setLoading] = useState();
+  const backDrop = useSelector(backDropSelector);
   const [isFound, setIsFound] = useState(true);
   useEffect(() => {
     handleScrollToTop();
@@ -18,6 +22,12 @@ export default function ProductDetailsPage() {
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(!backDrop);
+    }, 100);
+  }, [backDrop]);
 
   return (
     <>

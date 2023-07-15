@@ -46,7 +46,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 1rem;
+        gap: 2rem;
         Button {
           @include c.f-button(0.5rem 3rem, c.$Dominant4, c.$Complementary8);
         }
@@ -122,8 +122,8 @@
     .action {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      gap: 1rem;
+      justify-content: center;
+      gap: 2rem;
     }
   }
   .right {

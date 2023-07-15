@@ -392,12 +392,15 @@ export default function ProductDetails({ setIsFound }) {
                               <span className={s.oldPrice}>
                                 {formatNumber(product.product.price)}
                               </span>
-                              <span className={s.discount}>
-                                {(product.product.discountRate * 100).toFixed(
-                                  0
-                                )}
-                                % off
-                              </span>
+                              <Chip
+                                label={`${(
+                                  product.product.discountRate * 100
+                                ).toFixed(0)}% off`}
+                                sx={{
+                                  fontSize: "3rem",
+                                  color: "rgb(96, 25, 131)",
+                                }}
+                              />
                             </>
                           ) : (
                             <span className={s.disPrice}>

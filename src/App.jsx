@@ -70,6 +70,7 @@ function App() {
         <Route path="create-shop" element={<CreateShop />} />
         <Route path="shop/:id" element={<Shop />} />
         <Route path="shop/:id/collection" element={<Collection />} />
+        <Route path="shop/:id/collection/:tagId" element={<Collection />} />
         <Route path="shop/:id/portfolio" element={<Portfolio />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-code" element={<VerifyCode />} />

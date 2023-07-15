@@ -1,5 +1,46 @@
 @use "../../style/" as c;
 
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 5rem;
+  gap: 4rem;
+  .header {
+    display: flex;
+    justify-content: center;
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 15rem;
+    .left {
+      .image {
+        margin-bottom: 10rem;
+        .avatar {
+          position: absolute;
+          transform: translate(20%, -50%);
+        }
+      }
+      .info {
+        display: flex;
+        justify-content: space-between;
+        .l {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+        }
+        .r {
+          display: flex;
+          flex-direction: column;
+          gap: 3rem;
+        }
+      }
+    }
+    .right {
+    }
+  }
+}
+
 .container {
   display: flex;
   font-size: 2.4rem;
@@ -49,7 +90,5 @@
         }
       }
     }
-  }
-  .description {
   }
 }
