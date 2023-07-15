@@ -133,53 +133,6 @@ export default function Header() {
           onChange={handleChangeName}
         />
         <div className={clsx(s.filter)}>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-            sx={{ fontSize: "2.4rem", height: "4rem" }}
-            MenuProps={{
-              disableScrollLock: true,
-              style: {
-                color: "white",
-              },
-            }}
-          >
-            <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
-              Ten
-            </MenuItem>
-            <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
-              Twenty
-            </MenuItem>
-            <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
-              Thirty
-            </MenuItem>
-          </Select>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            onChange={handleChange}
-            sx={{ fontSize: "2.4rem", height: "4rem", marginLeft: "0.5rem" }}
-            MenuProps={{
-              disableScrollLock: true,
-              style: {
-                color: Style.color.$Dominant1,
-              },
-            }}
-          >
-            <MenuItem value={10} sx={{ fontSize: "2.4rem" }}>
-              Ten
-            </MenuItem>
-            <MenuItem value={20} sx={{ fontSize: "2.4rem" }}>
-              Twenty
-            </MenuItem>
-            <MenuItem value={30} sx={{ fontSize: "2.4rem" }}>
-              Thirty
-            </MenuItem>
-          </Select>
-
           <IconButton type="submit">
             <FontAwesomeIcon
               icon={faMagnifyingGlass}
@@ -193,32 +146,6 @@ export default function Header() {
       ) : (
         <GuestRightHeader totalCartItems={totalCartItems} />
       )}
-      {/* {
-            <Button
-               onClick={() => {
-                  const a = async () => {
-                     try {
-                        const id = [1, 2, 3, 4, 5];
-
-                        const res = await api.get("/products/id", {
-                           params: {
-                              id: [1, 2, 3, 4, 5, 7, 8],
-                              sort: 1,
-                              from: 100,
-                              to: 200
-                           }
-                        });
-                        console.log(res);
-                        const data = await res.data;
-                     } catch (err) {
-                        console.log(err);
-                     }
-                  };
-                  a();
-               }}
-            >
-            </Button>
-         } */}
     </div>
   );
 }

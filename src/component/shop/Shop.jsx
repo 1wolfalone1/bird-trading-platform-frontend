@@ -7,7 +7,9 @@ import s from "./shop.module.scss";
 import ShopOverview from "./shopOverview/ShopOverview";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import productsPresentationSlices, { filterByAll } from "../products-presentation/productsPresentationSlice";
+import productsPresentationSlices, {
+  filterByAll,
+} from "../products-presentation/productsPresentationSlice";
 
 export default function Shop() {
   const param = useParams();
@@ -18,7 +20,7 @@ export default function Shop() {
     dispatch(productsPresentationSlices.actions.resetAllPageNumberShopId());
     dispatch(productsPresentationSlices.actions.changeShopId(shopId));
     dispatch(filterByAll());
-  },[]);
+  }, []);
 
   return (
     <>

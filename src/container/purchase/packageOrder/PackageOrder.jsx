@@ -38,7 +38,9 @@ export default function PackageOrder() {
   }, [pageNumber]);
 
   useEffect(() => {
-    setLoading(!backDrop);
+    setTimeout(() => {
+      setLoading(!backDrop);
+    }, 500);
   }, [backDrop]);
 
   const handleChangePage = (e, value) => {
@@ -50,16 +52,16 @@ export default function PackageOrder() {
       {packageOrders ? (
         <>
           {!loading ? (
-            <>
+            <div className={clsx(s.skeleton)}>
               {Array.from({ length: 8 }).map((_, index) => (
                 <Skeleton
                   variant="rectangular"
-                  height={160}
-                  width={1250}
+                  height={147}
+                  width={1206}
                   animation="wave"
                 />
               ))}
-            </>
+            </div>
           ) : (
             packageOrders.lists.map((data) => (
               <Grid2
@@ -122,7 +124,7 @@ export default function PackageOrder() {
                 <Skeleton
                   variant="rectangular"
                   height={160}
-                  width={1250}
+                  width={1400}
                   animation="wave"
                 />
               ))}

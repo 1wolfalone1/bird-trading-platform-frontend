@@ -1,1 +1,45 @@
 @use "../../style/" as c;
+
+.container {
+  display: flex;
+  margin: 2rem 10rem;
+  .tag {
+    .item {
+      .content {
+        .itemDetail {
+          .header {
+          }
+          .info {
+            .image {
+              img {
+                width: 100%;
+                height: 25rem;
+              }
+            }
+            .name {
+              font-size: 2rem;
+              text-align: center;
+              // font-family: c.$Secondary;
+            }
+          }
+          .viewAll {
+            Button {
+              border: 1px solid rgba(0, 0, 0, 0.5);
+              font-size: 1.8rem;
+              font-family: c.$Secondary;
+              padding: 0.6rem 1.2rem;
+              text-transform: none;
+              color: c.$Dominant4;
+              background-color: c.$Complementary5;
+              &:hover {
+                border: 1px solid rgba(0, 0, 0, 0.5);
+                color: c.$Accent7;
+                background-color: c.$Dominant2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
