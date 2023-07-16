@@ -123,16 +123,18 @@ export default function Login() {
    });
    useEffect(() => {
       let error = params.get("error");
-      if (error == errorAuthentication.CONFLICT_GOOGLE_LOGIN) {
-         setLoginGoogleStatus(
-            "The email you provided is already registered in our system!"
-         );
-      } else if (error == errorAuthentication.BANNED_STAFF) {
-         setLoginGoogleStatus("Your staff account have been banned!");
-      } else if (error == errorAuthentication.BANNED_SHOP) {
-         setLoginGoogleStatus("Your shop have been banned!");
-      } else {
-         setLoginGoogleStatus("Something went wrong!");
+      if (error) {
+         if (error == errorAuthentication.CONFLICT_GOOGLE_LOGIN) {
+            setLoginGoogleStatus(
+               "The email you provided is already registered in our system!"
+            );
+         } else if (error == errorAuthentication.BANNED_STAFF) {
+            setLoginGoogleStatus("Your staff account have been banned!");
+         } else if (error == errorAuthentication.BANNED_SHOP) {
+            setLoginGoogleStatus("Your shop have been banned!");
+         } else {
+            setLoginGoogleStatus("Something went wrong!");
+         }
       }
    }, []);
 
