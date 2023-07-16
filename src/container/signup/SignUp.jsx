@@ -48,7 +48,7 @@ const validationSchema = yup.object({
   name: yup.string("").required("Name is required!"),
   phone: yup
     .string()
-    .matches(/^(?!\D)/, "Phone number is not valid!")
+    .matches(/^0\d{9,10}$/, "Phone number is not valid!")
     .required("Phone number is required!"),
   password: yup.string("").required("Password is required!"),
   confirmPassword: yup.string("").required("Confirm password is required!"),

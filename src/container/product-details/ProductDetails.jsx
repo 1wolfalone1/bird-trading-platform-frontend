@@ -4,7 +4,16 @@ import s from "./productDetails.module.scss";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
-import { Button, Chip, Divider, IconButton, Rating } from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  Rating,
+  Skeleton,
+  Stack,
+} from "@mui/material";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,7 +29,9 @@ import { toast } from "react-toastify";
 import AddToCartToast, {
   toastType,
 } from "../../component/toast/content/AddToCartToast";
-import globalConfigSlice from "../../redux/global/globalConfigSlice";
+import globalConfigSlice, {
+  backDropSelector,
+} from "../../redux/global/globalConfigSlice";
 import Style from "../../style/inline-style/style";
 import cartSlice, {
   getCartStatusSelector,
@@ -56,17 +67,20 @@ const cssButton = {
   "&:hover": { color: "rgb(4, 0, 30)" },
 };
 
-export default function ProductDetails() {
+export default function ProductDetails({ setIsFound }) {
   const navigate = useNavigate();
   const param = useParams();
   const cartStatus = useSelector(getCartStatusSelector);
   const [product, setProduct] = useState();
+  const [loading, setLoading] = useState(false);
+  const backDrop = useSelector(backDropSelector);
   const dispatch = useDispatch();
   const cartQuantity = useSelector(getItemQuantity(product?.product?.id));
   const element = `${product?.product.description}`;
   const [quantity, setQuantity] = useState(1);
   const [firstCall, setFirstCall] = useState(true);
   const { status } = useSelector(userInfoSelector);
+  const [ban, setBan] = useState(false);
 
   const buttonOrder = {
     fontSize: "2.4rem",
@@ -221,9 +235,17 @@ export default function ProductDetails() {
         console.log(data);
         setProduct(data);
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
+        setBan(false);
       } catch (error) {
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
+        const res = await error.response;
+        if (res.status === 423) {
+          setBan(true);
+          setProduct(res.data);
+        } else {
+          setIsFound(false);
+        }
       }
     };
     getProducts();
@@ -250,190 +272,283 @@ export default function ProductDetails() {
       border: "1px solid rgba(0, 0, 0, 0.5)",
     },
   };
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(!backDrop);
+    }, 100);
+  }, [backDrop]);
 
   return (
     <>
       {product ? (
-        <div className={clsx(s.container)}>
-          <div className={s.detail}>
-            <div className={s.summaryProduct}>
-              <div className={s.listImage}>
-                <ThumpImage
-                  images={product.listImages}
-                  video={product.product.videoUrl}
-                />
-              </div>
-              <div className={s.content}>
-                <div className={s.productName}>
-                  <span>{product.product.name}</span>
+        <>
+          {!loading ? (
+            <Stack
+              spacing={2}
+              sx={{ alignItems: "center" }}
+              className={s.container}
+            >
+              {/* <Skeleton variant="rectangular" width={"100%"} height={450} /> */}
+              <Box
+                width={1275}
+                height={600}
+                sx={{
+                  backgroundColor: "rgba(0, 0, 0, 0.11)",
+                }}
+                className={s.skeletonContainer}
+              >
+                <div className={clsx(s.left)}>
+                  <Skeleton variant="rectangular" width={520} height={520} />
+                  <div className={clsx(s.imageIntro)}>
+                    {Array.from({ length: 4 }).map((_, index) => (
+                      <Skeleton variant="rectangular" width={100} height={72} />
+                    ))}
+                  </div>
                 </div>
-                <div className={s.metric}>
-                  <span>{product.numberSold} sold</span>
-                  <Divider orientation="vertical" color="error" />
-                  <span>{product.product.star}</span>
-                  <Rating
-                    value={product.product.star}
-                    readOnly
-                    precision={0.5}
-                  />
-                  <Divider orientation="vertical" color="error" />
-                  <span> {product.numberReview} review</span>
-                </div>
-                <div className={s.mainContent}>
-                  <div className={s.price}>
-                    <div className={s.countPrice}>
-                      {product.product.discountRate !== 0 ? (
-                        <>
-                          <span className={s.disPrice}>
-                            {formatNumber(product.product.discountedPrice)}
-                          </span>
-                          <span className={s.oldPrice}>
-                            {formatNumber(product.product.price)}
-                          </span>
-                          <span className={s.discount}>
-                            {(product.product.discountRate * 100).toFixed(0)}%
-                            off
-                          </span>
-                        </>
-                      ) : (
-                        <span className={s.disPrice}>
-                          {formatNumber(product.product.price)}
-                        </span>
-                      )}
+                <div className={clsx(s.right)}>
+                  <div className={clsx(s.header)}>
+                    <Skeleton variant="rectangular" width={670} height={100} />
+                  </div>
+                  <div className={clsx(s.priceAndShop)}>
+                    <div className={clsx(s.price)}>
+                      <Skeleton variant="rectangular" width={270} height={86} />
                     </div>
-                    <div className={s.shop}>
-                      <div className={s.image}>
-                        <img
-                          src={product.product.shopOwner.imgUrl}
-                          alt="shop img"
-                          onClick={handleViewShop}
-                        />
+                    <div className={clsx(s.shop)}>
+                      <div className={clsx(s.avatar)}>
+                        <Skeleton variant="circular" width={80} height={80} />
                       </div>
-                      <div className={s.right}>
-                        <div className={s.name}>
-                          {product.product.shopOwner.shopName}
-                        </div>
-                        <div className={clsx(s.action)}>
-                          <div className={clsx(s.chat)}>
-                            <ButtonChatNow
-                              ButtonOrIcon={Button}
-                              shop={product.product.shopOwner}
-                              css={cssButton}
-                              text={"Chat now"}
+                      <div className={clsx(s.title)}>
+                        <Skeleton
+                          variant="rectangular"
+                          width={248}
+                          height={30}
+                        />
+                        <div className={clsx(s.button)}>
+                          {Array.from({ length: 2 }).map((_, index) => (
+                            <Skeleton
+                              variant="rectangular"
+                              width={120}
+                              height={48}
                             />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={clsx(s.text)}>
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <Skeleton variant="rectangular" width={270} height={36} />
+                    ))}
+                  </div>
+                  <div className={clsx(s.button)}>
+                    {Array.from({ length: 2 }).map((_, index) => (
+                      <Skeleton variant="rectangular" width={127} height={48} />
+                    ))}
+                  </div>
+                </div>
+              </Box>
+            </Stack>
+          ) : (
+            <div className={clsx(s.container)}>
+              <div className={s.detail}>
+                <div className={s.summaryProduct}>
+                  <div className={s.listImage}>
+                    <ThumpImage
+                      images={product.listImages}
+                      video={product.product.videoUrl}
+                    />
+                    {ban && (
+                      <img
+                        src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/banned.png"
+                        alt="This product banned"
+                        className={clsx(s.additionalImage)}
+                      />
+                    )}
+                  </div>
+                  <div className={s.content}>
+                    <div className={s.productName}>
+                      <span>{product.product.name}</span>
+                    </div>
+                    <div className={s.metric}>
+                      <span>{product.numberSold} sold</span>
+                      <Divider orientation="vertical" color="error" />
+                      <span>{product.product.star}</span>
+                      <Rating
+                        value={product.product.star}
+                        readOnly
+                        precision={0.5}
+                      />
+                      <Divider orientation="vertical" color="error" />
+                      <span> {product.numberReview} review</span>
+                    </div>
+                    <div className={s.mainContent}>
+                      <div className={s.price}>
+                        <div className={s.countPrice}>
+                          {product.product.discountRate !== 0 ? (
+                            <>
+                              <span className={s.disPrice}>
+                                {formatNumber(product.product.discountedPrice)}
+                              </span>
+                              <span className={s.oldPrice}>
+                                {formatNumber(product.product.price)}
+                              </span>
+                              <Chip
+                                label={`${(
+                                  product.product.discountRate * 100
+                                ).toFixed(0)}% off`}
+                                sx={{
+                                  fontSize: "3rem",
+                                  color: "rgb(96, 25, 131)",
+                                }}
+                              />
+                            </>
+                          ) : (
+                            <span className={s.disPrice}>
+                              {formatNumber(product.product.price)}
+                            </span>
+                          )}
+                        </div>
+                        {!ban && (
+                          <div className={s.shop}>
+                            <div className={s.image}>
+                              <img
+                                src={product.product.shopOwner.imgUrl}
+                                alt="shop img"
+                                onClick={handleViewShop}
+                              />
+                            </div>
+                            <div className={s.right}>
+                              <div className={s.name}>
+                                {product.product.shopOwner.shopName}
+                              </div>
+                              <div className={clsx(s.action)}>
+                                <div className={clsx(s.chat)}>
+                                  <ButtonChatNow
+                                    ButtonOrIcon={Button}
+                                    shop={product.product.shopOwner}
+                                    css={cssButton}
+                                    text={"Chat now"}
+                                  />
+                                </div>
+                                <div className={clsx(s.viewShop)}>
+                                  <Button
+                                    sx={cssButton}
+                                    onClick={handleViewShop}
+                                    shop={product.product.shopOwner}
+                                  >
+                                    View shop
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
                           </div>
-                          <div className={clsx(s.viewShop)}>
-                            <Button
-                              sx={cssButton}
-                              onClick={handleViewShop}
-                              shop={product.product.shopOwner}
+                        )}
+                      </div>
+                      <div className={s.type}>
+                        <span>
+                          Type: <span>{product.product.type.name}</span>
+                        </span>
+                      </div>
+                      {product.product.tags.length > 0 && (
+                        <div className={s.tag}>
+                          <span>Tag: </span>
+                          {product.product.tags.map((tag) => (
+                            <Chip
+                              key={tag.id}
+                              label={`#${tag.name}`}
+                              sx={{
+                                fontSize: "2rem",
+                                margin: "0.4rem",
+                                color: "#3e3d3d",
+                              }}
+                            />
+                          ))}
+                        </div>
+                      )}
+                      <div className={s.commonProperties}>
+                        <span className={s.commonProperties}>
+                          Common properties:
+                        </span>
+                        <BirdProperties product={product.product} />
+                      </div>
+                    </div>
+                    {!ban && (
+                      <>
+                        <div className={s.quantity}>
+                          <span className={s.titleQuantity}>Quantity: </span>
+                          <div>
+                            <IconButton
+                              color="Accent7"
+                              onClick={handleQuantityChange(
+                                quantityControlStatus.DECREASE
+                              )}
                             >
-                              View shop
+                              <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
+                            </IconButton>
+                            <input
+                              value={quantity}
+                              min={1}
+                              max={product.product.quantity}
+                              onChange={handleQuantityChange(
+                                quantityControlStatus.CHANGE
+                              )}
+                            />
+                            <IconButton
+                              color="Accent7"
+                              onClick={handleQuantityChange(
+                                quantityControlStatus.INCREASE
+                              )}
+                            >
+                              <AddCircleIcon sx={{ fontSize: "3rem" }} />
+                            </IconButton>
+                          </div>
+                          <span className={s.stock}>
+                            {product.product.quantity} in stocks
+                          </span>
+                        </div>
+                        <div className={s.footer}>
+                          <div className={s.buttonControl}>
+                            <Button
+                              sx={buttonAdd}
+                              color="Accent7"
+                              variant="outlined"
+                              onClick={handleAddToCart}
+                            >
+                              Add to cart{" "}
+                              <ShoppingCartCheckoutIcon
+                                sx={{
+                                  fontSize: "2.4rem",
+                                  marginLeft: "1rem",
+                                }}
+                              />
+                            </Button>
+                            <Button
+                              sx={buttonOrder}
+                              variant="contained"
+                              color="error"
+                              onClick={handleOrderNow}
+                            >
+                              {" "}
+                              Order now
                             </Button>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={s.type}>
-                    <span>
-                      Type: <span>{product.product.type.name}</span>
-                    </span>
-                  </div>
-                  {product.product.tags.length > 0 && (
-                    <div className={s.tag}>
-                      <span>Tag: </span>
-                      {product.product.tags.map((tag) => (
-                        <Chip
-                          key={tag.id}
-                          label={`#${tag.name}`}
-                          sx={{
-                            fontSize: "2rem",
-                            margin: "0.4rem",
-                            color: "#3e3d3d",
-                          }}
-                        />
-                      ))}
-                    </div>
-                  )}
-                  <div className={s.commonProperties}>
-                    <span className={s.commonProperties}>
-                      Common properties:
-                    </span>
-                    <BirdProperties product={product.product} />
+                      </>
+                    )}
                   </div>
                 </div>
-                <div className={s.quantity}>
-                  <span className={s.titleQuantity}>Quantity: </span>
-                  <div>
-                    <IconButton
-                      color="Accent7"
-                      onClick={handleQuantityChange(
-                        quantityControlStatus.DECREASE
-                      )}
-                    >
-                      <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
-                    </IconButton>
-                    <input
-                      value={quantity}
-                      min={1}
-                      max={product.product.quantity}
-                      onChange={handleQuantityChange(
-                        quantityControlStatus.CHANGE
-                      )}
-                    />
-                    <IconButton
-                      color="Accent7"
-                      onClick={handleQuantityChange(
-                        quantityControlStatus.INCREASE
-                      )}
-                    >
-                      <AddCircleIcon sx={{ fontSize: "3rem" }} />
-                    </IconButton>
-                  </div>
-                  <span className={s.stock}>
-                    {product.product.quantity} in stocks
-                  </span>
-                </div>
-                <div className={s.footer}>
-                  <div className={s.buttonControl}>
-                    <Button
-                      sx={buttonAdd}
-                      color="Accent7"
-                      variant="outlined"
-                      onClick={handleAddToCart}
-                    >
-                      Add to cart{" "}
-                      <ShoppingCartCheckoutIcon
-                        sx={{
-                          fontSize: "2.4rem",
-                          marginLeft: "1rem",
-                        }}
-                      />
-                    </Button>
-                    <Button
-                      sx={buttonOrder}
-                      variant="contained"
-                      color="error"
-                      onClick={handleOrderNow}
-                    >
-                      {" "}
-                      Order now
-                    </Button>
-                  </div>
+                <Divider />
+                <div className={s.description}>
+                  <h3>Description</h3>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: element }}
+                    className={s.content}
+                  />
                 </div>
               </div>
             </div>
-            <Divider />
-            <div className={s.description}>
-              <h3>Description</h3>
-              <div
-                dangerouslySetInnerHTML={{ __html: element }}
-                className={s.content}
-              />
-            </div>
-          </div>
-        </div>
+          )}
+        </>
       ) : (
         <></>
       )}

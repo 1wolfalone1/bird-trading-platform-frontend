@@ -5,44 +5,44 @@ import { productAPI } from "./../../api/server/products/ProductsAPI";
 import { accessoriesAPI } from "./../../api/server/products/AccessoriesAPI";
 
 export const homeDataStatus = {
-   ERROR: -1,
-   PENDING: 0,
-   FULFILLED: 1,
+  ERROR: -1,
+  PENDING: 0,
+  FULFILLED: 1,
 };
 
 export default createSlice({
-   name: "homeData",
-   initialState: {
-      topProduct: {
-         status: "",
-         data: [],
-      },
-      bird: {
-         status: "",
-         data: [],
-      },
-      accessories: {
-         status: "",
-         data: [],
-      },
-      food: {
-         status: "",
-         data: [],
-      },
-   },
-   reducers: {},
-   extraReducers: (builder) => {
-      builder
-         .addCase(getBirds.fulfilled, (state, payload) => {
-            state.bird.status = homeDataStatus.FULFILLED;
-            state.bird.data = [...payload.payload];
-         })
-         .addCase(getFood.fulfilled, (state, payload) => {
-            state.food.status = homeDataStatus.FULFILLED;
-            state.food.data = [...payload.payload];
-         })
-         .addCase(getTopProducts.fulfilled, (state, payload) => {
-            state.topProduct.status = homeDataStatus.FULFILLED;
+  name: "homeData",
+  initialState: {
+    topProduct: {
+      status: "",
+      data: [],
+    },
+    bird: {
+      status: "",
+      data: [],
+    },
+    accessories: {
+      status: "",
+      data: [],
+    },
+    food: {
+      status: "",
+      data: [],
+    },
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getBirds.fulfilled, (state, payload) => {
+        state.bird.status = homeDataStatus.FULFILLED;
+        state.bird.data = [...payload.payload];
+      })
+      .addCase(getFood.fulfilled, (state, payload) => {
+        state.food.status = homeDataStatus.FULFILLED;
+        state.food.data = [...payload.payload];
+      })
+      .addCase(getTopProducts.fulfilled, (state, payload) => {
+        state.topProduct.status = homeDataStatus.FULFILLED;
 
             state.topProduct.data = [...payload.payload];
          })
@@ -101,17 +101,17 @@ export const getFood = createAsyncThunk("home/getFood", async () => {
 });
 
 export const getTopProducts = createAsyncThunk(
-   "home/getTopProducts",
-   async () => {
-      try {
-         const response = await productAPI.get("/top-product");
-         console.log(response.data);
-         return response.data;
-      } catch (err) {
-         console.error(err);
-         throw err;
-      }
-   }
+  "home/getTopProducts",
+  async () => {
+    try {
+      const response = await productAPI.get("/top-product");
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
 );
 
 export const getAccessories = createAsyncThunk(

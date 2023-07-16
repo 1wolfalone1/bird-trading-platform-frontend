@@ -7,6 +7,7 @@ import ShopTitle from "../../../component/checkout/products/shop-title/ShopTitle
 import Style from "../../../style/inline-style/style";
 import { formatNumber } from "./../../../utils/myUtils";
 import s from "./order.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const boxPrice = {
   display: "flex",
@@ -17,6 +18,8 @@ const boxPrice = {
 };
 
 export default function Order({ order }) {
+  const navigate = useNavigate();
+
   return (
     <div>
       <div className={clsx(s.products)}>
@@ -39,14 +42,19 @@ export default function Order({ order }) {
 
         {order.orderDetails &&
           order.orderDetails.map((item) => (
-            <Product
-              key={item?.productId}
-              id={item?.productId}
-              name={item?.productName}
-              image={item?.imgUrl}
-              quantity={item?.quantity}
-              price={formatNumber(item.quantity * item.price)}
-            />
+            <div
+              onClick={() => navigate(`/product/${item.productId}`)}
+              className={clsx(s.product)}
+            >
+              <Product
+                key={item?.productId}
+                id={item?.productId}
+                name={item?.productName}
+                image={item?.imgUrl}
+                quantity={item?.quantity}
+                price={formatNumber(item.quantity * item.price)}
+              />
+            </div>
           ))}
         <Grid container spacing={2}>
           <>

@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import s from "./productSuggest.module.scss";
-import HomeProductSlider from "../../../component/slider/product/HomeProductSlider";
-import { useSelector } from "react-redux";
-import { getTopProductsSelector } from "../../home/HomeSlice";
-import clsx from "clsx";
-import { api } from "../../../api/server/API";
 import { Box, CircularProgress, Typography } from "@mui/material";
-import ProductHomeCard from "../../../component/card/bird-home-card/ProductHomeCard";
-import { SwiperSlide, Swiper } from "swiper/react";
+import clsx from "clsx";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Thumbs } from "swiper";
 import "swiper/css";
 import "swiper/css/thumbs";
-import { Thumbs } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { api } from "../../../api/server/API";
+import ProductHomeCard from "../../../component/card/bird-home-card/ProductHomeCard";
+import s from "./productSuggest.module.scss";
 
 export default function ProductSuggest() {
   const param = useParams();
@@ -20,59 +17,56 @@ export default function ProductSuggest() {
 
   useEffect(() => {
     getProductSuggestData();
-  },[])
+  }, []);
 
-  const getProductSuggestData = async() => {
+  const getProductSuggestData = async () => {
     const productId = param.id;
-    
+
     try {
       setLoading(true);
       const res = await api.get(`products/${productId}/relevant`);
       const data = res.data;
-      console.log(data, 'data ne');
       setProducts(data);
       setLoading(false);
-    }catch(error) {
+    } catch (error) {
       setLoading(false);
-      console.log()
       throw error;
     }
-  }
+  };
   return (
     <>
-      <Box className={clsx(s.container)}
-      >
+      <Box className={clsx(s.container)}>
         <Typography
-        //  font-family: "SeoulHangang";
-        //  font-style: normal;
-        //  font-weight: 400;
-        //  font-size: 5rem;
-   
-          sx={{textAlign: 'center', marginBottom: '10px', fontSize: '5rem', fontStyle: 'normal', fontWeight: '400', fontFamily: 'SeoulHangang' }}
-        >Suggestion
-        </Typography> 
-        {/* <div className={clsx(s.content)}> */}
-        {loading ? 
+          sx={{
+            textAlign: "center",
+            marginBottom: "10px",
+            fontSize: "5rem",
+            fontStyle: "normal",
+            fontWeight: "400",
+            fontFamily: "SeoulHangang",
+          }}
+        >
+          Suggestion
+        </Typography>
+        {loading ? (
           <CircularProgress />
-          :
+        ) : (
           <Swiper
-              spaceBetween={"0rem"}
-              slidesPerView={4.5}
-              modules={[Thumbs]}
-              watchSlidesProgress
-              onSlideChange={() => {}}
-              onSwiper={(swiper) => {}}
-            >
-              {products && products?.map(product => (
-                
+            spaceBetween={"0rem"}
+            slidesPerView={4.5}
+            modules={[Thumbs]}
+            watchSlidesProgress
+            onSlideChange={() => {}}
+            onSwiper={(swiper) => {}}
+          >
+            {products &&
+              products?.map((product) => (
                 <SwiperSlide key={product.id}>
-                    <ProductHomeCard product={product} isSuggest={true} />
+                  <ProductHomeCard product={product} isSuggest={true} />
                 </SwiperSlide>
-              
-            ))}
+              ))}
           </Swiper>
-        }    
-        {/* </div> */}
+        )}
       </Box>
     </>
   );

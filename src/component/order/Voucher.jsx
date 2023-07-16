@@ -66,7 +66,9 @@ export default function Voucher({ close }) {
                 .map((item) => (
                   <div
                     className={clsx(s.containerItem, {
-                      [s.disabled]: total < item.minimumOrderValue,
+                      [s.disabled]:
+                        total < item.minimumOrderValue ||
+                        item.used >= item.usageLimit,
                     })}
                     key={item.id}
                   >

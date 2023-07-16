@@ -5,24 +5,20 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../../api/server/API";
 import { useEffect } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
+import { Avatar, Box, Skeleton, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
+import { backDropSelector } from "../../../redux/global/globalConfigSlice";
 
 export default function Portfolio() {
-  const portfolio = {
-    name: "Pet shop",
-    description:
-      "Step into a world of magic and wonder at our extraordinary shop located in the heart of the bustling city. The Enchanted Emporium is a haven for all those seeking whimsical delights, one-of-a-kind treasures, and a touch of enchantment in their lives. As you enter our doors, you'll be greeted by an ethereal ambiance that transports you to a realm where dreams come true. The soft glow of crystal chandeliers and the faint scent of exotic herbs fill the air, creating an immersive experience like no other.",
-    moreInfo:
-      "As you enter our doors, you'll be greeted by an ethereal ambiance that transports you to a realm where dreams come true. The soft glow of crystal chandeliers and the faint scent of exotic herbs fill the air, creating an immersive experience like no other.",
-    bonusInfo:
-      "Explore our carefully curated collection of enchanted artifacts, mystical talismans, and spellbinding curiosities. From shimmering potions that promise to grant your deepest desires to intricately crafted wands that beckon with hidden powers, every item in our inventory has been procured from far-off lands and renowned magical artisans. For the avid readers and seekers of knowledge, our extensive library offers shelves lined with ancient grimoires, spellbooks, and volumes of arcane wisdom.",
-  };
-
   const [data, setData] = useState();
+  const [loading, setLoading] = useState();
+  const backDrop = useSelector(backDropSelector);
   const param = useParams();
   console.log(param);
   const getPortfolio = async () => {
     try {
-      const response = await api.get("");
+      const response = await api.get(`shop-info?id=${param.id}`);
       const data = await response.data;
       console.log(data);
       setData(data);
@@ -34,24 +30,153 @@ export default function Portfolio() {
     getPortfolio();
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(true);
+    }, 1000);
+  }, [backDrop]);
+
   return (
     <>
-      <div className={clsx(s.container)}>
-        <div className={clsx(s.introduction)}>
-          <span>Welcome to {portfolio.name}</span>
+      {!loading ? (
+        <div className={s.skeletonContainer}>
+          <div className={clsx(s.header)}>
+            <Skeleton variant="rectangular" width={360} height={45} />
+          </div>
+          <div className={clsx(s.content)}>
+            <div className={clsx(s.left)}>
+              <div className={clsx(s.image)}>
+                <Skeleton variant="rounded" width={528} height={288} />
+                <div className={clsx(s.avatar)}>
+                  <Skeleton variant="circular" width={112} height={112} />
+                </div>
+              </div>
+              <div className={clsx(s.info)}>
+                <div className={clsx(s.l)}>
+                  <Skeleton variant="rectangular" width={200} height={30} />
+                  <Skeleton variant="rectangular" width={200} height={30} />
+                </div>
+                <div className={clsx(s.r)}>
+                  <Skeleton variant="rectangular" width={200} height={30} />
+                  <Skeleton variant="rectangular" width={200} height={30} />
+                </div>
+              </div>
+            </div>
+            <div className={clsx(s.right)}>
+              <Skeleton variant="rounded" width={690} height={288} />
+            </div>
+          </div>
         </div>
-        <div className={clsx(s.content)}>
-          <div className={clsx(s.description)}>
-            <span>{portfolio.description}</span>
-          </div>
-          <div className={clsx(s.moreInfo)}>
-            <span>{portfolio.moreInfo}</span>
-          </div>
-          <div className={clsx(s.bonusInfo)}>
-            <span>{portfolio.bonusInfo}</span>
-          </div>
-        </div>
-      </div>
+      ) : (
+        <Box sx={{ width: "100%", padding: "5rem" }}>
+          <Typography
+            variant="h2"
+            fullWidth
+            sx={{
+              textAlign: "center",
+              color: "rgb(96, 25, 131)",
+              fontWeight: "800",
+              fontFamily: "SeoulHangang",
+            }}
+          >
+            Welcome to {data?.shopInfoDto?.shopName}
+          </Typography>
+          <Grid container columns={20} className={clsx(s.container)}>
+            <Grid sm={20} md={20} lg={20} xl={8} className={clsx(s.left)}>
+              <Grid className={clsx(s.image)}>
+                <Box
+                  fullWidth
+                  sx={{
+                    backgroundImage: `url(${
+                      data?.shopInfoDto?.coverImgUrl ||
+                      "https://images6.alphacoders.com/117/thumb-1920-1179684.png"
+                    })`,
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                    filter: "brightness(0.9)",
+                    height: "36rem",
+                    width: "66rem",
+                    borderRadius: "1rem",
+                  }}
+                  className={clsx("box-shadow")}
+                ></Box>
+                <Box
+                  sx={{
+                    position: "absolute",
+                    height: "14rem",
+                    width: "14rem",
+                    transform: "translate(20%, -50%)",
+                  }}
+                >
+                  <Avatar
+                    className={clsx("box-shadow")}
+                    src={
+                      data?.shopInfoDto?.avatarImgUrl ||
+                      "https://static.thenounproject.com/png/5034901-200.png"
+                    }
+                    alt=""
+                    sx={{ width: "100%", height: "100%" }}
+                  />
+                </Box>
+              </Grid>
+              <Grid className={clsx(s.info)}>
+                <Grid className={clsx(s.left)}>
+                  <Grid className={clsx(s.products)}>
+                    <Grid className={clsx(s.title)}>Products:</Grid>
+                    <Grid className={clsx(s.content)}>
+                      {data?.totalProduct}
+                    </Grid>
+                  </Grid>
+                  <Grid className={clsx(s.sold)}>
+                    <Grid className={clsx(s.title)}>Sold:</Grid>
+                    <Grid className={clsx(s.content)}>
+                      {data?.totalProductOrder}
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid className={clsx(s.right)}>
+                  <Grid className={clsx(s.rating)}>
+                    <Grid className={clsx(s.title)}>Rating:</Grid>
+                    <Grid className={clsx(s.content)}>
+                      star{data?.rating}({data?.rating} Rating)
+                    </Grid>
+                  </Grid>
+                  <Grid className={clsx(s.joined)}>
+                    <Grid className={clsx(s.title)}>Joined:</Grid>
+                    <Grid className={clsx(s.content)}>
+                      {new Date(
+                        data?.shopInfoDto?.createdDate
+                      ).toLocaleDateString("en-GB")}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid
+              sm={20}
+              md={20}
+              lg={20}
+              xl={11}
+              className={clsx(s.description)}
+            >
+              <div
+                dangerouslySetInnerHTML={{
+                  __html:
+                    data?.shopInfoDto?.description ||
+                    ` There is currently no description for ${data?.shopInfoDto.shopName}`,
+                }}
+                style={{
+                  boxShadow: "0.8rem 0.8rem 3rem 0.2rem gray",
+                  borderRadius: "1rem",
+                  padding: "1rem 3rem",
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Box>
+      )}
     </>
   );
 }

@@ -28,7 +28,6 @@ const menuItemStyle = {
 const typoItemMenu = {
   fontSize: "2.4rem",
   fontWeight: "1",
-  // color: Style.color.$Accent1,
 };
 export default function UserRightHeader({ user, totalCartItems }) {
   const [isActive, setIsActive] = React.useState(false);
@@ -102,6 +101,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
       console.log(error);
       if (error.errorCode === "400" || e.response.status === 403) {
         navigate("/create-shop");
+      } else if (error.errorCode === "423") {
       }
       console.log(e);
     }
@@ -160,6 +160,7 @@ export default function UserRightHeader({ user, totalCartItems }) {
               <FontAwesomeIcon icon={faShop} className={s.iconMenu} />
             </Box>
           </MenuItem>
+          <Divider className={clsx(s.divider)} />
           <MenuItem onClick={handleNavigateToOrderHistory("/order-history")}>
             <Box sx={menuItemStyle}>
               <Typography sx={typoItemMenu}>Order History</Typography>
