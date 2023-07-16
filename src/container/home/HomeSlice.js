@@ -64,38 +64,40 @@ export default createSlice({
          })
          .addCase(getBirds.rejected, (state, payload) => {
             console.log(payload);
+            state.bird.status = homeDataStatus.FULFILLED;
          })
          .addCase(getFood.rejected, (state, payload) => {
+            state.food.status = homeDataStatus.FULFILLED;
             console.log(payload);
          })
          .addCase(getTopProducts.rejected, (state, payload) => {
             console.log(payload);
+            state.topProduct.status = homeDataStatus.FULFILLED;
          })
          .addCase(getAccessories.rejected, (state, payload) => {
             console.log(payload);
-         })
+            state.accessories.status = homeDataStatus.FULFILLED;
+         });
    },
 });
 
 const suffixTopProduct = "/top-product";
-export const getBirds = createAsyncThunk("home/getBirds", 
-async () => {
-   try{
+export const getBirds = createAsyncThunk("home/getBirds", async () => {
+   try {
       const response = await birdApi.get(suffixTopProduct);
       return response.data;
-   }catch(error) {
+   } catch (error) {
       throw error;
    }
 });
 
 export const getFood = createAsyncThunk("home/getFood", async () => {
-   try{
+   try {
       const response = await foodAPI.get(suffixTopProduct);
       return response.data;
-   }catch(error) {
+   } catch (error) {
       throw error;
    }
-   
 });
 
 export const getTopProducts = createAsyncThunk(
@@ -115,10 +117,10 @@ export const getTopProducts = createAsyncThunk(
 export const getAccessories = createAsyncThunk(
    "home/getAccessories",
    async () => {
-      try{
+      try {
          const response = await accessoriesAPI.get(suffixTopProduct);
          return response.data;
-      }catch(error) {
+      } catch (error) {
          throw error;
       }
    }
