@@ -21,6 +21,7 @@ export default function ProductsSlider({ pageNumber = 10 }) {
         pageNumber: value,
       })
     );
+    console.log('here is page number ', value);
     setCurrentPage(value);
     dispatch(filterByAll());
   };
