@@ -132,6 +132,8 @@ export default function Login() {
             setLoginGoogleStatus("Your staff account have been banned!");
          } else if (error == errorAuthentication.BANNED_SHOP) {
             setLoginGoogleStatus("Your shop have been banned!");
+         } else if(error == errorAuthentication.UNAUTHORIZED){
+            setLoginGoogleStatus("Unauthorized!");
          } else {
             setLoginGoogleStatus("Something went wrong!");
          }
