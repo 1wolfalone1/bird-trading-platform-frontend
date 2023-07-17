@@ -45,10 +45,6 @@ export default function ShopOverview() {
     setLoading(!backDrop);
   }, [backDrop]);
 
-  const handleAllProducts = () => {
-    // navigate(`/shop/${data?.shopInfoDto?.id}`);
-  };
-
   const handleCollection = () => {
     navigate(`/shop/${data?.shopInfoDto?.id}/collection`);
   };
@@ -106,7 +102,6 @@ export default function ShopOverview() {
                 </Grid>
               </Grid>
               <Grid className={clsx(s.action)}>
-                <Button onClick={handleAllProducts}>All products</Button>
                 <Button onClick={handleCollection}>Collection</Button>
                 <Button onClick={handlePortfolio}>Portfolio</Button>
               </Grid>
@@ -144,36 +139,33 @@ export default function ShopOverview() {
           </Grid>
         </Grid>
       ) : (
-        <>
-          <div className={s.skeletonContainer}>
-            <div className={clsx(s.left)}>
-              <div className={clsx(s.info)}>
-                <div className={clsx(s.shopAvatar)}>
-                  <Skeleton variant="circular" width={144} height={144} />
-                </div>
-                <div className={clsx(s.shopName)}>
-                  <Skeleton variant="text" width={212} height={70} />
-                  <Skeleton variant="rounded" width={137} height={43} />
-                </div>
+        <div className={s.skeletonContainer}>
+          <div className={clsx(s.left)}>
+            <div className={clsx(s.info)}>
+              <div className={clsx(s.shopAvatar)}>
+                <Skeleton variant="circular" width={144} height={144} />
               </div>
-              <div className={clsx(s.action)}>
-                <Skeleton variant="rounded" width={150} height={43} />
-                <Skeleton variant="rounded" width={150} height={43} />
-                <Skeleton variant="rounded" width={150} height={43} />
+              <div className={clsx(s.shopName)}>
+                <Skeleton variant="text" width={212} height={70} />
+                <Skeleton variant="rounded" width={137} height={43} />
               </div>
             </div>
-            <div className={clsx(s.right)}>
-              <div className={clsx(s.l)}>
-                <Skeleton variant="text" width={220} height={70} />
-                <Skeleton variant="text" width={220} height={70} />
-              </div>
-              <div className={clsx(s.r)}>
-                <Skeleton variant="text" width={220} height={70} />
-                <Skeleton variant="text" width={220} height={70} />
-              </div>
+            <div className={clsx(s.action)}>
+              <Skeleton variant="rounded" width={160} height={43} />
+              <Skeleton variant="rounded" width={160} height={43} />
             </div>
           </div>
-        </>
+          <div className={clsx(s.right)}>
+            <div className={clsx(s.l)}>
+              <Skeleton variant="text" width={220} height={70} />
+              <Skeleton variant="text" width={220} height={70} />
+            </div>
+            <div className={clsx(s.r)}>
+              <Skeleton variant="text" width={220} height={70} />
+              <Skeleton variant="text" width={220} height={70} />
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

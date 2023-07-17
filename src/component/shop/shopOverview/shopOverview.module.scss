@@ -12,7 +12,8 @@
       display: flex;
       height: 100%;
       width: 100%;
-      justify-content: space-around;
+      justify-content: space-between;
+      padding: 0 5rem;
       @include c.f-backdrop();
       .overView {
         display: flex;
@@ -45,7 +46,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        gap: 1rem;
+        gap: 2rem;
         Button {
           @include c.f-button(0.5rem 3rem, c.$Dominant4, c.$Complementary8);
         }
@@ -109,39 +110,24 @@
   .left {
     display: flex;
     justify-content: center;
-    gap: 20rem;
-    padding-right: 9rem;
+    gap: 24rem;
+    padding-right: 5rem;
     border-right: 0.1rem solid gray;
     .info {
       display: flex;
       justify-content: center;
       align-items: center;
       gap: 3rem;
-      .shopAvatar {
-      }
-      .shopName {
-      }
     }
     .action {
       display: flex;
       flex-direction: column;
-      justify-content: space-around;
-      gap: 1rem;
+      justify-content: center;
+      gap: 2rem;
     }
   }
   .right {
     display: flex;
-    justify-content: center;
-    gap: 3rem;
-    .l {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .r {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
+    gap: 5rem;
   }
 }
