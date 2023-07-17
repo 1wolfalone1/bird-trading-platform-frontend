@@ -12,10 +12,12 @@ import SideBarFilter from "../../component/side-bar-filter/SideBarFilter";
 export default function ProductList() {
   const { shopId } = useParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(productsPresentationSlices.actions.resetAllPageNumberShopId());
     dispatch(filterByAll());
   }, []);
+
   return (
     <div className={s.container}>
       <SideBarFilter />

@@ -51,8 +51,6 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
     const [loading, setLoading] = useState(false);
     const hiddenFileRef = useRef(null);
 
-    console.log('here is an bird infor', initialValues);
-
     const validationSchema = yup.object({
         description: yup
         .string()
@@ -319,7 +317,14 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
                     </div>
                     { initialValues.description && <Box className={clsx(s.commentContent)}>
                       <span>Comment: </span>
-                    <div dangerouslySetInnerHTML={{ __html: initialValues.description }} style={{border: '1px solid #333333', padding: '10px'}}/>
+                    <div dangerouslySetInnerHTML={{ __html: initialValues.description }} 
+                          style={{border: '1px solid #333333',
+                         padding: '10px',
+                         overflow: 'hidden',
+                         wordBreak: 'break-all',
+                        }}
+                        
+                        />
                     </Box>}
                     {  listImage?.length > 0 &&
                       <Box>

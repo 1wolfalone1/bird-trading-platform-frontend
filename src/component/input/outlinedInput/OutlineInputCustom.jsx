@@ -77,7 +77,7 @@ export default function OutlineInputCustom({
     }
     
   };
-  console.log(filterObj, 'here is filter');
+
   return (
     <div className={className}>
       <TextField

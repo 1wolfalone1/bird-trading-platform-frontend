@@ -57,9 +57,7 @@ const productsPresentationSlices = createSlice({
       state.filter.ListTypeId = [];
     },
     setStar: (state, action) => {
-      console.log(action.payload.star);
       state.filter.star = action.payload.star;
-      state.filter.pageNumber = 1;
     },
     setSortDirection: (state, action) => {
       state.filter.sortPrice = action.payload.direction;
@@ -104,7 +102,7 @@ const productsPresentationSlices = createSlice({
     resetAllPageNumberShopId: (state, action) => {
       state.filter.star = 0;
       state.filter.shopId = -1;
-      state.filter.pageNumber = 1;
+      // state.filter.pageNumber = 1;
       state.filter.category = 1;
       state.filter.ListTypeId = [];
       state.typeProduct = typeProduct.BIRDS;
