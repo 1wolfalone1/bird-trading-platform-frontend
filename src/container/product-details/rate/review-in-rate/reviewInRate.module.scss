@@ -35,6 +35,9 @@
     .timeOfRating {
     }
     .content {
+      overflow: hidden;
+      word-break: break-all;
+      width: 100%;
     }
 
     .imgReview {

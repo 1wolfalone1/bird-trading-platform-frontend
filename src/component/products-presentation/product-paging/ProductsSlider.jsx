@@ -11,9 +11,9 @@ import { useState } from "react";
 
 export default function ProductsSlider({ pageNumber = 10 }) {
   const page = useSelector(pageSelector);
-  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const filterObj = useSelector(filterObjectSelector);
+  const [currentPage, setCurrentPage] = useState(1);
   const handleChange = (event, value) => {
     dispatch(
       productsPresentationSlices.actions.setPageNumber({
