@@ -6,6 +6,9 @@ export const errorAuthentication = {
   CONFLICT_GOOGLE_LOGIN: 1,
   ACCOUNT_BANNED: 2,
   LOGIN_BEFORE_ORDER: 3,
+  BANNED_STAFF: 4,
+  BANNED_SHOP: 5,
+  UNAUTHORIZED: 6
 };
 
 export const orderStatus = {

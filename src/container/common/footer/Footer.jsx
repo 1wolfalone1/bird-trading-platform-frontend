@@ -34,7 +34,7 @@ export default function Footer() {
             </div>
          </div>
          <div className={clsx(s.logo)}>
-            <img src={logo} alt="logo" />
+            <img src={'https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/Beige_Vintage_Elegant_Illustration_Bird_Logo_4.png'} alt="logo" />
          </div>
       </div>
    );

@@ -17,12 +17,12 @@ export default function ProductsPresentation() {
   const backDrop = useSelector(backDropSelector);
   const { data, page } = products;
 
-  useEffect(() => {
-    const k = async () => {
-      await dispatch(filterByAll());
-    };
-    k();
-  }, []);
+  // useEffect(() => {
+  //   const k = async () => {
+  //     await dispatch(filterByAll());
+  //   };
+  //   k();
+  // }, []);
 
   useEffect(() => {
     setLoading(!backDrop);

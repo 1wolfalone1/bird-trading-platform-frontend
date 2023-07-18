@@ -83,9 +83,6 @@ export default function Header() {
     console.log(value);
   };
 
-  const handleSearch = () => {
-    dispatch(filterByAll());
-  };
   const onFormSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -93,13 +90,17 @@ export default function Header() {
     } catch (error) {
       console.error(error);
     }
-    navigate("/products");
   };
 
   return (
     <div className={s.container}>
       <div className={s.logo}>
-        <img src={logo} alt="logo" />
+        <img
+          src={
+            "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/Beige_Vintage_Elegant_Illustration_Bird_Logo_4.png"
+          }
+          alt="logo"
+        />
       </div>
       <div className={s.navLeft}>
         <Box sx={{ width: "100%" }}>
@@ -147,6 +148,32 @@ export default function Header() {
       ) : (
         <GuestRightHeader totalCartItems={totalCartItems} />
       )}
+      {/* {
+            <Button
+               onClick={() => {
+                  const a = async () => {
+                     try {
+                        const id = [1, 2, 3, 4, 5];
+
+                        const res = await api.get("/products/id", {
+                           params: {
+                              id: [1, 2, 3, 4, 5, 7, 8],
+                              sort: 1,
+                              from: 100,
+                              to: 200
+                           }
+                        });
+                        console.log(res);
+                        const data = await res.data;
+                     } catch (err) {
+                        console.log(err);
+                     }
+                  };
+                  a();
+               }}
+            >
+            </Button>
+         } */}
     </div>
   );
 }
