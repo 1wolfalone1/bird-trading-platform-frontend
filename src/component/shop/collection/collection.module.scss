@@ -5,6 +5,8 @@
   margin: 2rem 10rem;
   .tag {
     .item {
+      display: flex;
+      justify-content: center;
       .content {
         box-shadow: 6px 6px 25px 2px gray;
         border-radius: 0.5rem;
