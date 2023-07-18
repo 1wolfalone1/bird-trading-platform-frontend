@@ -24,7 +24,13 @@ export default function BirdProperties({ product }) {
         <span style={dotStyle}></span>
         <span>
           Gender:{" "}
-          <span style={{ fontSize: "2rem", color: "#272727" }}>
+          <span
+            style={{
+              fontSize: "2.4rem",
+              color: "rgb(96, 25, 131)",
+              fontWeight: "bold",
+            }}
+          >
             {product.gender}
           </span>
         </span>
@@ -33,7 +39,13 @@ export default function BirdProperties({ product }) {
         <span style={dotStyle}></span>
         <span>
           Color:{" "}
-          <span style={{ fontSize: "2rem", color: "#272727" }}>
+          <span
+            style={{
+              fontSize: "2.4rem",
+              color: "rgb(96, 25, 131)",
+              fontWeight: "bold",
+            }}
+          >
             {product.color}
           </span>
         </span>
@@ -41,18 +53,15 @@ export default function BirdProperties({ product }) {
       <div style={headlineContainerStyle}>
         <span style={dotStyle}></span>
         <span>
-          Specie:{" "}
-          <span style={{ fontSize: "2rem", color: "#272727" }}>
-            {product.specie}
-          </span>
-        </span>
-      </div>
-      <div style={headlineContainerStyle}>
-        <span style={dotStyle}></span>
-        <span>
           Age:{" "}
-          <span style={{ fontSize: "2rem", color: "#272727" }}>
-            {product.age}
+          <span
+            style={{
+              fontSize: "2.4rem",
+              color: "rgb(96, 25, 131)",
+              fontWeight: "bold",
+            }}
+          >
+            {product.age} months
           </span>
         </span>
       </div>

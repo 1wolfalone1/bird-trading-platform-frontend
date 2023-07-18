@@ -1,5 +1,5 @@
 import { IconButton, Rating, Tooltip } from "@mui/material";
-import React, { useEffect, useId } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CartDown from "../../../asset/icons/CartDown";
@@ -20,27 +20,45 @@ export default function ProductCard({ product }) {
   const uuid = useId();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [outOfStock, setOutOfStock] = useState(false);
   const statusQuantity = useSelector(getCartStatusSelector);
+
   const handleAddToCart = async (event) => {
     event.stopPropagation();
     dispatch(globalConfigSlice.actions.changeToastStyle("add-to-cart"));
     dispatch(cartSlice.actions.addToCart({ ...product, cartQuantity: +1 }));
   };
   useEffect(() => {}, [statusQuantity]);
-  const notifyAddtoCart = (statusQuantity) => {
-    if (statusQuantity.isValid) {
-    } else {
+
+  const handleNavigate = () => {
+    if (product?.quantity > 0) {
+      navigate(`/product/${product.id}`);
     }
   };
-  
+
+  useEffect(() => {
+    if (product.quantity === 0) {
+      setOutOfStock(true);
+    }
+  }, []);
+
   return (
     <>
       <div
-        className={s.container}
-        onClick={() => navigate(`/product/${product.id}`)}
+        className={outOfStock ? s.containerError : s.container}
+        onClick={() => {
+          handleNavigate();
+        }}
       >
         <div className={s.image}>
           <img src={product.imgUrl} alt="" className={s.imageProduct} />
+          {outOfStock && (
+            <img
+              src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/soldout.png"
+              alt=""
+              className={s.outOfStockImage}
+            />
+          )}
           <div className={s.price}>
             <span>
               {product.discountRate !== 0 ? (
@@ -76,7 +94,11 @@ export default function ProductCard({ product }) {
           </div>
           <div className={s.shop}>
             <div className={s.image}>
-              <img src={product.shopOwner.imgUrl} alt="" />
+              <div className={s.image}>
+                <div className={s.image}>
+                  <img src={product.shopOwner.imgUrl} alt="" />
+                </div>
+              </div>
             </div>
             <div className={s.shopName}>
               <span>{product.shopOwner.shopName}</span>
@@ -130,18 +152,30 @@ export default function ProductCard({ product }) {
             <div className={s.rating}>
               <Rating value={product.star} sx={ratingCustomizer} readOnly />
             </div>
-            <div className={s.buttonIcon}>
-              <IconButton onClick={handleAddToCart}>
-                <CartDown />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  navigate(`/product/${product.id}`);
-                }}
-              >
-                <Details />
-              </IconButton>
-            </div>
+            {!outOfStock && (
+              <div className={s.buttonIcon}>
+                <IconButton onClick={handleAddToCart}>
+                  <CartDown />
+                </IconButton>
+                <IconButton
+                  onClick={() => {
+                    navigate(`/product/${product.id}`);
+                  }}
+                >
+                  <Details />
+                </IconButton>
+              </div>
+            )}
+            {outOfStock && (
+              <div className={s.buttonIconError}>
+                <IconButton disabled>
+                  <CartDown />
+                </IconButton>
+                <IconButton disabled>
+                  <Details />
+                </IconButton>
+              </div>
+            )}
           </div>
         </div>
       </div>

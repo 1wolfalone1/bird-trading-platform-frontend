@@ -15,7 +15,7 @@ export default function Collection() {
   const [loading, setLoading] = useState();
   const navigate = useNavigate();
   const backDrop = useSelector(backDropSelector);
-  const [product, setProduct] = useState();
+  const [tag, setTag] = useState();
   const param = useParams();
   const dispatch = useDispatch();
   console.log(param);
@@ -27,21 +27,21 @@ export default function Collection() {
   }, [backDrop]);
 
   useEffect(() => {
-    const getProducts = async () => {
+    const getTags = async () => {
       try {
         dispatch(globalConfigSlice.actions.changeBackDrops(true));
         const response = await api.get(`tags/shops/${param.id}`);
-        const product = await response.data;
-        console.log(product);
-        setProduct(product);
+        const tag = await response.data;
+        console.log(tag);
+        setTag(tag);
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
       } catch (error) {
         dispatch(globalConfigSlice.actions.changeBackDrops(false));
         console.log(error);
       }
     };
-    getProducts();
-    if (product) {
+    getTags();
+    if (tag) {
       //    const root = ReactDOM.createRoot(document.getElementById("content"));
       //    root.render();
     }
@@ -61,14 +61,14 @@ export default function Collection() {
     getCollection();
   }, []);
 
-  const handleViewAll = (tagId) => {
-    // navigate(`shop/:id/collection/:${tagId}`);
+  const handleViewAll = (tag) => {
+    navigate(`/shop/${param.id}/collection/${tag.id}`);
   };
 
   return (
     <>
       {!loading ? (
-        <div className={s.skeletonContainer}>
+        <div className={clsx(s.skeletonContainer)}>
           <div className={clsx(s.header)}>
             <Skeleton variant="rectangular" width={360} height={45} />
           </div>
@@ -88,22 +88,10 @@ export default function Collection() {
           >
             Welcome to {data?.shopInfoDto?.shopName}
           </Typography>
-          <Typography
-            variant="h4"
-            fullWidth
-            sx={{
-              color: "rgb(96, 25, 131)",
-              fontWeight: "600",
-              fontFamily: "SeoulHangang",
-              marginLeft: "10rem",
-            }}
-          >
-            Select the tag you want to find:
-          </Typography>
           <div className={clsx(s.container)}>
-            {product?.length > 0 && (
+            {tag?.length > 0 && (
               <Grid container spacing={5} className={s.tag}>
-                {product.map((tag) => (
+                {tag.map((tag) => (
                   <Grid
                     item
                     xs={4}
@@ -132,32 +120,28 @@ export default function Collection() {
                           className={clsx(s.header)}
                           sx={{
                             fontSize: "3rem",
+                            fontWeight: "600",
+                            color: "rgb(96, 25, 131)",
                           }}
                         >
-                          #{tag.name}
+                          #{tag.tag.name}
                         </Grid>
                         <Grid container spacing={2} className={clsx(s.info)}>
-                          <Grid xs={6} sm={6} lg={6} xl={6}>
-                            <Grid className={clsx(s.image)}>
-                              <img
-                                src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/7d4ab433-0c2f-4724-8154-e2f8ab332d06.png"
-                                alt=""
-                              />
+                          {tag.productTagList.map((item) => (
+                            <Grid xs={6} sm={6} lg={6} xl={6}>
+                              <Grid className={clsx(s.image)}>
+                                <img src={item.urlImg} alt="" />
+                              </Grid>
+                              <Grid className={clsx(s.name)}>{item.name}</Grid>
                             </Grid>
-                            <Grid className={clsx(s.name)}>Name products</Grid>
-                          </Grid>
-                          <Grid xs={6} sm={6} lg={6} xl={6}>
-                            <Grid className={clsx(s.image)}>
-                              <img
-                                src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/26.jpg"
-                                alt=""
-                              />
-                            </Grid>
-                            <Grid className={clsx(s.name)}>Name products</Grid>
-                          </Grid>
+                          ))}
                         </Grid>
                         <Grid className={clsx(s.viewAll)}>
-                          <Button onClick={handleViewAll(tag.id)}>
+                          <Button
+                            onClick={() => {
+                              handleViewAll(tag.tag);
+                            }}
+                          >
                             View all
                           </Button>
                         </Grid>

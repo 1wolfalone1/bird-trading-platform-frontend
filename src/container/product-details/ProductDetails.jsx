@@ -41,6 +41,8 @@ import cartSlice, {
 import ButtonChatNow from "../../component/message/button-chatnow/ButtonChatNow";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import { formatNumber } from "../../utils/myUtils";
+import FoodProperties from "./properties/FoodProperties";
+import AccessoryProperties from "./properties/AccessoryProperties";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -288,7 +290,6 @@ export default function ProductDetails({ setIsFound }) {
               sx={{ alignItems: "center" }}
               className={s.container}
             >
-              {/* <Skeleton variant="rectangular" width={"100%"} height={450} /> */}
               <Box
                 width={1275}
                 height={600}
@@ -469,7 +470,15 @@ export default function ProductDetails({ setIsFound }) {
                         <span className={s.commonProperties}>
                           Common properties:
                         </span>
-                        <BirdProperties product={product.product} />
+                        {product.product.categoryId === 1 && (
+                          <BirdProperties product={product.product} />
+                        )}
+                        {product.product.categoryId === 2 && (
+                          <FoodProperties product={product.product} />
+                        )}
+                        {product.product.categoryId === 3 && (
+                          <AccessoryProperties product={product.product} />
+                        )}
                       </div>
                     </div>
                     {!ban && (
@@ -507,31 +516,29 @@ export default function ProductDetails({ setIsFound }) {
                           </span>
                         </div>
                         <div className={s.footer}>
-                          <div className={s.buttonControl}>
-                            <Button
-                              sx={buttonAdd}
-                              color="Accent7"
-                              variant="outlined"
-                              onClick={handleAddToCart}
-                            >
-                              Add to cart{" "}
-                              <ShoppingCartCheckoutIcon
-                                sx={{
-                                  fontSize: "2.4rem",
-                                  marginLeft: "1rem",
-                                }}
-                              />
-                            </Button>
-                            <Button
-                              sx={buttonOrder}
-                              variant="contained"
-                              color="error"
-                              onClick={handleOrderNow}
-                            >
-                              {" "}
-                              Order now
-                            </Button>
-                          </div>
+                          <Button
+                            sx={buttonAdd}
+                            color="Accent7"
+                            variant="outlined"
+                            onClick={handleAddToCart}
+                          >
+                            Add to cart{" "}
+                            <ShoppingCartCheckoutIcon
+                              sx={{
+                                fontSize: "2.4rem",
+                                marginLeft: "1rem",
+                              }}
+                            />
+                          </Button>
+                          <Button
+                            sx={buttonOrder}
+                            variant="contained"
+                            color="error"
+                            onClick={handleOrderNow}
+                          >
+                            {" "}
+                            Order now
+                          </Button>
                         </div>
                       </>
                     )}
