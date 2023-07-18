@@ -94,7 +94,10 @@ export default function Voucher({ close }) {
                       </Grid>
                     </Grid>
                     <FormControlLabel
-                      disabled={total < item.minimumOrderValue}
+                      disabled={
+                        total < item.minimumOrderValue ||
+                        item.used >= item.usageLimit
+                      }
                       control={
                         <Radio
                           value={JSON.stringify(item)}
@@ -122,7 +125,9 @@ export default function Voucher({ close }) {
                 .map((item) => (
                   <div
                     className={clsx(s.containerItem, {
-                      [s.disabled]: total < item.minimumOrderValue,
+                      [s.disabled]:
+                        total < item.minimumOrderValue ||
+                        item.used >= item.usageLimit,
                     })}
                     key={item.id}
                   >
@@ -151,7 +156,10 @@ export default function Voucher({ close }) {
                       </Grid>
                     </Grid>
                     <FormControlLabel
-                      disabled={total < item.minimumOrderValue}
+                      disabled={
+                        total < item.minimumOrderValue ||
+                        item.used >= item.usageLimit
+                      }
                       control={
                         <Radio
                           value={JSON.stringify(item)}

@@ -93,6 +93,7 @@ export default function Header() {
     } catch (error) {
       console.error(error);
     }
+    navigate("/products");
   };
 
   return (

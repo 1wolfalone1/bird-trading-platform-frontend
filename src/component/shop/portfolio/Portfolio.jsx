@@ -138,9 +138,7 @@ export default function Portfolio() {
                 <Grid className={clsx(s.right)}>
                   <Grid className={clsx(s.rating)}>
                     <Grid className={clsx(s.title)}>Rating:</Grid>
-                    <Grid className={clsx(s.content)}>
-                      star{data?.rating}({data?.rating} Rating)
-                    </Grid>
+                    <Grid className={clsx(s.content)}>{data?.rating}</Grid>
                   </Grid>
                   <Grid className={clsx(s.joined)}>
                     <Grid className={clsx(s.title)}>Joined:</Grid>

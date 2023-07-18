@@ -6,6 +6,8 @@
   .tag {
     .item {
       .content {
+        box-shadow: 6px 6px 25px 2px gray;
+        border-radius: 0.5rem;
         .itemDetail {
           .header {
           }
@@ -19,7 +21,6 @@
             .name {
               font-size: 2rem;
               text-align: center;
-              // font-family: c.$Secondary;
             }
           }
           .viewAll {

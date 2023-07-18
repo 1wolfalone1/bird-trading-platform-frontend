@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FoodProperties({ product }) {
+export default function AccessoryProperties({ product }) {
   const dotStyle = {
     display: "inline-block",
     width: "0.8rem",
@@ -23,7 +23,7 @@ export default function FoodProperties({ product }) {
       <div style={headlineContainerStyle}>
         <span style={dotStyle}></span>
         <span>
-          Weight:{" "}
+          Origin:{" "}
           <span
             style={{
               fontSize: "2.4rem",
@@ -31,7 +31,7 @@ export default function FoodProperties({ product }) {
               fontWeight: "bold",
             }}
           >
-            {product.weight}g
+            {product.origin}
           </span>
         </span>
       </div>
