@@ -232,7 +232,7 @@ export default function Cart() {
             <Popup
               className="addButton"
               modal
-              trigger={<Button>Select voucher +</Button>}
+              trigger={<Button>Select Voucher +</Button>}
             >
               {(close) => <Voucher close={close} />}
             </Popup>
@@ -292,7 +292,7 @@ export default function Cart() {
           </div>
           <div className={clsx(s.totalOrders)}>
             <p className={clsx(s.bill)}>Total orders: {formatNumber(total)}</p>
-            <Button onClick={handleOrderNowClick}>Order now</Button>
+            <Button onClick={handleOrderNowClick}>Check Out</Button>
           </div>
         </div>
       ) : (

@@ -1,23 +1,26 @@
-import {
-  Badge,
-  Box,
-  Button,
-  Fade,
-  IconButton,
-  Popover,
-  Popper,
-  Typography,
-} from "@mui/material";
-import React, { Fragment } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import s from "./cartItemsPopper.module.scss";
+import { Badge, Button, IconButton, Popover } from "@mui/material";
 import clsx from "clsx";
+import React, { Fragment, useState } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import CartIcon from "../../../asset/icons/Cart";
 import { getListItemSelector } from "../../../container/order/cartSlice";
-import { useSelector } from "react-redux";
 import CartItemInPopper from "./cartItemInPopper/CartItemInPopper";
-import { useNavigate } from "react-router-dom";
+import s from "./cartItemsPopper.module.scss";
+
+const cssButton = {
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  textTransform: "none",
+  padding: "1rem 2rem",
+  backgroundColor: "rgb(178, 223, 255)",
+  color: "black",
+  "&:hover": {
+    color: "rgb(178, 223, 255)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+};
+
 export default function CartItemsPopper({ totalCartItems, setValue }) {
   const [anchorEl, setAnchorEl] = useState();
   const cartItems = useSelector(getListItemSelector);
@@ -64,7 +67,7 @@ export default function CartItemsPopper({ totalCartItems, setValue }) {
             <div>
               <div className={s.container}>
                 <div className={s.titleCartItem}>
-                  <span>Your cart</span>
+                  <span>Your Cart</span>
                 </div>
                 <div className={s.itemContainer}>
                   {cartItems.map((item, id) => {
@@ -92,8 +95,9 @@ export default function CartItemsPopper({ totalCartItems, setValue }) {
                     navigate("/cart");
                     handleClose();
                   }}
+                  sx={cssButton}
                 >
-                  Order now
+                  View My Cart
                 </Button>
               </div>
             </div>

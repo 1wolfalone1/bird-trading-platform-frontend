@@ -24,7 +24,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import SockJS from "sockjs-client";
 import { over } from "stompjs";
-import messageSlice, { getListMessageOlder, getListUser, getTotalUnread, messageSelector } from "./messageSlice";
+import messageSlice, {
+  getListMessageOlder,
+  getListUser,
+  getTotalUnread,
+  messageSelector,
+} from "./messageSlice";
 import moment from "moment";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -63,23 +68,23 @@ const PopupMessage = () => {
 
   const useEffectRun = useRef(false);
 
-  useEffect( () => {
-    connect(status); 
-  }, [status]); 
+  useEffect(() => {
+    connect(status);
+  }, [status]);
 
   // useEffect(() => {
   //   // handleReadMessage();
   //   dispatch(getTotalUnread());
   // }, [numRead]);
 
-  useEffect( () => {
+  useEffect(() => {
     refreshUnread();
-  },[info])
+  }, [info]);
 
   useEffect(() => {
-      handleMessageArrive(message, open, currentShopIDSelect);
-      dispatch(messageSlice.actions.increaseNumberUnread());
-      handleNewMessage(" ");
+    handleMessageArrive(message, open, currentShopIDSelect);
+    dispatch(messageSlice.actions.increaseNumberUnread());
+    handleNewMessage(" ");
   }, [message]);
 
   useEffect(() => {
@@ -115,14 +120,14 @@ const PopupMessage = () => {
   const onPrivateMessage = (payload) => {
     const message = JSON.parse(payload.body);
     setMessage(message);
-  }
+  };
   // end socket
 
   const refreshUnread = async () => {
-      if(info?.id != null) {
-        const res = await dispatch(getTotalUnread());
-        setUnread(res.payload?.totalUnread);
-      }
+    if (info?.id != null) {
+      const res = await dispatch(getTotalUnread());
+      setUnread(res.payload?.totalUnread);
+    }
   };
 
   const handleClick = (event) => {
@@ -155,14 +160,13 @@ const PopupMessage = () => {
         })
       );
       const shop = {
-        id: message.shopID
+        id: message.shopID,
       };
-      dispatch(messageSlice.actions.addShopIntoUserList({shop: shop}));
+      dispatch(messageSlice.actions.addShopIntoUserList({ shop: shop }));
     } else {
       setUnread(numberUnread);
     }
   };
-
 
   //audio when have new message
   const handleNewMessage = (message) => {

@@ -30,7 +30,8 @@ const buttonRegisterStyle = {
   textTransform: "none",
   fontSize: "3rem",
   width: "100%",
-  padding: "1rem",
+  padding: "0.64rem",
+  fontFamily: "SeoulHangang",
 };
 
 const formHelperText = {

@@ -7,7 +7,7 @@
     .item {
       .content {
         box-shadow: 6px 6px 25px 2px gray;
-        border-radius: 0.5rem;
+        border-radius: 0.8rem;
         .itemDetail {
           .header {
           }
@@ -25,18 +25,7 @@
           }
           .viewAll {
             Button {
-              border: 1px solid rgba(0, 0, 0, 0.5);
-              font-size: 1.8rem;
-              font-family: c.$Secondary;
-              padding: 0.6rem 1.2rem;
-              text-transform: none;
-              color: c.$Dominant4;
-              background-color: c.$Complementary5;
-              &:hover {
-                border: 1px solid rgba(0, 0, 0, 0.5);
-                color: c.$Accent7;
-                background-color: c.$Dominant2;
-              }
+              @include c.f-button();
             }
           }
         }
