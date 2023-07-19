@@ -1,54 +1,28 @@
-import s from "./header.module.scss";
-import logo from "../../../asset/logo=light.svg";
-import {
-  Badge,
-  Box,
-  Button,
-  IconButton,
-  MenuItem,
-  Select,
-  Tab,
-  Tabs,
-} from "@mui/material";
-import Style from "./../../../style/inline-style/style";
-import clsx from "clsx";
-import styled from "@emotion/styled";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faCartShopping,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { useLocation, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, IconButton, Tab, Tabs } from "@mui/material";
+import clsx from "clsx";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { totalItemsSelector, userStatus } from "../../order/cartSlice";
-import GuestRightHeader from "./guest-right-header/GuestRightHeader";
-import { userInfoSelector } from "./../../../redux/global/userInfoSlice";
-import UserRightHeader from "./user-right-header/UserRightHeader";
-import { toast } from "react-toastify";
-import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
-import { birdApi } from "../../../api/server/products/BirdsAPI";
+import { useLocation, useNavigate } from "react-router-dom";
+import productsPresentationSlices, {
+  filterByAll,
+  filterObjectSelector,
+} from "../../../component/products-presentation/productsPresentationSlice";
 import globalConfigSlice, {
   navigateValueSelector,
 } from "../../../redux/global/globalConfigSlice";
-import { Suspense } from "react";
-import { api } from "../../../api/server/API";
-import productsPresentationSlices, {
-  filterObjectSelector,
-} from "../../../component/products-presentation/productsPresentationSlice";
-import { filterByAll } from "../../../component/products-presentation/productsPresentationSlice";
+import { totalItemsSelector, userStatus } from "../../order/cartSlice";
+import { userInfoSelector } from "./../../../redux/global/userInfoSlice";
+import Style from "./../../../style/inline-style/style";
+import GuestRightHeader from "./guest-right-header/GuestRightHeader";
+import s from "./header.module.scss";
+import UserRightHeader from "./user-right-header/UserRightHeader";
 library.add(faCartShopping);
-const buttonStyle = {
-  fontSize: "3.8rem",
-  color: Style.color.$Dominant1,
-  fontFamily: Style.font.$Secondary,
-  fontWeight: 100,
-  padding: "1.5rem 1rem",
-  lineHeight: "100%",
-  textTransform: "none",
-};
 
 export default function Header() {
   const location = useLocation();
@@ -90,6 +64,7 @@ export default function Header() {
     } catch (error) {
       console.error(error);
     }
+    navigate("/products");
   };
 
   return (
