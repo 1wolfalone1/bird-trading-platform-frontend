@@ -27,7 +27,8 @@ const menuItemStyle = {
 };
 const typoItemMenu = {
   fontSize: "2.4rem",
-  fontWeight: "1",
+  fontWeight: "bold",
+  fontFamily: "SeoulHangang",
 };
 export default function UserRightHeader({ user, totalCartItems }) {
   const [isActive, setIsActive] = React.useState(false);
@@ -156,14 +157,14 @@ export default function UserRightHeader({ user, totalCartItems }) {
           <Divider className={clsx(s.divider)} />
           <MenuItem onClick={handleNavigateToShop}>
             <Box sx={menuItemStyle}>
-              <Typography sx={typoItemMenu}>Your shop</Typography>
+              <Typography sx={typoItemMenu}>My Shop</Typography>
               <FontAwesomeIcon icon={faShop} className={s.iconMenu} />
             </Box>
           </MenuItem>
           <Divider className={clsx(s.divider)} />
           <MenuItem onClick={handleNavigateToOrderHistory("/order-history")}>
             <Box sx={menuItemStyle}>
-              <Typography sx={typoItemMenu}>Order History</Typography>
+              <Typography sx={typoItemMenu}>My Purchase</Typography>
               <FontAwesomeIcon icon={faBoxOpen} className={s.iconMenu} />
             </Box>
           </MenuItem>

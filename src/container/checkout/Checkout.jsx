@@ -207,7 +207,7 @@ export default function Checkout() {
                 style={{ opacity: handleCheckout() ? 0.5 : 1 }}
                 onClick={handleOpen}
               >
-                Check out
+                Place Order
               </Button>
 
               <Modal

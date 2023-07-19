@@ -89,7 +89,7 @@ export default function Collection() {
             Welcome to {data?.shopInfoDto?.shopName}
           </Typography>
           <div className={clsx(s.container)}>
-            {tag?.length > 0 && (
+            {tag?.length > 0 ? (
               <Grid container spacing={5} className={s.tag}>
                 {tag.map((tag) => (
                   <Grid
@@ -150,6 +150,16 @@ export default function Collection() {
                   </Grid>
                 ))}
               </Grid>
+            ) : (
+              <div
+                style={{
+                  color: "red",
+                  fontSize: "3.6rem",
+                  margin: "5rem auto",
+                }}
+              >
+                There're no tags here!
+              </div>
             )}
           </div>
         </Box>
