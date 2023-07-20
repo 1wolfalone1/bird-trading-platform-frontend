@@ -21,6 +21,7 @@ export default function ButtonControl({ setListSlected, isType }) {
   };
 
   const handleFind = () => {
+    dispatch(productsPresentationSlices.actions.setPageNumber({pageNumber: 1}));
     dispatch(filterByAll());
   };
 
