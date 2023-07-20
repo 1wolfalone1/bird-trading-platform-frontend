@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { backDropSelector } from "../../../redux/global/globalConfigSlice";
 
 const cssButton = {
-  border: "1px solid #000000",
+  border: "1px solid rgba(0, 0, 0, 0.5)",
   padding: "0.5rem 3rem",
   fontSize: "2.4rem",
   fontFamily: "SeoulHangang",
@@ -96,7 +96,7 @@ export default function ShopOverview() {
                       ButtonOrIcon={Button}
                       shop={shopInfo}
                       css={cssButton}
-                      text={"Chat now"}
+                      text={"Chat Now"}
                     />
                   </Grid>
                 </Grid>
@@ -123,9 +123,7 @@ export default function ShopOverview() {
             <Grid className={clsx(s.right)}>
               <Grid className={clsx(s.rating)}>
                 <Grid className={clsx(s.title)}>Rating:</Grid>
-                <Grid className={clsx(s.content)}>
-                  star{data?.rating}({data?.rating} Rating)
-                </Grid>
+                <Grid className={clsx(s.content)}>{data?.rating}</Grid>
               </Grid>
               <Grid className={clsx(s.joined)}>
                 <Grid className={clsx(s.title)}>Joined:</Grid>

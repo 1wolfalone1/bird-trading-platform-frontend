@@ -31,6 +31,8 @@ import ProductPageRoute from "./routes/ProductPageRoute";
 import "./style/fontLoader.scss";
 import Collection from "./component/shop/collection/Collection";
 import Portfolio from "./component/shop/portfolio/Portfolio";
+import Error from "./container/error/Error";
+import Tag from "./component/shop/collection/tag/Tag";
 
 function App() {
   const cart = useSelector(getCartSelector);
@@ -70,12 +72,13 @@ function App() {
         <Route path="create-shop" element={<CreateShop />} />
         <Route path="shop/:id" element={<Shop />} />
         <Route path="shop/:id/collection" element={<Collection />} />
-        <Route path="shop/:id/collection/:tagId" element={<Collection />} />
+        <Route path="shop/:id/collection/:tagId" element={<Tag />} />
         <Route path="shop/:id/portfolio" element={<Portfolio />} />
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="verify-code" element={<VerifyCode />} />
         <Route path="reset-password" element={<ResetPassword />} />
         <Route path="verify-code-sign-up" element={<VerifyCodeSignUp />} />
+        <Route path="error" element={<Error />} />
       </Route>
     </Routes>
   );

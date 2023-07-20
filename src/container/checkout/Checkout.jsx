@@ -40,6 +40,7 @@ const payment = [
     name: "Delivery",
   },
 ];
+
 const lib = ["places"];
 export default function Checkout() {
   const { isLoaded } = useJsApiLoader({
@@ -116,7 +117,7 @@ export default function Checkout() {
             navigate("/order-history");
           })
           .catch((error) => {
-            console.error(error, "error paypal");
+            console.error(error, "Error payment with PayPal");
           });
       }
     }
@@ -201,35 +202,14 @@ export default function Checkout() {
               promotion={total?.promotionFee}
             />
             <div className={clsx(s.orderButton)}>
-              {/* <Popup
-                className="addButton"
-                modal
-                closeOnDocumentClick={false}
-                trigger={
-                  <Button
-                    disabled={handleCheckout()}
-                    style={{ opacity: handleCheckout() ? 0.8 : 1 }}
-                  >
-                    Check out
-                  </Button>
-                }
-              >
-                {(close) => (
-                  <OrderBill
-                    close={close}
-                    listShopOwnersItems={listShopOwnersItems}
-                    deliveryInfo={deliveryInfo}
-                  />
-                )}
-              </Popup> */}
-
               <Button
                 disabled={handleCheckout()}
                 style={{ opacity: handleCheckout() ? 0.5 : 1 }}
                 onClick={handleOpen}
               >
-                Check out
+                Place Order
               </Button>
+
               <Modal
                 open={open}
                 onClose={handleClose}

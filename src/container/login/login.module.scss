@@ -19,6 +19,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    font-family: c.$Secondary;
     padding: 0px 8rem;
     align-items: center;
     /* Inside auto layout */
@@ -59,8 +60,10 @@
     }
   }
   .separate {
-    font-size: 3.2rem;
-    padding-bottom: 1rem;
+    span {
+      font-size: 3rem;
+      font-family: c.$Secondary;
+    }
   }
 
   .helpGooleText {
@@ -74,12 +77,13 @@
   .linkBottom {
     color: c.$Complementary2;
     font-size: 2.4rem;
+    font-family: c.$Secondary;
     padding: 1rem;
+    .link {
+      color: rgb(85, 26, 139);
+    }
   }
   .forgotPassword {
-    // color: c.$Complementary2;
-    // font-size: 2.4rem;
-    // padding: 1rem;
     Button {
       @include c.f-button(0 1rem, c.$Accent7, c.$Dominant2);
       border: none;

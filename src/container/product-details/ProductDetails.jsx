@@ -41,6 +41,8 @@ import cartSlice, {
 import ButtonChatNow from "../../component/message/button-chatnow/ButtonChatNow";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import { formatNumber } from "../../utils/myUtils";
+import FoodProperties from "./properties/FoodProperties";
+import AccessoryProperties from "./properties/AccessoryProperties";
 
 const quantityControlStatus = {
   DECREASE: -1,
@@ -56,15 +58,34 @@ function mapObjects(source, target) {
   return target;
 }
 
-const cssButton = {
-  border: "1px solid #000000",
-  padding: "0.5rem 1.5rem",
-  fontSize: "2rem",
+const cssButton1 = {
+  border: "1px solid rgba(0, 0, 0, 0.5)",
+  padding: "1rem 2rem",
+  fontSize: "2.2rem",
   textTransform: "none",
-  fontFamily: "SeoulHangang",
   color: "rgb(255, 255, 255)",
   backgroundColor: "rgb(94, 94, 94)",
-  "&:hover": { color: "rgb(4, 0, 30)" },
+  "&:hover": {
+    color: "rgb(4, 0, 30)",
+    border: "1px solid rgba(0, 0, 0, 0.5)",
+  },
+};
+
+const cssButton2 = {
+  fontSize: "2.4rem",
+  fontFamily: Style.font.$Secondary,
+  border: "1px solid rgba(0, 0, 0, 0.5)",
+  textTransform: "none",
+  padding: "1rem 2rem",
+  marginLeft: "2rem",
+  backgroundColor: "rgb(178, 223, 255)",
+  color: "black",
+  fontWeight: "800",
+  "&:hover": {
+    border: "1px solid rgba(0, 0, 0, 0.5)",
+    color: "rgb(178, 223, 255)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
 };
 
 export default function ProductDetails({ setIsFound }) {
@@ -81,40 +102,6 @@ export default function ProductDetails({ setIsFound }) {
   const [firstCall, setFirstCall] = useState(true);
   const { status } = useSelector(userInfoSelector);
   const [ban, setBan] = useState(false);
-
-  const buttonOrder = {
-    fontSize: "2.4rem",
-    fontFamily: Style.font.$Secondary,
-    border: "1px solid rgba(0, 0, 0, 0.5)",
-    textTransform: "none",
-    padding: "1rem 2rem",
-    marginLeft: "2rem",
-    backgroundColor: "rgb(178, 223, 255)",
-    fontWeight: "800",
-    color: "black",
-    "&:hover": {
-      border: "1px solid rgba(0, 0, 0, 0.5)",
-      color: "rgb(178, 223, 255)",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-  };
-
-  const buttonAdd = {
-    fontSize: "2.4rem",
-    fontFamily: Style.font.$Secondary,
-    border: "1px solid rgba(0, 0, 0, 0.5)",
-    textTransform: "none",
-    padding: "1rem 2rem",
-    marginLeft: "2rem",
-    backgroundColor: "rgb(178, 223, 255)",
-    color: "black",
-    fontWeight: "800",
-    "&:hover": {
-      border: "1px solid rgba(0, 0, 0, 0.5)",
-      color: "rgb(178, 223, 255)",
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-    },
-  };
 
   const notifyWarningAddtoCart = (message) =>
     toast(<AddToCartToast type={toastType.WARNING} msg={message} />, {
@@ -260,18 +247,7 @@ export default function ProductDetails({ setIsFound }) {
   };
   // const root = ReactDOM.createRoot(document.getElementById("content"));
   // root.render(element);
-  const cssButton = {
-    border: "1px solid rgba(0, 0, 0, 0.5)",
-    padding: "1rem 2rem",
-    fontSize: "2.2rem",
-    textTransform: "none",
-    color: "rgb(255, 255, 255)",
-    backgroundColor: "rgb(94, 94, 94)",
-    "&:hover": {
-      color: "rgb(4, 0, 30)",
-      border: "1px solid rgba(0, 0, 0, 0.5)",
-    },
-  };
+
   useEffect(() => {
     setTimeout(() => {
       setLoading(!backDrop);
@@ -288,7 +264,6 @@ export default function ProductDetails({ setIsFound }) {
               sx={{ alignItems: "center" }}
               className={s.container}
             >
-              {/* <Skeleton variant="rectangular" width={"100%"} height={450} /> */}
               <Box
                 width={1275}
                 height={600}
@@ -379,7 +354,7 @@ export default function ProductDetails({ setIsFound }) {
                         precision={0.5}
                       />
                       <Divider orientation="vertical" color="error" />
-                      <span> {product.numberReview} review</span>
+                      <span> {product.numberReview} reviews</span>
                     </div>
                     <div className={s.mainContent}>
                       <div className={s.price}>
@@ -426,17 +401,17 @@ export default function ProductDetails({ setIsFound }) {
                                   <ButtonChatNow
                                     ButtonOrIcon={Button}
                                     shop={product.product.shopOwner}
-                                    css={cssButton}
-                                    text={"Chat now"}
+                                    css={cssButton1}
+                                    text={"Chat Now"}
                                   />
                                 </div>
                                 <div className={clsx(s.viewShop)}>
                                   <Button
-                                    sx={cssButton}
+                                    sx={cssButton1}
                                     onClick={handleViewShop}
                                     shop={product.product.shopOwner}
                                   >
-                                    View shop
+                                    View Shop
                                   </Button>
                                 </div>
                               </div>
@@ -469,7 +444,15 @@ export default function ProductDetails({ setIsFound }) {
                         <span className={s.commonProperties}>
                           Common properties:
                         </span>
-                        <BirdProperties product={product.product} />
+                        {product.product.categoryId === 1 && (
+                          <BirdProperties product={product.product} />
+                        )}
+                        {product.product.categoryId === 2 && (
+                          <FoodProperties product={product.product} />
+                        )}
+                        {product.product.categoryId === 3 && (
+                          <AccessoryProperties product={product.product} />
+                        )}
                       </div>
                     </div>
                     {!ban && (
@@ -507,31 +490,29 @@ export default function ProductDetails({ setIsFound }) {
                           </span>
                         </div>
                         <div className={s.footer}>
-                          <div className={s.buttonControl}>
-                            <Button
-                              sx={buttonAdd}
-                              color="Accent7"
-                              variant="outlined"
-                              onClick={handleAddToCart}
-                            >
-                              Add to cart{" "}
-                              <ShoppingCartCheckoutIcon
-                                sx={{
-                                  fontSize: "2.4rem",
-                                  marginLeft: "1rem",
-                                }}
-                              />
-                            </Button>
-                            <Button
-                              sx={buttonOrder}
-                              variant="contained"
-                              color="error"
-                              onClick={handleOrderNow}
-                            >
-                              {" "}
-                              Order now
-                            </Button>
-                          </div>
+                          <Button
+                            sx={cssButton2}
+                            color="Accent7"
+                            variant="outlined"
+                            onClick={handleAddToCart}
+                          >
+                            Add To Cart{" "}
+                            <ShoppingCartCheckoutIcon
+                              sx={{
+                                fontSize: "2.4rem",
+                                marginLeft: "1rem",
+                              }}
+                            />
+                          </Button>
+                          <Button
+                            sx={cssButton2}
+                            variant="contained"
+                            color="error"
+                            onClick={handleOrderNow}
+                          >
+                            {" "}
+                            Order Now
+                          </Button>
                         </div>
                       </>
                     )}

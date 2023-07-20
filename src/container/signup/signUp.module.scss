@@ -56,11 +56,15 @@
   }
 
   .separate {
-    font-size: 3rem;
-    padding: 0.8rem;
+    padding: 0.5rem;
+    span {
+      font-size: 3rem;
+      font-family: c.$Secondary;
+    }
   }
 
   .linkBottom {
+    font-family: c.$Secondary;
     color: c.$Complementary2;
     font-size: 2.4rem;
     margin-bottom: 5rem;
