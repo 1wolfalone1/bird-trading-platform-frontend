@@ -150,7 +150,7 @@ const MessageContent = () => {
               isSubmitting,
               /* and other goodies */
             }) => (
-              <Form className={clsx(s.wrapperInputSend)}>
+              <Form className={clsx(s.wrapperInputSend)} autocomplete="off" >
                  <div className={clsx(s.inputBox)}>
                     <Input className={clsx(s.inputSend)} placeholder='Enter message here'
                       name='content'
@@ -158,7 +158,7 @@ const MessageContent = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.content}
-                      autoComplete="new-password"
+                      autocomplete="off"
                     />
                   </div>
                   <Button type='submit' disabled={currentShopIDSelect === 0} ><Send className={clsx(s.sendIcon)}></Send></Button>
