@@ -51,7 +51,9 @@ export default function Order({ order }) {
                 id={item?.productId}
                 name={item?.productName}
                 image={item?.imgUrl}
-                quantity={item?.quantity}
+                quantity={item?.quantity.toLocaleString({
+                  minimumFractionDigits: 0,
+                })}
                 price={formatNumber(item.quantity * item.price)}
               />
             </div>
