@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
 import productsPresentationSlices, {
-  filterObjectSelector, productsPresentationSlicesSelector,
+  filterObjectSelector,
+  productsPresentationSlicesSelector,
 } from "../../products-presentation/productsPresentationSlice";
 import { useEffect } from "react";
 
@@ -20,24 +21,25 @@ export default function OutlineInputCustom({
 
   const filterObj = useSelector(filterObjectSelector);
 
-  const {isResetPrice} = useSelector(productsPresentationSlicesSelector)
+  const { isResetPrice } = useSelector(productsPresentationSlicesSelector);
 
-  const [number, setNumber] = useState(lower ? filterObj.lowestPrice : filterObj.highestPrice);
+  const [number, setNumber] = useState(
+    lower ? filterObj.lowestPrice : filterObj.highestPrice
+  );
 
-  useEffect( () => {
+  useEffect(() => {
     setNumber(0);
-  },[isResetPrice])
+  }, [isResetPrice]);
 
   const handleLowestPrice = (event) => {
     const { name, value } = event.target;
-    console.log('here is value', value);
-    if (lower) {         
+    console.log("here is value", value);
+    if (lower) {
       if (value > 10000) {
-        
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be more than 4 digits!"}
+            msg={"Value cannot be more than 5 digits!"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
@@ -58,7 +60,7 @@ export default function OutlineInputCustom({
         toast(
           <AddToCartToast
             type={toastType.WARNING_INPUT}
-            msg={"Value cannot be more than 6 digits!"}
+            msg={"Value cannot be more than 7 digits!"}
           />,
           {
             position: toast.POSITION.TOP_RIGHT,
@@ -75,7 +77,6 @@ export default function OutlineInputCustom({
         );
       }
     }
-    
   };
 
   return (

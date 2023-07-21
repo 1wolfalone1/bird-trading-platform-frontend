@@ -160,7 +160,9 @@ export default function OrderBill({
                           </Box>
                         </Grid>
                         <Grid sm={2} md={2} xl={2} className={clsx(s.quantity)}>
-                          {product.cartQuantity}
+                          {product.cartQuantity.toLocaleString({
+                            minimumFractionDigits: 0,
+                          })}
                         </Grid>
                         <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
                           {formatNumber(
@@ -201,7 +203,9 @@ export default function OrderBill({
                           </Box>
                         </Grid>
                         <Grid sm={2} md={2} xl={2} className={clsx(s.quantity)}>
-                          {product.cartQuantity}
+                          {product.cartQuantity.toLocaleString({
+                            minimumFractionDigits: 0,
+                          })}
                         </Grid>
                         <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
                           {formatNumber(

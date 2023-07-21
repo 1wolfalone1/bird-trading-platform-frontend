@@ -345,7 +345,12 @@ export default function ProductDetails({ setIsFound }) {
                       <span>{product.product.name}</span>
                     </div>
                     <div className={s.metric}>
-                      <span>{product.numberSold} sold</span>
+                      <span>
+                        {product.numberSold.toLocaleString({
+                          minimumFractionDigits: 0,
+                        })}{" "}
+                        sold
+                      </span>
                       <Divider orientation="vertical" color="error" />
                       <span>{product.product.star}</span>
                       <Rating
@@ -354,7 +359,13 @@ export default function ProductDetails({ setIsFound }) {
                         precision={0.5}
                       />
                       <Divider orientation="vertical" color="error" />
-                      <span> {product.numberReview} reviews</span>
+                      <span>
+                        {" "}
+                        {product.numberReview.toLocaleString({
+                          minimumFractionDigits: 0,
+                        })}{" "}
+                        reviews
+                      </span>
                     </div>
                     <div className={s.mainContent}>
                       <div className={s.price}>
@@ -469,7 +480,9 @@ export default function ProductDetails({ setIsFound }) {
                               <RemoveCircleIcon sx={{ fontSize: "3rem" }} />
                             </IconButton>
                             <input
-                              value={quantity}
+                              value={quantity.toLocaleString({
+                                minimumFractionDigits: 0,
+                              })}
                               min={1}
                               max={product.product.quantity}
                               onChange={handleQuantityChange(
@@ -486,7 +499,10 @@ export default function ProductDetails({ setIsFound }) {
                             </IconButton>
                           </div>
                           <span className={s.stock}>
-                            {product.product.quantity} in stocks
+                            {product.product.quantity.toLocaleString({
+                              minimumFractionDigits: 0,
+                            })}{" "}
+                            in stocks
                           </span>
                         </div>
                         <div className={s.footer}>

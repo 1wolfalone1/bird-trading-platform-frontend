@@ -85,7 +85,10 @@ export default function ProductCard({ product }) {
             <></>
           )}
           <div className={s.quantity}>
-            <span>{product.quantity} in stock</span>
+            <span>
+              {product.quantity.toLocaleString({ minimumFractionDigits: 0 })} in
+              stock
+            </span>
           </div>
         </div>
         <div className={s.content}>
@@ -150,7 +153,14 @@ export default function ProductCard({ product }) {
           </div>
           <div className={s.controlBottom}>
             <div className={s.rating}>
-              <Rating value={product.star} sx={ratingCustomizer} readOnly />
+              <Rating
+                name="simple-controlled"
+                value={product.star}
+                precision={0.5}
+                size="medium"
+                readOnly
+                sx={ratingCustomizer}
+              />
             </div>
             {!outOfStock && (
               <div className={s.buttonIcon}>
