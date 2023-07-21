@@ -114,6 +114,7 @@ export default function SideBarFilter() {
     dispatch(
       productsPresentationSlices.actions.setStar({ key: "", star: star })
     );
+    dispatch(productsPresentationSlices.actions.setPageNumber({pageNumber: 1}));
     dispatch(filterByAll());
   };
 

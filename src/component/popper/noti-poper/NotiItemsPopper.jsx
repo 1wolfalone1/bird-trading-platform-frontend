@@ -68,7 +68,6 @@ const NotiItemsPopper = () => {
       );
       dispatch(getListNotification(newPage));
       // dispatch(getListNotification(newPage))
-      console.log("hiiii");
     }
   };
 
