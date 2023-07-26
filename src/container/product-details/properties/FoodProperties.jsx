@@ -31,7 +31,7 @@ export default function FoodProperties({ product }) {
               fontWeight: "bold",
             }}
           >
-            {product.weight}g
+            {product.weight.toLocaleString({ minimumFractionDigits: 0 })}g
           </span>
         </span>
       </div>

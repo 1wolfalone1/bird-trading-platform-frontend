@@ -25,7 +25,10 @@ export default function CartItemInPopper({ item, className }) {
         </div>
         <div className={s.right}>
           <div className={s.price}>
-            {formatNumber(item.discountedPrice)} x {item.cartQuantity}
+            {formatNumber(item.discountedPrice)} x{" "}
+            {item.cartQuantity.toLocaleString({
+              minimumFractionDigits: 0,
+            })}
           </div>
           <div className={s.remove}>
             <IconButton

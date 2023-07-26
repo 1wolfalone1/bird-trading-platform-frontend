@@ -3,12 +3,11 @@ import ProductsSlider from "./product-paging/ProductsSlider";
 import Products from "./products/Products";
 import s from "./productsPresentation.module.scss";
 
+import { Skeleton, Stack } from "@mui/material";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { filterByAll } from "./productsPresentationSlice";
-import { getProducts } from "./productsSelector";
 import { backDropSelector } from "../../redux/global/globalConfigSlice";
-import { Skeleton, Stack } from "@mui/material";
+import { getProducts } from "./productsSelector";
 
 export default function ProductsPresentation() {
   const dispatch = useDispatch();

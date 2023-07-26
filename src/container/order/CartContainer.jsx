@@ -73,7 +73,13 @@ export default function Cart() {
     <>
       {carts.length > 0 ? (
         <div className={s.container}>
-          <p>Your cart have {carts.length} items</p>
+          <p>
+            Your cart have{" "}
+            {carts.length.toLocaleString({
+              minimumFractionDigits: 0,
+            })}{" "}
+            items
+          </p>
           <Grid className={clsx(s.birdList)}>
             <Grid className={clsx(s.header)}>
               <Grid container columns={9}>
@@ -128,7 +134,9 @@ export default function Cart() {
                     </div>
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
-                    {item.quantity}
+                    {item.quantity.toLocaleString({
+                      minimumFractionDigits: 0,
+                    })}
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
                     {formatNumber(item.discountedPrice)}
@@ -168,7 +176,9 @@ export default function Cart() {
                         />
                       </IconButton>
                       <TextField
-                        value={item.cartQuantity}
+                        value={item.cartQuantity.toLocaleString({
+                          minimumFractionDigits: 0,
+                        })}
                         onChange={handleChangeQuantity(item)}
                         sx={{
                           input: {
