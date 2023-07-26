@@ -67,7 +67,7 @@ export default function Products({ products, deliveryInfo, isLoaded }) {
          orderSlice.actions.updateItemsByShop({
             totalShopPrice: isNaN(fix2(totalShop)) ? +0 : fix2(totalShop),
             shippingFee: isNaN(fix2(shipPrice)) ? +0 : fix2(shipPrice),
-            distance: distance ? distance / 1000 : -1,
+            distance: distance || distance === 0 ? distance / 1000 : -1,
             shopId: products[0].shopOwner.id,
             listItems: listShopItems,
          })
