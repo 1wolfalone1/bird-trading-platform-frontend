@@ -78,7 +78,12 @@ export default function Voucher({ close }) {
                           Name: {item.name}
                         </Grid>
                         <Grid className={clsx(s.voucherDescription)}>
-                          Description: {item.description}
+                          Description:
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: item.description,
+                            }}
+                          />
                         </Grid>
                         <Grid className={clsx(s.voucherExpiration)}>
                           Valid Till:{" "}
@@ -137,7 +142,12 @@ export default function Voucher({ close }) {
                           Name: {item.name}
                         </Grid>
                         <Grid className={clsx(s.voucherDescription)}>
-                          Description: {item.description}
+                          Description:
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: item.description,
+                            }}
+                          />
                         </Grid>
                         <Grid className={clsx(s.voucherDiscount)}>
                           Discount: -{formatNumber(item.discount)}
