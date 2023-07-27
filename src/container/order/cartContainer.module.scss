@@ -9,7 +9,7 @@ $fz: 3rem;
   p {
     font-family: c.$Secondary;
     text-align: center;
-    font-size: 3rem;
+    font-size: 3.2rem;
     font-weight: bold;
   }
   .birdList {
@@ -32,7 +32,7 @@ $fz: 3rem;
       .container {
         background-color: c.$Complementary4;
         color: c.$Dominant2;
-        margin: 1rem 0;
+        margin: 2rem 0;
         display: flex;
         box-sizing: border-box !important;
         .item {
@@ -51,7 +51,7 @@ $fz: 3rem;
               align-items: flex-start;
               justify-content: center;
               font-size: 2.4rem;
-
+              color: c.$Accent1;
               .shopName {
                 font-size: 1.7rem;
               }
@@ -115,9 +115,9 @@ $fz: 3rem;
       padding-top: 1rem;
       font-size: $fz;
     }
-    Button {
-      @include c.f-button(1rem 3rem);
-    }
+    // Button {
+    //   @include c.f-button(1rem 3rem);
+    // }
   }
 }
 .modal {
