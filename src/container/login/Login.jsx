@@ -391,20 +391,6 @@ export default function Login() {
             </div>
           </form>
         )}
-        {/* <div className={clsx(s.separate)}>
-          <span>Or</span>
-        </div>
-        <div>
-          <ButtonGoogle content={"Sign in with Google"} onClick={() => {}} />
-
-          <div className={clsx(s.helpGooleText)}>
-            {loginGoogleStatus ? (
-              <span>{loginGoogleStatus}</span>
-            ) : (
-              loginGoogleStatus
-            )}
-          </div>
-        </div> */}
         <Box display="flex" alignItems="end">
           <Typography
             sx={{
@@ -426,15 +412,6 @@ export default function Login() {
             size="medium"
           />{" "}
         </Box>
-        {/* <div className={clsx(s.linkBottom)}>
-          Don't have an account yet?{" "}
-          <Link to="/sign-up" className={clsx(s.link)}>
-            Sign Up
-          </Link>
-        </div>
-        <div className={clsx(s.forgotPassword)}>
-          <Button onClick={handleSubmit}>Forgot Password?</Button>
-        </div> */}
       </div>
     </div>
   );
