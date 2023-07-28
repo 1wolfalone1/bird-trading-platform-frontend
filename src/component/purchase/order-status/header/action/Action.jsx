@@ -37,7 +37,7 @@ export default function Action({
       "days"
     );
     const currentDate = moment();
-    if (currentDate.isAfter(dateAfterOrderSeventDay)) return true;
+    // if (currentDate.isAfter(dateAfterOrderSeventDay)) return true;
     if (status !== "DELIVERED") return true;
   };
 
