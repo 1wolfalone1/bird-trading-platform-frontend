@@ -15,6 +15,7 @@ export default function OutlineInputCustom({
   color = "primary",
   label,
   lower,
+  setValueRating
 }) {
   const dispatch = useDispatch();
 
@@ -29,6 +30,7 @@ export default function OutlineInputCustom({
   },[isResetPrice])
 
   const handleLowestPrice = (event) => {
+    setValueRating(0);
     const { name, value } = event.target;
     console.log('here is value', value);
     if (lower) {         
