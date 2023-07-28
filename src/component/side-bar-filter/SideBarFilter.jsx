@@ -76,6 +76,8 @@ export default function SideBarFilter() {
 
   const [typeTextValue, setTypeTextValue] = useState("...");
 
+  const [valueRating, setValueRating] = useState(filterObj?.star);
+
   useEffect(() => {
     if (listSlected.length > 0) {
       const textValue = listSlected.map((a) => a.name).join(", ");
@@ -90,7 +92,12 @@ export default function SideBarFilter() {
     setListSlected([]);
   }, [getCategory]);
 
+  useEffect(() => {
+    setValueRating(filterObj?.star);
+  },[filterObj])
+
   const handleSelectTypeChange = (event) => {
+    setValueRating(0);
     const {
       target: { value },
     } = event;
@@ -111,6 +118,7 @@ export default function SideBarFilter() {
   };
 
   const handleSeletetedStar = (star) => {
+    setValueRating(star);
     dispatch(
       productsPresentationSlices.actions.setStar({ key: "", star: star })
     );
@@ -119,6 +127,7 @@ export default function SideBarFilter() {
   };
 
   const handleSortDirectChange = (event) => {
+    setValueRating(0);
     const {
       target: { value },
     } = event;
@@ -183,7 +192,7 @@ export default function SideBarFilter() {
                 </Select>
               </FormControl>
             </Tooltip>
-            <ButtonControl setListSlected={setListSlected} isType={true} />
+            <ButtonControl setListSlected={setListSlected} isType={true} setValueRating={setValueRating} />
           </div>
         </div>
         <div className={s.filterComponent}>
@@ -192,7 +201,7 @@ export default function SideBarFilter() {
             {ratingValue.map((value) => (
               <div
                 onClick={() => handleSeletetedStar(value)}
-                className={s.filterRating}
+                className={clsx(s.filterRating, {[s.backgroudColorHightLight] : value === valueRating})}
                 key={value}
               >
                 <Rating value={value} readOnly={true} sx={ratingCustomizer} />{" "}
@@ -243,6 +252,7 @@ export default function SideBarFilter() {
               color="Accent7"
               label="From ($)"
               lower={true}
+              setValueRating={setValueRating}
             />
             <OutlineInputCustom
               fs={"2rem"}
@@ -250,8 +260,9 @@ export default function SideBarFilter() {
               color="Accent7"
               label="To ($)"
               lower={false}
+              setValueRating={setValueRating}
             />
-            <ButtonControl />
+            <ButtonControl setValueRating={setValueRating}  />
           </div>
         </div>
       </div>

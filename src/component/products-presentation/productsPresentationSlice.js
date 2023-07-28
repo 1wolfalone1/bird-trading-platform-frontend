@@ -54,16 +54,19 @@ const productsPresentationSlices = createSlice({
       state.filter.ListTypeId = action.payload.valueTemp;
     },
     resetListTypeProduct: (state, action) => {
+      state.filter.star = 0;
       state.filter.ListTypeId = [];
     },
     setStar: (state, action) => {
       state.filter.star = action.payload.star;
     },
     setSortDirection: (state, action) => {
+      state.filter.star = 0;
       state.filter.sortPrice = action.payload.direction;
       console.log(state.filter.sortPrice);
     },
     setHighestPrice: (state, action) => {
+      state.filter.star = 0;
       const highestPrice = action.payload.highestPrice;
       if(highestPrice >= 0 && highestPrice !== "" )
         state.filter.highestPrice = action.payload.highestPrice;
@@ -72,6 +75,7 @@ const productsPresentationSlices = createSlice({
       }
     },
     setLowestPrice: (state, action) => {
+      state.filter.star = 0;
       const lowestPrice = action.payload.lowestPrice;
       if(lowestPrice >= 0 && lowestPrice !== "")
         state.filter.lowestPrice = lowestPrice;
@@ -82,21 +86,25 @@ const productsPresentationSlices = createSlice({
       state.filter.pageNumber = action.payload.pageNumber;
     },
     setAllPriceToNull: (state, action) => {
+      state.filter.star = 0;
       state.filter.sortPrice = "";
       state.filter.highestPrice = 0.0;
       state.filter.lowestPrice = 0.0;
       state.isResetPrice = state.isResetPrice == 1 ? 0 : 1;
     },
     setName: (state, action) => {
+      state.filter.star = 0;
       state.filter.name = action.payload.name;
     },
     setCategory: (state, action) => {
+      state.filter.star = 0;
       state.filter.category = action.payload.category;
     },
     setPageNumber: (state, action) => {
       state.filter.pageNumber = action.payload?.pageNumber;
     },
     changeShopId: (state, action) => {
+      state.filter.star = 0;
       state.filter.shopId = action.payload;
     },
     resetAllPageNumberShopId: (state, action) => {
@@ -108,6 +116,7 @@ const productsPresentationSlices = createSlice({
       state.typeProduct = typeProduct.BIRDS;
     },
     changeIsResetPrice: (state, action) => {
+      state.filter.star = 0;
       state.isResetPrice = state.isResetPrice == 1 ? 0 : 1;
     }
     
@@ -235,9 +244,9 @@ export const filterByAll = createAsyncThunk(
         params: state.productsPresentationData.filter,
       });
       const data = await res.data;
-      dispatch(
-        productsPresentationSlices.actions.setStar({ key: "", star: 0 })
-      );
+      // dispatch(
+      //   productsPresentationSlices.actions.setStar({ key: "", star: 0 })
+      // );
       dispatch(globalConfigSlice.actions.changeBackDrops(false));
       return data;
     } catch (error) {
