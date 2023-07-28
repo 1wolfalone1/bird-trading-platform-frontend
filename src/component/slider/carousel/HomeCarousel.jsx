@@ -9,9 +9,9 @@ import "swiper/css/scrollbar";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "./custom.scss";
 import s from "./homeCarousel.module.scss";
-const carouselImags = [
+const carouselImages = [
   {
-    img: "1.jpg",
+    img: "1.png",
     id: 1,
   },
   {
@@ -48,7 +48,7 @@ export default function HomeCarousel() {
       }}
       onSlideChange={(swiper) => {}}
     >
-      {carouselImags.map((img, i) => (
+      {carouselImages.map((img, i) => (
         <SwiperSlide key={img.id}>
           <div className={clsx(s.container)}>
             <img

@@ -1,10 +1,9 @@
-import React, { Fragment } from "react";
+import { Button } from "@mui/material";
 import clsx from "clsx";
-import Style from "../../../style/inline-style/style";
-import s from "./delivery.module.scss";
-import { Button, Tooltip, Typography } from "@mui/material";
+import React, { Fragment } from "react";
 import Popup from "reactjs-popup";
 import DeliveryPopup from "./DeliveryPopup";
+import s from "./delivery.module.scss";
 
 export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
   return (
@@ -29,12 +28,6 @@ export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
               )}
             </Popup>
           </div>
-
-          {/* <div className={clsx(s.changeButton)}>
-            <Button onClick={() => navigate("/profile")}>
-              Change information
-            </Button>
-          </div> */}
         </div>
         <div className={clsx(s.info)}>
           <div className={clsx(s.nameAndPhone)}>
@@ -55,7 +48,7 @@ export default function Delivery({ deliveryInfo, setDeliveryInfo }) {
             <div className={clsx(s.address)}>{deliveryInfo?.address}</div>
           )}
           {!deliveryInfo?.address && (
-            <div className={clsx(s.errorAddress)}>Provide your number!</div>
+            <div className={clsx(s.errorAddress)}>Provide your address!</div>
           )}
         </div>
       </div>
