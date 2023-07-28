@@ -53,8 +53,7 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
 
     const validationSchema = yup.object({
         description: yup
-        .string()
-        .min(10, "Your review must be at least 10 characters!"),
+        .string(),
         ratings: yup
         .number()
         .min(1, "Please choose star!")
@@ -188,6 +187,8 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
     const handleRemoveImage = (id) => {
         dispatch(rateSlice.actions.removeImagesPreview({id: id, productId: item.productId}));
     }
+
+    console.log('here is first initialValues', initialValues)
   return (
     <div className={clsx(s.container)}>
         <div className={clsx(s.productInfo)}>
@@ -309,7 +310,7 @@ const ItemRate = ({item, initialValues, isHaveValue, listImage, orderId}) => {
                     Product Quality{" "}
                     <Rating
                         name={`ratings`}
-                        value={value}
+                        value={initialValues?.ratings}
                         precision={1}
                         size="large"
                         color="Dominant1"
