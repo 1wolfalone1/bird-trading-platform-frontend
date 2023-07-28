@@ -8,10 +8,13 @@ import productsPresentationSlices, {
   resetListTypeProduct,
 } from "../products-presentation/productsPresentationSlice";
 
-export default function ButtonControl({ setListSlected, isType }) {
+export default function ButtonControl({ setListSlected, isType, setValueRating }) {
   const dispatch = useDispatch();
 
   const resetList = () => {
+    dispatch(
+        productsPresentationSlices.actions.setStar({ key: "", star: 0 })
+      );
     if (isType) {
       dispatch(productsPresentationSlices.actions.resetListTypeProduct());
       setListSlected([]);
@@ -21,6 +24,9 @@ export default function ButtonControl({ setListSlected, isType }) {
   };
 
   const handleFind = () => {
+    dispatch(
+        productsPresentationSlices.actions.setStar({ key: "", star: 0 })
+      );
     dispatch(productsPresentationSlices.actions.setPageNumber({pageNumber: 1}));
     dispatch(filterByAll());
   };
