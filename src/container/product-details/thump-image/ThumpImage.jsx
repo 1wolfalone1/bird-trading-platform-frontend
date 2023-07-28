@@ -36,9 +36,11 @@ export default function App({ images, video }) {
             <img src={image} alt="" />
           </SwiperSlide>
         ))}
-        <SwiperSlide key={100}>
-          <ReactPlayer url={video} controls width="100%" />
-        </SwiperSlide>
+        {video && (
+          <SwiperSlide key={100}>
+            <ReactPlayer url={video} controls width="100%" />
+          </SwiperSlide>
+        )}
         {/* <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
         </SwiperSlide>
@@ -72,9 +74,11 @@ export default function App({ images, video }) {
             <img src={image} alt="" />
           </SwiperSlide>
         ))}
-        <SwiperSlide key={99}>
-          <ReactPlayer url={video} width="100%" />
-        </SwiperSlide>
+        {video && (
+          <SwiperSlide key={99}>
+            <ReactPlayer url={video} width="100%" />
+          </SwiperSlide>
+        )}
         {/* <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
         </SwiperSlide>

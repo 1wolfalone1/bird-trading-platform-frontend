@@ -128,7 +128,13 @@ export default function Collection() {
                         </Grid>
                         <Grid container spacing={2} className={clsx(s.info)}>
                           {tag.productTagList.map((item) => (
-                            <Grid xs={6} sm={6} lg={6} xl={6}>
+                            <Grid
+                              xs={6}
+                              sm={6}
+                              lg={6}
+                              xl={6}
+                              sx={{ display: "flex", flexDirection: "column" }}
+                            >
                               <Grid className={clsx(s.image)}>
                                 <img src={item.urlImg} alt="" />
                               </Grid>

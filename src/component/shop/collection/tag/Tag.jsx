@@ -95,6 +95,7 @@ export default function Tag() {
                 {data.map((item) => (
                   <Grid
                     item
+                    sx={{ display: "flex" }}
                     xs={3}
                     sm={3}
                     lg={3}

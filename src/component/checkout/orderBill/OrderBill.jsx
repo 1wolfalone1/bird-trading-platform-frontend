@@ -1,21 +1,37 @@
-import React, { Fragment, useState } from "react";
-import clsx from "clsx";
-import s from "./orderBill.module.scss";
-import Grid from "@mui/material/Unstable_Grid2";
-import { Box, Button, Typography } from "@mui/material";
-import cartSlice, { getCartSelector } from "../../../container/order/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { userInfoSelector } from "../../../redux/global/userInfoSlice";
-import { useNavigate } from "react-router-dom";
-import { api } from "../../../api/server/API";
-import { toast } from "react-toastify";
-import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
-import { formatNumber } from "../../../utils/myUtils";
-import { orderSliceSelector } from "../../../redux/global/orderSlice";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-import orderSlice from "./../../../redux/global/orderSlice";
-import persistSlice from "../../../redux/global/persistSlice";
 import { LoadingButton } from "@mui/lab";
+import { Box, Typography } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import clsx from "clsx";
+import React, { Fragment, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { api } from "../../../api/server/API";
+import cartSlice, { getCartSelector } from "../../../container/order/cartSlice";
+import { orderSliceSelector } from "../../../redux/global/orderSlice";
+import persistSlice from "../../../redux/global/persistSlice";
+import { userInfoSelector } from "../../../redux/global/userInfoSlice";
+import { formatNumber } from "../../../utils/myUtils";
+import AddToCartToast, { toastType } from "../../toast/content/AddToCartToast";
+import orderSlice from "./../../../redux/global/orderSlice";
+import s from "./orderBill.module.scss";
+
+const cssButton = {
+  border: "1px solid rgba(0, 0, 0, 0.5)",
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  padding: "1rem 2rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  "&:hover": {
+    border: "1px solid rgba(0, 0, 0, 0.5)",
+    color: "rgb(30, 0, 7)",
+    backgroundColor: "rgb(228, 223, 209)",
+  },
+};
+
 export default function OrderBill({
   close,
   voucher,
@@ -160,7 +176,9 @@ export default function OrderBill({
                           </Box>
                         </Grid>
                         <Grid sm={2} md={2} xl={2} className={clsx(s.quantity)}>
-                          {product.cartQuantity}
+                          {product.cartQuantity.toLocaleString({
+                            minimumFractionDigits: 0,
+                          })}
                         </Grid>
                         <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
                           {formatNumber(
@@ -201,7 +219,9 @@ export default function OrderBill({
                           </Box>
                         </Grid>
                         <Grid sm={2} md={2} xl={2} className={clsx(s.quantity)}>
-                          {product.cartQuantity}
+                          {product.cartQuantity.toLocaleString({
+                            minimumFractionDigits: 0,
+                          })}
                         </Grid>
                         <Grid sm={3} md={3} xl={3} className={clsx(s.price)}>
                           {formatNumber(
@@ -235,10 +255,12 @@ export default function OrderBill({
       </div>
       <div className={clsx(s.submitBtn)}>
         <LoadingButton
-          loadingIndicator="Sending..."
           loading={isLoading}
           onClick={handleSubmitBtn}
           variant="outlined"
+          type="submit"
+          color="Accent7"
+          sx={cssButton}
         >
           Confirm Order
         </LoadingButton>

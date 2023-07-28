@@ -140,7 +140,6 @@ export default function SideBarFilter() {
     );
   };
 
-
   return (
     <div className={clsx(s.container)}>
       <div
@@ -226,7 +225,7 @@ export default function SideBarFilter() {
                 id="demo-multiple-checkbox-label"
                 sx={{ fontSize: "2rem" }}
               >
-                Sort price
+                Sorted price by
               </InputLabel>
               <Select
                 value={filterObj.sortPrice}
@@ -251,7 +250,7 @@ export default function SideBarFilter() {
               fs={"2rem"}
               line={"1.6rem"}
               color="Accent7"
-              label="From price"
+              label="From ($)"
               lower={true}
               setValueRating={setValueRating}
             />
@@ -259,7 +258,7 @@ export default function SideBarFilter() {
               fs={"2rem"}
               line={"1.6rem"}
               color="Accent7"
-              label="To price"
+              label="To ($)"
               lower={false}
               setValueRating={setValueRating}
             />

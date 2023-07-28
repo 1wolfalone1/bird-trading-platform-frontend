@@ -18,6 +18,22 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import { formatNumber } from "../../utils/myUtils";
+import { LoadingButton } from "@mui/lab";
+
+const cssButton = {
+  border: "1px solid rgba(0, 0, 0, 0.5)",
+  fontSize: "2.4rem",
+  fontFamily: "SeoulHangang",
+  padding: "1rem 2rem",
+  textTransform: "none",
+  color: "rgb(255, 255, 255)",
+  backgroundColor: "rgb(94, 94, 94)",
+  "&:hover": {
+    border: "1px solid rgba(0, 0, 0, 0.5)",
+    color: "rgb(30, 0, 7)",
+    backgroundColor: "rgb(228, 223, 209)",
+  },
+};
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -27,6 +43,7 @@ export default function Cart() {
   const carts = useSelector(getListItemSelector);
   const navigate = useNavigate();
   const { status } = useSelector(userInfoSelector);
+  const [loading, setLoading] = useState(false);
   const handleChangeQuantity = (item) => {
     return (e) => {
       dispatch(
@@ -51,9 +68,12 @@ export default function Cart() {
   };
 
   const handleOrderNowClick = () => {
+    setLoading(true);
     if (status === 0) {
+      setLoading(false);
       navigate("/login");
     } else {
+      setLoading(false);
       navigate("/checkout");
     }
   };
@@ -73,7 +93,13 @@ export default function Cart() {
     <>
       {carts.length > 0 ? (
         <div className={s.container}>
-          <p>Your cart have {carts.length} items</p>
+          <p>
+            Your cart have{" "}
+            {carts.length.toLocaleString({
+              minimumFractionDigits: 0,
+            })}{" "}
+            items
+          </p>
           <Grid className={clsx(s.birdList)}>
             <Grid className={clsx(s.header)}>
               <Grid container columns={9}>
@@ -128,7 +154,9 @@ export default function Cart() {
                     </div>
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.stockItem)}>
-                    {item.quantity}
+                    {item.quantity.toLocaleString({
+                      minimumFractionDigits: 0,
+                    })}
                   </Grid>
                   <Grid sm={1} md={1} xl={1} className={clsx(s.priceItem)}>
                     {formatNumber(item.discountedPrice)}
@@ -168,7 +196,9 @@ export default function Cart() {
                         />
                       </IconButton>
                       <TextField
-                        value={item.cartQuantity}
+                        value={item.cartQuantity.toLocaleString({
+                          minimumFractionDigits: 0,
+                        })}
                         onChange={handleChangeQuantity(item)}
                         sx={{
                           input: {
@@ -292,7 +322,15 @@ export default function Cart() {
           </div>
           <div className={clsx(s.totalOrders)}>
             <p className={clsx(s.bill)}>Total orders: {formatNumber(total)}</p>
-            <Button onClick={handleOrderNowClick}>Check Out</Button>
+            <LoadingButton
+              variant="outlined"
+              loading={loading}
+              type="submit"
+              onClick={handleOrderNowClick}
+              sx={cssButton}
+            >
+              Check Out
+            </LoadingButton>
           </div>
         </div>
       ) : (

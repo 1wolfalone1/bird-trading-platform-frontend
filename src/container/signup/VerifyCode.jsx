@@ -66,7 +66,7 @@ export default function VerifyCode({ close }) {
   const handleSubmitBtn = async () => {
     try {
       setLoading(true);
-      const response = await api.get("/users/verify/reset-password", {
+      const response = await api.get("/users/verify/register", {
         params: {
           code: verificationCode.join(""),
           email: emailTemp,

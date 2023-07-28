@@ -22,6 +22,7 @@ export default function GetToken() {
 
          try {
             const getUserInfo = async () => {
+               
                const res = await api.get(`/info${location.search}`);
                const data = await res.data;
                console.log(data)

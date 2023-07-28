@@ -131,8 +131,6 @@
    .submitBtn {
       display: flex;
       justify-content: end;
-      Button {
-         @include c.f-button();
-      }
+      
    }
 }

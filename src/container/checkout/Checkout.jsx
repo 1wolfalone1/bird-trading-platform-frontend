@@ -21,6 +21,7 @@ import { userInfoSelector } from "../../redux/global/userInfoSlice";
 import { fix2 } from "../../utils/myUtils";
 import cartSlice, { getCartSelector } from "../order/cartSlice";
 import s from "./checkout.module.scss";
+import { LoadingButton } from "@mui/lab";
 
 const payment = [
   {
@@ -50,6 +51,7 @@ export default function Checkout() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [loading, setLoading] = useState(false);
   const { items, voucherSelected } = useSelector(getCartSelector);
   const userInfo = useSelector(userInfoSelector);
   const [openBackDrop, setBackDrop] = useState(false);
@@ -160,8 +162,9 @@ export default function Checkout() {
       !deliveryInfo?.phoneNumber ||
       !deliveryInfo?.address ||
       !paymentMethod
-    )
+    ) {
       return true;
+    }
     return false;
   };
   return (
@@ -202,13 +205,24 @@ export default function Checkout() {
               promotion={total?.promotionFee}
             />
             <div className={clsx(s.orderButton)}>
-              <Button
+              {/* <Button
                 disabled={handleCheckout()}
                 style={{ opacity: handleCheckout() ? 0.5 : 1 }}
                 onClick={handleOpen}
               >
                 Place Order
-              </Button>
+              </Button> */}
+
+              <LoadingButton
+                disabled={handleCheckout()}
+                sx={{ opacity: handleCheckout() ? 0.8 : 1 }}
+                variant="outlined"
+                loading={loading}
+                type="submit"
+                onClick={handleOpen}
+              >
+                Place Order
+              </LoadingButton>
 
               <Modal
                 open={open}
