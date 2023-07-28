@@ -31,9 +31,7 @@ const validationSchema = yup.object({
   name: yup.string("").required("Name is required!"),
   phone: yup
     .string()
-    .matches(/^(?!\D)/, "Phone number is not valid!")
-    .min(8, "Phone number must be from 8 to 12 digits")
-    .max(12, "Phone number must be from 8 to 12 digits")
+    .matches(/^0\d{9,10}$/, "Phone number is not valid!")
     .required("Phone number is required!"),
 });
 export default function DeliveryPopup({

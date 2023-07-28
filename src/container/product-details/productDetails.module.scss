@@ -121,13 +121,11 @@ $imgWidth: 65rem;
               display: flex;
               align-items: center;
               .image {
-                width: 10rem;
-                height: 10rem;
-                border-radius: 50%;
-                overflow: hidden;
                 margin-right: 1rem;
                 img {
-                  width: 100%;
+                  border-radius: 50%;
+                  width: 10rem;
+                  height: 10rem;
                   cursor: pointer;
                 }
               }

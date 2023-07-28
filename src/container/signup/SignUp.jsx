@@ -41,6 +41,7 @@ const formHelperText = {
     marginLeft: "0px",
   },
 };
+
 const validationSchema = yup.object({
   email: yup
     .string("")
@@ -54,6 +55,7 @@ const validationSchema = yup.object({
   password: yup.string("").required("Password is required!"),
   confirmPassword: yup.string("").required("Confirm password is required!"),
 });
+
 export default function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

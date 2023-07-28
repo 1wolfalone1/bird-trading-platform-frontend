@@ -205,14 +205,6 @@ export default function Checkout() {
               promotion={total?.promotionFee}
             />
             <div className={clsx(s.orderButton)}>
-              {/* <Button
-                disabled={handleCheckout()}
-                style={{ opacity: handleCheckout() ? 0.5 : 1 }}
-                onClick={handleOpen}
-              >
-                Place Order
-              </Button> */}
-
               <LoadingButton
                 disabled={handleCheckout()}
                 sx={{ opacity: handleCheckout() ? 0.8 : 1 }}
