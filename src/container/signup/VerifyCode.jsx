@@ -75,9 +75,9 @@ export default function VerifyCode({ close }) {
       setLoading(false);
       const data = await response.data;
       console.log(data);
-      const verifyId = data.successMessage.match(/Id: (\d+)/)[1];
+      const verifyId = data.match(/Id: (\d+)/)[1];
       console.log(verifyId);
-      if (data.successCode == 200) {
+      if (response.status == 200) {
         dispatch(persistSlice.actions.saveCode(verificationCode));
         dispatch(persistSlice.actions.saveVerifyId(verifyId));
         navigate("/login");
