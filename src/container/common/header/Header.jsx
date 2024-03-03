@@ -72,7 +72,7 @@ export default function Header() {
       <div className={s.logo}>
         <img
           src={
-            "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/Beige_Vintage_Elegant_Illustration_Bird_Logo_4.png"
+            "https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/logo%3Dlight.svg"
           }
           alt="logo"
         />
