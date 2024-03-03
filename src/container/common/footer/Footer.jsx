@@ -1,10 +1,9 @@
+import FacebookIcon from '@mui/icons-material/Facebook';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import clsx from "clsx";
 import React from "react";
 import s from "./footer.module.scss";
-import clsx from "clsx";
-import logo from "../../../asset/logo=light.svg";
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import GitHubIcon from '@mui/icons-material/GitHub';
 
 const iconStyle = {
   fontSize: '5.4rem'
@@ -34,7 +33,7 @@ export default function Footer() {
             </div>
          </div>
          <div className={clsx(s.logo)}>
-            <img src={'https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/assetImage/asset/Beige_Vintage_Elegant_Illustration_Bird_Logo_4.png'} alt="logo" />
+            <img src={'https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/logo%3Ddark.svg'} alt="logo" />
          </div>
       </div>
    );
