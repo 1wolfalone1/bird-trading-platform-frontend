@@ -170,7 +170,7 @@ export default function SignUp() {
           className={clsx(s.imgLeft)}
         >
           <img
-            src="https://bird-trading-platform.s3.ap-southeast-1.amazonaws.com/image/signUp.png"
+            src="https://images.unsplash.com/photo-1587509232076-e6068343676a?q=80&w=1949&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             alt="Sign up"
           />
         </motion.div>
